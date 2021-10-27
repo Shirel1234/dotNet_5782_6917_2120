@@ -8,21 +8,24 @@ namespace DAL
 {
     namespace IDAL
     {
-        namespace Do
+        namespace DO
         {
             public struct Parcel
             {
                 public int CodeParcel { get; set; }
                 public int SenderId { get; set; }
-                public int TargetID { get; set; }
-                public int Weight { get; set; }
-                public double Priority { get; set; }
-                public int Drone { get; set; }
-                public dateTime Requested { get; set; }
-                public dateTime Scheduled { get; set; }
-                public dateTime PickedUp { get; set; }
-                public dateTime Delivered { get; set; }
-
+                public int TargetId { get; set; }
+                public WeightCategories Weight { get; set; }
+                public Priorities Priority { get; set; }
+                public int DroneId { get; set; }
+                public DateTime Requested { get; set; }
+                public DateTime Scheduled { get; set; }
+                public DateTime PickedUp { get; set; }
+                public DateTime Delivered { get; set; }
+                public override string ToString()
+                {
+                    return String.Format($"({CodeParcel}, /n{SenderId},/n {TargetID},/n{Weight},/n{Priority},/n{Drone},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");
+                }
 
 
 

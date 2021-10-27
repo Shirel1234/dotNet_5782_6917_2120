@@ -8,7 +8,7 @@ namespace DAL
 {
     namespace IDAL
     {
-        namespace Do
+        namespace DO
         {
             public struct BaseStation
             {
@@ -17,6 +17,10 @@ namespace DAL
                 public int ChargeSlots { get; set; }
                 public double Longitude { get; set; }
                 public double Latitude { get; set; }
+                public override string ToString()
+                {
+                    return String.Format($"({CodeStation}, /n{NameStation},/n {ChargeSlots},/n{Longitude},/n{Latitude})");
+                }
             }
         }
     }
