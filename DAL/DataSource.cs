@@ -67,7 +67,9 @@ namespace DAL
                     parcels.Add(p);
                 }
             }
+            
         }
     }
+    
 
 }

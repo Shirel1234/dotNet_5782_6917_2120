@@ -14,23 +14,23 @@ namespace DAL
             {
                 DataSource.Initialize();
             }
-            public void AddStation(BaseStation b)
+            public static void AddStation(BaseStation b)
             {
                 DataSource.stations.Add(b);
             }
-            public void AddDrone(Drone d)
+            public static void AddDrone(Drone d)
             {
                 DataSource.drones.Add(d);
             }
-            public void AddCustomer(Customer c)
+            public static void AddCustomer(Customer c)
             {
                 DataSource.customers.Add(c);
             }
-            public void AddParcel(Parcel p)
+            public static void AddParcel(Parcel p)
             {
                 DataSource.parcels.Add(p);
             }
-            public void UpdateParcelToDrone(int idP, int idD)
+            public static void UpdateParcelToDrone(int idP, int idD)
             {
                 for (int i = 0; i < DataSource.parcels.Count; i++)
                 {
@@ -52,7 +52,7 @@ namespace DAL
                     }
                 }    
             }
-            public void UpdatePickedUp(int idP)
+            public static void UpdatePickedUp(int idP)
             {
                 for (int i = 0; i < DataSource.parcels.Count; i++)
                 {
@@ -75,7 +75,7 @@ namespace DAL
                 }
             
             }
-            public void UpdateDeliver(int idP)
+            public static void UpdateDeliver(int idP)
             {
                 for (int i = 0; i < DataSource.parcels.Count; i++)
                 {
@@ -99,7 +99,7 @@ namespace DAL
                 }
 
             }
-            public void UpDateCharge(int idD , int idS)
+            public static void UpDateCharge(int idD , int idS)
             {
                 for (int i = 0; i < DataSource.stations.Count; i++)
                 {
@@ -112,14 +112,14 @@ namespace DAL
                         d.Status = DroneStatuses.maintenace;
                         d.Battery = DataSource.drones[i].Battery;
                         DataSource.drones[i] = d;
-                        DroneCharge dc = new DroneCharge();
-                        dc.DroneID = idD;
+                        DroneCharge dc = new DroneCharge();//מה עושים עם המופע של הישות הזו? אולי מכניסים לרשימה?
+                        dc.DroneID = idD;//אמורים להפחית באחד את מספר עמדות הטעינה הפנויות בתחנה שהתקבלה
                         dc.StationID = idS;
 
                     }
                 }
             }
-            public void ReleaseCharge(int idD, int idS)
+            public static void ReleaseCharge(int idD, int idS)
             {
                 for (int i = 0; i < DataSource.stations.Count; i++)
                 {
@@ -132,14 +132,14 @@ namespace DAL
                         d.Status = DroneStatuses.free;
                         d.Battery = DataSource.drones[i].Battery;
                         DataSource.drones[i] = d;
-                        DroneCharge dc = new DroneCharge();
-                        dc.DroneID = idD;
+                        DroneCharge dc = new DroneCharge();//כאן אמורים לשחרר את עמדת הטעינה
+                        dc.DroneID = idD;//אמורים להעלות באחד את מספר עמדות הטעינה הפנויות בתחנה שהתקבלה
                         dc.StationID = idS;
 
                     }
                 }
             }
-            public BaseStation ShowStation(int idS)
+            public static BaseStation ShowStation(int idS)
             {
                 for (int i = 0; i < DataSource.stations.Count; i++)
                 {
@@ -151,7 +151,7 @@ namespace DAL
                 BaseStation b =new BaseStation();
                 return b;
             }
-            public Drone ShowDrone(int idD)
+            public static Drone ShowDrone(int idD)
             {
                 for (int i = 0; i < DataSource.drones.Count; i++)
                 {
@@ -163,7 +163,7 @@ namespace DAL
                 Drone d = new Drone();
                 return d;
             }
-            public Customer ShowCustomer(int idC)
+            public static Customer ShowCustomer(int idC)
             {
                 for (int i = 0; i < DataSource.customers.Count; i++)
                 {
@@ -175,7 +175,7 @@ namespace DAL
                 Customer c=new Customer();
                 return c;
             }
-            public Parcel ShowParcel(int idP)
+            public static Parcel ShowParcel(int idP)
             {
                 for (int i = 0; i < DataSource.parcels.Count; i++)
                 {
@@ -187,36 +187,36 @@ namespace DAL
                 Parcel p=new Parcel();
                 return p;
             }
-            public List<BaseStation> ShowListBaseStations()
+            public static List<BaseStation> ShowListBaseStations()
             {
                 return DataSource.stations;
             }
-            public List<Drone> ShowListDrones()
+            public static List<Drone> ShowListDrones()
             {
                 return DataSource.drones;
             }
-            public List<Customer> ShowListBaseCustomer()
+            public static List<Customer> ShowListCustomers()
             {
                 return DataSource.customers;
             }
-            public List<Parcel> ShowListBaseParcel()
+            public static List<Parcel> ShowListParcels()
             {
                 return DataSource.parcels;
             }
-            public List<Parcel> ListParcelWithoutDrone()
+            public static List<Parcel> ListParcelWithoutDrone()
             {
                 List<Parcel> lstParcelWithoutDrone = new List<Parcel>();
                 for (int i = 0; i < DataSource.parcels.Count; i++)
                 {
                     //
-                    if (DataSource.parcels[i].DroneId > 0)
+                    if (DataSource.parcels[i].DroneId > 0)//למה גדול מאפס ולא קטן שווה?
                     {
                         lstParcelWithoutDrone.Add(DataSource.parcels[i]);
                     }
                 }
                 return lstParcelWithoutDrone;
             }
-            public List<BaseStation> ListBaseStationsSlots()
+            public static List<BaseStation> ListBaseStationsSlots()
             {
                 List<BaseStation> lstSlots = new List<BaseStation>();
                 for (int i = 0; i < DataSource.stations.Count; i++)
