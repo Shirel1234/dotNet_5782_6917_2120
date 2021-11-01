@@ -45,7 +45,7 @@ namespace DAL
                 for (int i = 1; i < 11; i++)
                 {
                     c.IdCustomer = r.Next(100000000, 1000000000);
-                    c.NameCustomer = (Names)r.Next(0, 10);
+                    c.NameCustomer = "customer"+i;
                     c.Phone = "050-" + r.Next(1000000, 10000000)+"";
                     c.Longitude = r.Next(-180, 180);
                     c.Latitude = r.Next(-90, 90);

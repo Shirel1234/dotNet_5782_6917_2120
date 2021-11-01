@@ -110,8 +110,7 @@ namespace ConsoleUI
             Console.WriteLine("enter the parcel ID and the drone ID\n");
             int idP = int.Parse(Console.ReadLine());
             int idD = int.Parse(Console.ReadLine());
-            if ()//אם צריך לבדוק שהרחפן פנוי ולהדפיס שגיאה אם לא ולבקש שוב קלט, אז יש לרוץ פה על הרשימה. ואם אנחנו מתאימים, אז זה גם פה, כי אם לא יהיה פנוי, אסור להדפיס שגיאה מדל אובג'קט, או שנקבל משם פולס ואז נדפיס שגיאה.
-                DAL.DalObject.DalObject.UpdateParcelToDrone(idP, idD);
+            DAL.DalObject.DalObject.UpdateParcelToDrone(idP, idD);
         }
         public static void pickedUpUpdate()
         {
@@ -161,32 +160,40 @@ namespace ConsoleUI
             Console.WriteLine("enter the base station ID\n");
             int idS = int.Parse(Console.ReadLine());
             DAL.IDAL.DO.BaseStation baseStation = DAL.DalObject.DalObject.ShowStation(idS);
-            if ()//איך לבדוק שהאובייקט לא ריק
+            if (baseStation.CodeStation==idS)//איך לבדוק שהאובייקט לא ריק
                 Console.WriteLine(baseStation + "\n");
+            else
+                Console.WriteLine("Sorry. The base station is not found\n");
         }
         public static void droneView()
         {
             Console.WriteLine("enter the drone ID\n");
             int idD = int.Parse(Console.ReadLine());
             DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
-            if ()//איך לבדוק שהאובייקט לא ריק
+            if (drone.CodeDrone==idD)//איך לבדוק שהאובייקט לא ריק
                 Console.WriteLine(drone + "\n");
+            else
+                Console.WriteLine("Sorry. The drone is not found\n");
         }
         public static void customerView()
         {
             Console.WriteLine("enter the customer ID\n");
             int idC = int.Parse(Console.ReadLine());
             DAL.IDAL.DO.Customer customer = DAL.DalObject.DalObject.ShowCustomer(idC);
-            if ()//איך לבדוק שהאובייקט לא ריק
+            if (customer.IdCustomer==idC)//איך לבדוק שהאובייקט לא ריק
                 Console.WriteLine(customer + "\n");
+            else
+                Console.WriteLine("Sorry. The customer is not found\n");
         }
         public static void parcelView()
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP = int.Parse(Console.ReadLine());
             DAL.IDAL.DO.Parcel parcel = DAL.DalObject.DalObject.ShowParcel(idP);
-            if ()//איך לבדוק שהאובייקט לא ריק
+            if (parcel.CodeParcel==idP)//איך לבדוק שהאובייקט לא ריק
                 Console.WriteLine(parcel + "\n");
+            else
+                Console.WriteLine("Sorry. The parcel is not found\n");
         }
         public static void listViewOptions()
         {
@@ -243,11 +250,12 @@ namespace ConsoleUI
         }
         public static void Main(string[] args)
         {
+            char choice;
             do
             {
                 Console.WriteLine("Choose one of the following:\na:Options of adding\n" +
                     "u:Options of update\n" + "v:Options of view\nl:Options of list view\ne: Exit");
-                char choice = (Char)System.Console.Read();
+                choice = (Char)System.Console.Read();
                 switch (choice)
                 {
                     case 'a': addingOptions(); break;
@@ -257,9 +265,10 @@ namespace ConsoleUI
                     case 'e': Console.WriteLine("bye\n"); break;
                     default: Console.WriteLine("error\n"); break;
                 }
-                while (choice != 'e') ;
             }
-            }
+            while (choice != 'e');
+        }
+         
     }
 }
 
