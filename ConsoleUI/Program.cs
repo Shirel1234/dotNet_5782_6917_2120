@@ -10,10 +10,14 @@ namespace ConsoleUI
 {
     class Program
     {
+        /// <summary>
+        /// the function offers the user 4 adding options for adding base station/drone/customer/parcel.
+        /// </summary>
         public static void addingOptions()
         {
             Console.WriteLine("Choose:\n1:add base station\n2:add drone\n3:add customer\n4:add parcel\n");
-            int ch = int.Parse(Console.ReadLine());
+            int ch; 
+            int.TryParse(Console.ReadLine(),out ch);
             switch (ch)
             {
                 case 1: newBaseStation(); break;
@@ -23,29 +27,42 @@ namespace ConsoleUI
                 default: Console.WriteLine("error\n"); break;
             }
         }
+        /// <summary>
+        /// the function adds a new base station to the list.
+        /// it creates a new object of base station, initializes its fields accordind to the input from the user and adds it to the list.
+        /// </summary>
         public static void newBaseStation()
         {
-            Console.WriteLine("enter ID number, name, longitude, lattitude and number of charge slots of the base station\n");
-            int id = int.Parse(Console.ReadLine());
-            int name = int.Parse(Console.ReadLine());
-            int chargeSlots = int.Parse(Console.ReadLine());
+            Console.WriteLine("enter ID number, name, longitude, lattitude and number of charging positions of the base station\n");
+            int id;
+            int.TryParse(Console.ReadLine(), out id);
             double longitude = double.Parse(Console.ReadLine());
             double lattitude = double.Parse(Console.ReadLine());
+            int name;
+            int.TryParse(Console.ReadLine(), out name);
+            int chargeSlots;
+            int.TryParse(Console.ReadLine(), out chargeSlots);
+
             DAL.IDAL.DO.BaseStation baseStation = new DAL.IDAL.DO.BaseStation();
             baseStation.CodeStation = id;
             baseStation.NameStation = name;
             baseStation.ChargeSlots = chargeSlots;
             baseStation.Longitude = longitude;
             baseStation.Latitude = lattitude;
-            DAL.DalObject.DalObject.AddStation(baseStation);//זה עובד רק אם מוסיפים סטטיק לפני המתודות בדל אובג'קט, לבדוק שזה בסדר
+            DAL.DalObject.DalObject.AddStation(baseStation);
         }
+        /// <summary>
+        /// the function adds a new drone to the list.
+        /// it creates a new object of drone, initializes its fields accordind to the input from the user and adds it to the list.
+        /// </summary>
         public static void newDrone()
         {
             Console.WriteLine("enter ID number, model, battery status," +
                 " and max weight(easy, medium, heavy) of the drone\n");
-            int id = int.Parse(Console.ReadLine());
+            int id;
+            int.TryParse(Console.ReadLine(),out id);
             string model = Console.ReadLine();
-            int battery = int.Parse(Console.ReadLine());//האם לבדוק תקינות קלט?
+            double battery = double.Parse(Console.ReadLine());
             WeightCategories weight = (WeightCategories)Console.Read();
             DAL.IDAL.DO.Drone drone = new DAL.IDAL.DO.Drone();
             drone.CodeDrone = id;
@@ -55,6 +72,10 @@ namespace ConsoleUI
             drone.MaxWeight = weight;
             DAL.DalObject.DalObject.AddDrone(drone);
         }
+        /// <summary>
+        /// the function adds a new customer to the list.
+        /// it creates a new object of customer, initializes its fields accordind to the input from the user and adds it to the list.
+        /// </summary>
         public static void newCustomer()
         {
             Console.WriteLine("enter ID number, name, phone number," +
@@ -66,16 +87,20 @@ namespace ConsoleUI
             double lattitude = double.Parse(Console.ReadLine());
             DAL.IDAL.DO.Customer customer = new DAL.IDAL.DO.Customer();
             customer.IdCustomer = id;
-            customer.NameCustomer = name;//לסדר את עניין ההגרלה
+            customer.NameCustomer = name;
             customer.Phone = phone;
             customer.Longitude = longitude;
             customer.Latitude = lattitude;
             DAL.DalObject.DalObject.AddCustomer(customer);
         }
+        /// <summary>
+        /// the function adds a new parcel to the list.
+        /// it creates a new object of parcel, initializes its fields accordind to the input from the user and adds it to the list.
+        /// </summary>
         public static void newParcel()
         {
             Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number," +
-                " weight(easy, medium, heavy), priority (normal, express, emergency) //and time of creating the parcel for sending//\n");
+                " weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//\n");
             int idP = int.Parse(Console.ReadLine());
             int idS = int.Parse(Console.ReadLine());
             int idT = int.Parse(Console.ReadLine());
@@ -90,6 +115,10 @@ namespace ConsoleUI
             parcel.Priority = priority;
             DAL.DalObject.DalObject.AddParcel(parcel);
         }
+        /// <summary>
+        /// the function offers the user 5 update options for update matching parcel to drone/picking up parcel by drone/
+        /// delevered parcel to customer/sending of drone to charge/releaseing of drone from charging
+        /// </summary>
         public static void updateOptions()
         {
             Console.WriteLine("Choose:\n1:update matching parcel to drone\n2:update picking up parcel by drone\n" +
@@ -104,26 +133,44 @@ namespace ConsoleUI
                 case 5: releaseFromChargeUpdate(); break;
                 default: Console.WriteLine("error\n"); break;
             }
-        }//
-        public static void parcelToDroneUpdate()//אנחנו אמורות לשייך את הרחפן לחבילה או רק לעדכן את השיוך שכבר נעשה?
+        }
+        /// <summary>
+        /// the function updates matching of a parcel to a drone: it receives from the user the ID numbers of the parcel and the drone,
+        /// and sends them to the update function in DalObject
+        /// </summary>
+        public static void parcelToDroneUpdate()
         {
             Console.WriteLine("enter the parcel ID and the drone ID\n");
             int idP = int.Parse(Console.ReadLine());
             int idD = int.Parse(Console.ReadLine());
             DAL.DalObject.DalObject.UpdateParcelToDrone(idP, idD);
         }
+        /// <summary>
+        /// the function updates picking up of a parcel by a drone: it receives from the user the ID numbers of the parcel and the drone,
+        /// and sends them to the update function in DalObject
+        /// </summary>
         public static void pickedUpUpdate()
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP = int.Parse(Console.ReadLine());
             DAL.DalObject.DalObject.UpdatePickedUp(idP);
         }
+        /// <summary>
+        /// the function updates delivering of a parcel to a customer: it receives from the user the ID number of the parcel,
+        /// and sends it to the update function in DalObject
+        /// </summary>
         public static void deliveredUpdate()
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP = int.Parse(Console.ReadLine());
             DAL.DalObject.DalObject.UpdateDeliver(idP);
         }
+        /// <summary>
+        /// the function updates sending of a drone to charging in a base station: it receives from the user the ID number of the drone
+        /// and shows the user a list of base stations with free charging positions. 
+        /// then, it receives from the user the id number of the base station he chose
+        /// and sends the two numbers to the update function in DalObject
+        /// </summary>
         public static void chargeUpdate()
         {
             Console.WriteLine("enter the drone ID\n");
@@ -133,7 +180,10 @@ namespace ConsoleUI
             int idS = int.Parse(Console.ReadLine());
             DAL.DalObject.DalObject.UpDateCharge(idD, idS);
         }
-
+        /// <summary>
+        /// the function updates releasing of a drone from charging: it receives from the user the ID numbers of the drone and the base station,
+        /// and sends them to the update function in DalObject
+        /// </summary>
         public static void releaseFromChargeUpdate()
         {
             Console.WriteLine("enter the drone ID and the base station ID\n");
@@ -141,6 +191,9 @@ namespace ConsoleUI
             int idS = int.Parse(Console.ReadLine());
             DAL.DalObject.DalObject.ReleaseCharge(idD, idS);
         }
+        /// <summary>
+        /// the function offers the user 4 view options for view of a base station/a drone/a customer/a parcel
+        /// </summary>
         public static void viewOptions()
         {
             Console.WriteLine("Choose:\n1:base station view\n2:drone view\n3:customer view\n4:parcel view\n");
@@ -154,27 +207,41 @@ namespace ConsoleUI
                 default: Console.WriteLine("error\n"); break;
             }
         }
-
+        /// <summary>
+        /// the function prints a base station: it receives the ID number of the base station from the user, sends it to a function in DalObject
+        /// which looks for this base station in the list and returns it, then, the function prints it. 
+        /// if the function in DalObject didn't find it, the function prints a message to the user
+        /// </summary>
         public static void baseStationView()
         {
             Console.WriteLine("enter the base station ID\n");
             int idS = int.Parse(Console.ReadLine());
             DAL.IDAL.DO.BaseStation baseStation = DAL.DalObject.DalObject.ShowStation(idS);
-            if (baseStation.CodeStation==idS)//איך לבדוק שהאובייקט לא ריק
+            if (baseStation.CodeStation==idS)
                 Console.WriteLine(baseStation + "\n");
             else
                 Console.WriteLine("Sorry. The base station is not found\n");
         }
+        /// <summary>
+        /// the function prints a drone: it receives the ID number of the drone from the user, sends it to a function in DalObject
+        /// which looks for this drone in the list and returns it, then, the function prints it. 
+        /// if the function in DalObject didn't find it, the function prints a message to the user
+        /// </summary>
         public static void droneView()
         {
             Console.WriteLine("enter the drone ID\n");
             int idD = int.Parse(Console.ReadLine());
             DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
-            if (drone.CodeDrone==idD)//איך לבדוק שהאובייקט לא ריק
+            if (drone.CodeDrone==idD)
                 Console.WriteLine(drone + "\n");
             else
                 Console.WriteLine("Sorry. The drone is not found\n");
         }
+        /// <summary>
+        /// the function prints a customer: it receives the ID number of the customer from the user, sends it to a function in DalObject
+        /// which looks for this customer in the list and returns it, then, the function prints it. 
+        /// if the function in DalObject didn't find it, the function prints a message to the user
+        /// </summary>
         public static void customerView()
         {
             Console.WriteLine("enter the customer ID\n");
@@ -185,6 +252,11 @@ namespace ConsoleUI
             else
                 Console.WriteLine("Sorry. The customer is not found\n");
         }
+        /// <summary>
+        /// the function prints a parcel: it receives the ID number of the parcel from the user, sends it to a function in DalObject
+        /// which looks for this parcel in the list and returns it, then, the function prints it. 
+        /// if the function in DalObject didn't find it, the function prints a message to the user
+        /// </summary>
         public static void parcelView()
         {
             Console.WriteLine("enter the parcel ID\n");
@@ -255,7 +327,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Choose one of the following:\na:Options of adding\n" +
                     "u:Options of update\n" + "v:Options of view\nl:Options of list view\ne: Exit");
-                choice = (Char)System.Console.Read();
+                choice = (Char)Console.Read();
                 switch (choice)
                 {
                     case 'a': addingOptions(); break;
@@ -271,18 +343,3 @@ namespace ConsoleUI
          
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
