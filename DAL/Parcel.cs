@@ -26,6 +26,7 @@ namespace DAL
                 {
                     return String.Format($"({CodeParcel}, /n{SenderId},/n {TargetId},/n{Weight},/n{Priority},/n{DroneId},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");
                 }
+                
 
 
 
