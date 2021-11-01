@@ -24,7 +24,7 @@ namespace DAL
                 public DateTime Delivered { get; set; }
                 public override string ToString()
                 {
-                    return String.Format($"({CodeParcel}, /n{SenderId},/n {TargetID},/n{Weight},/n{Priority},/n{Drone},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");
+                    return String.Format($"({CodeParcel}, /n{SenderId},/n {TargetId},/n{Weight},/n{Priority},/n{DroneId},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");
                 }
 
 
