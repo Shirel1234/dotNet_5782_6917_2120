@@ -10,6 +10,7 @@ namespace DAL
     {
         namespace DO
         {
+            
             public struct BaseStation
             {
                 public int CodeStation { get; set; }
