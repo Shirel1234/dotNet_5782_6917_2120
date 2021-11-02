@@ -10,26 +10,51 @@ namespace DAL
     {
       public class DalObject
         {
-           public DalObject()
+            /// <summary>
+            /// constructor of the class DalObject: it calls the function of initializing from DataSource.
+            /// </summary>
+            public DalObject()
             {
                 DataSource.Initialize();
             }
+            /// <summary>
+            /// the function gets an object of base station and adds it to the list of base stations
+            /// </summary>
+            /// <param name="b"></param>
             public static void AddStation(BaseStation b)
             {
                 DataSource.stations.Add(b);
             }
+            /// <summary>
+            /// the function gets an object of drone and adds it to the list of drones
+            /// </summary>
+            /// <param name="d"></param>
             public static void AddDrone(Drone d)
             {
                 DataSource.drones.Add(d);
             }
+            /// <summary>
+            /// the function gets an object of customer and adds it to the list of customers
+            /// </summary>
+            /// <param name="c"></param>
             public static void AddCustomer(Customer c)
             {
                 DataSource.customers.Add(c);
             }
-            public static void AddParcel(Parcel p)
+            /// <summary> 
+            /// the function gets an object of parcel and adds it to the list of parcels
+            /// </summary>
+            /// <param name="p"></param>
+               public static void AddParcel(Parcel p)
             {
                 DataSource.parcels.Add(p);
             }
+            /// <summary>
+            /// the function gets 2 IDnumbers of parcel and drone, looks for this parcel in the list 
+            /// and updates its drone field to be the drone the function got 
+            /// </summary>
+            /// <param name="idP"></param>
+            /// <param name="idD"></param>
             public static void UpdateParcelToDrone(int idP, int idD)
             {
                 for (int i = 0; i < DataSource.parcels.Count; i++)
