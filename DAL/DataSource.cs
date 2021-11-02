@@ -18,7 +18,7 @@ namespace DAL
             internal static List<Parcel> parcels = new List<Parcel>();
             internal class Config
             {
-                public static int countIdParcel = 1;
+                public static int countIdParcel = 1000;
             }
             public static void Initialize()
             {
@@ -54,7 +54,7 @@ namespace DAL
                 Parcel p = new Parcel();
                 for (int i = 1; i < 11; i++)
                 {
-                    p.CodeParcel = i;
+                    p.CodeParcel = Config.countIdParcel++;
                     p.SenderId = r.Next(100000000, 1000000000);
                     p.TargetId = r.Next(100000000, 1000000000);
                     p.Weight = (WeightCategories)r.Next(0, 3);
@@ -67,7 +67,6 @@ namespace DAL
                     parcels.Add(p);
                 }
             }
-            
         }
     }
     

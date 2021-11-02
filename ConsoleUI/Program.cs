@@ -36,7 +36,7 @@ namespace ConsoleUI
         public static void newBaseStation()
         {
             Console.WriteLine("enter ID number, name, longitude, lattitude and number of charging positions of the base station\n");
-             int id; int name; int chargeSlots;
+            int id; int name; int chargeSlots;
             if (int.TryParse(Console.ReadLine(), out id))
                 if (int.TryParse(Console.ReadLine(), out name))
                     if (int.TryParse(Console.ReadLine(), out chargeSlots))
@@ -51,7 +51,7 @@ namespace ConsoleUI
                         baseStation.Latitude = lattitude;
                         DAL.DalObject.DalObject.AddStation(baseStation);
                     }
-            
+
         }
         /// <summary>
         /// the function adds a new drone to the list.
@@ -153,9 +153,9 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter the parcel ID and the drone ID\n");
             int idP; int idD;
-            if(int.TryParse(Console.ReadLine(),out idP))
-              if(int.TryParse(Console.ReadLine(), out idD))
-                 DAL.DalObject.DalObject.UpdateParcelToDrone(idP, idD);
+            if (int.TryParse(Console.ReadLine(), out idP))
+                if (int.TryParse(Console.ReadLine(), out idD))
+                    DAL.DalObject.DalObject.UpdateParcelToDrone(idP, idD);
         }
         /// <summary>
         /// the function updates picking up of a parcel by a drone: it receives from the user the ID numbers of the parcel and the drone,
@@ -165,8 +165,8 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP;
-            if(int.TryParse(Console.ReadLine(),out idP))
-               DAL.DalObject.DalObject.UpdatePickedUp(idP);
+            if (int.TryParse(Console.ReadLine(), out idP))
+                DAL.DalObject.DalObject.UpdatePickedUp(idP);
         }
         /// <summary>
         /// the function updates delivering of a parcel to a customer: it receives from the user the ID number of the parcel,
@@ -176,7 +176,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP;
-            if(int.TryParse(Console.ReadLine(),out idP)
+            if (int.TryParse(Console.ReadLine(), out idP)
                 DAL.DalObject.DalObject.UpdateDeliver(idP);
         }
         /// <summary>
@@ -259,12 +259,15 @@ namespace ConsoleUI
         public static void droneView()
         {
             Console.WriteLine("enter the drone ID\n");
-            int idD = int.Parse(Console.ReadLine());
-            DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
-            if (drone.CodeDrone==idD)
-                Console.WriteLine(drone + "\n");
-            else
-                Console.WriteLine("Sorry. The drone is not found\n");
+            int idD;
+            if (int.TryParse(Console.ReadLine(), out idD))
+            {
+                DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
+                if (drone.CodeDrone == idD)
+                    Console.WriteLine(drone + "\n");
+                else
+                    Console.WriteLine("Sorry. The drone is not found\n");
+            }
         }
         /// <summary>
         /// the function prints a customer: it receives the ID number of the customer from the user, sends it to a function in DalObject
@@ -274,12 +277,15 @@ namespace ConsoleUI
         public static void customerView()
         {
             Console.WriteLine("enter the customer ID\n");
-            int idC = int.Parse(Console.ReadLine());
-            DAL.IDAL.DO.Customer customer = DAL.DalObject.DalObject.ShowCustomer(idC);
-            if (customer.IdCustomer==idC)//איך לבדוק שהאובייקט לא ריק
-                Console.WriteLine(customer + "\n");
-            else
-                Console.WriteLine("Sorry. The customer is not found\n");
+            int idC;
+            if (int.TryParse(Console.ReadLine(), out idC))
+            {
+                DAL.IDAL.DO.Customer customer = DAL.DalObject.DalObject.ShowCustomer(idC);
+                if (customer.IdCustomer == idC)//איך לבדוק שהאובייקט לא ריק
+                    Console.WriteLine(customer + "\n");
+                else
+                    Console.WriteLine("Sorry. The customer is not found\n");
+            }
         }
         /// <summary>
         /// the function prints a parcel: it receives the ID number of the parcel from the user, sends it to a function in DalObject
@@ -289,28 +295,34 @@ namespace ConsoleUI
         public static void parcelView()
         {
             Console.WriteLine("enter the parcel ID\n");
-            int idP = int.Parse(Console.ReadLine());
-            DAL.IDAL.DO.Parcel parcel = DAL.DalObject.DalObject.ShowParcel(idP);
-            if (parcel.CodeParcel==idP)//איך לבדוק שהאובייקט לא ריק
-                Console.WriteLine(parcel + "\n");
-            else
-                Console.WriteLine("Sorry. The parcel is not found\n");
+            int idP;
+            if (int.TryParse(Console.ReadLine(), out idP))
+            {
+                DAL.IDAL.DO.Parcel parcel = DAL.DalObject.DalObject.ShowParcel(idP);
+                if (parcel.CodeParcel == idP)
+                    Console.WriteLine(parcel + "\n");
+                else
+                    Console.WriteLine("Sorry. The parcel is not found\n");
+            }
         }
         public static void listViewOptions()
         {
             Console.WriteLine("Choose:\n1:a list of base stations view\n2:a list of drones view\n3:a list of customers view\n" +
                     "4:list of parcels view\n5:view of list of parcels not yet matched to a drone\n" +
                     "6:view of base stations with available charging stations\n");
-            int ch = int.Parse(Console.ReadLine());
-            switch (ch)
+            int ch;
+            if (int.TryParse(Console.ReadLine(), out ch))
             {
-                case 1: baseStationsListView(); break;
-                case 2: dronesListView(); break;
-                case 3: customersListView(); break;
-                case 4: parcelsListView(); break;
-                case 5: parcelsWithoutdrone(); break;
-                case 6: baseStationsWithChargeSlots(); break;
-                default: Console.WriteLine("error\n"); break;
+                switch (ch)
+                {
+                    case 1: baseStationsListView(); break;
+                    case 2: dronesListView(); break;
+                    case 3: customersListView(); break;
+                    case 4: parcelsListView(); break;
+                    case 5: parcelsWithoutdrone(); break;
+                    case 6: baseStationsWithChargeSlots(); break;
+                    default: Console.WriteLine("error\n"); break;
+                }
             }
         }
         public static void baseStationsListView()
@@ -369,6 +381,6 @@ namespace ConsoleUI
             }
             while (choice != 'e');
         }
-         
+
     }
 }
