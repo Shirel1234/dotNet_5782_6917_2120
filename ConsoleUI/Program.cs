@@ -84,7 +84,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter ID number, name, phone number,longitude and lattitude of the customer\n");
             int id;
-            if (int.TryParse(Console.ReadLine(), out id)
+            if (int.TryParse(Console.ReadLine(), out id))
             {
                 string name = Console.ReadLine();
                 string phone = Console.ReadLine();
@@ -108,7 +108,7 @@ namespace ConsoleUI
             Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//\n");
             int idP; int idS; int idT;
             if (int.TryParse(Console.ReadLine(), out idP))
-                if (int.TryParse(Console.ReadLine(), out idS)
+                if (int.TryParse(Console.ReadLine(), out idS))
                    if (int.TryParse(Console.ReadLine(), out idT))
                     {
                         WeightCategories weight = (WeightCategories)Console.Read();
@@ -176,7 +176,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP;
-            if (int.TryParse(Console.ReadLine(), out idP)
+            if (int.TryParse(Console.ReadLine(), out idP))
                 DAL.DalObject.DalObject.UpdateDeliver(idP);
         }
         /// <summary>
