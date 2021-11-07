@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DAL.IDAL.DO;
 
 
+
 namespace ConsoleUI
 {
     class Program
@@ -16,16 +17,19 @@ namespace ConsoleUI
         /// </summary>
         public static void addingOptions()
         {
+            char digit;
             Console.WriteLine("Choose:\n1:add base station\n2:add drone\n3:add customer\n4:add parcel\n");
-            int ch;
-            if (int.TryParse(Console.ReadLine(), out ch))
+            digit = (char)Console.Read();
+            //bool flag;
+            //flag = int.TryParse(Console.ReadLine(), out ch);
+           // if(flag)
             {
-                switch (ch)
+                switch (digit)
                 {
-                    case 1: newBaseStation(); break;
-                    case 2: newDrone(); break;
-                    case 3: newCustomer(); break;
-                    case 4: newParcel(); break;
+                    case '1': newBaseStation(); break;
+                    case '2': newDrone(); break;
+                    case '3': newCustomer(); break;
+                    case '4': newParcel(); break;
                     default: Console.WriteLine("error\n"); break;
                 }
             }
@@ -85,7 +89,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter ID number, name, phone number,longitude and lattitude of the customer\n");
             int id;
-            if (int.TryParse(Console.ReadLine(), out id)
+            if (int.TryParse(Console.ReadLine(), out id))
             {
                 string name = Console.ReadLine();
                 string phone = Console.ReadLine();
@@ -109,7 +113,7 @@ namespace ConsoleUI
             Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//\n");
             int idP; int idS; int idT;
             if (int.TryParse(Console.ReadLine(), out idP))
-                if (int.TryParse(Console.ReadLine(), out idS)
+                if (int.TryParse(Console.ReadLine(), out idS))
                    if (int.TryParse(Console.ReadLine(), out idT))
                     {
                         WeightCategories weight = (WeightCategories)Console.Read();
@@ -177,7 +181,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP;
-            if (int.TryParse(Console.ReadLine(), out idP)
+            if (int.TryParse(Console.ReadLine(), out idP))
                 DAL.DalObject.DalObject.UpdateDeliver(idP);
         }
         /// <summary>
