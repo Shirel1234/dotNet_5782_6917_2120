@@ -15,11 +15,11 @@ namespace IDAL
                 public int CodeDrone { get; set; }
                 public string ModelDrone { get; set; }
                 public WeightCategories MaxWeight { get; set; }
-                public DroneStatuses Status { get; set; }
-                public double Battery { get; set; }
+               // public DroneStatuses Status { get; set; }
+               // public double Battery { get; set; }
                 public override string ToString()
                 {
-                    return String.Format($"({CodeDrone}, /n{ModelDrone},/n {MaxWeight},/n{Status},/n{Battery})");
+                    return String.Format($"({CodeDrone}, /n{ModelDrone},/n {MaxWeight})");
                 }
             }
         }

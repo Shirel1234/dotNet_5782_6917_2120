@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.DalObject;
 using DAL.IDAL.DO;
 
 
@@ -12,25 +13,39 @@ namespace ConsoleUI
 {
     class Program
     {
+
+        enum Menu { Exit, Add, Update, View, ViewList }
+        enum AddOption { Exit, Station, Drone, Customer, Parcel }
+        enum UpdateOption {Exit, Assignment, PickedUp, Delivery, Recharge, Releas }
+        enum ShowOption { Exit, Station, Drone, Customer, Parcel }
+        enum ShowListOption { Exit, Station, Drone, Customers, Parcels, UnAssignmentParcel, AvailableChargingsStation }
+
         /// <summary>
         /// the function offers the user 4 adding options for adding base station/drone/customer/parcel.
         /// </summary>
         public static void addingOptions()
         {
-            char digit;
-            Console.WriteLine("Choose:\n1:add base station\n2:add drone\n3:add customer\n4:add parcel\n");
-            digit = (char)Console.Read();
-            //bool flag;
-            //flag = int.TryParse(Console.ReadLine(), out ch);
-           // if(flag)
+            AddOption addOp;
+            int choice;
+
+            Console.WriteLine("Choose:\n1-add base station\n2-add drone\n3-add customer\n4-add parcel");
+            if (int.TryParse(Console.ReadLine(), out choice))
             {
-                switch (digit)
+                addOp = (AddOption)choice;
+
+                //Console.WriteLine("enter number:");
+                //bool success = int.TryParse(Console.ReadLine(), out x);
+                // Console.WriteLine(x);
                 {
-                    case '1': newBaseStation(); break;
-                    case '2': newDrone(); break;
-                    case '3': newCustomer(); break;
-                    case '4': newParcel(); break;
-                    default: Console.WriteLine("error\n"); break;
+                    switch (addOp)
+                    {
+                        case AddOption.Station: newBaseStation(); break;
+                        case AddOption.Drone: newDrone(); break;
+                        case AddOption.Customer: newCustomer(); break;
+                        case AddOption.Parcel: newParcel(); break;
+                        case AddOption.Exit:break;
+                        default: Console.WriteLine("error\n"); break;
+                    }
                 }
             }
         }
@@ -40,14 +55,16 @@ namespace ConsoleUI
         /// </summary>
         public static void newBaseStation()
         {
-            Console.WriteLine("enter ID number, name, longitude, lattitude and number of charging positions of the base station\n");
+            Console.WriteLine("enter ID number, name, longitude, lattitude and number of charging positions of the base station");
             int id; int name; int chargeSlots;
             if (int.TryParse(Console.ReadLine(), out id))
                 if (int.TryParse(Console.ReadLine(), out name))
                     if (int.TryParse(Console.ReadLine(), out chargeSlots))
                     {
-                        double longitude = double.Parse(Console.ReadLine());
-                        double lattitude = double.Parse(Console.ReadLine());
+                        int tempLon = int.Parse(Console.ReadLine());
+                        int tempLat = int.Parse(Console.ReadLine());
+                        double longitude = (double)tempLon;
+                        double lattitude = (double)tempLat;
                         DAL.IDAL.DO.BaseStation baseStation = new DAL.IDAL.DO.BaseStation();
                         baseStation.CodeStation = id;
                         baseStation.NameStation = name;
@@ -70,13 +87,15 @@ namespace ConsoleUI
             if (int.TryParse(Console.ReadLine(), out id))
             {
                 string model = Console.ReadLine();
-                double battery = double.Parse(Console.ReadLine());
+                int tempBattery = int.Parse(Console.ReadLine());
+                double battery = (double)tempBattery;
                 WeightCategories weight = (WeightCategories)Console.Read();
                 DAL.IDAL.DO.Drone drone = new DAL.IDAL.DO.Drone();
                 drone.CodeDrone = id;
                 drone.ModelDrone = model;
-                drone.Battery = battery;
-                drone.Status = DroneStatuses.free;
+                //   drone.Battery = battery;
+                //
+                //drone.Status = DroneStatuses.free;
                 drone.MaxWeight = weight;
                 DAL.DalObject.DalObject.AddDrone(drone);
             }
@@ -93,8 +112,10 @@ namespace ConsoleUI
             {
                 string name = Console.ReadLine();
                 string phone = Console.ReadLine();
-                double longitude = double.Parse(Console.ReadLine());
-                double lattitude = double.Parse(Console.ReadLine());
+                int tempLon = int.Parse(Console.ReadLine());
+                int tempLat = int.Parse(Console.ReadLine());
+                double longitude = (double)tempLon;
+                double lattitude = (double)tempLat;
                 DAL.IDAL.DO.Customer customer = new DAL.IDAL.DO.Customer();
                 customer.IdCustomer = id;
                 customer.NameCustomer = name;
@@ -114,7 +135,7 @@ namespace ConsoleUI
             int idP; int idS; int idT;
             if (int.TryParse(Console.ReadLine(), out idP))
                 if (int.TryParse(Console.ReadLine(), out idS))
-                   if (int.TryParse(Console.ReadLine(), out idT))
+                    if (int.TryParse(Console.ReadLine(), out idT))
                     {
                         WeightCategories weight = (WeightCategories)Console.Read();
                         Priorities priority = (Priorities)Console.Read();
@@ -134,18 +155,21 @@ namespace ConsoleUI
         /// </summary>
         public static void updateOptions()
         {
-            Console.WriteLine("Choose:\n1:update matching parcel to drone\n2:update picking up parcel by drone\n" +
+            Console.WriteLine("Choose:\n0:Exit\n1:update matching parcel to drone\n2:update picking up parcel by drone\n" +
                "3:update delevered parcel to customer\n4:update sending of drone to charge\n5:update releaseing of drone from charging\n");
-            int ch;
-            if (int.TryParse(Console.ReadLine(), out ch))
+            int choice;
+            UpdateOption updateOp;
+            if (int.TryParse(Console.ReadLine(), out choice))
             {
-                switch (ch)
+                updateOp = (UpdateOption)choice;
+                switch (updateOp)
                 {
-                    case 1: parcelToDroneUpdate(); break;
-                    case 2: pickedUpUpdate(); break;
-                    case 3: deliveredUpdate(); break;
-                    case 4: chargeUpdate(); break;
-                    case 5: releaseFromChargeUpdate(); break;
+                    case UpdateOption.Assignment: parcelToDroneUpdate(); break;
+                    case UpdateOption.PickedUp: pickedUpUpdate(); break;
+                    case UpdateOption.Delivery: deliveredUpdate(); break;
+                    case UpdateOption.Recharge: chargeUpdate(); break;
+                    case UpdateOption.Releas: releaseFromChargeUpdate(); break;
+                    case UpdateOption.Exit: break;
                     default: Console.WriteLine("error\n"); break;
                 }
             }
@@ -224,15 +248,18 @@ namespace ConsoleUI
         public static void viewOptions()
         {
             Console.WriteLine("Choose:\n1:base station view\n2:drone view\n3:customer view\n4:parcel view\n");
-            int ch;
-            if (int.TryParse(Console.ReadLine(), out ch))
+            int choice;
+            ShowOption showOption; 
+            if (int.TryParse(Console.ReadLine(), out choice))
             {
-                switch (ch)
+                showOption = (ShowOption)choice;
+                switch (showOption)
                 {
-                    case 1: baseStationView(); break;
-                    case 2: droneView(); break;
-                    case 3: customerView(); break;
-                    case 4: parcelView(); break;
+                    case ShowOption.Station: baseStationView(); break;
+                    case ShowOption.Drone: droneView(); break;
+                    case ShowOption.Customer: customerView(); break;
+                    case ShowOption.Parcel: parcelView(); break;
+                    case ShowOption.Exit:break;
                     default: Console.WriteLine("error\n"); break;
                 }
             }
@@ -315,77 +342,85 @@ namespace ConsoleUI
             Console.WriteLine("Choose:\n1:a list of base stations view\n2:a list of drones view\n3:a list of customers view\n" +
                     "4:list of parcels view\n5:view of list of parcels not yet matched to a drone\n" +
                     "6:view of base stations with available charging stations\n");
-            int ch;
-            if (int.TryParse(Console.ReadLine(), out ch))
+            int choice;
+            ShowListOption showListOption;
+            if (int.TryParse(Console.ReadLine(), out choice))
             {
-                switch (ch)
+                showListOption = (ShowListOption)choice;
+                switch (showListOption)
                 {
-                    case 1: baseStationsListView(); break;
-                    case 2: dronesListView(); break;
-                    case 3: customersListView(); break;
-                    case 4: parcelsListView(); break;
-                    case 5: parcelsWithoutdrone(); break;
-                    case 6: baseStationsWithChargeSlots(); break;
+                    case ShowListOption.Station: baseStationsListView(); break;
+                    case ShowListOption.Drone: dronesListView(); break;
+                    case ShowListOption.Customers: customersListView(); break;
+                    case ShowListOption.Parcels: parcelsListView(); break;
+                    case ShowListOption.UnAssignmentParcel: parcelsWithoutdrone(); break;
+                    case ShowListOption.AvailableChargingsStation: baseStationsWithChargeSlots(); break;
                     default: Console.WriteLine("error\n"); break;
                 }
             }
         }
         public static void baseStationsListView()
         {
-            List<BaseStation> baseStations = DAL.DalObject.DalObject.ShowListBaseStations();
+            List<BaseStation> baseStations =
+                DAL.DalObject.DalObject.ShowListBaseStations().ToList();
             for (int i = 1; i <= baseStations.Count; i++)
                 Console.WriteLine("Base station No. " + i + ":\n" + baseStations[i]);
         }
         public static void dronesListView()
         {
-            List<Drone> drones = DAL.DalObject.DalObject.ShowListDrones();
+            List<Drone> drones = DAL.DalObject.DalObject.ShowListDrones().ToList();
             for (int i = 1; i <= drones.Count; i++)
                 Console.WriteLine("Drone No. " + i + ":\n" + drones[i]);
         }
         public static void customersListView()
         {
-            List<Customer> customers = DAL.DalObject.DalObject.ShowListCustomers();
+            List<Customer> customers = DAL.DalObject.DalObject.ShowListCustomers().ToList();
             for (int i = 1; i <= customers.Count; i++)
                 Console.WriteLine("Customer No. " + i + ":\n" + customers[i]);
         }
         public static void parcelsListView()
         {
-            List<Parcel> parcels = DAL.DalObject.DalObject.ShowListParcels();
+            List<Parcel> parcels = DAL.DalObject.DalObject.ShowListParcels().ToList();
             for (int i = 1; i <= parcels.Count; i++)
                 Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
         }
         public static void parcelsWithoutdrone()
         {
-            List<Parcel> parcels = DAL.DalObject.DalObject.ListParcelWithoutDrone();
+            List<Parcel> parcels = DAL.DalObject.DalObject.ListParcelWithoutDrone().ToList();
             for (int i = 1; i <= parcels.Count; i++)
                 Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
         }
         public static void baseStationsWithChargeSlots()
         {
-            List<BaseStation> baseStations = DAL.DalObject.DalObject.ListBaseStationsSlots();
+            List<BaseStation> baseStations = DAL.DalObject.DalObject.ListBaseStationsSlots().ToList();
             for (int i = 1; i <= baseStations.Count; i++)
                 Console.WriteLine("Parcel No. " + i + ":\n" + baseStations[i]);
         }
+
         public static void Main(string[] args)
         {
-            char choice;
+            Menu menuOp;
+            int choice;
             do
             {
-                Console.WriteLine("Choose one of the following:\na:Options of adding\n" +
-                    "u:Options of update\n" + "v:Options of view\nl:Options of list view\ne: Exit");
-                choice = (Char)Console.Read();
-                switch (choice)
+                Console.WriteLine("Choose one of the following:\n1-Add\n2-Update\n3-View\n4-View list\n0-Exit");
+                if (int.TryParse(Console.ReadLine(), out choice))
                 {
-                    case 'a': addingOptions(); break;
-                    case 'u': updateOptions(); break;
-                    case 'v': viewOptions(); break;
-                    case 'l': listViewOptions(); break;
-                    case 'e': Console.WriteLine("bye\n"); break;
-                    default: Console.WriteLine("error\n"); break;
+                    menuOp = (Menu)choice;
+                    //choice = (Char)Console.Read();
+                    switch (menuOp)
+                    {
+                        case Menu.Add: addingOptions(); break;
+                        case Menu.Update: updateOptions(); break;
+                        case Menu.View: viewOptions(); break;
+                        case Menu.ViewList: listViewOptions(); break;
+                        case Menu.Exit: Console.WriteLine("bye\n"); break;
+                        default: Console.WriteLine("error\n"); break;
+                    }
                 }
             }
-            while (choice != 'e');
+            while (choice !=0);
         }
-
     }
 }
+    
