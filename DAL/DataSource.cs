@@ -36,9 +36,9 @@ namespace DAL
                 {
                     d.CodeDrone = i;
                     d.ModelDrone = "model no."+i+"";
-                    d.Status = (DroneStatuses)r.Next(0, 3);
+                   // d.Status = (DroneStatuses)r.Next(0, 3);
                     d.MaxWeight= (WeightCategories)r.Next(0, 3);
-                    d.Battery = (double)r.Next(0, 101);
+                   // d.Battery = (double)r.Next(0, 101);
                     drones.Add(d);
                 }
                 Customer c = new Customer();
