@@ -28,7 +28,7 @@ namespace ConsoleUI
             AddOption addOp;
             int choice;
 
-            Console.WriteLine("Choose:\n1-add base station\n2-add drone\n3-add customer\n4-add parcel");
+            Console.WriteLine("Choose:\n1-add base station\n2-add drone\n3-add customer\n4-add parcel\n0-exit");
             if (int.TryParse(Console.ReadLine(), out choice))
             {
                 addOp = (AddOption)choice;
@@ -134,7 +134,7 @@ namespace ConsoleUI
             Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//\n");
             int idP; int idS; int idT;
             if (int.TryParse(Console.ReadLine(), out idP))
-                if (int.TryParse(Console.ReadLine(), out idS)
+                if (int.TryParse(Console.ReadLine(), out idS))
                    if (int.TryParse(Console.ReadLine(), out idT))
                     {
                         WeightCategories weight = (WeightCategories)Console.Read();
@@ -205,7 +205,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("enter the parcel ID\n");
             int idP;
-            if (int.TryParse(Console.ReadLine(), out idP)
+            if (int.TryParse(Console.ReadLine(), out idP))
                 DAL.DalObject.DalObject.UpdateDeliver(idP);
         }
         /// <summary>
@@ -399,15 +399,16 @@ namespace ConsoleUI
 
         public static void Main(string[] args)
         {
-            char choice;
+            int choice;
+            Menu menu;
             do
             {
                 Console.WriteLine("Choose one of the following:\n1-Add\n2-Update\n3-View\n4-View list\n0-Exit");
                 if (int.TryParse(Console.ReadLine(), out choice))
                 {
-                    menuOp = (Menu)choice;
+                    menu = (Menu)choice;
                     //choice = (Char)Console.Read();
-                    switch (menuOp)
+                    switch (menu)
                     {
                         case Menu.Add: addingOptions(); break;
                         case Menu.Update: updateOptions(); break;

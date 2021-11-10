@@ -23,7 +23,20 @@ namespace DAL
             /// <param name="b"></param>
             public static void AddStation(BaseStation b)
             {
-                DataSource.stations.Add(b);
+                try
+                {
+                    List<BaseStation> baseStations = new();
+                    for (int i = 0; i < baseStations.Count; i++)
+                    {
+                        // if (baseStations[i].CodeStation == b.CodeStation)
+                        // thrownew ArgumentException( "Error. This base station is already exists");
+                        DataSource.stations.Add(b);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             /// <summary>
             /// the function gets an object of drone and adds it to the list of drones
