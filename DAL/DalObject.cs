@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.IDAL.DO;
+using IDAL.DO;
 namespace DAL
 {
     namespace DalObject
@@ -23,20 +24,10 @@ namespace DAL
             /// <param name="b"></param>
             public static void AddStation(BaseStation b)
             {
-                try
-                {
                     List<BaseStation> baseStations = new();
-                    for (int i = 0; i < baseStations.Count; i++)
-                    {
-                        // if (baseStations[i].CodeStation == b.CodeStation)
-                        // thrownew ArgumentException( "Error. This base station is already exists");
-                        DataSource.stations.Add(b);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                if (DataSource.stations.FirstOrDefault(station => station.CodeStation == b.CodeStation) != null)
+                    throw new Exceptions.AddingExceptions(b.CodeStation, "base station already exists");
+                DataSource.stations.Add(b); 
             }
             /// <summary>
             /// the function gets an object of drone and adds it to the list of drones
@@ -44,6 +35,8 @@ namespace DAL
             /// <param name="d"> a drone</param>
             public static void AddDrone(Drone d)
             {
+                if (DataSource.drones.FirstOrDefault(drone => drone.CodeDrone == d.CodeDrone) != null)
+                    throw new Exceptions.AddingExceptions(d.CodeDrone, "drone already exists");
                 DataSource.drones.Add(d);
             }
             /// <summary>
@@ -52,6 +45,8 @@ namespace DAL
             /// <param name="c"> a customer</param>
             public static void AddCustomer(Customer c)
             {
+                if (DataSource.customers.FirstOrDefault(customer => customer.IdCustomer == c.IdCustomer) != null)
+                    throw new Exceptions.AddingExceptions(c.IdCustomer, "customer already exists");
                 DataSource.customers.Add(c);
             }
             /// <summary> 
@@ -60,6 +55,8 @@ namespace DAL
             /// <param name="p"> a parcel</param>
                public static void AddParcel(Parcel p)
             {
+                if (DataSource.parcels.FirstOrDefault(parcel => parcel.CodeParcel == p.CodeParcel) != null)
+                    throw new Exceptions.AddingExceptions(p.CodeParcel, "parcel already exists");
                 DataSource.parcels.Add(p);
             }
             /// <summary>
@@ -71,18 +68,12 @@ namespace DAL
             public static void UpdateParcelToDrone(int idP, int idD)
             {
                 List<Parcel> parcels = new();
-                for (int i = 0; i < parcels.Count; i++)
-                {
-                    if(parcels[i].CodeParcel==idP)
-                    {
-                        Parcel p = parcels[i];
-                        p.DroneId = idD;
-                        p.Requested = DateTime.Now;
-                        parcels[i] = p;
-                        break;
-                    }   
-
-                }
+                Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);//מחזיר את האוביקט ממש אוו העתק שלו?
+                if(p==null)
+                    throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
+                p.DroneId = idD;//אם הוא נמצא, הוא מעדכן אותו ישירות, כי זה מה שחזר מ-find 
+                p.Requested = DateTime.Now;
+            }
                 //for (int i = 0; i < DataSource.parcels.Count; i++)
                 //{
                 //    if (DataSource.parcels[i].CodeParcel==idP)
@@ -102,7 +93,6 @@ namespace DAL
                 //        break;
                 //    }
                 //}    
-            }
             /// <summary>
             /// the function searchs the parcel with this id  and updates the parcel to be pick up
             /// </summary>
@@ -110,16 +100,11 @@ namespace DAL
             public static void UpdatePickedUp(int idP)
             {
                 List<Parcel> parcels = new();
-                for (int i = 0; i < parcels.Count; i++)
-                {
-                  if(parcels[i].CodeParcel==idP)
-                    {
-                        Parcel p = parcels[i];
-                        p.PickedUp = DateTime.Now;
-                        parcels[i] = p;
-                        break;
-                    }
-                }
+                Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
+                if (p == null)
+                    throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
+                p.PickedUp = DateTime.Now;
+                 
             //    for (int i = 0; i < DataSource.parcels.Count; i++)
             //    {
             //        if (DataSource.parcels[i].CodeParcel == idP)
@@ -147,17 +132,12 @@ namespace DAL
             /// <param name="idP"> an id of parcel</param>
             public static void UpdateDeliver(int idP)
             {
-                List<Parcel> parcels = new();
-                for (int i = 0; i < parcels.Count; i++)
-                {
-                    if (parcels[i].CodeParcel == idP)
-                    {
-                        Parcel p = parcels[i];
-                        p.Delivered = DateTime.Now;
-                        parcels[i] = p;
-                        break;
-                    }
-                }
+                //List<Parcel> parcels = new();
+                Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
+                if (p == null)
+                    throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
+                p.Delivered = DateTime.Now;
+            }
                 //for (int i = 0; i < DataSource.parcels.Count; i++)
                 //{
                 //    if (DataSource.parcels[i].CodeParcel == idP)
@@ -179,7 +159,7 @@ namespace DAL
                 //    }
                 //}
 
-            }
+            
             /// <summary>
             /// the function searches the drone with this id and updates its status to be maintenace
             /// in additions it creates a droneCharge and uptates its id of drone and id of station
@@ -188,49 +168,28 @@ namespace DAL
             /// <param name="idS">an id of station</param>
             public static void UpDateCharge(int idD , int idS)
             {
-                for (int i = 0; i < DataSource.stations.Count; i++)
-                {
-                    if (DataSource.drones[i].CodeDrone == idD)
-                    {
-                        Drone d= new Drone();
-                        d.CodeDrone = DataSource.drones[i].CodeDrone;
-                        d.MaxWeight = DataSource.drones[i].MaxWeight;
-                        d.ModelDrone = DataSource.drones[i].ModelDrone;
-                       // d.Status = DroneStatuses.maintenace;
-                       // d.Battery = DataSource.drones[i].Battery;
-                        DataSource.drones[i] = d;
-                        DroneCharge dc = new DroneCharge();
-                        dc.DroneID = idD;
-                        dc.StationID = idS;
-
-                    }
-                }
+                Drone d = DataSource.drones.Find(drone => drone.CodeDrone == idD);
+                if (d == null)
+                    throw new Exceptions.UpdateExceptions(idD, "drone does not exist"); 
+                DroneCharge dc = new DroneCharge();
+                dc.DroneID = idD;
+                dc.StationID = idS;
             }
-            /// <summary>
+            ///<summary>
             /// the function searches the drone with this id and updates its status to be free   
             /// </summary>
             /// <param name="idD"> an id of drone</param>
             /// <param name="idS">an id of station</param>
             public static void ReleaseCharge(int idD, int idS)
             {
-                for (int i = 0; i < DataSource.stations.Count; i++)
-                {
-                    if (DataSource.drones[i].CodeDrone == idD)
-                    {
-                        Drone d = new Drone();
-                        d.CodeDrone = DataSource.drones[i].CodeDrone;
-                        d.MaxWeight = DataSource.drones[i].MaxWeight;
-                        d.ModelDrone = DataSource.drones[i].ModelDrone;
-                      //  d.Status = DroneStatuses.free;
-                       // d.Battery = DataSource.drones[i].Battery;
-                        DataSource.drones[i] = d;
-                        DroneCharge dc = new DroneCharge();
-                        dc.DroneID = idD;
-                        dc.StationID = idS;
-
-                    }
-                }
+                Drone d = DataSource.drones.Find(drone => drone.CodeDrone == idD);
+                if (d == null)
+                    throw new Exceptions.UpdateExceptions(idD, "drone does not exist");
+                //DroneCharge dc = new DroneCharge();//לדעתי צריך כאן דווקא לשחרר את הישות של הרחפן שבטעינה ולא ליצור חדש
+                //dc.DroneID = idD;
+                //dc.StationID = idS;
             }
+            
             /// <summary>
             /// the function searches the station with the id that it got
             /// </summary>
@@ -238,14 +197,9 @@ namespace DAL
             /// <returns>the details of this station</returns>
             public static BaseStation ShowStation(int idS)
             {
-                for (int i = 0; i < DataSource.stations.Count; i++)
-                {
-                    if (DataSource.stations[i].CodeStation == idS)
-                    {
-                        return DataSource.stations[i];
-                    }
-                }
-                BaseStation b =new BaseStation();
+               BaseStation b = DataSource.stations.Find(station => station.CodeStation == idS);
+                if (b == null)
+                    throw new Exceptions.UpdateExceptions(idS, "base station does not exist");
                 return b;
             }
             /// <summary>
@@ -255,6 +209,7 @@ namespace DAL
             /// <returns>the details of this drone</returns>
             public static Drone ShowDrone(int idD)
             {
+                //עד כאן הגעתי
                 for (int i = 0; i < DataSource.drones.Count; i++)
                 {
                     if (DataSource.drones[i].CodeDrone == idD)

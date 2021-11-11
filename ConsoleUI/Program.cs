@@ -55,7 +55,7 @@ namespace ConsoleUI
         /// </summary>
         public static void newBaseStation()
         {
-            Console.WriteLine("enter ID number, name, longitude, lattitude and number of charging positions of the base station");
+            Console.WriteLine("enter ID number, name, number of charging positions of the base station, longitude and lattitude");
             int id; int name; int chargeSlots;
             if (int.TryParse(Console.ReadLine(), out id))
                 if (int.TryParse(Console.ReadLine(), out name))
@@ -106,7 +106,7 @@ namespace ConsoleUI
         /// </summary>
         public static void newCustomer()
         {
-            Console.WriteLine("enter ID number, name, phone number,longitude and lattitude of the customer\n");
+            Console.WriteLine("enter ID number, name, phone number,longitude and lattitude of the customer");
             int id;
             if (int.TryParse(Console.ReadLine(), out id))
             {
@@ -131,7 +131,7 @@ namespace ConsoleUI
         /// </summary>
         public static void newParcel()
         {
-            Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//\n");
+            Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//");
             int idP; int idS; int idT;
             if (int.TryParse(Console.ReadLine(), out idP))
                 if (int.TryParse(Console.ReadLine(), out idS))
@@ -155,8 +155,8 @@ namespace ConsoleUI
         /// </summary>
         public static void updateOptions()
         {
-            Console.WriteLine("Choose:\n0:Exit\n1:update matching parcel to drone\n2:update picking up parcel by drone\n" +
-               "3:update delevered parcel to customer\n4:update sending of drone to charge\n5:update releaseing of drone from charging\n");
+            Console.WriteLine("Choose:\n1:update matching parcel to drone\n2:update picking up parcel by drone\n" +
+               "3:update delivered parcel to customer\n4:update sending of drone to charge\n5:update releaseing of drone from charging\n0:Exit");
             int choice;
             UpdateOption updateOp;
             if (int.TryParse(Console.ReadLine(), out choice))
@@ -180,7 +180,7 @@ namespace ConsoleUI
         /// </summary>
         public static void parcelToDroneUpdate()
         {
-            Console.WriteLine("enter the parcel ID and the drone ID\n");
+            Console.WriteLine("enter the parcel ID and the drone ID");
             int idP; int idD;
             if (int.TryParse(Console.ReadLine(), out idP))
                 if (int.TryParse(Console.ReadLine(), out idD))
@@ -192,7 +192,7 @@ namespace ConsoleUI
         /// </summary>
         public static void pickedUpUpdate()
         {
-            Console.WriteLine("enter the parcel ID\n");
+            Console.WriteLine("enter the parcel ID");
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
                 DAL.DalObject.DalObject.UpdatePickedUp(idP);
@@ -203,7 +203,7 @@ namespace ConsoleUI
         /// </summary>
         public static void deliveredUpdate()
         {
-            Console.WriteLine("enter the parcel ID\n");
+            Console.WriteLine("enter the parcel ID");
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
                 DAL.DalObject.DalObject.UpdateDeliver(idP);
@@ -216,11 +216,11 @@ namespace ConsoleUI
         /// </summary>
         public static void chargeUpdate()
         {
-            Console.WriteLine("enter the drone ID\n");
+            Console.WriteLine("enter the drone ID");
             int idD;
             if (int.TryParse(Console.ReadLine(), out idD))
             {
-                Console.WriteLine("Choose one of the following base stations for charging. Enter its ID number\n");
+                Console.WriteLine("Choose one of the following base stations for charging. Enter its ID number");
                 baseStationsWithChargeSlots();
                 int idS;
                 if (int.TryParse(Console.ReadLine(), out idS))
@@ -233,7 +233,7 @@ namespace ConsoleUI
         /// </summary>
         public static void releaseFromChargeUpdate()
         {
-            Console.WriteLine("enter the drone ID and the base station ID\n");
+            Console.WriteLine("enter the drone ID and the base station ID");
             int idD;
             if (int.TryParse(Console.ReadLine(), out idD))
             {
@@ -247,7 +247,7 @@ namespace ConsoleUI
         /// </summary>
         public static void viewOptions()
         {
-            Console.WriteLine("Choose:\n1:base station view\n2:drone view\n3:customer view\n4:parcel view\n");
+            Console.WriteLine("Choose:\n1:base station view\n2:drone view\n3:customer view\n4:parcel view\n0:Exit");
             int choice;
             ShowOption showOption; 
             if (int.TryParse(Console.ReadLine(), out choice))
@@ -272,7 +272,7 @@ namespace ConsoleUI
         /// 
         public static void baseStationView()
         {
-            Console.WriteLine("enter the base station ID\n");
+            Console.WriteLine("enter the base station ID");
             int idS;
             if (int.TryParse(Console.ReadLine(), out idS))
             {
@@ -290,7 +290,7 @@ namespace ConsoleUI
         /// </summary>
         public static void droneView()
         {
-            Console.WriteLine("enter the drone ID\n");
+            Console.WriteLine("enter the drone ID");
             int idD;
             if (int.TryParse(Console.ReadLine(), out idD))
             {
@@ -308,7 +308,7 @@ namespace ConsoleUI
         /// </summary>
         public static void customerView()
         {
-            Console.WriteLine("enter the customer ID\n");
+            Console.WriteLine("enter the customer ID");
             int idC;
             if (int.TryParse(Console.ReadLine(), out idC))
             {
@@ -326,7 +326,7 @@ namespace ConsoleUI
         /// </summary>
         public static void parcelView()
         {
-            Console.WriteLine("enter the parcel ID\n");
+            Console.WriteLine("enter the parcel ID");
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
             {
