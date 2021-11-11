@@ -209,15 +209,9 @@ namespace DAL
             /// <returns>the details of this drone</returns>
             public static Drone ShowDrone(int idD)
             {
-                //עד כאן הגעתי
-                for (int i = 0; i < DataSource.drones.Count; i++)
-                {
-                    if (DataSource.drones[i].CodeDrone == idD)
-                    {
-                        return DataSource.drones[i];
-                    }
-                }
-                Drone d = new Drone();
+                Drone d = DataSource.drones.Find(drone => drone.CodeDrone == idD);
+                if (d == null)
+                    throw new Exceptions.UpdateExceptions(idD, "drone does not exist");
                 return d;
             }
             /// <summary>
@@ -227,14 +221,9 @@ namespace DAL
             /// <returns>the details of this customer</returns>
             public static Customer ShowCustomer(int idC)
             {
-                for (int i = 0; i < DataSource.customers.Count; i++)
-                {
-                    if (DataSource.customers[i].IdCustomer == idC)
-                    {
-                        return DataSource.customers[i];
-                    }
-                }
-                Customer c=new Customer();
+                Customer c = DataSource.customers.Find(customer => customer.IdCustomer == idC);
+                if (c == null)
+                    throw new Exceptions.UpdateExceptions(idC, "customer does not exist");
                 return c;
             }
             /// <summary>
@@ -244,14 +233,9 @@ namespace DAL
             /// <returns>the details of this parcel</returns>
             public static Parcel ShowParcel(int idP)
             {
-                for (int i = 0; i < DataSource.parcels.Count; i++)
-                {
-                    if (DataSource.parcels[i].CodeParcel == idP)
-                    {
-                        return DataSource.parcels[i];
-                    }
-                }
-                Parcel p=new Parcel();
+                Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
+                if (p == null)
+                    throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
                 return p;
             }
             /// <summary>
@@ -292,32 +276,34 @@ namespace DAL
             /// <returns></returns>
             public static IEnumerable<Parcel> ListParcelWithoutDrone()
             {
-                List<Parcel> lstParcelWithoutDrone = new List<Parcel>();
-                for (int i = 0; i < DataSource.parcels.Count; i++)
-                {
-                    //
-                    if (DataSource.parcels[i].DroneId > 0)//למה גדול מאפס ולא קטן שווה?
-                    {
-                        lstParcelWithoutDrone.Add(DataSource.parcels[i]);
-                    }
-                }
-                return lstParcelWithoutDrone;
+                List<Parcel> lstParcelWithoutDrone = DataSource.parcels.FindAll(parcel => parcel.DroneId <=0);
+                //List<Parcel> lstParcelWithoutDrone = new List<Parcel>();
+                //for (int i = 0; i < DataSource.parcels.Count; i++)
+                //{
+                //    //
+                //    if (DataSource.parcels[i].DroneId > 0)//למה גדול מאפס ולא קטן שווה?
+                //    {
+                //        lstParcelWithoutDrone.Add(DataSource.parcels[i]);
+                //    }
+                //}
+                return lstParcelWithoutDrone;//האם זה בסדר שיתכן ויחזיר רשימה ריקה, או שיש לבדוק זאת ולזרוק חריגה אם כן?כנ"ל לגבי כל המתודות לעיל המחזירות רשימות
             }
             /// <summary>
-            /// the function searches tha stations thats have charges of slot are free and creates a new list with them
+            /// the function searches for the stations that have free slots of charge and creates a new list with them
             /// </summary>
-            /// <returns>the new list of stations with chargeslots free</returns>
+            /// <returns>the new list of stations with free charge slots</returns>
             public static IEnumerable<BaseStation> ListBaseStationsSlots()
             {
-                List<BaseStation> lstSlots = new List<BaseStation>();
-                for (int i = 0; i < DataSource.stations.Count; i++)
-                {
-                    if (DataSource.stations[i].ChargeSlots > 0)
-                    {
-                        lstSlots.Add(DataSource.stations[i]);
-                    }
-                }
-                return lstSlots;
+                List<BaseStation> lstStationsWithSlots = DataSource.stations.FindAll(station => station.ChargeSlots > 0);
+                //List<BaseStation> lstSlots = new List<BaseStation>();
+                //for (int i = 0; i < DataSource.stations.Count; i++)
+                //{
+                //    if (DataSource.stations[i].ChargeSlots > 0)
+                //    {
+                //        lstSlots.Add(DataSource.stations[i]);
+                //    }
+                //}
+                return lstStationsWithSlots;
             }
         }
     }

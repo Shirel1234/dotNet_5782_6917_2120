@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -276,11 +275,12 @@ namespace ConsoleUI
             int idS;
             if (int.TryParse(Console.ReadLine(), out idS))
             {
-                DAL.IDAL.DO.BaseStation baseStation = DAL.DalObject.DalObject.ShowStation(idS);
-                if (baseStation.CodeStation == idS)
-                    Console.WriteLine(baseStation + "\n");
-                else
-                    Console.WriteLine("Sorry. The base station is not found\n");
+                //DAL.IDAL.DO.BaseStation baseStation = DAL.DalObject.DalObject.ShowStation(idS);
+                //if (baseStation.CodeStation == idS)
+                    //Console.WriteLine(baseStation + "\n");
+                //else
+                // Console.WriteLine("Sorry. The base station is not found\n");
+                Console.WriteLine(DAL.DalObject.DalObject.ShowStation(idS));
             }
         }
         /// <summary>
@@ -294,11 +294,12 @@ namespace ConsoleUI
             int idD;
             if (int.TryParse(Console.ReadLine(), out idD))
             {
-                DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
-                if (drone.CodeDrone == idD)
-                    Console.WriteLine(drone + "\n");
-                else
-                    Console.WriteLine("Sorry. The drone is not found\n");
+                //DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
+               // if (drone.CodeDrone == idD)
+                    //Console.WriteLine(drone + "\n");//לבדוק איך למנוע הדפסה במקרה שנזרקה חריגה, אולי לעשות כאן טריי
+               // else
+               // Console.WriteLine("Sorry. The drone is not found\n");
+                Console.WriteLine(DAL.DalObject.DalObject.ShowDrone(idD));
             }
         }
         /// <summary>
@@ -312,11 +313,12 @@ namespace ConsoleUI
             int idC;
             if (int.TryParse(Console.ReadLine(), out idC))
             {
-                DAL.IDAL.DO.Customer customer = DAL.DalObject.DalObject.ShowCustomer(idC);
-                if (customer.IdCustomer == idC)//איך לבדוק שהאובייקט לא ריק
-                    Console.WriteLine(customer + "\n");
-                else
-                    Console.WriteLine("Sorry. The customer is not found\n");
+                //DAL.IDAL.DO.Customer customer = DAL.DalObject.DalObject.ShowCustomer(idC);
+                //if (customer.IdCustomer == idC)//איך לבדוק שהאובייקט לא ריק
+                   // Console.WriteLine(customer + "\n");
+                //else
+                // Console.WriteLine("Sorry. The customer is not found\n");
+                Console.WriteLine(DAL.DalObject.DalObject.ShowCustomer(idC));
             }
         }
         /// <summary>
@@ -330,11 +332,12 @@ namespace ConsoleUI
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
             {
-                DAL.IDAL.DO.Parcel parcel = DAL.DalObject.DalObject.ShowParcel(idP);
-                if (parcel.CodeParcel == idP)
-                    Console.WriteLine(parcel + "\n");
-                else
-                    Console.WriteLine("Sorry. The parcel is not found\n");
+                //DAL.IDAL.DO.Parcel parcel = DAL.DalObject.DalObject.ShowParcel(idP);
+                //if (parcel.CodeParcel == idP)
+                  //  Console.WriteLine(parcel + "\n");
+                // else
+                //  Console.WriteLine("Sorry. The parcel is not found\n");
+                Console.WriteLine(DAL.DalObject.DalObject.ShowParcel(idP));
             }
         }
         public static void listViewOptions()
@@ -363,38 +366,62 @@ namespace ConsoleUI
         {
             List<BaseStation> baseStations =
                 DAL.DalObject.DalObject.ShowListBaseStations().ToList();
-            for (int i = 1; i <= baseStations.Count; i++)
-                Console.WriteLine("Base station No. " + i + ":\n" + baseStations[i]);
+            //for (int i = 1; i <= baseStations.Count; i++)
+            //    Console.WriteLine("Base station No. " + i + ":\n" + baseStations[i]);
+            foreach(BaseStation item in baseStations)
+            {
+                Console.WriteLine(item);
+            }
         }
         public static void dronesListView()
         {
             List<Drone> drones = DAL.DalObject.DalObject.ShowListDrones().ToList();
-            for (int i = 1; i <= drones.Count; i++)
-                Console.WriteLine("Drone No. " + i + ":\n" + drones[i]);
+            //for (int i = 1; i <= drones.Count; i++)
+            //    Console.WriteLine("Drone No. " + i + ":\n" + drones[i]);
+            foreach (Drone item in drones)
+            {
+                Console.WriteLine(item);
+            }
         }
         public static void customersListView()
         {
             List<Customer> customers = DAL.DalObject.DalObject.ShowListCustomers().ToList();
-            for (int i = 1; i <= customers.Count; i++)
-                Console.WriteLine("Customer No. " + i + ":\n" + customers[i]);
+            //for (int i = 1; i <= customers.Count; i++)
+            //    Console.WriteLine("Customer No. " + i + ":\n" + customers[i]);
+            foreach (Customer item in customers)
+            {
+                Console.WriteLine(item);
+            }
         }
         public static void parcelsListView()
         {
             List<Parcel> parcels = DAL.DalObject.DalObject.ShowListParcels().ToList();
-            for (int i = 1; i <= parcels.Count; i++)
-                Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
+            //for (int i = 1; i <= parcels.Count; i++)
+            //    Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
+            foreach (Parcel item in parcels)
+            {
+                Console.WriteLine(item);
+            }
         }
         public static void parcelsWithoutdrone()
         {
             List<Parcel> parcels = DAL.DalObject.DalObject.ListParcelWithoutDrone().ToList();
-            for (int i = 1; i <= parcels.Count; i++)
-                Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
+            //for (int i = 1; i <= parcels.Count; i++)
+            //    Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
+            foreach (Parcel item in parcels)
+            {
+                Console.WriteLine(item);
+            }
         }
         public static void baseStationsWithChargeSlots()
         {
             List<BaseStation> baseStations = DAL.DalObject.DalObject.ListBaseStationsSlots().ToList();
-            for (int i = 1; i <= baseStations.Count; i++)
-                Console.WriteLine("Parcel No. " + i + ":\n" + baseStations[i]);
+            //for (int i = 1; i <= baseStations.Count; i++)
+            //    Console.WriteLine("Parcel No. " + i + ":\n" + baseStations[i]);
+            foreach (BaseStation item in baseStations)
+            {
+                Console.WriteLine(item);
+            }
         }
 
         public static void Main(string[] args)

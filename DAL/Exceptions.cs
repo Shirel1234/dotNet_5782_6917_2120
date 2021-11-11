@@ -33,7 +33,12 @@ namespace IDAL
             }
             public class ViewExceptions : Exception
             {
-
+                public ViewExceptions() : base() { }
+                public ViewExceptions(int id, string message) : base(message) { }
+                override public string ToString()
+                {
+                    return Message + "\n";
+                }
             }
         }
     } 
