@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace DAL
-{
-    namespace IDAL
+
+namespace IDAL
     {
         namespace DO
         {
@@ -17,5 +16,5 @@ namespace DAL
             public enum Names { Reuven, Shimon, Levi, Yehuda, Isachar, Zvulun, Dan, Asher, Gad, Naftali}
         }
     }
-}
+
 

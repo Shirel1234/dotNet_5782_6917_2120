@@ -1,13 +1,11 @@
-﻿using DAL.IDAL.DO;
+﻿using IDAL.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
-{
-    namespace DalObject
+  namespace DalObject
     {
        public class DataSource
         {
@@ -19,11 +17,11 @@ namespace DAL
             internal class Config
             {
                 public static int countIdParcel = 1000;
-                static double free;
-                static double easy;
-                static double mmedium;
-                static double heavy;
-                double chargingRate;
+                internal static double free;
+                internal static double easy;
+                internal static double medium;
+                internal static double heavy;
+                internal static double chargingRate;
             }
             public static void Initialize()
             {
@@ -76,4 +74,3 @@ namespace DAL
     }
     
 
-}

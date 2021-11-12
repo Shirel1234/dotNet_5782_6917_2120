@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.IDAL.DO;
 using IDAL.DO;
-namespace DAL
-{
-    namespace DalObject
+
+  namespace DalObject
     {
       public class DalObject
         {
@@ -24,8 +22,9 @@ namespace DAL
             /// <param name="b"></param>
             public static void AddStation(BaseStation b)
             {
-                    List<BaseStation> baseStations = new();
-                if (DataSource.stations.FirstOrDefault(station => station.CodeStation == b.CodeStation) != null)
+                List<BaseStation> baseStations = new();
+                BaseStation temp = DataSource.stations.FirstOrDefault(station => station.CodeStation == b.CodeStation);
+                if(temp.CodeStation==b.CodeStation)
                     throw new Exceptions.AddingExceptions(b.CodeStation, "base station already exists");
                 DataSource.stations.Add(b); 
             }
@@ -35,7 +34,8 @@ namespace DAL
             /// <param name="d"> a drone</param>
             public static void AddDrone(Drone d)
             {
-                if (DataSource.drones.FirstOrDefault(drone => drone.CodeDrone == d.CodeDrone) != null)
+            Drone temp = DataSource.drones.FirstOrDefault(drone => drone.CodeDrone == d.CodeDrone);
+            if(temp.CodeDrone==d.CodeDrone)
                     throw new Exceptions.AddingExceptions(d.CodeDrone, "drone already exists");
                 DataSource.drones.Add(d);
             }
@@ -45,7 +45,8 @@ namespace DAL
             /// <param name="c"> a customer</param>
             public static void AddCustomer(Customer c)
             {
-                if (DataSource.customers.FirstOrDefault(customer => customer.IdCustomer == c.IdCustomer) != null)
+            Customer temp = DataSource.customers.FirstOrDefault(customer => customer.IdCustomer == c.IdCustomer);
+            if(temp.IdCustomer==c.IdCustomer)
                     throw new Exceptions.AddingExceptions(c.IdCustomer, "customer already exists");
                 DataSource.customers.Add(c);
             }
@@ -53,9 +54,10 @@ namespace DAL
             /// the function gets an object of parcel and adds it to the list of parcels
             /// </summary>
             /// <param name="p"> a parcel</param>
-               public static void AddParcel(Parcel p)
+            public static void AddParcel(Parcel p)
             {
-                if (DataSource.parcels.FirstOrDefault(parcel => parcel.CodeParcel == p.CodeParcel) != null)
+                Parcel temp = DataSource.parcels.FirstOrDefault(parcel => parcel.CodeParcel == p.CodeParcel);
+                if(temp.CodeParcel==p.CodeParcel)
                     throw new Exceptions.AddingExceptions(p.CodeParcel, "parcel already exists");
                 DataSource.parcels.Add(p);
             }
@@ -65,13 +67,14 @@ namespace DAL
             /// </summary>
             /// <param name="idP"> an id of parcel</param>
             /// <param name="idD">an id of drone</param>
+            
             public static void UpdateParcelToDrone(int idP, int idD)
             {
                 List<Parcel> parcels = new();
-                Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);//מחזיר את האוביקט ממש אוו העתק שלו?
-                if(p==null)
+                Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
+                if(p.CodeParcel==idP)
                     throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
-                p.DroneId = idD;//אם הוא נמצא, הוא מעדכן אותו ישירות, כי זה מה שחזר מ-find 
+                p.DroneId = idD;
                 p.Requested = DateTime.Now;
             }
                 //for (int i = 0; i < DataSource.parcels.Count; i++)
@@ -101,7 +104,7 @@ namespace DAL
             {
                 List<Parcel> parcels = new();
                 Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
-                if (p == null)
+                if (p.CodeParcel==idP)
                     throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
                 p.PickedUp = DateTime.Now;
                  
@@ -134,7 +137,7 @@ namespace DAL
             {
                 //List<Parcel> parcels = new();
                 Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
-                if (p == null)
+                if (p.CodeParcel==idP)
                     throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
                 p.Delivered = DateTime.Now;
             }
@@ -169,7 +172,7 @@ namespace DAL
             public static void UpDateCharge(int idD , int idS)
             {
                 Drone d = DataSource.drones.Find(drone => drone.CodeDrone == idD);
-                if (d == null)
+                if (d.CodeDrone== idD)
                     throw new Exceptions.UpdateExceptions(idD, "drone does not exist"); 
                 DroneCharge dc = new DroneCharge();
                 dc.DroneID = idD;
@@ -183,7 +186,7 @@ namespace DAL
             public static void ReleaseCharge(int idD, int idS)
             {
                 Drone d = DataSource.drones.Find(drone => drone.CodeDrone == idD);
-                if (d == null)
+                if (d.CodeDrone ==idD)
                     throw new Exceptions.UpdateExceptions(idD, "drone does not exist");
                 //DroneCharge dc = new DroneCharge();//לדעתי צריך כאן דווקא לשחרר את הישות של הרחפן שבטעינה ולא ליצור חדש
                 //dc.DroneID = idD;
@@ -198,7 +201,7 @@ namespace DAL
             public static BaseStation ShowStation(int idS)
             {
                BaseStation b = DataSource.stations.Find(station => station.CodeStation == idS);
-                if (b == null)
+                if (b.CodeStation == idS)
                     throw new Exceptions.UpdateExceptions(idS, "base station does not exist");
                 return b;
             }
@@ -210,7 +213,7 @@ namespace DAL
             public static Drone ShowDrone(int idD)
             {
                 Drone d = DataSource.drones.Find(drone => drone.CodeDrone == idD);
-                if (d == null)
+                if (d.CodeDrone == idD)
                     throw new Exceptions.UpdateExceptions(idD, "drone does not exist");
                 return d;
             }
@@ -222,7 +225,7 @@ namespace DAL
             public static Customer ShowCustomer(int idC)
             {
                 Customer c = DataSource.customers.Find(customer => customer.IdCustomer == idC);
-                if (c == null)
+                if (c.IdCustomer == idC)
                     throw new Exceptions.UpdateExceptions(idC, "customer does not exist");
                 return c;
             }
@@ -234,7 +237,7 @@ namespace DAL
             public static Parcel ShowParcel(int idP)
             {
                 Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == idP);
-                if (p == null)
+                if (p.CodeParcel == idP)
                     throw new Exceptions.UpdateExceptions(idP, "parcel does not exist");
                 return p;
             }
@@ -281,7 +284,7 @@ namespace DAL
                 //for (int i = 0; i < DataSource.parcels.Count; i++)
                 //{
                 //    //
-                //    if (DataSource.parcels[i].DroneId > 0)//למה גדול מאפס ולא קטן שווה?
+                //    if (DataSource.parcels[i].DroneId < 0)//למה גדול מאפס ולא קטן שווה?
                 //    {
                 //        lstParcelWithoutDrone.Add(DataSource.parcels[i]);
                 //    }
@@ -305,6 +308,15 @@ namespace DAL
                 //}
                 return lstStationsWithSlots;
             }
-        }
-    }
-}
+            public static double[] AskElectrical(Drone d)
+            {
+            double[] arrElectrical = new double[5];
+            arrElectrical[0] =DataSource.Config.free;
+            arrElectrical[1] = DataSource.Config.easy;
+            arrElectrical[2] = DataSource.Config.medium;
+            arrElectrical[3] = DataSource.Config.heavy;
+            arrElectrical[4] = DataSource.Config.chargingRate;
+            return arrElectrical;
+            }
+      }
+  }

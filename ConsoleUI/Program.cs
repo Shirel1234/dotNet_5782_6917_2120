@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.DalObject;
-using DAL.IDAL.DO;
+using DalObject;
+using IDAL.DO;
 
 
 
