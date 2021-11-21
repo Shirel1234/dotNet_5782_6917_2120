@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
  namespace IDAL
+  {
+    namespace DO
     {
-        namespace DO
-        {
             public struct Customer
             {
                 public int IdCustomer { get; set; }

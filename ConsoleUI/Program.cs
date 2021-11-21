@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
+//using DalObject;
 using IDAL.DO;
 
 
 
 namespace ConsoleUI
 {
-    class Program
-    {
-        static DalObject.DalObject data = new DalObject.DalObject();
+  public class Program
+  {
+        IDal dal = new DalObject.DalObject();
         enum Menu { Exit, Add, Update, View, ViewList }
         enum AddOption { Exit, Station, Drone, Customer, Parcel }
         enum UpdateOption {Exit, Assignment, PickedUp, Delivery, Recharge, Releas }
@@ -22,7 +22,7 @@ namespace ConsoleUI
         /// <summary>
         /// the function offers the user 4 adding options for adding base station/drone/customer/parcel.
         /// </summary>
-        public static void addingOptions()
+        public void addingOptions()
         {
             AddOption addOp;
             int choice;
@@ -52,7 +52,7 @@ namespace ConsoleUI
         /// the function adds a new base station to the list.
         /// it creates a new object of base station, initializes its fields accordind to the input from the user and adds it to the list.
         /// </summary>
-        public static void newBaseStation()
+        public void newBaseStation()
         {
             Console.WriteLine("enter ID number, name, number of charging positions of the base station, longitude and lattitude");
             int id; int name; int chargeSlots;
@@ -70,7 +70,7 @@ namespace ConsoleUI
                         baseStation.ChargeSlots = chargeSlots;
                         baseStation.Longitude = longitude;
                         baseStation.Latitude = lattitude;
-                        DalObject.DalObject.AddStation(baseStation);
+                        dal.AddStation(baseStation);
                     }
 
         }
@@ -78,7 +78,7 @@ namespace ConsoleUI
         /// the function adds a new drone to the list.
         /// it creates a new object of drone, initializes its fields accordind to the input from the user and adds it to the list.
         /// </summary>
-        public static void newDrone()
+        public void newDrone()
         {
             Console.WriteLine("enter ID number, model, battery status," +
                 " and max weight(easy, medium, heavy) of the drone\n");
@@ -96,14 +96,14 @@ namespace ConsoleUI
                 //
                 //drone.Status = DroneStatuses.free;
                 drone.MaxWeight = weight;
-                DalObject.DalObject.AddDrone(drone);
+                dal.AddDrone(drone);
             }
         }
         /// <summary>
         /// the function adds a new customer to the list.
         /// it creates a new object of customer, initializes its fields accordind to the input from the user and adds it to the list.
         /// </summary>
-        public static void newCustomer()
+        public void newCustomer()
         {
             Console.WriteLine("enter ID number, name, phone number,longitude and lattitude of the customer");
             int id;
@@ -121,14 +121,14 @@ namespace ConsoleUI
                 customer.Phone = phone;
                 customer.Longitude = longitude;
                 customer.Latitude = lattitude;
-                DalObject.DalObject.AddCustomer(customer);
+                dal.AddCustomer(customer);
             }
         }
         /// <summary>
         /// the function adds a new parcel to the list.
         /// it creates a new object of parcel, initializes its fields accordind to the input from the user and adds it to the list.
         /// </summary>
-        public static void newParcel()
+        public void newParcel()
         {
             Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy, medium, heavy) and priority (normal, express, emergency) of the parcel //and time of creating the parcel for sending//");
             int idP; int idS; int idT;
@@ -145,14 +145,14 @@ namespace ConsoleUI
                         parcel.TargetId = idT;
                         parcel.Weight = weight;
                         parcel.Priority = priority;
-                        DalObject.DalObject.AddParcel(parcel);
+                        dal.AddParcel(parcel);
                     }
         }
         /// <summary>
         /// the function offers the user 5 update options for update matching parcel to drone/picking up parcel by drone/
         /// delevered parcel to customer/sending of drone to charge/releaseing of drone from charging
         /// </summary>
-        public static void updateOptions()
+        public void updateOptions()
         {
             Console.WriteLine("Choose:\n1:update matching parcel to drone\n2:update picking up parcel by drone\n" +
                "3:update delivered parcel to customer\n4:update sending of drone to charge\n5:update releaseing of drone from charging\n0:Exit");
@@ -177,35 +177,35 @@ namespace ConsoleUI
         /// the function updates matching of a parcel to a drone: it receives from the user the ID numbers of the parcel and the drone,
         /// and sends them to the update function in DalObject
         /// </summary>
-        public static void parcelToDroneUpdate()
+        public void parcelToDroneUpdate()
         {
             Console.WriteLine("enter the parcel ID and the drone ID");
             int idP; int idD;
             if (int.TryParse(Console.ReadLine(), out idP))
                 if (int.TryParse(Console.ReadLine(), out idD))
-                    DalObject.DalObject.UpdateParcelToDrone(idP, idD);
+                    dal.UpdateParcelToDrone(idP, idD);
         }
         /// <summary>
         /// the function updates picking up of a parcel by a drone: it receives from the user the ID numbers of the parcel and the drone,
         /// and sends them to the update function in DalObject
         /// </summary>
-        public static void pickedUpUpdate()
+        public void pickedUpUpdate()
         {
             Console.WriteLine("enter the parcel ID");
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
-                DalObject.DalObject.UpdatePickedUp(idP);
+                dal.UpdatePickedUp(idP);
         }
         /// <summary>
         /// the function updates delivering of a parcel to a customer: it receives from the user the ID number of the parcel,
         /// and sends it to the update function in DalObject
         /// </summary>
-        public static void deliveredUpdate()
+        public void deliveredUpdate()
         {
             Console.WriteLine("enter the parcel ID");
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
-                DalObject.DalObject.UpdateDeliver(idP);
+                dal.UpdateDeliver(idP);
         }
         /// <summary>
         /// the function updates sending of a drone to charging in a base station: it receives from the user the ID number of the drone
@@ -213,7 +213,7 @@ namespace ConsoleUI
         /// then, it receives from the user the id number of the base station he chose
         /// and sends the two numbers to the update function in DalObject
         /// </summary>
-        public static void chargeUpdate()
+        public void chargeUpdate()
         {
             Console.WriteLine("enter the drone ID");
             int idD;
@@ -223,14 +223,14 @@ namespace ConsoleUI
                 baseStationsWithChargeSlots();
                 int idS;
                 if (int.TryParse(Console.ReadLine(), out idS))
-                    DalObject.DalObject.UpDateCharge(idD, idS);
+                    dal.UpDateCharge(idD, idS);
             }
         }
         /// <summary>
         /// the function updates releasing of a drone from charging: it receives from the user the ID numbers of the drone and the base station,
         /// and sends them to the update function in DalObject
         /// </summary>
-        public static void releaseFromChargeUpdate()
+        public void releaseFromChargeUpdate()
         {
             Console.WriteLine("enter the drone ID and the base station ID");
             int idD;
@@ -238,13 +238,13 @@ namespace ConsoleUI
             {
                 int idS;
                 if (int.TryParse(Console.ReadLine(), out idS))
-                    DalObject.DalObject.ReleaseCharge(idD, idS);
+                    dal.ReleaseCharge(idD, idS);
             }
         }
         /// <summary>
         /// the function offers the user 4 view options for view of a base station/a drone/a customer/a parcel
         /// </summary>
-        public static void viewOptions()
+        public void viewOptions()
         {
             Console.WriteLine("Choose:\n1:base station view\n2:drone view\n3:customer view\n4:parcel view\n0:Exit");
             int choice;
@@ -269,7 +269,7 @@ namespace ConsoleUI
         /// if the function in DalObject didn't find it, the function prints a message to the user
         /// </summary>
         /// 
-        public static void baseStationView()
+        public void baseStationView()
         {
             Console.WriteLine("enter the base station ID");
             int idS;
@@ -280,7 +280,7 @@ namespace ConsoleUI
                     //Console.WriteLine(baseStation + "\n");
                 //else
                 // Console.WriteLine("Sorry. The base station is not found\n");
-                Console.WriteLine(DalObject.DalObject.ShowStation(idS));
+                Console.WriteLine(dal.GetStation(idS));
             }
         }
         /// <summary>
@@ -288,7 +288,7 @@ namespace ConsoleUI
         /// which looks for this drone in the list and returns it, then, the function prints it. 
         /// if the function in DalObject didn't find it, the function prints a message to the user
         /// </summary>
-        public static void droneView()
+        public void droneView()
         {
             Console.WriteLine("enter the drone ID");
             int idD;
@@ -299,7 +299,7 @@ namespace ConsoleUI
                     //Console.WriteLine(drone + "\n");//לבדוק איך למנוע הדפסה במקרה שנזרקה חריגה, אולי לעשות כאן טריי
                // else
                // Console.WriteLine("Sorry. The drone is not found\n");
-                Console.WriteLine(DalObject.DalObject.ShowDrone(idD));
+                Console.WriteLine(dal.GetDrone(idD));
             }
         }
         /// <summary>
@@ -307,7 +307,7 @@ namespace ConsoleUI
         /// which looks for this customer in the list and returns it, then, the function prints it. 
         /// if the function in DalObject didn't find it, the function prints a message to the user
         /// </summary>
-        public static void customerView()
+        public void customerView()
         {
             Console.WriteLine("enter the customer ID");
             int idC;
@@ -318,7 +318,7 @@ namespace ConsoleUI
                    // Console.WriteLine(customer + "\n");
                 //else
                 // Console.WriteLine("Sorry. The customer is not found\n");
-                Console.WriteLine(DalObject.DalObject.ShowCustomer(idC));
+                Console.WriteLine(dal.GetCustomer(idC));
             }
         }
         /// <summary>
@@ -326,7 +326,7 @@ namespace ConsoleUI
         /// which looks for this parcel in the list and returns it, then, the function prints it. 
         /// if the function in DalObject didn't find it, the function prints a message to the user
         /// </summary>
-        public static void parcelView()
+        public void parcelView()
         {
             Console.WriteLine("enter the parcel ID");
             int idP;
@@ -337,13 +337,13 @@ namespace ConsoleUI
                   //  Console.WriteLine(parcel + "\n");
                 // else
                 //  Console.WriteLine("Sorry. The parcel is not found\n");
-                Console.WriteLine(DalObject.DalObject.ShowParcel(idP));
+                Console.WriteLine(dal.GetParcel(idP));
             }
         }
         /// <summary>
         /// the function shows the options of view lists and cout the chose of the user
         /// </summary>
-        public static void listViewOptions()
+        public void listViewOptions()
         {
             Console.WriteLine("Choose:\n1:a list of base stations view\n2:a list of drones view\n3:a list of customers view\n" +
                     "4:list of parcels view\n5:view of list of parcels not yet matched to a drone\n" +
@@ -368,9 +368,9 @@ namespace ConsoleUI
         /// <summary>
         /// the function prints the list of base stations
         /// </summary>
-        public static void baseStationsListView()
+        public void baseStationsListView()
         {
-            List<BaseStation> baseStations = DalObject.DalObject.ShowListBaseStations().ToList();
+            List<BaseStation> baseStations = dal.GetBaseStations().ToList();
             //for (int i = 1; i <= baseStations.Count; i++)
             //    Console.WriteLine("Base station No. " + i + ":\n" + baseStations[i]);
             foreach(BaseStation item in baseStations)
@@ -381,9 +381,9 @@ namespace ConsoleUI
         /// <summary>
         /// the function prints the list of drones
         /// </summary>
-        public static void dronesListView()
+        public void dronesListView()
         {
-            List<Drone> drones = DalObject.DalObject.ShowListDrones().ToList();
+            List<Drone> drones = dal.GetDrones().ToList();
             //for (int i = 1; i <= drones.Count; i++)
             //    Console.WriteLine("Drone No. " + i + ":\n" + drones[i]);
             foreach (Drone item in drones)
@@ -394,9 +394,9 @@ namespace ConsoleUI
         /// <summary>
         /// the function prints the list of customers
         /// </summary>
-        public static void customersListView()
+        public void customersListView()
         {
-            List<Customer> customers = DalObject.DalObject.ShowListCustomers().ToList();
+            List<Customer> customers = dal.GetCustomers().ToList();
             //for (int i = 1; i <= customers.Count; i++)
             //    Console.WriteLine("Customer No. " + i + ":\n" + customers[i]);
             foreach (Customer item in customers)
@@ -407,9 +407,9 @@ namespace ConsoleUI
         /// <summary>
         /// the function prints the list of parcels
         /// </summary>
-        public static void parcelsListView()
+        public void parcelsListView()
         {
-            List<Parcel> parcels = DalObject.DalObject.ShowListParcels().ToList();
+            List<Parcel> parcels = dal.GetParcels().ToList();
             //for (int i = 1; i <= parcels.Count; i++)
             //    Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
             foreach (Parcel item in parcels)
@@ -420,9 +420,9 @@ namespace ConsoleUI
         /// <summary>
         /// the function prints the parcels that dowsn't connect the drone
         /// </summary>
-        public static void parcelsWithoutdrone()
+        public void parcelsWithoutdrone()
         {
-            List<Parcel> parcels = DalObject.DalObject.ListParcelWithoutDrone().ToList();
+            List<Parcel> parcels = dal.ListParcelWithoutDrone().ToList();
             //for (int i = 1; i <= parcels.Count; i++)
             //    Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
             foreach (Parcel item in parcels)
@@ -433,9 +433,9 @@ namespace ConsoleUI
         /// <summary>
         /// the function prints the list of base stations that it has charge solts that are free
         /// </summary>
-        public static void baseStationsWithChargeSlots()
+        public void baseStationsWithChargeSlots()
         {
-            List<BaseStation> baseStations = DalObject.DalObject.ListBaseStationsSlots().ToList();
+            List<BaseStation> baseStations = dal.ListBaseStationsSlots().ToList();
             //for (int i = 1; i <= baseStations.Count; i++)
             //    Console.WriteLine("Parcel No. " + i + ":\n" + baseStations[i]);
             foreach (BaseStation item in baseStations)

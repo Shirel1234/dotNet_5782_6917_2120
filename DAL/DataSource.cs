@@ -16,13 +16,13 @@ using System.Threading.Tasks;
             internal static List<Parcel> parcels = new List<Parcel>();
             internal class Config
             {
-                public static int countIdParcel = 1000;
-                internal static double free;
-                internal static double easy;
-                internal static double medium;
-                internal static double heavy;
-                internal static double chargingRate;
-            }
+                internal static int countIdParcel = 200;
+            internal static double Free { get => 0; }
+            internal static double Easy { get => 10; }
+            internal static double Heavy { get => 150; }
+            internal static double Medium { get => 50; }
+            internal static double ChargingRate { get => 10.25; }
+        }
             public static void Initialize()
             {
                 BaseStation b = new BaseStation();
