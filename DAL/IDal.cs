@@ -28,7 +28,7 @@ namespace IDAL.DO
             IEnumerable<Parcel> GetParcels();
             IEnumerable<Parcel> ListParcelWithoutDrone();
             IEnumerable<BaseStation> ListBaseStationsSlots();
-            double[] AskElectrical(Drone d);
+            double[] AskElectrical();
        
        }
 }

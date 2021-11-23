@@ -1,36 +1,35 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL;
-using IBL.BO;
 
 namespace IBL
 {
-    public interface IBL
+    public interface IBl
     {
-        void addBaseStation(BaseStation b);
-        void addDrone(Drone d);
-        void addCustomer(Customer c);
-        void addParcel(Parcel p);
-        void updateDrone(int id, string m);
-        void updateBaseStation(int id, string name="",int numOfChargePositions=0);
-        void updateCustomer(int id, string name = "", int phone = 0);
-        void updateSendingDroneToCharge(int id);
-        void updateReleasingDroneFromCharge(int id, double timeOfCharging);
-        void updateParcelToDrone(int idD);
-        void updateParcelPickedUpByDrone(int idD);
-        void updateDeliveredParcelByDrone(int idD);
-        BaseStation getBaseStation(int idS);
-        Drone getDrone(int idD);
-        Customer getCustomer(int idC);
-        Parcel getParcel(int idP);
-        IEnumerable<BaseStationList> getAllBaseStations();
-        IEnumerable<DroneList> getAllDrones();
-        IEnumerable<CustomerList> getAllCustomers();
-        IEnumerable<ParcelList> getAllParcels();
-        IEnumerable<ParcelList> getAllParcelsWithoutDrone();
-        IEnumerable<BaseStationList> getAllBaseStationsWithChargePositions();
+        void AddBaseStation(BaseStation b);
+        void AddDrone(Drone d);
+        void AddCustomer(Customer c);
+        void AddParcel(Parcel p);
+        void UpdateBaseStation(int id, string name="",int numOfChargePositions=0);
+        void UpdateCustomer(int id, string name = "", int phone = 0);
+        void UpdateDrone(int id, string model = "");
+        void UpdateSendingDroneToCharge(int id);
+        void UpdateReleasingDroneFromCharge(int id, double timeOfCharging);
+        void UpdateParcelToDrone(int idD);
+        void UpdateParcelPickedUpByDrone(int idD);
+        void UpdateDeliveredParcelByDrone(int idD);
+        BaseStation GetBaseStation(int idS);
+        Drone GetDrone(int idD);
+        Customer GetCustomer(int idC);
+        Parcel GetParcel(int idP);
+        IEnumerable<BaseStationList> GetAllBaseStations();
+        IEnumerable<DroneList> GetAllDrones();
+        IEnumerable<CustomerList> GetAllCustomers();
+        IEnumerable<ParcelList> GetAllParcels();
+        IEnumerable<ParcelList> GetAllParcelsWithoutDrone();
+        IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions();
     }
 }
