@@ -7,13 +7,8 @@ using IBL.BO;
 
 namespace BL
 {
-   public partial class BLObject
+    public partial class BLObjectCustomer
     {
-        IDAL.DO.IDal dl;
-        public BLObject()
-        {
-            dl = new DalObject.DalObject();
-        }
         public Customer GetCustomer(int id)
         {
             Customer customer = default;
@@ -27,15 +22,14 @@ namespace BL
                     Phone = dalCustomer.Phone,
                     //Location 
                     SendParcels = new List<ParcelCustomer>(),
-                    Taretparcels= new List<ParcelCustomer>()
+                    Taretparcels = new List<ParcelCustomer>()
 
                 };
             }
-            catch(IDAL.DO.DoesntExistException customerException)
+            catch (IDAL.DO.DoesntExistException customerException)
             {
                 throw new GetDetailsProblemException($"Customer id {id} was not found", customerException);
             }
         }
-
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-  public partial class BLObjectParcel
+    public partial class BLObject
     {
 
     }
