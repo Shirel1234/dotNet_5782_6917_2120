@@ -22,7 +22,7 @@ namespace ConsoleUI
         /// <summary>
         /// the function offers the user 4 adding options for adding base station/drone/customer/parcel.
         /// </summary>
-        public void addingOptions()
+        public void AddingOptions()
         {
             AddOption addOp;
             int choice;
@@ -52,7 +52,7 @@ namespace ConsoleUI
         /// the function adds a new base station to the list.
         /// it creates a new object of base station, initializes its fields accordind to the input from the user and adds it to the list.
         /// </summary>
-        public void newBaseStation()
+        public void NewBaseStation()
         {
             Console.WriteLine("enter ID number, name, number of charging positions of the base station, longitude and lattitude");
             int id; int name; int chargeSlots;
@@ -444,7 +444,7 @@ namespace ConsoleUI
             }
         }
 
-        public static void Main(string[] args)
+        public void Main(string[] args)
         {
             int choice;
             Menu menu;

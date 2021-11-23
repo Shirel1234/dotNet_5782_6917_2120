@@ -182,7 +182,7 @@ namespace DalObject
             //}
             return lstStationsWithSlots;
         }
-        public double[] AskElectrical(Drone d)
+        public double[] AskElectrical()
         {
             double[] arrElectrical = new double[5];
             arrElectrical[0] = DataSource.Config.Free;

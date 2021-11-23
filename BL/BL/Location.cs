@@ -10,8 +10,13 @@ namespace IBL
     {
        public class Location
         {
-                public int Longitude{ get; set; }
-                public int Latitude{ get; set; }
+                public double Longitude{ get; set; }
+                public double Latitude{ get; set; }
+            public Location(double longitude, double latitude)
+            {
+                this.Longitude = longitude;
+                this.Latitude = latitude;
+            }
         }
     }
 }
