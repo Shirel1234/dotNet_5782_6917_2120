@@ -44,7 +44,6 @@ namespace IBL
         {
             IDAL.DO.Drone tempD= dl.GetDrones().ToList().Find(drone => drone.CodeDrone== id);
             tempD.ModelDrone = model;//האם הרחפן נשמר אחרי השינוי כולל??????????????????
-
         }
     }
 }

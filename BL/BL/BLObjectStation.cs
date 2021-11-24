@@ -37,9 +37,12 @@ namespace IBL
               throw new AddingProblemException("Can't add this baseStation", ex);
             }
         }
-        public void UpdateBaseStation(int id, string model)
+        public void UpdateBaseStation(int id, int name, int countChargeSolts)
         {
-            I
+            IDAL.DO.BaseStation tempB = dl.GetStation(id);
+            tempB.NameStation = name;
+            tempB.ChargeSlots = countChargeSolts;
+            dl.UpdateBaseStation(tempB);
         }
     }
 }
