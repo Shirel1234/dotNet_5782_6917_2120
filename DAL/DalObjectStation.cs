@@ -28,6 +28,19 @@ namespace DalObject
                 throw new AlreadyExistException("The baseStation already exist in the system");
             DataSource.stations.Add(b);
         }
+        public void UpdateBaseStation(BaseStation b)
+        {
+            BaseStation myStation = DataSource.stations.Find(x => x.CodeStation == b.CodeStation);
+            if (myStation.CodeStation != b.CodeStation)
+                throw new DoesntExistException("This baseStation doesn't exist in the system");
+            myStation.CodeStation = b.CodeStation;
+            myStation.NameStation = b.NameStation;
+            myStation.ChargeSlots = b.ChargeSlots;
+            myStation.Longitude = b.Longitude;
+            myStation.Latitude = b.Latitude;
+            DataSource.stations.Remove(b);
+            DataSource.stations.Add(myStation);
+        }
         /// <summary>
         /// the function searches the station with the id that it got
         /// </summary>

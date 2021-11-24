@@ -29,6 +29,23 @@ namespace DalObject
             DataSource.customers.Add(c);
         }
         /// <summary>
+        /// the function update every field to the new details
+        /// </summary>
+        /// <param name="c"> a new customer</param>
+        public void UpdateCustomer(Customer c)
+        {
+            Customer myCustomer = DataSource.customers.Find(x => x.IdCustomer == c.IdCustomer);
+            if (myCustomer.IdCustomer != c.IdCustomer)
+                throw new DoesntExistException("This customer doesn't exist in the system");
+            myCustomer.IdCustomer = c.IdCustomer;
+            myCustomer.NameCustomer = c.NameCustomer;
+            myCustomer.Phone = c.Phone;
+            myCustomer.Longitude = c.Longitude;
+            myCustomer.Latitude = c.Latitude;
+            DataSource.customers.Remove(c);
+            DataSource.customers.Add(myCustomer);
+        }
+        /// <summary>
         /// the function searchs the customer with the id that it got
         /// </summary>
         /// <param name="id"></param>

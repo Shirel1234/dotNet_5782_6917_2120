@@ -7,6 +7,7 @@ using IBL.BO;
 
 namespace IBL
 {
+    //שינוי אחרון בהצלחה
    public partial class BLObject: IBl//.BO//לא צריך לירוש כאן מאיי בי אל? 
     {
         #region
