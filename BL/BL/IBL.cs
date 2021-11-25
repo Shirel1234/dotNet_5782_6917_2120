@@ -10,9 +10,9 @@ namespace IBL
     public interface IBl
     {
         void AddBaseStation(BaseStation b);
-        void AddDrone(Drone d);
+         void AddDrone(Drone d);
         void AddCustomer(Customer c);
-        void AddParcel(Parcel p);
+         void AddParcel(Parcel p);
         void UpdateDrone(int id, string model = "");
         void UpdateBaseStation(int id, string name="",int numOfChargePositions=0);
         void UpdateCustomer(int id, string name = "", string phone = "");

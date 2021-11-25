@@ -55,14 +55,5 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
-        public void UpdateSendingDroneToCharge(int id)
-        {
-            if (id < 0)
-                throw new UpdateProblemException("The ID number must be a positive number");
-            IDAL.DO.Drone myDrone;
-            if (dl.GetParcels().ToList().Any(parcel=>parcel.DroneId==id))
-                 myDrone = dl.GetDrone(id);
-
-        }
+    
     }
-}
