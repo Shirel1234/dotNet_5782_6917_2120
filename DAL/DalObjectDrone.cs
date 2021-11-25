@@ -25,8 +25,19 @@ namespace DalObject
         public void AddDrone(Drone d)
         {
             if (CheckDrone(d.CodeDrone))
-                throw new AlreadyExistException("The drone already exist in the system");
+                throw new AlreadyExistException("This drone already exist in the system");
             DataSource.drones.Add(d);
+        }
+        public void UpDateDrone(Drone d)
+        {
+            Drone myDrone = DataSource.drones.Find(x => x.CodeDrone == d.CodeDrone);
+            if (myDrone.CodeDrone != d.CodeDrone)
+                throw new DoesntExistException("This drone doesn't exist in the system");
+            myDrone.CodeDrone = d.CodeDrone;
+            myDrone.ModelDrone = d.ModelDrone;
+            myDrone.MaxWeight = d.MaxWeight;
+            DataSource.drones.Remove(d);
+            DataSource.drones.Add(myDrone);
         }
         /// <summary>
         /// the function searches the drone with the id that it got

@@ -31,18 +31,30 @@ namespace IBL
                 };
                 dl.AddStation(doStation);
             }
-
             catch (Exception ex)
             {
               throw new AddingProblemException("Can't add this baseStation", ex);
             }
         }
-        public void UpdateBaseStation(int id, int name, int countChargeSolts)
+        public void UpdateBaseStation(int id, int name, int numOfChargePositions)
         {
+            if (id < 0)
+                throw new UpdateProblemException("The ID number must be a positive number");
+            if (numOfChargePositions < 0)
+                throw new UpdateProblemException("The number of the charging positions must be a positive number");
             IDAL.DO.BaseStation tempB = dl.GetStation(id);
-            tempB.NameStation = name;
-            tempB.ChargeSlots = countChargeSolts;
-            dl.UpdateBaseStation(tempB);
+            if (!name.Equals(""))
+                tempB.NameStation = name;
+            if (numOfChargePositions != 0)
+                tempB.ChargeSlots = numOfChargePositions;
+            try
+            {
+                dl.UpDateBaseStation(tempB);
+            }
+            catch (Exception)
+            {
+                throw new UpdateProblemException();
+            }
         }
     }
 }

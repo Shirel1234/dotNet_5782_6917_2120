@@ -7,12 +7,12 @@ using IBL.BO;
 
 namespace IBL
 {
-    public partial class BLObjectCustomer
+    public partial class BLObject
     {
         public void AddCustomer(Customer c)
         {
             if (c.Id < 100000000 || c.Id > 999999999)
-                throw new AddingProblemException("The ID number must contain 9 digits");
+                throw new AddingProblemException("The customer ID number must contain 9 digits");
             if (c.Phone.Length != 10)
                 throw new AddingProblemException("The phone number isn't valid");
             if (c.Location.Longitude < -180 || c.Location.Longitude > 180)
@@ -37,7 +37,25 @@ namespace IBL
                 throw new AddingProblemException("Can't add this customer", ex);
             }
         }
-            public Customer GetCustomer(int id)
+        public void UpdateCustomer(int id, string name, string phone)
+        {
+            if (id < 100000000 || id > 999999999)
+                throw new UpdateProblemException("The customer ID number must contain 9 digits");
+            IDAL.DO.Customer tempC = dl.GetCustomer(id);
+            if (!name.Equals(""))
+                tempC.NameCustomer = name;
+            if (!phone.Equals(""))
+                tempC.Phone = phone;
+            try
+            {
+                dl.UpDateCustomer(tempC);
+            }
+            catch (Exception)
+            {
+                throw new UpdateProblemException();
+            }
+        }
+        public Customer GetCustomer(int id)
             {
             Customer customer = default;
             try

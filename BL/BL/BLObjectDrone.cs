@@ -36,14 +36,33 @@ namespace IBL
 
             catch (Exception ex)
             {
-                throw new AddingProblemException("Can't add this drone", ex);
+                throw new AddingProblemException("Can't add this drone", ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
             }
 
         }
         public void UpdateDrone(int id, string model)
         {
-            IDAL.DO.Drone tempD= dl.GetDrones().ToList().Find(drone => drone.CodeDrone== id);
-            tempD.ModelDrone = model;//האם הרחפן נשמר אחרי השינוי כולל??????????????????
+            if (id < 0)
+                throw new UpdateProblemException("The ID number must be a positive number");
+            IDAL.DO.Drone tempD = dl.GetDrone(id);
+            tempD.ModelDrone = model;
+            try
+            {
+                dl.UpDateDrone(tempD);
+            }
+            catch(Exception)
+            {
+                throw new UpdateProblemException();
+            }
+        }
+        public void UpdateSendingDroneToCharge(int id)
+        {
+            if (id < 0)
+                throw new UpdateProblemException("The ID number must be a positive number");
+            IDAL.DO.Drone myDrone;
+            if (dl.GetParcels().ToList().Any(parcel=>parcel.DroneId==id))
+                 myDrone = dl.GetDrone(id);
+
         }
     }
 }

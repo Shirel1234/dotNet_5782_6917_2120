@@ -28,6 +28,25 @@ namespace DalObject
                 throw new AlreadyExistException("The bus already exist in the system");
             DataSource.parcels.Add(p);
         }
+        public void UpDateParcel(Parcel p)
+        {
+            Parcel myParcel = DataSource.parcels.Find(x => x.CodeParcel == p.CodeParcel);
+            if (myParcel.CodeParcel != p.CodeParcel)
+                throw new DoesntExistException("This parcel doesn't exist in the system");
+            myParcel.CodeParcel = p.CodeParcel;//נראה לי מיותר לעדכן, כי אף פעם לא משנים את מספר הזיהוי וגם בודקים באמצעותו קודם
+            myParcel.SenderId = p.SenderId;
+            myParcel.TargetId = p.TargetId;
+            myParcel.Weight = p.Weight;
+            myParcel.Priority = p.Priority;
+            myParcel.DroneId = p.DroneId;
+            myParcel.Requested = p.Requested;
+            myParcel.Scheduled = p.Scheduled;
+            myParcel.PickedUp = p.PickedUp;
+            myParcel.Delivered = p.Delivered;
+            DataSource.parcels.Remove(p);
+            DataSource.parcels.Add(myParcel);
+        }
+
         /// <summary>
         /// the function searchs the parcel with the id that it got
         /// </summary>
