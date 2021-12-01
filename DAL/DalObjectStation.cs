@@ -57,6 +57,7 @@ namespace DalObject
         /// <returns>list of stations</returns>
         public IEnumerable<BaseStation>  GetBaseStations()
         {
+            //return DataSource.stations;
             return from station in DataSource.stations select station;
         }
 

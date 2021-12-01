@@ -14,10 +14,10 @@ namespace IBL
         {
             if (d.Id < 0)
                 throw new AddingProblemException("The ID number must be positive");
-            if (d.MaxWeight<0)///operator>
+            if (d.MaxWeight < 0)///operator>
                 throw new AddingProblemException("The max weight isn't valid");
             IDAL.DO.BaseStation tempB = dl.GetBaseStations().ToList().Find(station => station.CodeStation == idStation);
-            if(tempB.CodeStation!= idStation)
+            if (tempB.CodeStation != idStation)
                 throw new AddingProblemException("The station doesn't exist");
             d.Battery = rnd.Next(20, 41);
             d.DroneStatus = (DroneStatuses)1;
@@ -38,7 +38,17 @@ namespace IBL
             {
                 throw new AddingProblemException("Can't add this drone", ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
             }
-
+            DroneList boDrone = new DroneList()
+            {
+                Id=d.Id,
+                ModelDrone=d.ModelDrone,
+                Weight=d.MaxWeight,
+                DroneStatus=d.DroneStatus,
+                Battery=d.Battery,
+                LocationNow=d.LocationNow,
+                ParcelInWay=0
+            };
+            BODrones.Add(boDrone);
         }
         public void UpdateDrone(int id, string model)
         {
@@ -50,10 +60,14 @@ namespace IBL
             {
                 dl.UpDateDrone(tempD);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new UpdateProblemException();
             }
         }
-    
+        public IEnumerable<DroneList> GetAllDrones()
+        {
+            return BODrones;
+        }
     }
+}

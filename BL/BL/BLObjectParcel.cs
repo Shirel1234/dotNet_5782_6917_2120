@@ -47,6 +47,43 @@ namespace IBL
                     throw new AddingProblemException("Can't add this parcel", ex);
                 }
             }
-
+        public IEnumerable<ParcelList> GetAllParcels()
+        {
+            List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
+            List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+            return
+                from parcel in DOparcelsList
+                let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
+                let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
+                let parcelStatus=HelpClass.GetParcelStatus(parcel)
+                select new ParcelList()
+                {
+                    Id= parcel.CodeParcel,
+                    NameSender= senderName,
+                    NameTarget= receiverName,
+                    Weight=(WeightCategories)parcel.Weight,
+                    Priority=(Priorities)parcel.Priority,
+                    Status=parcelStatus
+                };
         }
+        public IEnumerable<ParcelList> GetAllParcelsWithoutDrone()
+        {
+            List<IDAL.DO.Parcel> DOparcelsWithoutDroneList = dl.GetParcels().ToList().FindAll(parcel => parcel.DroneId == 0);
+            List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+            return
+                from parcel in DOparcelsWithoutDroneList
+                let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
+                let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
+                let parcelStatus = (ParcelStatuses)0
+                select new ParcelList()
+                {
+                    Id = parcel.CodeParcel,
+                    NameSender = senderName,
+                    NameTarget = receiverName,
+                    Weight = (WeightCategories)parcel.Weight,
+                    Priority = (Priorities)parcel.Priority,
+                    Status = parcelStatus
+                };
+        }
+    }
 }

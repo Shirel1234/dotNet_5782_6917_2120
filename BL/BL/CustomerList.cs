@@ -10,10 +10,10 @@ namespace IBL.BO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Phone { get; set; }
-        public int CountParcelsSend { get; set; }
-        public int CountParcelsNotProvide { get; set; }
-        public int CountParcelsGet { get; set; }
+        public string Phone { get; set; }
+        public int CountDeliveredParcels { get; set; }
+        public int CountNotDeliveredParcels { get; set; }
+        public int CountAcceptedParcelsByCustomer { get; set; }
         public int CountParcelsInWay { get; set; }
         public override string ToString()
         {

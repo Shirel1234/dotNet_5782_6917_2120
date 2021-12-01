@@ -9,6 +9,7 @@ namespace IBL
 {
     public partial class BLObject
     {
+        #region
         public void AddBaseStation(BaseStation b) 
         {
                 if (b.Id < 0)
@@ -36,6 +37,8 @@ namespace IBL
               throw new AddingProblemException("Can't add this baseStation", ex);
             }
         }
+        #endregion
+        #region
         public void UpdateBaseStation(int id, int name, int numOfChargePositions)
         {
             if (id < 0)
@@ -46,7 +49,13 @@ namespace IBL
             if (!name.Equals(""))
                 tempB.NameStation = name;
             if (numOfChargePositions != 0)
-                tempB.ChargeSlots = numOfChargePositions;
+            {
+                int busyChargingPositions = BODrones.Count
+                    (drone => drone.DroneStatus == (DroneStatuses)1
+                    && drone.LocationNow.Longitude == tempB.Longitude
+                    && drone.LocationNow.Latitude == tempB.Latitude);
+                tempB.ChargeSlots = numOfChargePositions- busyChargingPositions;
+            }
             try
             {
                 dl.UpDateBaseStation(tempB);
@@ -55,6 +64,41 @@ namespace IBL
             {
                 throw new UpdateProblemException();
             }
+        }
+        #endregion
+        public IEnumerable<BaseStationList> GetAllBaseStations()
+        {
+            List<IDAL.DO.BaseStation> DOstatinsList = dl.GetBaseStations().ToList();
+            return  
+                from station in DOstatinsList
+                 let busyChargingPositions = BODrones.Count
+                    (drone => drone.DroneStatus == (DroneStatuses)1
+                    && drone.LocationNow.Longitude == station.Longitude
+                    && drone.LocationNow.Latitude == station.Latitude)
+                 select new BaseStationList()
+                 {
+                     Id = station.CodeStation,
+                     Name = station.NameStation,
+                     ChargeSlotsFree = station.ChargeSlots,
+                     ChargeSlotsCatch = busyChargingPositions
+                 };
+        }
+        public IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions()
+        {
+            List<IDAL.DO.BaseStation> DOstatinsWithChargeSlotsList = dl.GetBaseStations().ToList().FindAll(station => station.ChargeSlots > 0);
+            return
+               from station in DOstatinsWithChargeSlotsList
+               let busyChargingPositions = BODrones.Count
+                   (drone => drone.DroneStatus == (DroneStatuses)1
+                   && drone.LocationNow.Longitude == station.Longitude
+                   && drone.LocationNow.Latitude == station.Latitude)
+               select new BaseStationList()
+               {
+                   Id = station.CodeStation,
+                   Name = station.NameStation,
+                   ChargeSlotsFree = station.ChargeSlots,
+                   ChargeSlotsCatch = busyChargingPositions
+               };
         }
     }
 }

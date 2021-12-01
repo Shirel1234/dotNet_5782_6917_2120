@@ -77,5 +77,29 @@ namespace IBL
                 throw new GetDetailsProblemException($"Customer id {id} was not found", customerException);
             }
         }
+        public IEnumerable<CustomerList> GetAllCustomers()
+        {
+            List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+            List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
+            return
+                from customer in DOcustomersList
+                let numOfDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
+                let numOfNotDeliveredParcels= DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
+                && DateTime.Compare(parcel.PickedUp, DateTime.Now) > 0 && DateTime.Compare(parcel.Scheduled, DateTime.Now) <= 0)
+                let numOfParcelsInWay= DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
+                && DateTime.Compare(parcel.PickedUp, DateTime.Now) <= 0)
+                let numOfAcceptedParcels= DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
+                select new CustomerList()
+                {
+                    Id=customer.IdCustomer,
+                    Name=customer.NameCustomer,
+                    Phone=customer.Phone,
+                    CountDeliveredParcels= numOfDeliveredParcels,
+                    CountNotDeliveredParcels= numOfNotDeliveredParcels,
+                    CountParcelsInWay= numOfParcelsInWay,
+                    CountAcceptedParcelsByCustomer= numOfAcceptedParcels
+                };
+        }
+
     }
 }
