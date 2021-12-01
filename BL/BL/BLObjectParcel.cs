@@ -9,7 +9,7 @@ namespace IBL
 {
     public partial class BLObject
     {
-            public void AddParcel(Parcel p)
+        public void AddParcel(Parcel p)
             {
             if (p.SenderCustomerId < 100000000 || p.SenderCustomerId > 999999999)
                 throw new AddingProblemException("The id of sender must contain 9 digits");
@@ -47,6 +47,28 @@ namespace IBL
                     throw new AddingProblemException("Can't add this parcel", ex);
                 }
             }
-
+        public Parcel GetParcel(int id)
+        {
+            IDAL.DO.Parcel dalParcel = dl.GetParcel(id);
+            return new Parcel()
+            {
+                CodeParcel = dalParcel.CodeParcel,
+                SenderCustomerId = dalParcel.SenderId,
+                TargetCustomerId =dalParcel.TargetId,
+                DroneId = dalParcel.DroneId,
+                Weight= (WeightCategories)dalParcel.Weight,
+                Priority= (Priorities)dalParcel.Priority,
+                Delivered=dalParcel.Delivered,
+                Requested=dalParcel.Requested,
+                PickedUp=dalParcel.PickedUp,
+                Scheduled=dalParcel.Scheduled
+            };
         }
+        public IEnumerable<ParcelList> GetAllParcels()
+        {
+            IEnumerable<ParcelList> b = new List<ParcelList>();
+            return b;
+        }
+
+    }
 }

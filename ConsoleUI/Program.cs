@@ -38,7 +38,7 @@ namespace ConsoleUI
                 {
                     switch (addOp)
                     {
-                        case AddOption.Station: newBaseStation(); break;
+                        case AddOption.Station: NewBaseStation(); break;
                         case AddOption.Drone: newDrone(); break;
                         case AddOption.Customer: newCustomer(); break;
                         case AddOption.Parcel: newParcel(); break;
@@ -194,7 +194,7 @@ namespace ConsoleUI
             Console.WriteLine("enter the parcel ID");
             int idP;
             if (int.TryParse(Console.ReadLine(), out idP))
-                dal.UpdatePickedUp(idP);
+                dal.(idP);
         }
         /// <summary>
         /// the function updates delivering of a parcel to a customer: it receives from the user the ID number of the parcel,
@@ -457,7 +457,7 @@ namespace ConsoleUI
                     //choice = (Char)Console.Read();
                     switch (menu)
                     {
-                        case Menu.Add: addingOptions(); break;
+                        case Menu.Add: AddingOptions(); break;
                         case Menu.Update: updateOptions(); break;
                         case Menu.View: viewOptions(); break;
                         case Menu.ViewList: listViewOptions(); break;

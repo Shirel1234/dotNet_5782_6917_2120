@@ -15,7 +15,7 @@ namespace IBL
             public string Phone { get; set; }
             public Location Location { get; set; }
             public IEnumerable<ParcelCustomer> SendParcels { get; set; }
-            public IEnumerable<ParcelCustomer> Taretparcels { get; set; }
+            public IEnumerable<ParcelCustomer> TargetParcels { get; set; }
             public override string ToString()
             {
                 return String.Format($"({Id}, /n{Name}, /n{Phone}, /n{Location})");

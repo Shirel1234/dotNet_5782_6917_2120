@@ -7,7 +7,7 @@ using IDAL.DO;
 
 namespace DalObject
 {
-    public partial class DalObject: IDal
+    public partial class DalObject
     {
         /// <summary>
         /// the function check if this station is exist yet
@@ -28,7 +28,7 @@ namespace DalObject
                 throw new AlreadyExistException("The baseStation already exist in the system");
             DataSource.stations.Add(b);
         }
-        public void UpdateBaseStation(BaseStation b)
+        public void UpDateBaseStation(BaseStation b)
         {
             BaseStation myStation = DataSource.stations.Find(x => x.CodeStation == b.CodeStation);
             if (myStation.CodeStation != b.CodeStation)

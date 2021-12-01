@@ -56,5 +56,36 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
+        public IEnumerable<DroneCharge> GetChargesDrone(IDAL.DO.BaseStation dalStation)
+        {
+            IEnumerable<DroneCharge> dronesCharge = from boDrone in BODrones
+                                                    where boDrone.DroneStatus == DroneStatuses.maintenace && boDrone.LocationNow.Longitude == dalStation.Longitude && boDrone.LocationNow.Latitude == dalStation.Latitude
+                                                    select new DroneCharge
+                                                    {
+                                                        Battery = boDrone.Battery,
+                                                        Id = boDrone.Id
+                                                    };
+            return dronesCharge;
+        }
+        public BaseStation GetBaseStation(int idS)
+        {
+            IDAL.DO.BaseStation dalStation = dl.GetStation(idS);
+            return new BaseStation()
+            {
+                Id = dalStation.CodeStation,
+                Name = dalStation.NameStation,
+                ChargeSlots = dalStation.ChargeSlots,
+                Location = new Location(dalStation.Longitude, dalStation.Latitude),
+                ListDroneCharge = GetChargesDrone(dalStation)
+            };
+        }
+        public IEnumerable<BaseStationList> GetAllBaseStations()
+        {
+            IEnumerable<BaseStationList> b = new List<BaseStationList>();
+            return b; 
+        }
+
+
+
     }
 }

@@ -6,6 +6,6 @@
         public WeightCategories Weight { get; set; }
         public Priorities Priority { get; set; }
         public ParcelStatuses Status { get; set; }
-        public ParcelStatuses SenderId { get; set; }
+        public int CustomerId { get; set; }
     }
 }
