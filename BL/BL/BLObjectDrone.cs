@@ -1,4 +1,5 @@
-﻿using IBL.BO;
+﻿using DalObject;
+using IBL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,52 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
+        public Drone GetDrone(int id)
+        {
+            IDAL.DO.Drone dalDrone = dl.GetDrone(id);
+            DroneList boDrone = (DroneList)(from drone in BODrones
+                                            where drone.Id == id
+                                            select drone);
+            IDAL.DO.Parcel dalParcel = dl.GetParcels().ToList().Find(p => p.DroneId == id);
+            IDAL.DO.Customer dalSender = dl.GetCustomer(dalParcel.SenderId);
+            IDAL.DO.Customer dalTarget = dl.GetCustomer(dalParcel.TargetId);
+            Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
+            Location locationT = new Location(dalTarget.Longitude, dalTarget.Longitude);
+            return new Drone
+            {
+                Id = dalDrone.CodeDrone,
+                ModelDrone = dalDrone.ModelDrone,
+                DroneStatus = boDrone.DroneStatus,
+                MaxWeight = (WeightCategories)dalDrone.MaxWeight,
+                Battery = boDrone.Battery,
+                LocationNow = boDrone.LocationNow,
+                ParcelInWay = new ParcelInWay
+                {
+                    Id = dalParcel.CodeParcel,
+                    Priority = (Priorities)dalParcel.Priority,
+                    Weight = (WeightCategories)dalParcel.Weight,
+                    SenderId = dalParcel.SenderId,
+                    TargetId = dalParcel.TargetId,
+                    IsInWay = true,
+                    LocationPickedUp = locationS,
+                    LocationTarget = locationT,
+                    TransportDistance = HelpClass.GetDistance(locationS, locationT)
+                }
+
+            };
+        }
+        public IEnumerable<DroneList> GetAllDrones()
+        {
+            IEnumerable<DroneList> d = new List<DroneList>();
+            return d;
+        }
+        /// <summary>
+        /// the function show the list of stations
+        /// </summary>
+        /// <returns>list of stations</returns>
+
+    }
+}
         public IEnumerable<DroneList> GetAllDrones()
         {
             return BODrones;

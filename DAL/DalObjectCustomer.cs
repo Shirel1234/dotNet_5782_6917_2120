@@ -32,7 +32,7 @@ namespace DalObject
         /// the function update every field to the new details
         /// </summary>
         /// <param name="c"> a new customer</param>
-        public void UpdateCustomer(Customer c)
+        public void UpDateCustomer(Customer c)
         {
             Customer myCustomer = DataSource.customers.Find(x => x.IdCustomer == c.IdCustomer);
             if (myCustomer.IdCustomer != c.IdCustomer)

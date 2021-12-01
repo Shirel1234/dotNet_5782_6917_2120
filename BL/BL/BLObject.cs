@@ -28,13 +28,13 @@ namespace IBL
             medium = arr[2];
             heavy = arr[3];
             chargingRate = arr[4];
-            BODrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
+            IEnumerable< DroneList> BODrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
                        select new DroneList()
                        {
                            Id = item.CodeDrone,
                            ModelDrone = item.ModelDrone,
                            Weight = (WeightCategories)item.MaxWeight,
-                           Battery =
+                          // Battery =
                            };
         }
         public void UpdateSendingDroneToCharge(int id)
@@ -100,53 +100,70 @@ namespace IBL
         }
         public void UpdateParcelToDrone(int id)
         {
-            DroneList droneList = BODrones.Find(droneL => droneL.Id == id);
-            if (droneList.Id == 0)
-                throw new UpdateProblemException("This drone doesn't exist");
-            if (droneList.DroneStatus == (DroneStatuses)0)
-            {
-                var groups = dl.GetParcels().ToList().GroupBy(parcel => parcel.Priority);
-                List<IDAL.DO.Parcel> g0=new List<IDAL.DO.Parcel>();
-                List<IDAL.DO.Parcel> g1=new List<IDAL.DO.Parcel>();
-                List<IDAL.DO.Parcel> g2=new List<IDAL.DO.Parcel>();
-                foreach (IGrouping<Priorities, IDAL.DO.Parcel> group in groups)
-                {
-                    if (group.Key == (Priorities)0)
-                        g0 = group.ToList();
-                    else
-                        if (group.Key == (Priorities)1)
-                        g1 = group.ToList();
-                    else
-                        g2 = group.ToList();
-                }
-                var matchWeightParcels = from item in g2
-                                         where ((int)item.Weight)<= ((int)droneList.Weight)
-                                         select item;
-                if(matchWeightParcels.ToList().Count!=0)
-                {
-                    IDAL.DO.Parcel closerParcel=new IDAL.DO.Parcel();
-                    double minDistance=10000000;
-                    foreach (var item in matchWeightParcels)
-                    {
-                        IDAL.DO.Customer customer = dl.GetCustomer(item.SenderId);
-                        double distance = HelpClass.GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow);
-                        if (minDistance > distance)
-                        {
-                            minDistance = distance;
-                            closerParcel = item;
-                        }
+    //        DroneList droneList = BODrones.Find(droneL => droneL.Id == id);
+    //        if (droneList.Id == 0)
+    //            throw new UpdateProblemException("This drone doesn't exist");
+    //        if (droneList.DroneStatus == (DroneStatuses)0)
+    //        {
+    //            var groups = dl.GetParcels().ToList().GroupBy(parcel => parcel.Priority);
+    //            List<IDAL.DO.Parcel> g0=new List<IDAL.DO.Parcel>();
+    //            List<IDAL.DO.Parcel> g1=new List<IDAL.DO.Parcel>();
+    //            List<IDAL.DO.Parcel> g2=new List<IDAL.DO.Parcel>();
+    //            foreach (IGrouping<Priorities, IDAL.DO.Parcel> group in groups)
+    //            {
+    //                if (group.Key == (Priorities)0)
+    //                    g0 = group.ToList();
+    //                else
+    //                    if (group.Key == (Priorities)1)
+    //                    g1 = group.ToList();
+    //                else
+    //                    g2 = group.ToList();
+    //            }
+    //            var matchWeightParcels = from item in g2
+    //                                     where ((int)item.Weight)<= ((int)droneList.Weight)
+    //                                     select item;
+    //            if(matchWeightParcels.ToList().Count!=0)
+    //            {
+    //                IDAL.DO.Parcel closerParcel=new IDAL.DO.Parcel();
+    //                double minDistance=10000000;
+    //                foreach (var item in matchWeightParcels)
+    //                {
+    //                    IDAL.DO.Customer customer = dl.GetCustomer(item.SenderId);
+    //                    double distance = HelpClass.GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow);
+    //                    if (minDistance > distance)
+    //                    {
+    //                        minDistance = distance;
+    //                        closerParcel = item;
+    //                    }
 
-                    } 
-                    if()
+    //                } 
+    //                if()
                                      
-                }
+    //            }
 
 
-            }
+    //        }
 
 
     }
+        public void UpdateParcelPickedUpByDrone(int idD)
+        {
 
-    #endregion
-}
+        }
+        public void UpdateDeliveredParcelByDrone(int idD)
+        {
+
+        }
+        public IEnumerable<ParcelList> GetAllParcelsWithoutDrone()
+        {
+            IEnumerable<ParcelList> p = new List<ParcelList>();
+            return p;
+        }
+        public IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions()
+        {
+            IEnumerable<BaseStationList> p = new List<BaseStationList>();
+            return p;
+        }
+        #endregion
+    }
 }

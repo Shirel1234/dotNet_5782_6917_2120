@@ -55,20 +55,59 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
+        public int GetParcelStatus(IDAL.DO.Parcel parcel)
+        {
+            DateTime temp = new DateTime(0);
+            if (parcel.Scheduled == temp)
+                return 0;
+            if (parcel.PickedUp == temp)
+                return 1;
+            if (parcel.Delivered == temp)
+                return 2;
+            return 3;
+        }
+       public IEnumerable<ParcelCustomer> GetSendParcels(int id)
+        {
+            IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
+                                                      where parcel.SenderId == id
+                                                      select new ParcelCustomer
+                                                      {
+                                                          Id = parcel.CodeParcel,
+                                                          Priority = (Priorities)parcel.Priority,
+                                                          CustomerId = id,
+                                                          Weight = (WeightCategories)parcel.Weight,
+                                                          Status = (ParcelStatuses)GetParcelStatus(parcel)
+
+                                                      };
+            return sendParcels;
+        }
+        public IEnumerable<ParcelCustomer> GetTargetParcel(int id)
+        {
+            IEnumerable<ParcelCustomer> targetParcel = from parcel in dl.GetParcels()
+                                                      where parcel.TargetId == id
+                                                      select new ParcelCustomer
+                                                      {
+                                                          Id = parcel.CodeParcel,
+                                                          Priority = (Priorities)parcel.Priority,
+                                                          CustomerId = id,
+                                                          Weight = (WeightCategories)parcel.Weight,
+                                                          Status= (ParcelStatuses)GetParcelStatus(parcel)
+                                                      };
+            return targetParcel;
+        }
         public Customer GetCustomer(int id)
-            {
-            Customer customer = default;
+        {
             try
             {
                 IDAL.DO.Customer dalCustomer = dl.GetCustomer(id);
-                return new Customer()
+                return new BO.Customer()
                 {
                     Id = dalCustomer.IdCustomer,
                     Name = dalCustomer.NameCustomer,
                     Phone = dalCustomer.Phone,
-                    //Location 
-                    SendParcels = new List<ParcelCustomer>(),
-                    Taretparcels = new List<ParcelCustomer>()
+                    Location = new Location(dalCustomer.Longitude,dalCustomer.Latitude ),
+                    SendParcels = GetSendParcels(id),
+                    TargetParcels =GetTargetParcel(id)
 
                 };
             }
