@@ -66,13 +66,6 @@ namespace IBL
         }
         public IEnumerable<ParcelList> GetAllParcels()
         {
-            IEnumerable<ParcelList> b = new List<ParcelList>();
-            return b;
-        }
-
-    }
-        public IEnumerable<ParcelList> GetAllParcels()
-        {
             List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
             List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
             return

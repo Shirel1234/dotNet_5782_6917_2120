@@ -7,7 +7,6 @@ using IBL.BO;
 
 namespace IBL
 {
-    //שינוי אחרון בהצלחה
     public partial class BLObject : IBl
     {
         public double free;
@@ -17,7 +16,8 @@ namespace IBL
         public double chargingRate;
 
         #region
-        IDAL.DO.IDal dl;
+       public static  Random rnd = new Random();
+        public static IDAL.DO.IDal dl;
         List<DroneList> BODrones;
         public BLObject()
         {
@@ -28,13 +28,15 @@ namespace IBL
             medium = arr[2];
             heavy = arr[3];
             chargingRate = arr[4];
-            IEnumerable< DroneList> BODrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
-                       select new DroneList()
-                       {
-                           Id = item.CodeDrone,
-                           ModelDrone = item.ModelDrone,
-                           Weight = (WeightCategories)item.MaxWeight,
-                          // Battery =
+            List<IDAL.DO.Parcel> listParcels = dl.GetParcels().ToList();
+            IEnumerable<DroneList> BODrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
+                                              select new DroneList()
+                                              {
+                                                  Id = item.CodeDrone,
+                                                  ModelDrone = item.ModelDrone,
+                                                  Weight = (WeightCategories)item.MaxWeight,
+                                                  DroneStatus = GetDroneStatus(item),
+                                                  LocationNow=
                            };
         }
         public void UpdateSendingDroneToCharge(int id)
@@ -44,18 +46,8 @@ namespace IBL
                 throw new UpdateProblemException("This drone doesn't exist");
             if (droneList.DroneStatus == (DroneStatuses)0)
             {
-                double minDistance = 10000000;
-                IDAL.DO.BaseStation closeStation = new IDAL.DO.BaseStation();
-                foreach (var item in dl.GetBaseStations())
-                {
-                    double distance = HelpClass.GetDistance(new Location(item.Longitude, item.Latitude), droneList.LocationNow);
-                    if (minDistance > distance)
-                    {
-                        minDistance = distance;
-                        closeStation = item;
-                    }
-                }
-                //sending the drone to charging
+                IDAL.DO.BaseStation closeStation = GetCloserBaseStation(droneList.LocationNow);
+                double minDistance = GetDistance(new Location(closeStation.Longitude, closeStation.Latitude), droneList.LocationNow);
                 if (droneList.Battery >= minDistance * free && closeStation.ChargeSlots > 0)
                 {
                     //update drone
@@ -100,52 +92,53 @@ namespace IBL
         }
         public void UpdateParcelToDrone(int id)
         {
-    //        DroneList droneList = BODrones.Find(droneL => droneL.Id == id);
-    //        if (droneList.Id == 0)
-    //            throw new UpdateProblemException("This drone doesn't exist");
-    //        if (droneList.DroneStatus == (DroneStatuses)0)
-    //        {
-    //            var groups = dl.GetParcels().ToList().GroupBy(parcel => parcel.Priority);
-    //            List<IDAL.DO.Parcel> g0=new List<IDAL.DO.Parcel>();
-    //            List<IDAL.DO.Parcel> g1=new List<IDAL.DO.Parcel>();
-    //            List<IDAL.DO.Parcel> g2=new List<IDAL.DO.Parcel>();
-    //            foreach (IGrouping<Priorities, IDAL.DO.Parcel> group in groups)
-    //            {
-    //                if (group.Key == (Priorities)0)
-    //                    g0 = group.ToList();
-    //                else
-    //                    if (group.Key == (Priorities)1)
-    //                    g1 = group.ToList();
-    //                else
-    //                    g2 = group.ToList();
-    //            }
-    //            var matchWeightParcels = from item in g2
-    //                                     where ((int)item.Weight)<= ((int)droneList.Weight)
-    //                                     select item;
-    //            if(matchWeightParcels.ToList().Count!=0)
-    //            {
-    //                IDAL.DO.Parcel closerParcel=new IDAL.DO.Parcel();
-    //                double minDistance=10000000;
-    //                foreach (var item in matchWeightParcels)
-    //                {
-    //                    IDAL.DO.Customer customer = dl.GetCustomer(item.SenderId);
-    //                    double distance = HelpClass.GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow);
-    //                    if (minDistance > distance)
-    //                    {
-    //                        minDistance = distance;
-    //                        closerParcel = item;
-    //                    }
+            DroneList droneList = BODrones.Find(droneL => droneL.Id == id);
+            if (droneList.Id == 0)
+                throw new UpdateProblemException("This drone doesn't exist");
+            if (droneList.DroneStatus == (DroneStatuses)0)
+            {
+                var groups = dl.GetParcels().ToList().GroupBy(parcel => parcel.Priority);
+                List<IDAL.DO.Parcel> g0 = new List<IDAL.DO.Parcel>();
+                List<IDAL.DO.Parcel> g1 = new List<IDAL.DO.Parcel>();
+                List<IDAL.DO.Parcel> g2 = new List<IDAL.DO.Parcel>();
+                foreach (IGrouping<Priorities, IDAL.DO.Parcel> group in groups)
+                {
+                    if (group.Key == (Priorities)0)
+                        g0 = group.ToList();
+                    else
+                        if (group.Key == (Priorities)1)
+                        g1 = group.ToList();
+                    else
+                        g2 = group.ToList();
+                }
+                var matchWeightParcels = from item in g2
+                                         where ((int)item.Weight) <= ((int)droneList.Weight)
+                                         select item;
+                if (matchWeightParcels.ToList().Count != 0)
+                {
+                    IDAL.DO.Parcel closerParcel = new IDAL.DO.Parcel();
+                    double minDistance = 10000000;
+                    foreach (var item in matchWeightParcels)
+                    {
+                        IDAL.DO.Customer customer = dl.GetCustomer(item.SenderId);
+                        double distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow);
+                        if (minDistance > distance)
+                        {
+                            minDistance = distance;
+                            closerParcel = item;
+                        }
 
-    //                } 
-    //                if()
-                                     
-    //            }
+                    }
+                    if ()
 
 
-    //        }
+                }
 
 
-    }
+            }
+
+
+        }
         public void UpdateParcelPickedUpByDrone(int idD)
         {
 
@@ -153,16 +146,6 @@ namespace IBL
         public void UpdateDeliveredParcelByDrone(int idD)
         {
 
-        }
-        public IEnumerable<ParcelList> GetAllParcelsWithoutDrone()
-        {
-            IEnumerable<ParcelList> p = new List<ParcelList>();
-            return p;
-        }
-        public IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions()
-        {
-            IEnumerable<BaseStationList> p = new List<BaseStationList>();
-            return p;
         }
         #endregion
     }

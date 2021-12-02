@@ -66,7 +66,7 @@ namespace IBL
                 return 2;
             return 3;
         }
-       public IEnumerable<ParcelCustomer> GetSendParcels(int id)
+        public IEnumerable<ParcelCustomer> GetSendParcels(int id)
         {
             IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
                                                       where parcel.SenderId == id

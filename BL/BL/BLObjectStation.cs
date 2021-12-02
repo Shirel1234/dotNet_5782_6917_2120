@@ -123,13 +123,6 @@ namespace IBL
                 ListDroneCharge = GetChargesDrone(dalStation)
             };
         }
-        public IEnumerable<BaseStationList> GetAllBaseStations()
-        {
-            IEnumerable<BaseStationList> b = new List<BaseStationList>();
-            return b; 
-        }
-
-
 
     }
 }

@@ -10,7 +10,6 @@ namespace IBL
 {
     public partial class BLObject
     {
-        Random rnd = new Random();
         public void AddDrone(Drone d, int idStation)
         {
             if (d.Id < 0)
@@ -102,9 +101,9 @@ namespace IBL
         }
         public IEnumerable<DroneList> GetAllDrones()
         {
-            IEnumerable<DroneList> d = new List<DroneList>();
-            return d;
+            return BODrones;
         }
+
         /// <summary>
         /// the function show the list of stations
         /// </summary>
@@ -112,9 +111,4 @@ namespace IBL
 
     }
 }
-        public IEnumerable<DroneList> GetAllDrones()
-        {
-            return BODrones;
-        }
-    }
-}
+
