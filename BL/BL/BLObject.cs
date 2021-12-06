@@ -86,14 +86,14 @@ namespace IBL
                 BODrones.Add(droneList);
                 //update station
                 IDAL.DO.BaseStation myStation = dl.GetBaseStations().ToList().Find(station => station.Longitude == droneList.LocationNow.Longitude && station.Latitude == droneList.LocationNow.Latitude);
-                dl.GetBaseStations().ToList().Remove(myStation);
                 myStation.ChargeSlots++;
-                dl.GetBaseStations().ToList().Add(myStation);
+                dl.UpDateBaseStation(myStation);
             }
 
         }
         public void UpdateParcelToDrone(int id)
         {
+            IDAL.DO.Parcel chosenParcel=default;
             //bring the details of this drone
             DroneList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
@@ -116,32 +116,25 @@ namespace IBL
                     else
                         gEmergency = group.ToList();
                 }
-                var matchWeightParcels = from item in gEmergency
-                                         where ((int)item.Weight) <= ((int)droneList.Weight)
-                                         select item;
-                if (matchWeightParcels.ToList().Count != 0)
+                chosenParcel = GetParcelToDrone(gEmergency, droneList);
+                if (chosenParcel.CodeParcel == default)
                 {
-                    IDAL.DO.Parcel closerParcel = new IDAL.DO.Parcel();
-                    double minDistance = 10000000;
-                    foreach (var item in matchWeightParcels)
+                    chosenParcel = GetParcelToDrone(gExpress, droneList);
+                    if (chosenParcel.CodeParcel == default)
                     {
-                        IDAL.DO.Customer customer = dl.GetCustomer(item.SenderId);
-                        double distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow);
-                        if (minDistance > distance)
-                        {
-                            minDistance = distance;
-                            closerParcel = item;
-                        }
-
+                        chosenParcel = GetParcelToDrone(gExpress, droneList);
+                        if (chosenParcel.CodeParcel == default)
+                            throw new UpdateProblemException("Parcel wasn't found");
                     }
-                    if ()
-
-
                 }
-
-
+                BODrones.Remove(droneList);
+                droneList.DroneStatus =(DroneStatuses)2;
+                BODrones.Add(droneList);
+                chosenParcel.DroneId = id;
+                chosenParcel.Scheduled = DateTime.Now;
+                dl.UpDateParcel(chosenParcel);
             }
-
+            throw new UpdateProblemException("This drone isn't free");
 
         }
         public void UpdateParcelPickedUpByDrone(int droneID)

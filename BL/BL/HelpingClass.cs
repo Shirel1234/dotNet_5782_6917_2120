@@ -75,7 +75,7 @@ namespace IBL
             IDAL.DO.Parcel defaultP = default;
             DroneList newDroneList = new DroneList();
             //find the parcel of this drone that was scheduled or pickedUp
-            IDAL.DO.Parcel p = dl.GetParcels().ToList().Find(parcel => parcel.DroneId == d.CodeDrone && GetParcelStatus(parcel) ==2 || GetParcelStatus(parcel) == 1);
+            IDAL.DO.Parcel p = dl.GetParcels().ToList().Find(parcel => parcel.DroneId == d.CodeDrone && GetParcelStatus(parcel) == 2 || GetParcelStatus(parcel) == 1);
             //if this parcel was found
             if (p.CodeParcel != defaultP.CodeParcel)
             {
@@ -87,7 +87,7 @@ namespace IBL
                 else
                     newDroneList.LocationNow = new Location(dl.GetCustomer(p.SenderId).Longitude, dl.GetCustomer(p.SenderId).Latitude);
                 //calculate the battry by the minimum distance that the drone needs to pass
-                Location  locationTarget = new Location (dl.GetCustomer(p.TargetId).Longitude, dl.GetCustomer(p.TargetId).Latitude);
+                Location locationTarget = new Location(dl.GetCustomer(p.TargetId).Longitude, dl.GetCustomer(p.TargetId).Latitude);
                 double distanceDroneToTarget = GetDistance(newDroneList.LocationNow, locationTarget);
                 double distanceTargetToCloserStation = GetDistance(locationTarget, new Location(GetCloserBaseStation(locationTarget).Longitude, GetCloserBaseStation(locationTarget).Latitude));
                 double minCharge;
@@ -97,8 +97,8 @@ namespace IBL
                 else
                 //if the parcel has a medium weight
                    if (p.Weight == (IDAL.DO.WeightCategories)1)
-                      minCharge = (distanceDroneToTarget + distanceTargetToCloserStation) * medium;
-                   else
+                    minCharge = (distanceDroneToTarget + distanceTargetToCloserStation) * medium;
+                else
                     //the parcel has a heavy weight
                     minCharge = (distanceDroneToTarget + distanceTargetToCloserStation) * heavy;
                 newDroneList.Battery = rnd.Next((int)minCharge, 101);
@@ -112,7 +112,7 @@ namespace IBL
                 {
                     newDroneList.Battery = rnd.Next(0, 21);
                     //random a base station
-                    int countStations =dl.GetBaseStations().ToList().Count();
+                    int countStations = dl.GetBaseStations().ToList().Count();
                     IDAL.DO.BaseStation[] arrBaseStation = dl.GetBaseStations().ToArray();
                     IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(countStations)];
                     newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
@@ -129,7 +129,7 @@ namespace IBL
                     IDAL.DO.Customer randomCustomer = arrCustomerGotParcel[rnd.Next(count)];
                     newDroneList.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
                     //random battery between minimum of arriving to base station for charge
-                    IDAL.DO.BaseStation closerBaseStation=GetCloserBaseStation(newDroneList.LocationNow);
+                    IDAL.DO.BaseStation closerBaseStation = GetCloserBaseStation(newDroneList.LocationNow);
                     double distance = GetDistance(newDroneList.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
                     newDroneList.Battery = distance * free;
                 }
@@ -137,7 +137,7 @@ namespace IBL
             return newDroneList;
 
         }
-        public static double ElectricityUseOfBattery(double distance,WeightCategories weight)
+        public static double ElectricityUseOfBattery(double distance, WeightCategories weight)
         {
             if (weight == (WeightCategories)0)
                 return distance * easy;
@@ -147,6 +147,7 @@ namespace IBL
                 else
                     return distance * heavy;
         }
+
         /// <summary>
         /// the function calculates the battery after the delivered by the distance that the drone did and 
         /// </summary>
@@ -169,6 +170,42 @@ namespace IBL
                 newBattery = newBattery - (distance * heavy);
             return newBattery;
         }
+        public static IDAL.DO.Parcel GetParcelToDrone(List<IDAL.DO.Parcel> parcels, DroneList droneList)
+        {
+            IDAL.DO.Parcel chosenParcel = default;
+            //list of parcels that matching the weight
+            var matchWeightParcels = from item in parcels
+                                     where ((int)item.Weight) <= ((int)droneList.Weight)
+                                     select item;
+            //find the closer parcel
+            if (matchWeightParcels.ToList().Count != 0)
+            {
+                List<IDAL.DO.Parcel> closerParcels = (List<IDAL.DO.Parcel>)(from parcel in matchWeightParcels
+                                                                            let customer = dl.GetCustomer(parcel.SenderId)
+                                                                            let distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow)
+                                                                            orderby distance
+                                                                            select parcel);
+                //search the parcel that its battery will be enough
+                foreach (var item in closerParcels)
+                {
+                    Location locationSender = new Location(dl.GetCustomer(item.SenderId).Longitude, dl.GetCustomer(item.SenderId).Latitude);
+                    Location locationTarget = new Location(dl.GetCustomer(item.TargetId).Longitude, dl.GetCustomer(item.TargetId).Latitude);
+                    double chargeBattery = GetDistance(droneList.LocationNow, locationSender) * free;
+                    double distanceSenderToTarget = GetDistance(locationSender, locationTarget);
+                    chargeBattery += ElectricityUseOfBattery(distanceSenderToTarget, (WeightCategories)item.Weight);
+                    IDAL.DO.BaseStation closerStation = GetCloserBaseStation(locationTarget);
+                    double distanceTargetToCloserStation = GetDistance(locationTarget, new Location(closerStation.Longitude, closerStation.Latitude));
+                    chargeBattery += distanceTargetToCloserStation * free;
+                    if (chargeBattery <= droneList.Battery)
+                    {
+                        chosenParcel = item;
+                        break;
+                    }
+                }
+            }
+            return chosenParcel;
+
+        }
+
     }
-       
 }
