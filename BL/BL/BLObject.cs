@@ -9,14 +9,14 @@ namespace IBL
 {
     public partial class BLObject : IBl
     {
-        public double free;
-        public double easy;
-        public double medium;
-        public double heavy;
-        public double chargingRate;
+        public static double free;
+        public static double easy;
+        public static double medium;
+        public static double heavy;
+        public static double chargingRate;
 
         #region
-       public static  Random rnd = new Random();
+        public static Random rnd = new Random();
         public static IDAL.DO.IDal dl;
         List<DroneList> BODrones;
         public BLObject()
@@ -35,9 +35,11 @@ namespace IBL
                                                   Id = item.CodeDrone,
                                                   ModelDrone = item.ModelDrone,
                                                   Weight = (WeightCategories)item.MaxWeight,
-                                                  DroneStatus = GetDroneStatus(item),
-                                                  LocationNow=
-                           };
+                                                  DroneStatus = GetUpdatedDetailDrone(item).DroneStatus,
+                                                  LocationNow = GetUpdatedDetailDrone(item).LocationNow,
+                                                  Battery = GetUpdatedDetailDrone(item).Battery,
+                                                  ParcelInWay = 0
+                                              };
         }
         public void UpdateSendingDroneToCharge(int id)
         {
@@ -88,30 +90,33 @@ namespace IBL
                 myStation.ChargeSlots++;
                 dl.GetBaseStations().ToList().Add(myStation);
             }
-                
+
         }
         public void UpdateParcelToDrone(int id)
         {
+            //bring the details of this drone
             DroneList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
+            //check that the drone is free
             if (droneList.DroneStatus == (DroneStatuses)0)
             {
+                //create three groops by the type of priority
                 var groups = dl.GetParcels().ToList().GroupBy(parcel => parcel.Priority);
-                List<IDAL.DO.Parcel> g0 = new List<IDAL.DO.Parcel>();
-                List<IDAL.DO.Parcel> g1 = new List<IDAL.DO.Parcel>();
-                List<IDAL.DO.Parcel> g2 = new List<IDAL.DO.Parcel>();
+                List<IDAL.DO.Parcel> gNormal = new List<IDAL.DO.Parcel>();
+                List<IDAL.DO.Parcel> gExpress = new List<IDAL.DO.Parcel>();
+                List<IDAL.DO.Parcel> gEmergency = new List<IDAL.DO.Parcel>();
                 foreach (IGrouping<Priorities, IDAL.DO.Parcel> group in groups)
                 {
                     if (group.Key == (Priorities)0)
-                        g0 = group.ToList();
+                        gNormal = group.ToList();
                     else
                         if (group.Key == (Priorities)1)
-                        g1 = group.ToList();
+                        gExpress = group.ToList();
                     else
-                        g2 = group.ToList();
+                        gEmergency = group.ToList();
                 }
-                var matchWeightParcels = from item in g2
+                var matchWeightParcels = from item in gEmergency
                                          where ((int)item.Weight) <= ((int)droneList.Weight)
                                          select item;
                 if (matchWeightParcels.ToList().Count != 0)
@@ -143,10 +148,51 @@ namespace IBL
         {
 
         }
-        public void UpdateDeliveredParcelByDrone(int idD)
+        public void UpdateDeliveredParcelByDrone(int id)
         {
+            //update drone
+            DroneList droneList = BODrones.ToList().Find(drone => drone.Id == id);
+            if (droneList.Id == id)
+            {
+                IDAL.DO.Parcel parcel = dl.GetParcel(droneList.ParcelInWay);
+                if (GetDateTimeToStatus(parcel) != (ParcelStatuses)2)
+                    throw new UpdateProblemException("Impossible to deliver the parcel");
+                else
+                {
+                    DroneList newDroneListnew = new DroneList
+                    {
+                        Id = droneList.Id,
+                        ModelDrone = droneList.ModelDrone,
+                        ParcelInWay = droneList.ParcelInWay,
+                        Weight = droneList.Weight,
+                        Battery = GetBatteryDeliveredParccel(droneList, parcel),
+                        LocationNow = new Location(dl.GetCustomer(parcel.TargetId).Longitude, dl.GetCustomer(parcel.TargetId).Latitude),
+                        DroneStatus = (DroneStatuses)0,
+                    };
+                    BODrones.ToList().Remove(droneList);
+                    BODrones.ToList().Add(newDroneListnew);
 
+                }
+                //update parcel
+                IDAL.DO.Parcel newParcel = new IDAL.DO.Parcel
+                {
+                    CodeParcel = parcel.CodeParcel,
+                    Weight = parcel.Weight,
+                    Priority = parcel.Priority,
+                    SenderId = parcel.SenderId,
+                    TargetId = parcel.TargetId,
+                    DroneId = parcel.DroneId,
+                    Requested = parcel.Requested,
+                    Scheduled = parcel.Scheduled,
+                    PickedUp = parcel.PickedUp,
+                    Delivered = DateTime.Now
+                };
+
+            }
+            throw new UpdateProblemException("The drone list doesn't exist");
         }
-        #endregion
     }
 }
+        #endregion
+    
+

@@ -55,17 +55,6 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
-        public int GetParcelStatus(IDAL.DO.Parcel parcel)
-        {
-            DateTime temp = new DateTime(0);
-            if (parcel.Scheduled == temp)
-                return 0;
-            if (parcel.PickedUp == temp)
-                return 1;
-            if (parcel.Delivered == temp)
-                return 2;
-            return 3;
-        }
         public IEnumerable<ParcelCustomer> GetSendParcels(int id)
         {
             IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
