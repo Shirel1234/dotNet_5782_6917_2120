@@ -143,11 +143,10 @@ namespace IBL
                 return distance * easy;
             else
                 if (weight == (WeightCategories)1)
-                return distance * medium;
-            else
-                return distance * heavy;
+                    return distance * medium;
+                else
+                    return distance * heavy;
         }
-    }
         /// <summary>
         /// the function calculates the battery after the delivered by the distance that the drone did and 
         /// </summary>
@@ -160,7 +159,7 @@ namespace IBL
             double newBattery = droneList.Battery;
             double distance = GetDistance(droneList.LocationNow, new Location(targetCustomer.Longitude, targetCustomer.Latitude));
             if (parcel.Weight == (IDAL.DO.WeightCategories)0)
-                newBattery = newBattery- (distance*easy);
+                newBattery = newBattery - (distance * easy);
             else
                   //if the parcel has a medium weight
                   if (parcel.Weight == (IDAL.DO.WeightCategories)1)
@@ -170,4 +169,6 @@ namespace IBL
                 newBattery = newBattery - (distance * heavy);
             return newBattery;
         }
+    }
+       
 }
