@@ -46,7 +46,7 @@ namespace IBL
             if (numOfChargePositions < 0)
                 throw new UpdateProblemException("The number of the charging positions must be a positive number");
             IDAL.DO.BaseStation tempB = dl.GetStation(id);
-            if (!name.Equals(""))
+            if (name!=0)
                 tempB.NameStation = name;
             if (numOfChargePositions != 0)
             {

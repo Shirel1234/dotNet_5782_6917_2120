@@ -72,7 +72,7 @@ namespace IBL
                 from parcel in DOparcelsList
                 let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
                 let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
-                let parcelStatus=HelpClass.GetParcelStatus(parcel)
+                let parcelStatus=GetParcelStatus(parcel)
                 select new ParcelList()
                 {
                     Id= parcel.CodeParcel,

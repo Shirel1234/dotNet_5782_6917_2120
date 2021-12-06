@@ -13,9 +13,9 @@ namespace IBL
          void AddDrone(Drone d, int idStation);
         void AddCustomer(Customer c);
          void AddParcel(Parcel p);
-        void UpdateDrone(int id, string model = "");
-        void UpdateBaseStation(int id, int name=0,int numOfChargePositions=0);
-        void UpdateCustomer(int id, string name = "", string phone = "");
+        void UpdateDrone(int id, string model);
+        void UpdateBaseStation(int id, int name,int numOfChargePositions);
+        void UpdateCustomer(int id, string name, string phone);
         void UpdateSendingDroneToCharge(int id);
         void UpdateReleasingDroneFromCharge(int id, double timeOfCharging);
         void UpdateParcelToDrone(int idD);

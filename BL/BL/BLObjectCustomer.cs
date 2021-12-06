@@ -42,9 +42,9 @@ namespace IBL
             if (id < 100000000 || id > 999999999)
                 throw new UpdateProblemException("The customer ID number must contain 9 digits");
             IDAL.DO.Customer tempC = dl.GetCustomer(id);
-            if (!name.Equals(""))
+            if (!name.Equals("0"))
                 tempC.NameCustomer = name;
-            if (!phone.Equals(""))
+            if (!phone.Equals("0"))
                 tempC.Phone = phone;
             try
             {

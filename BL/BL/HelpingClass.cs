@@ -54,16 +54,16 @@ namespace IBL
             IDAL.DO.BaseStation closerBaseStation = GetCloserBaseStation(new Location(customer.Longitude, customer.Latitude));
             return new Location(closerBaseStation.Longitude, closerBaseStation.Latitude);
         }
-        public static int GetParcelStatus(IDAL.DO.Parcel parcel)
+        public static ParcelStatuses GetParcelStatus(IDAL.DO.Parcel parcel)
         {
             DateTime temp = new DateTime(0);
             if (parcel.Scheduled == temp)
-                return 0;
+                return (ParcelStatuses)0;
             if (parcel.PickedUp == temp)
-                return 1;
+                return (ParcelStatuses)1;
             if (parcel.Delivered == temp)
-                return 2;
-            return 3;
+                return (ParcelStatuses)2;
+            return (ParcelStatuses)3;
         }
         /// <summary>
         /// the function update the status of drone, location and battery
@@ -75,7 +75,7 @@ namespace IBL
             IDAL.DO.Parcel defaultP = default;
             DroneList newDroneList = new DroneList();
             //find the parcel of this drone that was scheduled or pickedUp
-            IDAL.DO.Parcel p = dl.GetParcels().ToList().Find(parcel => parcel.DroneId == d.CodeDrone && GetParcelStatus(parcel) == 2 || GetParcelStatus(parcel) == 1);
+            IDAL.DO.Parcel p = dl.GetParcels().ToList().Find(parcel => parcel.DroneId == d.CodeDrone && GetParcelStatus(parcel) == (ParcelStatuses) 2 || GetParcelStatus(parcel) == (ParcelStatuses)1);
             //if this parcel was found
             if (p.CodeParcel != defaultP.CodeParcel)
             {
@@ -92,15 +92,7 @@ namespace IBL
                 double distanceTargetToCloserStation = GetDistance(locationTarget, new Location(GetCloserBaseStation(locationTarget).Longitude, GetCloserBaseStation(locationTarget).Latitude));
                 double minCharge;
                 //if the parcel has an easy weight
-                if (p.Weight == (IDAL.DO.WeightCategories)0)
-                    minCharge = (distanceDroneToTarget + distanceTargetToCloserStation) * easy;
-                else
-                //if the parcel has a medium weight
-                   if (p.Weight == (IDAL.DO.WeightCategories)1)
-                    minCharge = (distanceDroneToTarget + distanceTargetToCloserStation) * medium;
-                else
-                    //the parcel has a heavy weight
-                    minCharge = (distanceDroneToTarget + distanceTargetToCloserStation) * heavy;
+                minCharge = GetElectricityUseOfBattery(distanceDroneToTarget + distanceTargetToCloserStation, (WeightCategories) p.Weight);
                 newDroneList.Battery = rnd.Next((int)minCharge, 101);
             }
             //the drone doesn't do sending
@@ -137,14 +129,17 @@ namespace IBL
             return newDroneList;
 
         }
-        public static double ElectricityUseOfBattery(double distance, WeightCategories weight)
+        public static double GetElectricityUseOfBattery(double distance, WeightCategories weight)
         {
+            //if the parcel has an easy weight
             if (weight == (WeightCategories)0)
                 return distance * easy;
             else
                 if (weight == (WeightCategories)1)
+                //if the parcel has a medium weight
                     return distance * medium;
                 else
+                //the parcel has a heavy weight
                     return distance * heavy;
         }
 
@@ -154,20 +149,12 @@ namespace IBL
         /// <param name="droneList"></param>
         /// <param name="parcel"></param>
         /// <returns></returns>
-        public static double GetBatteryDeliveredParccel(DroneList droneList, IDAL.DO.Parcel parcel)
+        public static double GetBatteryDeliveredParcel(DroneList droneList, IDAL.DO.Parcel parcel)
         {
             IDAL.DO.Customer targetCustomer = dl.GetCustomer(parcel.TargetId);
             double newBattery = droneList.Battery;
             double distance = GetDistance(droneList.LocationNow, new Location(targetCustomer.Longitude, targetCustomer.Latitude));
-            if (parcel.Weight == (IDAL.DO.WeightCategories)0)
-                newBattery = newBattery - (distance * easy);
-            else
-                  //if the parcel has a medium weight
-                  if (parcel.Weight == (IDAL.DO.WeightCategories)1)
-                newBattery = newBattery - (distance * medium);
-            else
-                //the parcel has a heavy weight
-                newBattery = newBattery - (distance * heavy);
+            newBattery -= GetElectricityUseOfBattery(distance, (WeightCategories)parcel.Weight);
             return newBattery;
         }
         public static IDAL.DO.Parcel GetParcelToDrone(List<IDAL.DO.Parcel> parcels, DroneList droneList)
@@ -192,7 +179,7 @@ namespace IBL
                     Location locationTarget = new Location(dl.GetCustomer(item.TargetId).Longitude, dl.GetCustomer(item.TargetId).Latitude);
                     double chargeBattery = GetDistance(droneList.LocationNow, locationSender) * free;
                     double distanceSenderToTarget = GetDistance(locationSender, locationTarget);
-                    chargeBattery += ElectricityUseOfBattery(distanceSenderToTarget, (WeightCategories)item.Weight);
+                    chargeBattery += GetElectricityUseOfBattery(distanceSenderToTarget, (WeightCategories)item.Weight);
                     IDAL.DO.BaseStation closerStation = GetCloserBaseStation(locationTarget);
                     double distanceTargetToCloserStation = GetDistance(locationTarget, new Location(closerStation.Longitude, closerStation.Latitude));
                     chargeBattery += distanceTargetToCloserStation * free;

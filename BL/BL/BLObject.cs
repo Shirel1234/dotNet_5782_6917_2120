@@ -60,9 +60,8 @@ namespace IBL
                     droneList.DroneStatus = (DroneStatuses)1;
                     BODrones.Add(droneList);
                     //update station
-                    dl.GetBaseStations().ToList().Remove(closeStation);
                     closeStation.ChargeSlots--;
-                    dl.GetBaseStations().ToList().Add(closeStation);
+                    dl.UpDateBaseStation(closeStation);
                     //update drone Charge
                     DroneCharge droneCharge = new DroneCharge() { Battery = droneList.Battery, Id = droneList.Id };
                 }
@@ -178,29 +177,16 @@ namespace IBL
                         ModelDrone = droneList.ModelDrone,
                         ParcelInWay = droneList.ParcelInWay,
                         Weight = droneList.Weight,
-                        Battery = GetBatteryDeliveredParccel(droneList, parcel),
+                        Battery = GetBatteryDeliveredParcel(droneList, parcel),
                         LocationNow = new Location(dl.GetCustomer(parcel.TargetId).Longitude, dl.GetCustomer(parcel.TargetId).Latitude),
                         DroneStatus = (DroneStatuses)0,
                     };
                     BODrones.ToList().Remove(droneList);
                     BODrones.ToList().Add(newDroneListnew);
-
                 }
                 //update parcel
-                IDAL.DO.Parcel newParcel = new IDAL.DO.Parcel
-                {
-                    CodeParcel = parcel.CodeParcel,
-                    Weight = parcel.Weight,
-                    Priority = parcel.Priority,
-                    SenderId = parcel.SenderId,
-                    TargetId = parcel.TargetId,
-                    DroneId = parcel.DroneId,
-                    Requested = parcel.Requested,
-                    Scheduled = parcel.Scheduled,
-                    PickedUp = parcel.PickedUp,
-                    Delivered = DateTime.Now
-                };
-
+                parcel.Delivered = DateTime.Now;
+                dl.UpDateParcel(parcel);
             }
             throw new UpdateProblemException("The drone list doesn't exist");
         }
