@@ -71,5 +71,15 @@ namespace IBL
                 newDroneList.DroneStatus = (DroneStatuses)rnd.Next(0, 2);
 
         }
+        public static double ElectricityUseOfBattery(double distance,WeightCategories weight)
+        {
+            if (weight == (WeightCategories)0)
+                return distance * easy;
+            else
+                if (weight == (WeightCategories)1)
+                return distance * medium;
+            else
+                return distance * heavy;
+        }
     }
 }

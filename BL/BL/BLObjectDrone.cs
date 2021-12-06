@@ -64,6 +64,10 @@ namespace IBL
             {
                 throw new UpdateProblemException();
             }
+            DroneList boDrone = BODrones.Find(drone => drone.Id == id);
+            BODrones.Remove(boDrone);
+            boDrone.ModelDrone = model;
+            BODrones.Add(boDrone);
         }
         public Drone GetDrone(int id)
         {
@@ -94,7 +98,7 @@ namespace IBL
                     IsInWay = true,
                     LocationPickedUp = locationS,
                     LocationTarget = locationT,
-                    TransportDistance = HelpClass.GetDistance(locationS, locationT)
+                    TransportDistance = GetDistance(locationS, locationT)
                 }
 
             };

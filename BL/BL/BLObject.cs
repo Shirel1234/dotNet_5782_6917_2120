@@ -139,9 +139,29 @@ namespace IBL
 
 
         }
-        public void UpdateParcelPickedUpByDrone(int idD)
+        public void UpdateParcelPickedUpByDrone(int droneID)
         {
-
+            Drone drone = GetDrone(droneID);
+            if (drone.DroneStatus==(DroneStatuses)2)
+            {
+                IDAL.DO.Parcel p = dl.GetParcels().ToList().Find(parcel => parcel.DroneId==droneID && parcel.PickedUp > DateTime.Now);
+                //if the conditions match and the parcel was found
+                if(p.DroneId==droneID)
+                {
+                    //update the drone and the parcel to be picked up by the drone 
+                    Location senderLocation = new Location(dl.GetCustomer(p.SenderId).Longitude, dl.GetCustomer(p.SenderId).Latitude);
+                    double distanceDroneToSender = GetDistance(drone.LocationNow, senderLocation);
+                    DroneList boDrone = BODrones.Find(drone => drone.Id == droneID);
+                    BODrones.Remove(boDrone);
+                    boDrone.Battery -= free * distanceDroneToSender;
+                    boDrone.LocationNow = senderLocation;
+                    BODrones.Add(boDrone);
+                    p.PickedUp = DateTime.Now;
+                    dl.UpDateParcel(p);
+                    return;
+                }
+            }
+            throw new UpdateProblemException("This drone can't pick up the parcel");
         }
         public void UpdateDeliveredParcelByDrone(int idD)
         {
