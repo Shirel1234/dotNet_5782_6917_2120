@@ -10,7 +10,7 @@ namespace ConsoleUI
     public class Program
     {
         IDal dal = new DalObject.DalObject();
-        enum Menu { Exit, Add, Update, View, ViewList }
+        enum Menu { Exit, Add, View, ViewList }
         enum AddOption { Exit, Station, Drone, Customer, Parcel }
         enum ShowOption { Exit, Station, Drone, Customer, Parcel }
         enum ShowListOption { Exit, Station, Drone, Customers, Parcels, UnAssignmentParcel, AvailableChargingsStation }

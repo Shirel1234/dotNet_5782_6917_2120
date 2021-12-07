@@ -12,9 +12,10 @@ using System.Threading.Tasks;
             internal static Random r = new Random();
             internal static List<BaseStation> stations = new List<BaseStation>();
             internal static List<Customer> customers = new List<Customer>();
-            public static List<Drone> drones = new List<Drone>();
+            internal static List<Drone> drones = new List<Drone>();
             internal static List<Parcel> parcels = new List<Parcel>();
-            internal class Config
+            internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
+        internal class Config
             {
                 internal static int countIdParcel = 200;
             internal static double Free { get => 0; }

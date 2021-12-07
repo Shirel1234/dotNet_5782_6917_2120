@@ -182,6 +182,23 @@ namespace DalObject
             //}
             return lstStationsWithSlots;
         }
+        public DroneCharge GetDroneCharge(int idDC)
+        {
+            return DataSource.dronesCharge.Find(droneCharge => droneCharge.DroneID== idDC);
+        }
+        public void AddDroneCharge(int idD, int idS)
+        {
+            DroneCharge dc = new DroneCharge()
+            {
+                DroneID = idD,
+                StationID = idS
+            };
+            DataSource.dronesCharge.Add(dc);
+        }
+        public void RemoveDroneCharge(DroneCharge dc)
+        {
+            DataSource.dronesCharge.Remove(dc);
+        }
         public double[] AskElectrical()
         {
             double[] arrElectrical = new double[5];

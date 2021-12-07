@@ -18,7 +18,7 @@ namespace IBL
         #region
         public static Random rnd = new Random();
         public static IDAL.DO.IDal dl;
-        List<DroneList> BODrones;
+        List<DroneList> BODrones= new List<DroneList>();
         public BLObject()
         {
             dl = new DalObject.DalObject();
@@ -63,7 +63,8 @@ namespace IBL
                     closeStation.ChargeSlots--;
                     dl.UpDateBaseStation(closeStation);
                     //update drone Charge
-                    DroneCharge droneCharge = new DroneCharge() { Battery = droneList.Battery, Id = droneList.Id };
+                    //DroneCharge droneCharge = new DroneCharge() { Battery = droneList.Battery, Id = droneList.Id };
+                    dl.AddDroneCharge(droneList.Id, closeStation.CodeStation);
                 }
                 else
                     throw new UpdateProblemException("It is impossible to send this drone to charging");
@@ -87,6 +88,7 @@ namespace IBL
                 IDAL.DO.BaseStation myStation = dl.GetBaseStations().ToList().Find(station => station.Longitude == droneList.LocationNow.Longitude && station.Latitude == droneList.LocationNow.Latitude);
                 myStation.ChargeSlots++;
                 dl.UpDateBaseStation(myStation);
+                dl.RemoveDroneCharge(dl.GetDroneCharge(droneList.Id));
             }
 
         }
