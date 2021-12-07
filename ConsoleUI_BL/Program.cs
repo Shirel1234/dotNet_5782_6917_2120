@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using IBL.BO;
@@ -38,6 +39,9 @@ namespace ConsoleUI_BL
                 }
             }
         }
+        /// <summary>
+        /// a function 
+        /// </summary>
         public void NewBaseStation()
         {
             try
@@ -505,9 +509,10 @@ namespace ConsoleUI_BL
                 Console.WriteLine(ex + "\n");
             }
         }
+
         public void Main(string[] args)
         {
-            Program p = new Program();
+           // Program p = new Program();
             int choice;
             Menu menu;
             do
@@ -519,9 +524,9 @@ namespace ConsoleUI_BL
                     //choice = (Char)Console.Read();
                     switch (menu)
                     {
-                        case Menu.Add: p.AddingOptions(); break;
-                        case Menu.Update: p.UpdateOptions(); break;
-                        case Menu.View: p.ViewOptions(); break;
+                        case Menu.Add: AddingOptions(); break;
+                        case Menu.Update: UpdateOptions(); break;
+                        case Menu.View: ViewOptions(); break;
                         case Menu.ViewList: ListViewOptions(); break;
                         case Menu.Exit: Console.WriteLine("bye\n"); break;
                         default: Console.WriteLine("error\n"); break;
@@ -529,7 +534,7 @@ namespace ConsoleUI_BL
                 }
             }
             while (choice != 0);
-
-        }
+        } 
     }
+    
 }
