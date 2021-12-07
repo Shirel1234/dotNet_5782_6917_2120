@@ -1,27 +1,26 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using IBL.BO;
 
-namespace ConsoleUI_BL
+namespace Console_BL
 {
     class Program
     {
         enum MenuOption { Exit, Add, Update, View, ViewList }
         enum AddOption { Exit, Station, Drone, Customer, Parcel }
-        enum UpdateOption { Exit, Drone, BaseStation, Customer, Charge , Release, Schedule, PickedUp, Delivery }
+        enum UpdateOption { Exit, Drone, BaseStation, Customer, Charge, Release, Schedule, PickedUp, Delivery }
         enum ShowOption { Exit, Station, Drone, Customer, Parcel }
         enum ShowListOption { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingsStations }
         public static Random rnd = new Random();
         static IBL.IBl bl;
-        static void Main(string[]args)
+
+        static void Main(string[] args)
         {
-            bl= new IBL.BLObject();
-            Menu();
-        }
-        /// <summary>
-        /// the function offers the user 4 adding options for adding base station/drone/customer/parcel.
-        /// </summary>
+                bl = new IBL.BLObject();
+                Menu();
+
+            }
         private static void Menu()
         {
             int choice;
@@ -92,7 +91,7 @@ namespace ConsoleUI_BL
                             bl.AddBaseStation(baseStation);
                         }
             }
-            catch(AddingProblemException ex)
+            catch (AddingProblemException ex)
             {
                 Console.WriteLine(ex + "\n");
             }
@@ -103,25 +102,28 @@ namespace ConsoleUI_BL
             try
             {
                 Console.WriteLine("enter ID number, model, max weight(easy=0, medium=1, heavy=2) of the drone, id of station for charge\n");
-                int id; int idStation;
+                int id; int enumWeight;  int idStation;
                 if (int.TryParse(Console.ReadLine(), out id))
                 {
                     string model = Console.ReadLine();
-                    WeightCategories weight = (WeightCategories)Console.Read();
-                    if (int.TryParse(Console.ReadLine(), out idStation))
+                     if (int.TryParse(Console.ReadLine(), out enumWeight))
                     {
-                        IBL.BO.Drone drone = new IBL.BO.Drone()
+                        WeightCategories weight = (WeightCategories)enumWeight;
+                        if (int.TryParse(Console.ReadLine(), out idStation))
                         {
-                            Id = id,
-                            ModelDrone = model,
-                            MaxWeight = weight,
-                        };
-                        bl.AddDrone(drone, idStation);
+                            IBL.BO.Drone drone = new IBL.BO.Drone()
+                            {
+                                Id = id,
+                                ModelDrone = model,
+                                MaxWeight = weight,
+                            };
+                            bl.AddDrone(drone, idStation);
+                        }
                     }
 
                 }
             }
-            catch(AddingProblemException ex)
+            catch (AddingProblemException ex)
             {
                 Console.WriteLine(ex + "\n");
             }
@@ -151,17 +153,17 @@ namespace ConsoleUI_BL
                     bl.AddCustomer(customer);
                 }
             }
-            catch(AddingProblemException ex)
+            catch (AddingProblemException ex)
             {
                 Console.WriteLine(ex + "\n");
             }
         }
         public static void NewParcel()
         {
-            try 
-            { 
-            Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy=0, medium=1, heavy=2) and priority (normal=0, express=1, emergency=2) of the parcel");
-            int idP; int idS; int idT;
+            try
+            {
+                Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy=0, medium=1, heavy=2) and priority (normal=0, express=1, emergency=2) of the parcel");
+                int idP; int idS; int idT;
                 if (int.TryParse(Console.ReadLine(), out idP))
                     if (int.TryParse(Console.ReadLine(), out idS))
                         if (int.TryParse(Console.ReadLine(), out idT))
@@ -179,7 +181,7 @@ namespace ConsoleUI_BL
                             bl.AddParcel(parcel);
                         }
             }
-            catch(AddingProblemException ex)
+            catch (AddingProblemException ex)
             {
                 Console.WriteLine(ex + "\n");
             }
@@ -214,13 +216,13 @@ namespace ConsoleUI_BL
                 }
             }
         }
-        public static void UpdateDrone() 
+        public static void UpdateDrone()
         {
             try
             {
                 Console.WriteLine("enter drone ID number and a new model");
                 int idD;
-                if (int.TryParse(Console.ReadLine(),out idD))
+                if (int.TryParse(Console.ReadLine(), out idD))
                 {
                     string newModel = Console.ReadLine();
                     bl.UpdateDrone(idD, newModel);
@@ -242,7 +244,7 @@ namespace ConsoleUI_BL
                 if (int.TryParse(Console.ReadLine(), out idS))
                     if (int.TryParse(Console.ReadLine(), out newName))
                         if (int.TryParse(Console.ReadLine(), out numOfChargePositions))
-                                bl.UpdateBaseStation(idS, newName, numOfChargePositions);
+                            bl.UpdateBaseStation(idS, newName, numOfChargePositions);
             }
             catch (UpdateProblemException ex)
             {
@@ -259,8 +261,8 @@ namespace ConsoleUI_BL
                 int idC;
                 if (int.TryParse(Console.ReadLine(), out idC))
                 {
-                    string newName= Console.ReadLine();
-                    string newPhone= Console.ReadLine();
+                    string newName = Console.ReadLine();
+                    string newPhone = Console.ReadLine();
                     bl.UpdateCustomer(idC, newName, newPhone);
                 }
             }
@@ -292,7 +294,7 @@ namespace ConsoleUI_BL
                 if (int.TryParse(Console.ReadLine(), out idD))
                 {
                     double chargingTime = double.Parse(Console.ReadLine());
-                    bl.UpdateReleasingDroneFromCharge(idD,chargingTime);
+                    bl.UpdateReleasingDroneFromCharge(idD, chargingTime);
                 }
             }
             catch (UpdateProblemException ex)
@@ -403,7 +405,7 @@ namespace ConsoleUI_BL
             }
             catch (GetDetailsProblemException ex)
             {
-                Console.WriteLine(ex+"\n");
+                Console.WriteLine(ex + "\n");
             }
         }
         public static void ShowParcel()
@@ -448,7 +450,7 @@ namespace ConsoleUI_BL
         {
             try
             {
-               List<BaseStationList> baseStationsList = bl.GetAllBaseStations().ToList();
+                List<BaseStationList> baseStationsList = bl.GetAllBaseStations().ToList();
                 foreach (BaseStationList item in baseStationsList)
                 {
                     Console.WriteLine(item);
@@ -534,6 +536,5 @@ namespace ConsoleUI_BL
                 Console.WriteLine(ex + "\n");
             }
         }
-            
     }
 }

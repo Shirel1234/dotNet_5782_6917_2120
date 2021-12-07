@@ -10,6 +10,10 @@ namespace IBL
 {
     public partial class BLObject
     {
+        /// <summary>
+        /// the function checks the details and throw errors in step and then adds a new drone to the list of drones
+        /// </summary>
+        /// <param name="d"> a new drone</param>
         public void AddDrone(Drone d, int idStation)
         {
             if (d.Id < 0)
@@ -38,6 +42,7 @@ namespace IBL
             {
                 throw new AddingProblemException("Can't add this drone", ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
             }
+            //add this drone to the bo drones
             DroneList boDrone = new DroneList()
             {
                 Id=d.Id,
@@ -50,6 +55,12 @@ namespace IBL
             };
             BODrones.Add(boDrone);
         }
+        /// <summary>
+        /// the funcrion gets new details of drone, checks them and throw matching errors
+        /// In addition it calls to the function that update the drone from dal with the new details
+        /// </summary>
+        /// <param name="id">id of drone</param>
+        /// <param name="model"> model of drone</param>
         public void UpdateDrone(int id, string model)
         {
             if (id < 0)
@@ -69,6 +80,11 @@ namespace IBL
             boDrone.ModelDrone = model;
             BODrones.Add(boDrone);
         }
+        /// <summary>
+        /// the function brings from the list of drones in bl and create new dron by this information
+        /// </summary>
+        /// <param name="id">id of drone</param>
+        /// <returns>drone</returns>
         public Drone GetDrone(int id)
         {
             IDAL.DO.Drone dalDrone = dl.GetDrone(id);

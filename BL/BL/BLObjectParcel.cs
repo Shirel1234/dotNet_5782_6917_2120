@@ -9,6 +9,10 @@ namespace IBL
 {
     public partial class BLObject
     {
+        /// <summary>
+        /// the function checks the details and throw errors in step and then adds a new parcel to the list of parcels
+        /// </summary>
+        /// <param name="c"> a new parcel</param>
         public void AddParcel(Parcel p)
             {
             if (p.SenderCustomerId < 100000000 || p.SenderCustomerId > 999999999)
@@ -47,6 +51,11 @@ namespace IBL
                     throw new AddingProblemException("Can't add this parcel", ex);
                 }
             }
+        /// <summary>
+        /// the function brings from the dal the details of the parcel and creates by it a parcel of bl
+        /// </summary>
+        /// <param name="id">id of parcel</param>
+        /// <returns>a parcel</returns>
         public Parcel GetParcel(int id)
         {
             IDAL.DO.Parcel dalParcel = dl.GetParcel(id);

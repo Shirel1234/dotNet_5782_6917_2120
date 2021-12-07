@@ -17,11 +17,6 @@ namespace IDAL.DO
             void UpDateParcel(Parcel p);
             void UpDateDrone(Drone d);
             void UpDateCustomer(Customer c);
-           // void UpdateParcelToDrone(int idP, int idD);
-          //  void UpdatePickedUp(int idP);
-           // void UpdateDeliver(int idP);
-          //  void UpDateCharge(int idD, int idS);
-         //   void ReleaseCharge(int idD, int idS);
             BaseStation GetStation(int idS);
             Drone GetDrone(int idD);
             Customer GetCustomer(int idC);

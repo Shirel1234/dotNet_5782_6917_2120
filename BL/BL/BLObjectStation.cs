@@ -9,7 +9,10 @@ namespace IBL
 {
     public partial class BLObject
     {
-        #region
+        /// <summary>
+        /// the function checks the details and throw errors in step and then adds a new station to the list of stations
+        /// </summary>
+        /// <param name="b"> a new station</param>
         public void AddBaseStation(BaseStation b) 
         {
                 if (b.Id < 0)
@@ -37,8 +40,13 @@ namespace IBL
               throw new AddingProblemException("Can't add this baseStation", ex);
             }
         }
-        #endregion
-        #region
+        /// <summary>
+        /// the function gets new details of station, checks them and throw matching errors
+        ///In addition it calls to the function that update the station from dal with the new details
+        /// </summary>
+        /// <param name="id">id of station</param>
+        /// <param name="name">name of station</param>
+        /// <param name="numOfChargePositions"> number of charge position</param>
         public void UpdateBaseStation(int id, int name, int numOfChargePositions)
         {
             if (id < 0)
@@ -65,7 +73,24 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
-        #endregion
+        /// <summary>
+        /// the function brings from the dal the details of the station and creates by it a station of bl
+        /// </summary>
+        /// <param name="id">id of base station</param>
+        /// <returns>base station</returns>
+        public BaseStation GetBaseStation(int id)
+        {
+            IDAL.DO.BaseStation dalStation = dl.GetStation(id);
+            return new BaseStation()
+            {
+                Id = dalStation.CodeStation,
+                Name = dalStation.NameStation,
+                ChargeSlots = dalStation.ChargeSlots,
+                Location = new Location(dalStation.Longitude, dalStation.Latitude),
+                ListDroneCharge = GetChargesDrone(dalStation)
+            };
+        }
+
         public IEnumerable<BaseStationList> GetAllBaseStations()
         {
             List<IDAL.DO.BaseStation> DOstatinsList = dl.GetBaseStations().ToList();
@@ -107,21 +132,11 @@ namespace IBL
                                                     select new DroneCharge
                                                     {
                                                         Battery = boDrone.Battery,
-                                                        Id = boDrone.Id
+                                                        Id = boDrone.Id,
                                                     };
+            if (dronesCharge.Count() == 0)
+                dronesCharge = new List<DroneCharge>();
             return dronesCharge;
-        }
-        public BaseStation GetBaseStation(int idS)
-        {
-            IDAL.DO.BaseStation dalStation = dl.GetStation(idS);
-            return new BaseStation()
-            {
-                Id = dalStation.CodeStation,
-                Name = dalStation.NameStation,
-                ChargeSlots = dalStation.ChargeSlots,
-                Location = new Location(dalStation.Longitude, dalStation.Latitude),
-                ListDroneCharge = GetChargesDrone(dalStation)
-            };
         }
 
     }

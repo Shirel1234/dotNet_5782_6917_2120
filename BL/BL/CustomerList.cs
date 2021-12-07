@@ -17,7 +17,7 @@ namespace IBL.BO
         public int CountParcelsInWay { get; set; }
         public override string ToString()
         {
-            return String.Format($"({Id}, /n{Name}, /n{Phone}, /n{CountParcelsSend})/n{CountParcelsNotProvide}/n{CountParcelsInWay}");
+            return String.Format($"({Id}, /n{Name}, /n{Phone}, /n{CountDeliveredParcels})/n{CountNotDeliveredParcels}/n{CountAcceptedParcelsByCustomer}/n{CountParcelsInWay}");
         }
     }
 }

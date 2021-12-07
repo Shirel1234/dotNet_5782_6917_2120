@@ -9,6 +9,10 @@ namespace IBL
 {
     public partial class BLObject
     {
+        /// <summary>
+        /// the function checks the details and throw errors in step and then adds a new castumer to the list of customers
+        /// </summary>
+        /// <param name="c"> a new castumer</param>
         public void AddCustomer(Customer c)
         {
             if (c.Id < 100000000 || c.Id > 999999999)
@@ -37,6 +41,13 @@ namespace IBL
                 throw new AddingProblemException("Can't add this customer", ex);
             }
         }
+        /// <summary>
+        /// the funcrion gets new details of customer, checks them and throw matching errors
+        /// In addition it calls to tha function that update the customer from dal with the new details
+        /// </summary>
+        /// <param name="id"> id of customer</param>
+        /// <param name="name"> name of customer</param>
+        /// <param name="phone"> phone of customer</param>
         public void UpdateCustomer(int id, string name, string phone)
         {
             if (id < 100000000 || id > 999999999)
@@ -55,6 +66,11 @@ namespace IBL
                 throw new UpdateProblemException();
             }
         }
+        /// <summary>
+        /// the function moves on the parcel and create list of all the parcels that this customer send
+        /// </summary>
+        /// <param name="id"> id of customer</param>
+        /// <returns>list of parcelsthat this customer send</returns>
         public IEnumerable<ParcelCustomer> GetSendParcels(int id)
         {
             IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
@@ -70,6 +86,11 @@ namespace IBL
                                                       };
             return sendParcels;
         }
+        /// <summary>
+        ///  the function moves on the parcels and creates a list of all the parcels that this customer got
+        /// </summary>
+        /// <param name="id">id of customer</param>
+        /// <returns>list of parcels that this customer got</returns>
         public IEnumerable<ParcelCustomer> GetTargetParcel(int id)
         {
             IEnumerable<ParcelCustomer> targetParcel = from parcel in dl.GetParcels()
@@ -84,6 +105,11 @@ namespace IBL
                                                       };
             return targetParcel;
         }
+        /// <summary>
+        /// the function bring from the dal the details of the customer and create by it a customer of bl
+        /// </summary>
+        /// <param name="id"> id of customer</param>
+        /// <returns>a customer has this id</returns>
         public Customer GetCustomer(int id)
         {
             try
