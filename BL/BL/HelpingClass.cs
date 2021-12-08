@@ -123,7 +123,7 @@ namespace IBL
                     //random battery between minimum of arriving to base station for charge
                     IDAL.DO.BaseStation closerBaseStation = GetCloserBaseStation(newDroneList.LocationNow);
                     double distance = GetDistance(newDroneList.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
-                    newDroneList.Battery = distance * free;
+                    newDroneList.Battery = rnd.Next((int)(distance * free),100);
                 }
             }
             return newDroneList;

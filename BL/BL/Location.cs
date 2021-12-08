@@ -17,6 +17,10 @@ namespace IBL
                 this.Longitude = longitude;
                 this.Latitude = latitude;
             }
+            public override string ToString()
+            {
+                return String.Format($"{Longitude}, {Latitude}");
+            }
         }
     }
 }
