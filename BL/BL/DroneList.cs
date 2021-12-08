@@ -15,5 +15,9 @@ namespace IBL.BO
         public double Battery { set; get; }
         public Location LocationNow { set; get; }
         public int ParcelInWay { set; get; }
+        public override string ToString()
+        {
+            return String.Format($"({Id}, \n{ModelDrone})\n{Weight})\n{DroneStatus})\n{Battery}\n{LocationNow}\n{ParcelInWay}");
+        }
     }
 }
