@@ -17,11 +17,11 @@ using System.Threading.Tasks;
             internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
         internal class Config
             {
-             internal static int countIdParcel = 200;
-            internal static double Free { get => 0; }
-            internal static double Easy { get => 10; }
-            internal static double Heavy { get => 150; }
-            internal static double Medium { get => 50; }
+                internal static int countIdParcel = 200;
+            internal static double Free { get => 1; }
+            internal static double Easy { get => 2; }
+            internal static double Medium { get => 3; }
+            internal static double Heavy { get => 5; }
             internal static double ChargingRate { get => 10.25; }
         }
             public static void Initialize()
@@ -31,9 +31,9 @@ using System.Threading.Tasks;
                 {
                     b.CodeStation = i;
                     b.NameStation = r.Next(1000, 10000);
-                    b.Longitude = r.Next(-180, 180);
-                    b.Latitude = r.Next(-90, 90);
-                    stations.Add(b);
+                    b.Longitude = r.NextDouble() * (36.3 - 33.7) + 33.7;
+                    b.Latitude = r.NextDouble() * (33.5 - 29.3) + 29.3;
+                stations.Add(b);
                 }
                 Drone d = new Drone();
                 for (int i = 1; i < 6; i++)
@@ -51,8 +51,8 @@ using System.Threading.Tasks;
                     c.IdCustomer = r.Next(100000000, 1000000000);
                     c.NameCustomer = "customer"+i;
                     c.Phone = "050-" + r.Next(1000000, 10000000)+"";
-                    c.Longitude = r.Next(-180, 180);
-                    c.Latitude = r.Next(-90, 90);
+                    c.Longitude = r.NextDouble() * (36.3 - 33.7) + 33.7;
+                    c.Latitude = r.NextDouble() * (33.5 - 29.3) + 29.3;
                     customers.Add(c);
                 }
                 Parcel p = new Parcel();
