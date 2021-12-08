@@ -18,7 +18,7 @@ namespace IBL
         #region
         public static Random rnd = new Random();
         public static IDAL.DO.IDal dl;
-        List<DroneList> BODrones= new List<DroneList>();
+        List<DroneList> BODrones=new List<DroneList>();
         public BLObject()
         {
             dl = new DalObject.DalObject();
@@ -29,9 +29,8 @@ namespace IBL
             heavy = arr[3];
             chargingRate = arr[4];
             List<IDAL.DO.Parcel> listParcels = dl.GetParcels().ToList();
-            List <IDAL.DO.Drone> listDrones= dl.GetDrones().ToList();
-            BODrones = from item in listDrones
-                       select new DroneList()
+            IEnumerable<DroneList> tempBoDrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
+                                              select new DroneList()
                                               {
                                                   Id = item.CodeDrone,
                                                   ModelDrone = item.ModelDrone,
@@ -41,6 +40,7 @@ namespace IBL
                                                   Battery = GetUpdatedDetailDrone(item).Battery,
                                                   ParcelInWay = 0
                                               };
+            BODrones = tempBoDrones.ToList();
         }
         public void UpdateSendingDroneToCharge(int id)
         {
