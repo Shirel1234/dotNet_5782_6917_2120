@@ -12,5 +12,6 @@ namespace IBL.BO
         public int Name { set; get; }
         public int ChargeSlotsFree { set; get; }
         public int ChargeSlotsCatch { set; get; }
+
     }
 }
