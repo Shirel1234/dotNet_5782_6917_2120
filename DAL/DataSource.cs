@@ -17,7 +17,7 @@ using System.Threading.Tasks;
             internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
         internal class Config
             {
-                internal static int countIdParcel = 200;
+             internal static int countIdParcel = 200;
             internal static double Free { get => 0; }
             internal static double Easy { get => 10; }
             internal static double Heavy { get => 150; }
