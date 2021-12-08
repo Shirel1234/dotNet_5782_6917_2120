@@ -15,9 +15,9 @@ namespace IBL
         /// <param name="c"> a new parcel</param>
         public void AddParcel(Parcel p)
             {
-            if (p.SenderCustomerId < 100000000 || p.SenderCustomerId > 999999999)
+            if (p.SenderCustomer.Id < 100000000 || p.SenderCustomer.Id > 999999999)
                 throw new AddingProblemException("The id of sender must contain 9 digits");
-           if (p.TargetCustomerId < 100000000 || p.TargetCustomerId > 999999999)
+           if (p.TargetCustomer.Id < 100000000 || p.TargetCustomer.Id > 999999999)
                 throw new AddingProblemException("The id of target must contain 9 digits");
             if (p.Weight < 0)///operator>
                 throw new AddingProblemException("The weight isn't valid");
@@ -27,16 +27,16 @@ namespace IBL
             p.Scheduled = new DateTime(0);
             p.PickedUp = new DateTime(0);
             p.Delivered = new DateTime(0);
-            p.DroneId = 0;
+            p.DroneInParcel = new DroneParcel();
             try
             {
                     IDAL.DO.Parcel doParcel = new IDAL.DO.Parcel()
                     {
                         CodeParcel = p.CodeParcel,
-                        SenderId= p.SenderCustomerId,
-                        TargetId= p.TargetCustomerId,
+                        SenderId= p.SenderCustomer.Id,
+                        TargetId= p.TargetCustomer.Id,
                         Weight= (IDAL.DO.WeightCategories)p.Weight,
-                        DroneId = p.DroneId,
+                        DroneId = p.DroneInParcel.Id,
                         Priority = (IDAL.DO.Priorities)p.Priority,
                         Delivered = p.Delivered,
                         Requested = p.Requested,
@@ -62,9 +62,9 @@ namespace IBL
             return new Parcel()
             {
                 CodeParcel = dalParcel.CodeParcel,
-                SenderCustomerId = dalParcel.SenderId,
-                TargetCustomerId =dalParcel.TargetId,
-                DroneId = dalParcel.DroneId,
+                SenderCustomer = new CustomerParcel() { Id = dalParcel.SenderId, Name = dl.GetCustomer(dalParcel.SenderId).NameCustomer },
+                TargetCustomer = new CustomerParcel() { Id = dalParcel.TargetId, Name = dl.GetCustomer(dalParcel.TargetId).NameCustomer },
+                DroneInParcel = new DroneParcel() {Id=dalParcel.DroneId, Battery=BODrones.Find(drone=> drone.Id ==dalParcel.DroneId).Battery, LocationNow = BODrones.Find(drone => drone.Id == dalParcel.DroneId).LocationNow },
                 Weight= (WeightCategories)dalParcel.Weight,
                 Priority= (Priorities)dalParcel.Priority,
                 Delivered=dalParcel.Delivered,

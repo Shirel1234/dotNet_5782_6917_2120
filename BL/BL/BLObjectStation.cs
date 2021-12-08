@@ -31,7 +31,7 @@ namespace IBL
                     NameStation = b.Name,
                     ChargeSlots = b.ChargeSlots,
                     Longitude = b.Location.Longitude,
-                    Latitude = b.Location.Latitude
+                    Latitude = b.Location.Latitude,
                 };
                 dl.AddStation(doStation);
             }
@@ -90,7 +90,6 @@ namespace IBL
                 ListDroneCharge = GetChargesDrone(dalStation)
             };
         }
-
         public IEnumerable<BaseStationList> GetAllBaseStations()
         {
             List<IDAL.DO.BaseStation> DOstatinsList = dl.GetBaseStations().ToList();

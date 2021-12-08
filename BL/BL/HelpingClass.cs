@@ -106,7 +106,7 @@ namespace IBL
                     //random a base station
                     int countStations = dl.GetBaseStations().ToList().Count();
                     IDAL.DO.BaseStation[] arrBaseStation = dl.GetBaseStations().ToArray();
-                    IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(countStations)];
+                    IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(0,countStations)];
                     newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
                 }
                 //the drone is free
@@ -123,7 +123,7 @@ namespace IBL
                     //random battery between minimum of arriving to base station for charge
                     IDAL.DO.BaseStation closerBaseStation = GetCloserBaseStation(newDroneList.LocationNow);
                     double distance = GetDistance(newDroneList.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
-                    newDroneList.Battery = rnd.Next((int)(distance * free),100);
+                    newDroneList.Battery = rnd.Next((int)(distance * free),101);
                 }
             }
             return newDroneList;

@@ -25,7 +25,7 @@ namespace DalObject
         public void AddStation(BaseStation b)
         {
             if (CheckStation(b.CodeStation))
-                throw new AlreadyExistException("The baseStation already exist in the system");
+                throw new AlreadyExistException("The base station already exist in the system");
             DataSource.stations.Add(b);
         }
         public void UpDateBaseStation(BaseStation b)
