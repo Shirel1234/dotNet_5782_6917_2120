@@ -19,8 +19,7 @@ namespace Console_BL
         {
                 bl = new IBL.BLObject();
                 Menu();
-
-            }
+        }
         private static void Menu()
         {
             int choice;
@@ -74,12 +73,13 @@ namespace Console_BL
                 int id; int name; int chargeSlots;
                 if (int.TryParse(Console.ReadLine(), out id))
                     if (int.TryParse(Console.ReadLine(), out name))
+                        {
+                            double tempLon = double.Parse(Console.ReadLine());
+                            double tempLat = double.Parse(Console.ReadLine());
+                            double longitude = tempLon;
+                            double lattitude = tempLat;
                         if (int.TryParse(Console.ReadLine(), out chargeSlots))
                         {
-                            int tempLon = int.Parse(Console.ReadLine());
-                            int tempLat = int.Parse(Console.ReadLine());
-                            double longitude = (double)tempLon;
-                            double lattitude = (double)tempLat;
                             IBL.BO.BaseStation baseStation = new IBL.BO.BaseStation()
                             {
                                 Id = id,
@@ -89,6 +89,7 @@ namespace Console_BL
                                 ListDroneCharge = new List<DroneCharge>(),
                             };
                             bl.AddBaseStation(baseStation);
+                        }
                         }
             }
             catch (AddingProblemException ex)
