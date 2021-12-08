@@ -14,7 +14,7 @@ namespace IBL.BO
         public int ChargeSlotsCatch { set; get; }
         public override string ToString()
         {
-            return String.Format($"({Id}, \n{Name})\n{Name})\n{ChargeSlotsFree})\n{ChargeSlotsCatch}");
+            return String.Format($"{Id}, {Name}, {ChargeSlotsFree}, {ChargeSlotsCatch}");
         }
     }
 }

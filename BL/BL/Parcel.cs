@@ -22,7 +22,7 @@ namespace IBL
             public DateTime Delivered { get; set; }//זמן אספקה
             public override string ToString()
             {
-                return String.Format($"({CodeParcel}, /n{SenderCustomerId},/n {TargetCustomerId},/n{Weight},/n{DroneId},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");
+                return String.Format($"{CodeParcel}, {SenderCustomerId}, {TargetCustomerId}, {Weight}, {DroneId}, {Requested}, {Scheduled}, {PickedUp}, {Delivered}");
             }
         }
     }

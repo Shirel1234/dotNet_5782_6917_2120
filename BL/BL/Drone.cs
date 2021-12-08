@@ -19,7 +19,7 @@ namespace IBL
             public Location LocationNow { get; set; }
             public override string ToString()
             {
-                return String.Format($"({Id}, /n{ModelDrone},/n {MaxWeight})");
+                return String.Format($"{Id}, {ModelDrone}, {MaxWeight}, {DroneStatus}, {Battery}, {ParcelInWay},  {LocationNow}");
             }
         }
     }
