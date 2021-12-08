@@ -12,5 +12,9 @@ namespace IBL.BO
         public int Name { set; get; }
         public int ChargeSlotsFree { set; get; }
         public int ChargeSlotsCatch { set; get; }
+        public override string ToString()
+        {
+            return String.Format($"({Id}, \n{Name})\n{Name})\n{ChargeSlotsFree})\n{ChargeSlotsCatch}");
+        }
     }
 }
