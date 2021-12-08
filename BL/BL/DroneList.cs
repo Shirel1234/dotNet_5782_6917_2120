@@ -17,7 +17,7 @@ namespace IBL.BO
         public int ParcelInWay { set; get; }
         public override string ToString()
         {
-            return String.Format($"({Id}, \n{ModelDrone})\n{Weight})\n{DroneStatus})\n{Battery}\n{LocationNow}\n{ParcelInWay}");
+            return String.Format($"{Id}, {ModelDrone}, {Weight}, {DroneStatus}, {Battery}, {LocationNow}, {ParcelInWay}");
         }
     }
 }

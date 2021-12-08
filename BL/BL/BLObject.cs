@@ -29,8 +29,9 @@ namespace IBL
             heavy = arr[3];
             chargingRate = arr[4];
             List<IDAL.DO.Parcel> listParcels = dl.GetParcels().ToList();
-            IEnumerable<DroneList> BODrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
-                                              select new DroneList()
+            List <IDAL.DO.Drone> listDrones= dl.GetDrones().ToList();
+            BODrones = from item in listDrones
+                       select new DroneList()
                                               {
                                                   Id = item.CodeDrone,
                                                   ModelDrone = item.ModelDrone,
