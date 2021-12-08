@@ -12,8 +12,8 @@ namespace IBL.BO
         public bool IsInWay { set; get; }
         public Priorities Priority { set; get; }
         public WeightCategories Weight { set; get; }
-        public int SenderId { set; get; }
-        public int TargetId { set; get; }
+        public CustomerParcel Sender { set; get; }
+        public CustomerParcel Target { set; get; }
         public Location LocationPickedUp { set; get; }
         public Location LocationTarget { set; get; }
         public double TransportDistance { set; get; }

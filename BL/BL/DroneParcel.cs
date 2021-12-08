@@ -13,12 +13,7 @@ namespace IBL.BO
       public Location LocationNow { set; get; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Battery}, {LocationNow}, ");
+            return String.Format($"{Id}, {Battery}, {LocationNow}");
         }
     }
 }
-//לקוח בחבילה-כן-חבילה,חבילה בהעברה
-//חבילה אצל לקוח-כן-לקוח
-//חבילה בהעברה-כן-רחפן
-//רחפן בחבילה-כן-חבילה
-//רחפן בטעינה-כן-תחנת בסיס

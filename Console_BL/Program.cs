@@ -14,7 +14,6 @@ namespace Console_BL
         enum ShowListOption { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingsStations }
         public static Random rnd = new Random();
         static IBL.IBl bl;
-
         static void Main(string[] args)
         {
                 bl = new IBL.BLObject();
@@ -73,13 +72,13 @@ namespace Console_BL
                 int id; int name; int chargeSlots;
                 if (int.TryParse(Console.ReadLine(), out id))
                     if (int.TryParse(Console.ReadLine(), out name))
-                        {
-                            double tempLon = double.Parse(Console.ReadLine());
-                            double tempLat = double.Parse(Console.ReadLine());
-                            double longitude = tempLon;
-                            double lattitude = tempLat;
+                    {
+                        double tempLon = double.Parse(Console.ReadLine());
+                        double tempLat = double.Parse(Console.ReadLine());
                         if (int.TryParse(Console.ReadLine(), out chargeSlots))
                         {
+                            double longitude = (double)tempLon;
+                            double lattitude = (double)tempLat;
                             IBL.BO.BaseStation baseStation = new IBL.BO.BaseStation()
                             {
                                 Id = id,
@@ -90,7 +89,7 @@ namespace Console_BL
                             };
                             bl.AddBaseStation(baseStation);
                         }
-                        }
+                    }
             }
             catch (AddingProblemException ex)
             {
@@ -164,18 +163,18 @@ namespace Console_BL
             try
             {
                 Console.WriteLine("enter parcel ID number, sender ID number, target customer ID number,weight(easy=0, medium=1, heavy=2) and priority (normal=0, express=1, emergency=2) of the parcel");
-                int idP; int idS; int idT;
-                if (int.TryParse(Console.ReadLine(), out idP))
-                    if (int.TryParse(Console.ReadLine(), out idS))
-                        if (int.TryParse(Console.ReadLine(), out idT))
+                int idParcel; int idSender; int idTarget;
+                if (int.TryParse(Console.ReadLine(), out idParcel))
+                    if (int.TryParse(Console.ReadLine(), out idSender))
+                        if (int.TryParse(Console.ReadLine(), out idTarget))
                         {
                             WeightCategories weight = (WeightCategories)Console.Read();
                             Priorities priority = (Priorities)Console.Read();
                             IBL.BO.Parcel parcel = new IBL.BO.Parcel()
                             {
-                                CodeParcel = idP,
-                                SenderCustomerId = idS,
-                                TargetCustomerId = idT,
+                                CodeParcel = idParcel,
+                                SenderCustomer = new CustomerParcel() {Id=idSender},
+                                TargetCustomer = new CustomerParcel() { Id = idTarget},
                                 Weight = weight,
                                 Priority = priority
                             };

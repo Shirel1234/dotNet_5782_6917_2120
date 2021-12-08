@@ -106,7 +106,7 @@ namespace IBL
                     //random a base station
                     int countStations = dl.GetBaseStations().ToList().Count();
                     IDAL.DO.BaseStation[] arrBaseStation = dl.GetBaseStations().ToArray();
-                    IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(countStations)];
+                    IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(0,countStations)];
                     newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
                 }
                 //the drone is free

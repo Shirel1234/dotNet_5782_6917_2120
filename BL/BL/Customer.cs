@@ -18,7 +18,7 @@ namespace IBL
             public IEnumerable<ParcelCustomer> TargetParcels { get; set; }
             public override string ToString()
             {
-                return String.Format($"{Id}, {Name}, {Phone}, {Location}");
+                return String.Format($"{Id}, {Name}, {Phone}, {Location},{SendParcels},{TargetParcels}");
             }
         }
     }

@@ -79,8 +79,7 @@ namespace IBL
                                                       {
                                                           Id = parcel.CodeParcel,
                                                           Priority = (Priorities)parcel.Priority,
-                                                          CustomerId = id,
-                                                          Weight = (WeightCategories)parcel.Weight,
+                                                          SecondSideCustomer = new CustomerParcel() { Id = parcel.TargetId, Name = dl.GetCustomer(parcel.TargetId).NameCustomer },                                                          Weight = (WeightCategories)parcel.Weight,
                                                           Status = (ParcelStatuses)GetParcelStatus(parcel)
 
                                                       };
@@ -99,7 +98,7 @@ namespace IBL
                                                       {
                                                           Id = parcel.CodeParcel,
                                                           Priority = (Priorities)parcel.Priority,
-                                                          CustomerId = id,
+                                                          SecondSideCustomer = new CustomerParcel() { Id = parcel.SenderId, Name = dl.GetCustomer(parcel.SenderId).NameCustomer },
                                                           Weight = (WeightCategories)parcel.Weight,
                                                           Status= (ParcelStatuses)GetParcelStatus(parcel)
                                                       };

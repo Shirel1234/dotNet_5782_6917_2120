@@ -11,10 +11,6 @@ namespace IBL.BO
         public WeightCategories Weight { get; set; }
         public Priorities Priority { get; set; }
         public ParcelStatuses Status { get; set; }
-        public int CustomerId { get; set; }
-        public override string ToString()
-        {
-            return String.Format($"{Id}, {Weight}, {Priority},{Status}, {CustomerId}, ");
-        }
+        public CustomerParcel SecondSideCustomer { get; set; }
     }
 }
