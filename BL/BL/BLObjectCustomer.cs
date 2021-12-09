@@ -52,18 +52,18 @@ namespace IBL
         {
             if (id < 100000000 || id > 999999999)
                 throw new UpdateProblemException("The customer ID number must contain 9 digits");
-            IDAL.DO.Customer tempC = dl.GetCustomer(id);
-            if (!name.Equals("0"))
-                tempC.NameCustomer = name;
-            if (!phone.Equals("0"))
-                tempC.Phone = phone;
             try
             {
+                IDAL.DO.Customer tempC = dl.GetCustomer(id);
+                if (!name.Equals("0"))
+                    tempC.NameCustomer = name;
+                if (!phone.Equals("0"))
+                    tempC.Phone = phone;
                 dl.UpDateCustomer(tempC);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new UpdateProblemException();
+                throw new UpdateProblemException(ex.Message);
             }
         }
         /// <summary>
@@ -73,17 +73,24 @@ namespace IBL
         /// <returns>list of parcelsthat this customer send</returns>
         public IEnumerable<ParcelCustomer> GetSendParcels(int id)
         {
-            IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
-                                                      where parcel.SenderId == id
-                                                      select new ParcelCustomer
-                                                      {
-                                                          Id = parcel.CodeParcel,
-                                                          Priority = (Priorities)parcel.Priority,
-                                                          SecondSideCustomer = new CustomerParcel() { Id = parcel.TargetId, Name = dl.GetCustomer(parcel.TargetId).NameCustomer },                                                          Weight = (WeightCategories)parcel.Weight,
-                                                          Status = (ParcelStatuses)GetParcelStatus(parcel)
-
-                                                      };
-            return sendParcels;
+            try
+            {
+                IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
+                                                          where parcel.SenderId == id
+                                                          select new ParcelCustomer
+                                                          {
+                                                              Id = parcel.CodeParcel,
+                                                              Priority = (Priorities)parcel.Priority,
+                                                              SecondSideCustomer = new CustomerParcel() { Id = parcel.TargetId, Name = dl.GetCustomer(parcel.TargetId).NameCustomer },
+                                                              Weight = (WeightCategories)parcel.Weight,
+                                                              Status = (ParcelStatuses)GetParcelStatus(parcel)
+                                                          };
+                return sendParcels;
+            }
+            catch
+            {
+                throw new GetDetailsProblemException();
+            }
         }
         /// <summary>
         ///  the function moves on the parcels and creates a list of all the parcels that this customer got
@@ -92,17 +99,24 @@ namespace IBL
         /// <returns>list of parcels that this customer got</returns>
         public IEnumerable<ParcelCustomer> GetTargetParcel(int id)
         {
-            IEnumerable<ParcelCustomer> targetParcel = from parcel in dl.GetParcels()
-                                                      where parcel.TargetId == id
-                                                      select new ParcelCustomer
-                                                      {
-                                                          Id = parcel.CodeParcel,
-                                                          Priority = (Priorities)parcel.Priority,
-                                                          SecondSideCustomer = new CustomerParcel() { Id = parcel.SenderId, Name = dl.GetCustomer(parcel.SenderId).NameCustomer },
-                                                          Weight = (WeightCategories)parcel.Weight,
-                                                          Status= (ParcelStatuses)GetParcelStatus(parcel)
-                                                      };
-            return targetParcel;
+            try
+            {
+                IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
+                                                          where parcel.SenderId == id
+                                                          select new ParcelCustomer
+                                                          {
+                                                              Id = parcel.CodeParcel,
+                                                              Priority = (Priorities)parcel.Priority,
+                                                              SecondSideCustomer = new CustomerParcel() { Id = parcel.TargetId, Name = dl.GetCustomer(parcel.TargetId).NameCustomer },
+                                                              Weight = (WeightCategories)parcel.Weight,
+                                                              Status = (ParcelStatuses)GetParcelStatus(parcel)
+                                                          };
+                return sendParcels;
+            }
+            catch
+            {
+                throw new GetDetailsProblemException();
+            }
         }
         /// <summary>
         /// the function bring from the dal the details of the customer and create by it a customer of bl
@@ -125,33 +139,41 @@ namespace IBL
 
                 };
             }
-            catch (IDAL.DO.DoesntExistException customerException)
+            catch (Exception ex)
             {
-                throw new GetDetailsProblemException($"Customer id {id} was not found", customerException);
+                throw new GetDetailsProblemException();
+                //throw new GetDetailsProblemException($"Customer id {id} was not found", ex);
             }
         }
         public IEnumerable<CustomerList> GetAllCustomers()
         {
-            List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
-            List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
-            return
-                from customer in DOcustomersList
-                let numOfDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
-                let numOfNotDeliveredParcels= DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
-                && DateTime.Compare(parcel.PickedUp, DateTime.Now) > 0 && DateTime.Compare(parcel.Scheduled, DateTime.Now) <= 0)
-                let numOfParcelsInWay= DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
-                && DateTime.Compare(parcel.PickedUp, DateTime.Now) <= 0)
-                let numOfAcceptedParcels= DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
-                select new CustomerList()
-                {
-                    Id=customer.IdCustomer,
-                    Name=customer.NameCustomer,
-                    Phone=customer.Phone,
-                    CountDeliveredParcels= numOfDeliveredParcels,
-                    CountNotDeliveredParcels= numOfNotDeliveredParcels,
-                    CountParcelsInWay= numOfParcelsInWay,
-                    CountAcceptedParcelsByCustomer= numOfAcceptedParcels
-                };
+            try
+            {
+                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+                List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
+                return
+                    from customer in DOcustomersList
+                    let numOfDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
+                    let numOfNotDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
+                 && DateTime.Compare(parcel.PickedUp, DateTime.Now) > 0 && DateTime.Compare(parcel.Scheduled, DateTime.Now) <= 0)
+                    let numOfParcelsInWay = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
+                 && DateTime.Compare(parcel.PickedUp, DateTime.Now) <= 0)
+                    let numOfAcceptedParcels = DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
+                    select new CustomerList()
+                    {
+                        Id = customer.IdCustomer,
+                        Name = customer.NameCustomer,
+                        Phone = customer.Phone,
+                        CountDeliveredParcels = numOfDeliveredParcels,
+                        CountNotDeliveredParcels = numOfNotDeliveredParcels,
+                        CountParcelsInWay = numOfParcelsInWay,
+                        CountAcceptedParcelsByCustomer = numOfAcceptedParcels
+                    };
+            }
+            catch(Exception ex)
+            {
+                throw new GetDetailsProblemException(ex.Message);
+            }
         }
 
     }

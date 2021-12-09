@@ -18,9 +18,9 @@ namespace IBL
         {
             if (d.Id < 0)
                 throw new AddingProblemException("The ID number must be positive");
-            if (d.MaxWeight < 0)///operator>
+            if ((int)d.MaxWeight < 0|| (int)d.MaxWeight>2)
                 throw new AddingProblemException("The max weight isn't valid");
-            IDAL.DO.BaseStation tempB = dl.GetBaseStations().ToList().Find(station => station.CodeStation == idStation);
+            IDAL.DO.BaseStation tempB = dl.GetStation(idStation);
             if (tempB.CodeStation != idStation)
                 throw new AddingProblemException("The station doesn't exist");
             d.Battery = rnd.Next(20, 41);
@@ -35,6 +35,9 @@ namespace IBL
                     ModelDrone = d.ModelDrone,
                 };
                 dl.AddDrone(doDrone);
+                tempB.ChargeSlots--;
+                dl.UpDateBaseStation(tempB);
+                dl.AddDroneCharge(d.Id, idStation);
             }
 
             catch (Exception ex)
@@ -86,35 +89,42 @@ namespace IBL
         /// <returns>drone</returns>
         public Drone GetDrone(int id)
         {
-            IDAL.DO.Drone dalDrone = dl.GetDrone(id);
-            DroneList boDrone = BODrones.Find(drone => drone.Id == id);
-            IDAL.DO.Parcel dalParcel = dl.GetParcels().ToList().Find(p => p.DroneId == id);
-            IDAL.DO.Customer dalSender = dl.GetCustomer(dalParcel.SenderId);
-            IDAL.DO.Customer dalTarget = dl.GetCustomer(dalParcel.TargetId);
-            Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
-            Location locationT = new Location(dalTarget.Longitude, dalTarget.Longitude);
-            return new Drone
+            try
             {
-                Id = dalDrone.CodeDrone,
-                ModelDrone = dalDrone.ModelDrone,
-                DroneStatus = boDrone.DroneStatus,
-                MaxWeight = (WeightCategories)dalDrone.MaxWeight,
-                Battery = boDrone.Battery,
-                LocationNow = boDrone.LocationNow,
-                ParcelInWay = new ParcelInWay
+                IDAL.DO.Drone dalDrone = dl.GetDrone(id);
+                DroneList boDrone = BODrones.Find(boDrone => boDrone.Id == id);
+                IDAL.DO.Parcel dalParcel = dl.GetParcels().ToList().Find(p => p.DroneId == id);
+                IDAL.DO.Customer dalSender = dl.GetCustomer(dalParcel.SenderId);
+                IDAL.DO.Customer dalTarget = dl.GetCustomer(dalParcel.TargetId);
+                Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
+                Location locationT = new Location(dalTarget.Longitude, dalTarget.Longitude);
+                return new Drone
                 {
-                    Id = dalParcel.CodeParcel,
-                    Priority = (Priorities)dalParcel.Priority,
-                    Weight = (WeightCategories)dalParcel.Weight,
-                    Sender = new CustomerParcel() { Id = dalParcel.SenderId, Name = dl.GetCustomer(dalParcel.SenderId).NameCustomer },
-                    Target = new CustomerParcel() { Id = dalParcel.TargetId, Name = dl.GetCustomer(dalParcel.TargetId).NameCustomer },
-                    IsInWay = true,
-                    LocationPickedUp = locationS,
-                    LocationTarget = locationT,
-                    TransportDistance = GetDistance(locationS, locationT)
-                }
+                    Id = dalDrone.CodeDrone,
+                    ModelDrone = dalDrone.ModelDrone,
+                    DroneStatus = boDrone.DroneStatus,
+                    MaxWeight = (WeightCategories)dalDrone.MaxWeight,
+                    Battery = boDrone.Battery,
+                    LocationNow = boDrone.LocationNow,
+                    ParcelInWay = new ParcelInWay
+                    {
+                        Id = dalParcel.CodeParcel,
+                        Priority = (Priorities)dalParcel.Priority,
+                        Weight = (WeightCategories)dalParcel.Weight,
+                        Sender = new CustomerParcel() { Id = dalParcel.SenderId, Name = dl.GetCustomer(dalParcel.SenderId).NameCustomer },
+                        Target = new CustomerParcel() { Id = dalParcel.TargetId, Name = dl.GetCustomer(dalParcel.TargetId).NameCustomer },
+                        IsInWay = true,
+                        LocationPickedUp = locationS,
+                        LocationTarget = locationT,
+                        TransportDistance = GetDistance(locationS, locationT)
+                    }
 
-            };
+                };
+            }
+            catch
+            {
+                throw new GetDetailsProblemException();
+            }
         }
         public IEnumerable<DroneList> GetAllDrones()
         {

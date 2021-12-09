@@ -18,8 +18,7 @@ namespace Console_BL
         {
                 bl = new IBL.BLObject();
                 Menu();
-
-            }
+        }
         private static void Menu()
         {
             int choice;
@@ -377,7 +376,7 @@ namespace Console_BL
             }
             catch (GetDetailsProblemException ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowDrone()
@@ -387,7 +386,11 @@ namespace Console_BL
                 Console.WriteLine("Enter drone ID number");
                 int idD;
                 if (int.TryParse(Console.ReadLine(), out idD))
-                    Console.WriteLine(bl.GetDrone(idD));
+                {
+                    Drone d = bl.GetDrone(idD);
+                    Console.WriteLine(d);
+                }
+                   
             }
             catch (GetDetailsProblemException ex)
             {
@@ -406,7 +409,7 @@ namespace Console_BL
             }
             catch (GetDetailsProblemException ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowParcel()

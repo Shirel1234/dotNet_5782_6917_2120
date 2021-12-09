@@ -47,7 +47,9 @@ namespace DalObject
         public Drone GetDrone(int id)
         {
             Drone d = DataSource.drones.Find(drone => drone.CodeDrone == id);
-            return d;
+            if(d.CodeDrone==id)
+                return d;
+            throw new DoesntExistException("This drone does not exist");
         }
         /// <summary>
         /// the function show the list of drones

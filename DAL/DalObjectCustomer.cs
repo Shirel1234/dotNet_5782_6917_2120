@@ -53,7 +53,9 @@ namespace DalObject
         public Customer GetCustomer(int id)
         {
             Customer c = DataSource.customers.Find(customer => customer.IdCustomer == id);
-            return c;
+            if(c.IdCustomer==id)
+                return c;
+            throw new DoesntExistException("This customer does not exist");
         }
         /// <summary>
         /// the function show the list of customers

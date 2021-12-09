@@ -80,15 +80,22 @@ namespace IBL
         /// <returns>base station</returns>
         public BaseStation GetBaseStation(int id)
         {
-            IDAL.DO.BaseStation dalStation = dl.GetStation(id);
-            return new BaseStation()
+            try
             {
-                Id = dalStation.CodeStation,
-                Name = dalStation.NameStation,
-                ChargeSlots = dalStation.ChargeSlots,
-                Location = new Location(dalStation.Longitude, dalStation.Latitude),
-                ListDroneCharge = GetChargesDrone(dalStation)
-            };
+                IDAL.DO.BaseStation dalStation = dl.GetStation(id);
+                return new BaseStation()
+                {
+                    Id = dalStation.CodeStation,
+                    Name = dalStation.NameStation,
+                    ChargeSlots = dalStation.ChargeSlots,
+                    Location = new Location(dalStation.Longitude, dalStation.Latitude),
+                    ListDroneCharge = GetChargesDrone(dalStation)
+                };
+            }
+            catch(Exception ex)
+            {
+                throw new GetDetailsProblemException("This drone does not exist");
+            }
         }
         public IEnumerable<BaseStationList> GetAllBaseStations()
         {

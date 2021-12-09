@@ -58,58 +58,80 @@ namespace IBL
         /// <returns>a parcel</returns>
         public Parcel GetParcel(int id)
         {
-            IDAL.DO.Parcel dalParcel = dl.GetParcel(id);
-            return new Parcel()
+            try
             {
-                CodeParcel = dalParcel.CodeParcel,
-                SenderCustomer = new CustomerParcel() { Id = dalParcel.SenderId, Name = dl.GetCustomer(dalParcel.SenderId).NameCustomer },
-                TargetCustomer = new CustomerParcel() { Id = dalParcel.TargetId, Name = dl.GetCustomer(dalParcel.TargetId).NameCustomer },
-                DroneInParcel = new DroneParcel() {Id=dalParcel.DroneId, Battery=BODrones.Find(drone=> drone.Id ==dalParcel.DroneId).Battery, LocationNow = BODrones.Find(drone => drone.Id == dalParcel.DroneId).LocationNow },
-                Weight= (WeightCategories)dalParcel.Weight,
-                Priority= (Priorities)dalParcel.Priority,
-                Delivered=dalParcel.Delivered,
-                Requested=dalParcel.Requested,
-                PickedUp=dalParcel.PickedUp,
-                Scheduled=dalParcel.Scheduled
-            };
+                IDAL.DO.Parcel dalParcel = dl.GetParcel(id);
+                return new Parcel()
+                {
+                    CodeParcel = dalParcel.CodeParcel,
+                    SenderCustomer = new CustomerParcel() { Id = dalParcel.SenderId, Name = dl.GetCustomer(dalParcel.SenderId).NameCustomer },
+                    TargetCustomer = new CustomerParcel() { Id = dalParcel.TargetId, Name = dl.GetCustomer(dalParcel.TargetId).NameCustomer },
+                    DroneInParcel = new DroneParcel() { Id = dalParcel.DroneId, Battery = BODrones.Find(drone => drone.Id == dalParcel.DroneId).Battery, LocationNow = BODrones.Find(drone => drone.Id == dalParcel.DroneId).LocationNow },
+                    Weight = (WeightCategories)dalParcel.Weight,
+                    Priority = (Priorities)dalParcel.Priority,
+                    Delivered = dalParcel.Delivered,
+                    Requested = dalParcel.Requested,
+                    PickedUp = dalParcel.PickedUp,
+                    Scheduled = dalParcel.Scheduled
+                };
+            }
+            catch
+            {
+                throw new GetDetailsProblemException();
+            }
         }
         public IEnumerable<ParcelList> GetAllParcels()
         {
-            List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
-            List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
-            return
-                from parcel in DOparcelsList
-                let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
-                let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
-                let parcelStatus=GetParcelStatus(parcel)
-                select new ParcelList()
-                {
-                    Id= parcel.CodeParcel,
-                    NameSender= senderName,
-                    NameTarget= receiverName,
-                    Weight=(WeightCategories)parcel.Weight,
-                    Priority=(Priorities)parcel.Priority,
-                    Status=parcelStatus
-                };
+            try
+            {
+                List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
+                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+                return
+                    from parcel in DOparcelsList
+                    let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
+                    let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
+                    let parcelStatus = GetParcelStatus(parcel)
+                    select new ParcelList()
+                    {
+                        Id = parcel.CodeParcel,
+                        NameSender = senderName,
+                        NameTarget = receiverName,
+                        Weight = (WeightCategories)parcel.Weight,
+                        Priority = (Priorities)parcel.Priority,
+                        Status = parcelStatus
+                    };
+            }
+            catch
+            {
+                throw new GetDetailsProblemException();
+            }
         }
         public IEnumerable<ParcelList> GetAllParcelsWithoutDrone()
         {
-            List<IDAL.DO.Parcel> DOparcelsWithoutDroneList = dl.GetParcels().ToList().FindAll(parcel => parcel.DroneId == 0);
-            List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
-            return
-                from parcel in DOparcelsWithoutDroneList
-                let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
-                let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
-                let parcelStatus = (ParcelStatuses)0
-                select new ParcelList()
-                {
-                    Id = parcel.CodeParcel,
-                    NameSender = senderName,
-                    NameTarget = receiverName,
-                    Weight = (WeightCategories)parcel.Weight,
-                    Priority = (Priorities)parcel.Priority,
-                    Status = parcelStatus
-                };
+            try
+            {
+                List<IDAL.DO.Parcel> DOparcelsWithoutDroneList = dl.GetParcels().ToList().FindAll(parcel => parcel.DroneId == 0);
+                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+                return
+                    from parcel in DOparcelsWithoutDroneList
+                    let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
+                    let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
+                    let parcelStatus = (ParcelStatuses)0
+                    select new ParcelList()
+                    {
+                        Id = parcel.CodeParcel,
+                        NameSender = senderName,
+                        NameTarget = receiverName,
+                        Weight = (WeightCategories)parcel.Weight,
+                        Priority = (Priorities)parcel.Priority,
+                        Status = parcelStatus
+                    };
+            }
+            catch
+            {
+                throw new GetDetailsProblemException();
+            }
         }
+
     }
 }
