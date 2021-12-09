@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
-
 namespace IBL
 {
     public partial class BLObject
