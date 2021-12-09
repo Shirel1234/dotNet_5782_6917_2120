@@ -18,7 +18,7 @@ namespace IBL
             public IEnumerable<DroneCharge> ListDroneCharge { get; set; }
             public override string ToString()
             {
-                return String.Format($"{Id}, {Name}, { Location}, {ChargeSlots}, {ListDroneCharge}");
+                return String.Format($"{Id}, {Name}, { Location}, {ChargeSlots}");
             }            
         }
     }

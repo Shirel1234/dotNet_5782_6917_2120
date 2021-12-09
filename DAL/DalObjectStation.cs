@@ -49,7 +49,9 @@ namespace DalObject
         public BaseStation GetStation(int id)
         {
             BaseStation b = DataSource.stations.Find(station => station.CodeStation == id);
-            return b;
+            if(b.CodeStation==id)
+                return b;
+            throw new DoesntExistException("This drone does not exist");
         }
         /// <summary>
         /// the function show the list of stations
