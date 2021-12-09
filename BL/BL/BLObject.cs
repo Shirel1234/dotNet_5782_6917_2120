@@ -42,6 +42,10 @@ namespace IBL
                                               };
             BODrones = tempBoDrones.ToList();
         }
+        /// <summary>
+        /// the function finds the details of this drone and sending it to charge in the closer base station
+        /// </summary>
+        /// <param name="id"> id of drone</param>
         public void UpdateSendingDroneToCharge(int id)
         {
             DroneList droneList = BODrones.Find(droneL => droneL.Id == id);

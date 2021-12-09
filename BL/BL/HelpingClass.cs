@@ -9,19 +9,23 @@ namespace IBL
 {
     public partial class BLObject
     {
-        public static double GetDistance(Location l1, Location l2)
+        private double GetDistance(Location l1, Location l2)
         {
-            return Math.Sqrt(Math.Pow(l1.Latitude - l2.Latitude, 2) + Math.Pow(l1.Longitude - l2.Longitude, 2));
+            var R = 6371; // Radius of the earth in km
+            var dLatitude = Getdeg2radius(l2.Latitude - l1.Latitude);  // deg2rad below
+            var dLongitude = Getdeg2radius(l2.Longitude - l1.Longitude);
+            var a =
+              Math.Sin(dLatitude / 2) * Math.Sin(dLatitude / 2) +
+              Math.Cos(Getdeg2radius(l1.Latitude)) * Math.Cos(Getdeg2radius(l2.Latitude)) *
+              Math.Sin(dLongitude / 2) * Math.Sin(dLongitude / 2)
+              ;
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var d = R * c; // Distance in km
+            return d;
         }
-        public static ParcelStatuses GetDateTimeToStatus(IDAL.DO.Parcel p)
+        private double Getdeg2radius(double d)
         {
-            if (DateTime.Compare(p.Delivered, DateTime.Now) <= 0)
-                return (ParcelStatuses)3;
-            if (DateTime.Compare(p.PickedUp, DateTime.Now) <= 0)
-                return (ParcelStatuses)2;
-            if (DateTime.Compare(p.Scheduled, DateTime.Now) <= 0)
-                return (ParcelStatuses)1;
-            return (ParcelStatuses)0;
+            return d * (Math.PI / 180);
         }
         /// <summary>
         /// the function moves on the base stations and find the closer station to the location 
@@ -29,7 +33,7 @@ namespace IBL
         /// <param name="l"> location</param>
         /// <param name="listBaseStation"> list of base stations</param>
         /// <returns> the closer base station</returns>
-        public static IDAL.DO.BaseStation GetCloserBaseStation(Location l)
+        private IDAL.DO.BaseStation GetCloserBaseStation(Location l)
         {
             double minDistance = 10000000;
             IDAL.DO.BaseStation closeStation = new IDAL.DO.BaseStation();
@@ -44,17 +48,18 @@ namespace IBL
             }
             return closeStation;
         }
+     
         /// <summary>
         /// 
         /// </summary>
         /// <param name="p"></param>
-        public static Location GetLocationNotPickedUp(IDAL.DO.Parcel p)
+        private Location GetLocationNotPickedUp(IDAL.DO.Parcel p)
         {
             IDAL.DO.Customer customer = dl.GetCustomer(p.SenderId);
             IDAL.DO.BaseStation closerBaseStation = GetCloserBaseStation(new Location(customer.Longitude, customer.Latitude));
             return new Location(closerBaseStation.Longitude, closerBaseStation.Latitude);
         }
-        public static ParcelStatuses GetParcelStatus(IDAL.DO.Parcel parcel)
+        private ParcelStatuses GetParcelStatus(IDAL.DO.Parcel parcel)
         {
             DateTime temp = new DateTime(0);
             if (parcel.Scheduled == temp)
@@ -70,7 +75,7 @@ namespace IBL
         /// </summary>
         /// <param name="d">drone</param>
         /// <returns> drone of list</returns>
-        public static DroneList GetUpdatedDetailDrone(IDAL.DO.Drone d)
+        private DroneList GetUpdatedDetailDrone(IDAL.DO.Drone d)
         {
             IDAL.DO.Parcel defaultP = default;
             DroneList newDroneList = new DroneList();
@@ -129,7 +134,7 @@ namespace IBL
             return newDroneList;
 
         }
-        public static double GetElectricityUseOfBattery(double distance, WeightCategories weight)
+        private double GetElectricityUseOfBattery(double distance, WeightCategories weight)
         {
             //if the parcel has an easy weight
             if (weight == (WeightCategories)0)
@@ -149,7 +154,7 @@ namespace IBL
         /// <param name="droneList"></param>
         /// <param name="parcel"></param>
         /// <returns></returns>
-        public static double GetBatteryDeliveredParcel(DroneList droneList, IDAL.DO.Parcel parcel)
+        public double GetBatteryDeliveredParcel(DroneList droneList, IDAL.DO.Parcel parcel)
         {
             IDAL.DO.Customer targetCustomer = dl.GetCustomer(parcel.TargetId);
             double newBattery = droneList.Battery;
@@ -157,7 +162,7 @@ namespace IBL
             newBattery -= GetElectricityUseOfBattery(distance, (WeightCategories)parcel.Weight);
             return newBattery;
         }
-        public static IDAL.DO.Parcel GetParcelToDrone(List<IDAL.DO.Parcel> parcels, DroneList droneList)
+        private IDAL.DO.Parcel GetParcelToDrone(List<IDAL.DO.Parcel> parcels, DroneList droneList)
         {
             IDAL.DO.Parcel chosenParcel = default;
             //list of parcels that matching the weight

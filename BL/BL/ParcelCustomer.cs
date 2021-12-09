@@ -7,5 +7,9 @@
         public Priorities Priority { get; set; }
         public ParcelStatuses Status { get; set; }
         public CustomerParcel SecondSideCustomer { get; set; }
+        public override string ToString()
+        {
+            return string.Format($"{Id}, {Weight}, {Priority}, {Status}, {SecondSideCustomer}");
+        }
     }
 }

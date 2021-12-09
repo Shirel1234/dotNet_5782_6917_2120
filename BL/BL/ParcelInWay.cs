@@ -17,5 +17,9 @@ namespace IBL.BO
         public Location LocationPickedUp { set; get; }
         public Location LocationTarget { set; get; }
         public double TransportDistance { set; get; }
+        public override string ToString()
+        {
+            return String.Format($"{Id}, {IsInWay}, {Priority}, {Weight}, \n{Sender}, \n{Target}, \n{LocationPickedUp}, \n{LocationTarget}, \n{TransportDistance}");
+        }
     }
 }

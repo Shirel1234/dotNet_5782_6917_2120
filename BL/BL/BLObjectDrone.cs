@@ -25,8 +25,7 @@ namespace IBL
                 throw new AddingProblemException("The station doesn't exist");
             d.Battery = rnd.Next(20, 41);
             d.DroneStatus = (DroneStatuses)1;
-            d.LocationNow.Longitude = tempB.Longitude;
-            d.LocationNow.Latitude = tempB.Latitude;
+            d.LocationNow= new Location(tempB.Longitude, tempB.Latitude);
             try
             {
                 IDAL.DO.Drone doDrone = new IDAL.DO.Drone()
@@ -88,9 +87,7 @@ namespace IBL
         public Drone GetDrone(int id)
         {
             IDAL.DO.Drone dalDrone = dl.GetDrone(id);
-            DroneList boDrone = (DroneList)(from drone in BODrones
-                                            where drone.Id == id
-                                            select drone);
+            DroneList boDrone = BODrones.Find(drone => drone.Id == id);
             IDAL.DO.Parcel dalParcel = dl.GetParcels().ToList().Find(p => p.DroneId == id);
             IDAL.DO.Customer dalSender = dl.GetCustomer(dalParcel.SenderId);
             IDAL.DO.Customer dalTarget = dl.GetCustomer(dalParcel.TargetId);
