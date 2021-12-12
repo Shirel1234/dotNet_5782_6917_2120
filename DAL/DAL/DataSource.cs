@@ -59,8 +59,8 @@ using System.Threading.Tasks;
                 for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
                 {
                     p.CodeParcel = Config.countIdParcel++;
-                    p.SenderId = r.Next(100000000, 1000000000);
-                    p.TargetId = r.Next(100000000, 1000000000);
+                    p.SenderId = customers[i].IdCustomer;
+                    p.TargetId = customers[j].IdCustomer;
                     p.Weight = (WeightCategories)r.Next(0, 3);
                     p.Priority = (Priorities)r.Next(0, 3);
                     p.Requested =DateTime.Now;
