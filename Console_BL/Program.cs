@@ -91,9 +91,9 @@ namespace Console_BL
                         }
                     }
             }
-            catch (AddingProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
 
         }
@@ -123,9 +123,9 @@ namespace Console_BL
 
                 }
             }
-            catch (AddingProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
 
         }
@@ -153,9 +153,9 @@ namespace Console_BL
                     bl.AddCustomer(customer);
                 }
             }
-            catch (AddingProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void NewParcel()
@@ -181,9 +181,9 @@ namespace Console_BL
                             bl.AddParcel(parcel);
                         }
             }
-            catch (AddingProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         /// <summary>
@@ -228,9 +228,9 @@ namespace Console_BL
                     bl.UpdateDrone(idD, newModel);
                 }
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void UpdateStation()
@@ -246,9 +246,9 @@ namespace Console_BL
                         if (int.TryParse(Console.ReadLine(), out numOfChargePositions))
                             bl.UpdateBaseStation(idS, newName, numOfChargePositions);
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void UpdateCustomer()
@@ -266,9 +266,9 @@ namespace Console_BL
                     bl.UpdateCustomer(idC, newName, newPhone);
                 }
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void UpdateSendingDroneToCharge()
@@ -280,9 +280,9 @@ namespace Console_BL
                 if (int.TryParse(Console.ReadLine(), out idD))
                     bl.UpdateSendingDroneToCharge(idD);
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void UpdateReleasingDroneFromCharge()
@@ -297,9 +297,9 @@ namespace Console_BL
                     bl.UpdateReleasingDroneFromCharge(idD, chargingTime);
                 }
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void UpdateSchedulingParcelToDrone()
@@ -325,9 +325,9 @@ namespace Console_BL
                 if (int.TryParse(Console.ReadLine(), out idD))
                     bl.UpdateParcelPickedUpByDrone(idD);
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void UpdateDeliveringParcelByDrone()
@@ -339,9 +339,9 @@ namespace Console_BL
                 if (int.TryParse(Console.ReadLine(), out idD))
                     bl.UpdateDeliveredParcelByDrone(idD);
             }
-            catch (UpdateProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ViewOptions()
@@ -374,7 +374,7 @@ namespace Console_BL
                 if (int.TryParse(Console.ReadLine(), out idS))
                     Console.WriteLine(bl.GetBaseStation(idS));
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + "\n");
             }
@@ -392,7 +392,7 @@ namespace Console_BL
                 }
                    
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex + "\n");
 
@@ -407,7 +407,7 @@ namespace Console_BL
                 if (int.TryParse(Console.ReadLine(), out idC))
                     Console.WriteLine(bl.GetCustomer(idC));
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + "\n");
             }
@@ -421,9 +421,9 @@ namespace Console_BL
                 if (int.TryParse(Console.ReadLine(), out idP))
                     Console.WriteLine(bl.GetParcel(idP));
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ListViewOptions()
@@ -460,9 +460,9 @@ namespace Console_BL
                     Console.WriteLine(item);
                 }
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowAllDrones()
@@ -475,9 +475,9 @@ namespace Console_BL
                     Console.WriteLine(item);
                 }
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowAllCustomers()
@@ -490,9 +490,9 @@ namespace Console_BL
                     Console.WriteLine(item);
                 }
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowAllParcels()
@@ -505,9 +505,9 @@ namespace Console_BL
                     Console.WriteLine(item);
                 }
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowAllUnAssignmentParcels()
@@ -520,9 +520,9 @@ namespace Console_BL
                     Console.WriteLine(item);
                 }
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
         public static void ShowAllAvailableChargingsStations()
@@ -535,9 +535,9 @@ namespace Console_BL
                     Console.WriteLine(item);
                 }
             }
-            catch (GetDetailsProblemException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex + "\n");
+                Console.WriteLine(ex.Message + "\n");
             }
         }
     }

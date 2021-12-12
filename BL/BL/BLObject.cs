@@ -28,8 +28,8 @@ namespace IBL
             medium = arr[2];
             heavy = arr[3];
             chargingRate = arr[4];
-            List<IDAL.DO.Parcel> listParcels = dl.GetParcels().ToList();
-            IEnumerable<DroneList> tempBoDrones = from IDAL.DO.Drone item in dl.GetDrones().ToList()
+            List<IDAL.DO.Parcel> listParcels = dl.GetParcelsByCondition().ToList();
+            IEnumerable<DroneList> tempBoDrones = from IDAL.DO.Drone item in dl.GetDronesByCondition().ToList()
                                               select new DroneList()
                                               {
                                                   Id = item.CodeDrone,
@@ -90,7 +90,7 @@ namespace IBL
                 droneList.DroneStatus = (DroneStatuses)0;
                 BODrones.Add(droneList);
                 //update station
-                IDAL.DO.BaseStation myStation = dl.GetBaseStations().ToList().Find(station => station.Longitude == droneList.LocationNow.Longitude && station.Latitude == droneList.LocationNow.Latitude);
+                IDAL.DO.BaseStation myStation = dl.GetStationsByCondition().ToList().Find(station => station.Longitude == droneList.LocationNow.Longitude && station.Latitude == droneList.LocationNow.Latitude);
                 myStation.ChargeSlots++;
                 dl.UpDateBaseStation(myStation);
                 dl.RemoveDroneCharge(dl.GetDroneCharge(droneList.Id));
@@ -108,7 +108,7 @@ namespace IBL
             if (droneList.DroneStatus == (DroneStatuses)0)
             {
                 //create three groops by the type of priority
-                var groups = dl.GetParcels().ToList().GroupBy(parcel => parcel.Priority);
+                var groups = dl.GetParcelsByCondition().ToList().GroupBy(parcel => parcel.Priority);
                 List<IDAL.DO.Parcel> gNormal = new List<IDAL.DO.Parcel>();
                 List<IDAL.DO.Parcel> gExpress = new List<IDAL.DO.Parcel>();
                 List<IDAL.DO.Parcel> gEmergency = new List<IDAL.DO.Parcel>();
@@ -150,7 +150,7 @@ namespace IBL
                 Drone drone = GetDrone(droneID);
                 if (drone.DroneStatus == (DroneStatuses)2)
                 {
-                    IDAL.DO.Parcel p = dl.GetParcels().ToList().Find(parcel => parcel.DroneId == droneID && parcel.PickedUp > DateTime.Now);
+                    IDAL.DO.Parcel p = dl.GetParcelsByCondition().ToList().Find(parcel => parcel.DroneId == droneID );
                     //if the conditions match and the parcel was found
                     if (p.DroneId == droneID)
                     {

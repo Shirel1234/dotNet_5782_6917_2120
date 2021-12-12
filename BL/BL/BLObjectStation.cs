@@ -37,7 +37,7 @@ namespace IBL
             }
             catch (Exception ex)
             {
-              throw new AddingProblemException("Can't add this baseStation", ex);
+              throw new AddingProblemException(ex.Message, ex);
             }
         }
         /// <summary>
@@ -68,9 +68,9 @@ namespace IBL
             {
                 dl.UpDateBaseStation(tempB);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new UpdateProblemException();
+                throw new UpdateProblemException(ex.Message,ex);
             }
         }
         /// <summary>
@@ -94,29 +94,44 @@ namespace IBL
             }
             catch(Exception ex)
             {
-                throw new GetDetailsProblemException("This drone does not exist");
+                throw new GetDetailsProblemException(ex.Message,ex);
             }
         }
+        /// <summary>
+        /// the function brings all the stations from the dal and adds the mess details for bl  station
+        /// </summary>
+        /// <returns>list of station</returns>
         public IEnumerable<BaseStationList> GetAllBaseStations()
         {
-            List<IDAL.DO.BaseStation> DOstatinsList = dl.GetBaseStations().ToList();
-            return  
-                from station in DOstatinsList
-                 let busyChargingPositions = BODrones.Count
-                    (drone => drone.DroneStatus == (DroneStatuses)1
-                    && drone.LocationNow.Longitude == station.Longitude
-                    && drone.LocationNow.Latitude == station.Latitude)
-                 select new BaseStationList()
-                 {
-                     Id = station.CodeStation,
-                     Name = station.NameStation,
-                     ChargeSlotsFree = station.ChargeSlots,
-                     ChargeSlotsCatch = busyChargingPositions
-                 };
+            try
+            {
+                List<IDAL.DO.BaseStation> DOstatinsList = dl.GetStationsByCondition().ToList();
+                return
+                    from station in DOstatinsList
+                    let busyChargingPositions = BODrones.Count
+                   (drone => drone.DroneStatus == (DroneStatuses)1
+                   && drone.LocationNow.Longitude == station.Longitude
+                   && drone.LocationNow.Latitude == station.Latitude)
+                    select new BaseStationList()
+                    {
+                        Id = station.CodeStation,
+                        Name = station.NameStation,
+                        ChargeSlotsFree = station.ChargeSlots,
+                        ChargeSlotsCatch = busyChargingPositions
+                    };
+            }
+            catch (Exception ex)
+            {
+                throw new GetDetailsProblemException(ex.Message, ex);
+            }
         }
+        /// <summary>
+        /// the function create a list of all the station that are without charge position
+        /// </summary>
+        /// <returns>list of station without charge position</returns>
         public IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions()
         {
-            List<IDAL.DO.BaseStation> DOstatinsWithChargeSlotsList = dl.GetBaseStations().ToList().FindAll(station => station.ChargeSlots > 0);
+            List<IDAL.DO.BaseStation> DOstatinsWithChargeSlotsList = dl.GetStationsByCondition().ToList().FindAll(station => station.ChargeSlots > 0);
             return
                from station in DOstatinsWithChargeSlotsList
                let busyChargingPositions = BODrones.Count
@@ -131,6 +146,11 @@ namespace IBL
                    ChargeSlotsCatch = busyChargingPositions
                };
         }
+        /// <summary>
+        /// the function create a list of drones in the station that got
+        /// </summary>
+        /// <param name="dalStation"> station</param>
+        /// <returns>list of drones in this station</returns>
         public IEnumerable<DroneCharge> GetChargesDrone(IDAL.DO.BaseStation dalStation)
         {
             IEnumerable<DroneCharge> dronesCharge = from boDrone in BODrones

@@ -51,16 +51,22 @@ namespace DalObject
             BaseStation b = DataSource.stations.Find(station => station.CodeStation == id);
             if(b.CodeStation==id)
                 return b;
-            throw new DoesntExistException("This drone does not exist");
+            throw new DoesntExistException("This station does not exist");
         }
+
         /// <summary>
         /// the function show the list of stations
         /// </summary>
         /// <returns>list of stations</returns>
-        public IEnumerable<BaseStation>  GetBaseStations()
+        public IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null)
         {
-            //return DataSource.stations;
-            return from station in DataSource.stations select station;
+            if (conditionDelegate == null)
+                return from station in DataSource.stations select station;
+            else
+            {
+                List<BaseStation> lstStationsWithSlots = DataSource.stations.FindAll(station => conditionDelegate(station));
+                return lstStationsWithSlots;
+            }
         }
 
     }

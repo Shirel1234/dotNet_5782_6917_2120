@@ -18,10 +18,10 @@ using System.Threading.Tasks;
         internal class Config
             {
                 internal static int countIdParcel = 200;
-            internal static double Free { get => 1; }
-            internal static double Easy { get => 2; }
-            internal static double Medium { get => 3; }
-            internal static double Heavy { get => 5; }
+            internal static double Free { get => 0.01; }
+            internal static double Easy { get => 0.011; }
+            internal static double Medium { get => 0.012; }
+            internal static double Heavy { get => 0.013; }
             internal static double ChargingRate { get => 10.25; }
         }
             public static void Initialize()
@@ -31,9 +31,9 @@ using System.Threading.Tasks;
                 {
                     b.CodeStation = i;
                     b.NameStation = r.Next(1000, 10000);
-                    b.Longitude = r.NextDouble() * (36.3 - 33.7) + 33.7;
-                    b.Latitude = r.NextDouble() * (33.5 - 29.3) + 29.3;
-                stations.Add(b);
+                     b.Longitude = r.NextDouble()+ r.Next(30, 34);
+                    b.Latitude = r.NextDouble()+r.Next(34,37);
+                    stations.Add(b);
                 }
                 Drone d = new Drone();
                 for (int i = 1; i < 6; i++)
@@ -51,24 +51,38 @@ using System.Threading.Tasks;
                     c.IdCustomer = r.Next(100000000, 1000000000);
                     c.NameCustomer = "customer"+i;
                     c.Phone = "050-" + r.Next(1000000, 10000000)+"";
-                    c.Longitude = r.NextDouble() * (36.3 - 33.7) + 33.7;
-                    c.Latitude = r.NextDouble() * (33.5 - 29.3) + 29.3;
+                    c.Longitude = r.NextDouble() + r.Next(30, 34);
+                    c.Latitude = r.NextDouble() + r.Next(34, 37);
                     customers.Add(c);
                 }
                 Parcel p = new Parcel();
-                for (int i = 1; i < 11; i++)
+                for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
                 {
                     p.CodeParcel = Config.countIdParcel++;
                     p.SenderId = r.Next(100000000, 1000000000);
                     p.TargetId = r.Next(100000000, 1000000000);
                     p.Weight = (WeightCategories)r.Next(0, 3);
                     p.Priority = (Priorities)r.Next(0, 3);
-                    p.DroneId = 0;
-                    p.Requested =new DateTime(2021,10,i); 
-                    p.Scheduled= new DateTime(2021, 10, 1+i);
-                    p.PickedUp = new DateTime(2021, 10, 2+i);
-                    p.Delivered= new DateTime(2021, 10, 3+i);
-                    parcels.Add(p);
+                    p.Requested =DateTime.Now;
+                int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
+                int numDrone = m;
+                var listDrones = from droneMatchW in drones where droneMatchW.MaxWeight >= p.Weight select droneMatchW;
+                var drone = listDrones.FirstOrDefault(d => arrTemp[d.CodeDrone - 1] == 0);
+                p.DroneId = drone.CodeDrone;
+                if (p.DroneId != 0)
+                {
+                    arrTemp[p.DroneId] = 1;
+                    p.Scheduled = DateTime.Now;
+                    p.PickedUp = new DateTime(0);
+                    p.Delivered = new DateTime(0);
+                }
+                else
+                {
+                    p.Scheduled = new DateTime(0);
+                    p.PickedUp = new DateTime(0);
+                    p.Delivered = new DateTime(0);
+                }
+                parcels.Add(p);
                 }
             }
         }

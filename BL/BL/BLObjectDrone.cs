@@ -42,7 +42,7 @@ namespace IBL
 
             catch (Exception ex)
             {
-                throw new AddingProblemException("Can't add this drone", ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
+                throw new AddingProblemException(ex.Message, ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
             }
             //add this drone to the bo drones
             DroneList boDrone = new DroneList()
@@ -67,15 +67,15 @@ namespace IBL
         {
             if (id < 0)
                 throw new UpdateProblemException("The ID number must be a positive number");
-            IDAL.DO.Drone tempD = dl.GetDrone(id);
-            tempD.ModelDrone = model;
             try
             {
+                IDAL.DO.Drone tempD = dl.GetDrone(id);
+                tempD.ModelDrone = model;
                 dl.UpDateDrone(tempD);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new UpdateProblemException();
+                throw new UpdateProblemException(ex.Message,ex);
             }
             DroneList boDrone = BODrones.Find(drone => drone.Id == id);
             BODrones.Remove(boDrone);
@@ -93,7 +93,7 @@ namespace IBL
             {
                 IDAL.DO.Drone dalDrone = dl.GetDrone(id);
                 DroneList boDrone = BODrones.Find(boDrone => boDrone.Id == id);
-                IDAL.DO.Parcel dalParcel = dl.GetParcels().ToList().Find(p => p.DroneId == id);
+                IDAL.DO.Parcel dalParcel = dl.GetParcelsByCondition().ToList().Find(p => p.DroneId == id);
                 IDAL.DO.Customer dalSender = dl.GetCustomer(dalParcel.SenderId);
                 IDAL.DO.Customer dalTarget = dl.GetCustomer(dalParcel.TargetId);
                 Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
@@ -121,20 +121,20 @@ namespace IBL
 
                 };
             }
-            catch
+            catch(Exception ex)
             {
-                throw new GetDetailsProblemException();
+                throw new GetDetailsProblemException(ex.Message,ex);
             }
         }
+        /// <summary>
+        /// the function returns the list of drones that we update in this program
+        /// </summary>
+        /// <returns>list of drones</returns>
         public IEnumerable<DroneList> GetAllDrones()
         {
             return BODrones;
         }
 
-        /// <summary>
-        /// the function show the list of stations
-        /// </summary>
-        /// <returns>list of stations</returns>
 
     }
 }

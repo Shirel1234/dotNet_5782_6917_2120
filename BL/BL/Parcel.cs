@@ -16,10 +16,10 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public DroneParcel DroneInParcel { get; set; }
-            public DateTime Requested { get; set; }//זמן יצירת החבילה
-            public DateTime Scheduled { get; set; }//זמן שיוך
-            public DateTime PickedUp { get; set; }//זמן איסוף
-            public DateTime Delivered { get; set; }//זמן אספקה
+            public DateTime? Requested { get; set; }//זמן יצירת החבילה
+            public DateTime? Scheduled { get; set; }//זמן שיוך
+            public DateTime? PickedUp { get; set; }//זמן איסוף
+            public DateTime? Delivered { get; set; }//זמן אספקה
             public override string ToString()
             {
                 return String.Format($"{CodeParcel}, {SenderCustomer}, {TargetCustomer}, {Weight}, {DroneInParcel}, {Requested}, {Scheduled}, {PickedUp}, {Delivered}");

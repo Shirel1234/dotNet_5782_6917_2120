@@ -55,9 +55,15 @@ namespace DalObject
         /// the function show the list of drones
         /// </summary>
         /// <returns>list of drones</returns>
-        public IEnumerable<Drone> GetDrones()
+        public IEnumerable<Drone> GetDronesByCondition(Func<Drone, bool> conditionDelegate = null)
         {
-            return from drone in DataSource.drones select drone;
+            if (conditionDelegate == null)
+                return from drone in DataSource.drones select drone;
+            else
+            {
+                List<Drone> listDronesByCondition = DataSource.drones.FindAll(drone => conditionDelegate(drone));
+                return listDronesByCondition;
+            }
         }
     }
 }

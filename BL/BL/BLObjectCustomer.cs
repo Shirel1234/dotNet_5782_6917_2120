@@ -63,7 +63,7 @@ namespace IBL
             }
             catch (Exception ex)
             {
-                throw new UpdateProblemException(ex.Message);
+                throw new UpdateProblemException(ex.Message,ex);
             }
         }
         /// <summary>
@@ -75,7 +75,7 @@ namespace IBL
         {
             try
             {
-                IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
+                IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcelsByCondition()
                                                           where parcel.SenderId == id
                                                           select new ParcelCustomer
                                                           {
@@ -101,7 +101,7 @@ namespace IBL
         {
             try
             {
-                IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcels()
+                IEnumerable<ParcelCustomer> sendParcels = from parcel in dl.GetParcelsByCondition()
                                                           where parcel.SenderId == id
                                                           select new ParcelCustomer
                                                           {
@@ -141,24 +141,24 @@ namespace IBL
             }
             catch (Exception ex)
             {
-                throw new GetDetailsProblemException();
+                throw new GetDetailsProblemException(ex.Message,ex);
                 //throw new GetDetailsProblemException($"Customer id {id} was not found", ex);
             }
         }
+        /// <summary>
+        /// the function brings all of the customers from dal and add the mess detail for bl Customer
+        /// </summary>
+        /// <returns>list of customer</returns>
         public IEnumerable<CustomerList> GetAllCustomers()
         {
-            try
-            {
-                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
-                List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
+                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomersByCondition().ToList();
+                List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcelsByCondition().ToList();
                 return
                     from customer in DOcustomersList
-                    let numOfDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
-                    let numOfNotDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
-                 && DateTime.Compare(parcel.PickedUp, DateTime.Now) > 0 && DateTime.Compare(parcel.Scheduled, DateTime.Now) <= 0)
-                    let numOfParcelsInWay = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) > 0
-                 && DateTime.Compare(parcel.PickedUp, DateTime.Now) <= 0)
-                    let numOfAcceptedParcels = DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && DateTime.Compare(parcel.Delivered, DateTime.Now) <= 0)
+                    let numOfDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && parcel.Delivered!=null)
+                    let numOfNotDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && parcel.Delivered==null)
+                    let numOfParcelsInWay = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && parcel.PickedUp==null)
+                    let numOfAcceptedParcels = DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && parcel.Requested!=null)
                     select new CustomerList()
                     {
                         Id = customer.IdCustomer,
@@ -170,11 +170,7 @@ namespace IBL
                         CountAcceptedParcelsByCustomer = numOfAcceptedParcels
                     };
             }
-            catch(Exception ex)
-            {
-                throw new GetDetailsProblemException(ex.Message);
-            }
+                        
         }
 
     }
-}

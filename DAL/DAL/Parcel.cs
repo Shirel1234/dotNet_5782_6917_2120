@@ -16,10 +16,10 @@ using System.Threading.Tasks;
                 public WeightCategories Weight { get; set; }
                 public Priorities Priority { get; set; }
                 public int DroneId { get; set; }
-                public DateTime Requested { get; set; }
-                public DateTime Scheduled { get; set; }
-                public DateTime PickedUp { get; set; }
-                public DateTime Delivered { get; set; }
+                public DateTime? Requested { get; set; }
+                public DateTime? Scheduled { get; set; }
+                public DateTime? PickedUp { get; set; }
+                public DateTime? Delivered { get; set; }
                 public override string ToString()
                 {
                     return String.Format($"({CodeParcel}, /n{SenderId},/n {TargetId},/n{Weight},/n{Priority},/n{DroneId},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");

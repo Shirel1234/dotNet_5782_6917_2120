@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DalObject;
 
-namespace IDAL.DO
-{
-       public interface IDal
-       {
+
+    namespace IDAL.DO
+    {
+
+        public interface IDal
+        {
             void AddStation(BaseStation b);
             void AddDrone(Drone d);
             void AddCustomer(Customer c);
@@ -24,15 +26,13 @@ namespace IDAL.DO
             Customer GetCustomer(int idC);
             Parcel GetParcel(int idP);
             DroneCharge GetDroneCharge(int idD);
-            IEnumerable<BaseStation> GetBaseStations();
-            IEnumerable<Drone> GetDrones();
-            IEnumerable<Customer> GetCustomers();
-            IEnumerable<Parcel> GetParcels();
-            IEnumerable<Parcel> ListParcelWithoutDrone();
-            IEnumerable<BaseStation> ListBaseStationsSlots();
+            IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null);
+            IEnumerable<Parcel> GetParcelsByCondition(Func<Parcel, bool> conditionDelegate = null);
+            IEnumerable<Drone> GetDronesByCondition(Func<Drone, bool> conditionDelegate = null);
+            IEnumerable<Customer> GetCustomersByCondition(Func<Customer, bool> conditionDelegate = null);
             double[] AskElectrical();
-       
-       }
-}
+
+        }
+    }
 
 

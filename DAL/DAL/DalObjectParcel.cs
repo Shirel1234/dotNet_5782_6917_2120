@@ -61,9 +61,15 @@ namespace DalObject
         /// the function show the list of parcels
         /// </summary>
         /// <returns>list of parcels</returns>
-        public IEnumerable<Parcel> GetParcels()
+        public IEnumerable<Parcel> GetParcelsByCondition(Func<Parcel, bool> conditionDelegate = null)
         {
-            return from parcel in DataSource.parcels select parcel;
+            if (conditionDelegate == null)
+                return from parcel in DataSource.parcels select parcel;
+            else
+            {
+                List<Parcel> listParcelByCondition = DataSource.parcels.FindAll(parcel => conditionDelegate(parcel));
+                return listParcelByCondition;
+            }
         }
 
     }

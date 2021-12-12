@@ -24,9 +24,9 @@ namespace IBL
             if (p.Priority < 0)///operator>
                 throw new AddingProblemException("The priority isn't valid");
             p.Requested = DateTime.Now;
-            p.Scheduled = new DateTime(0);
-            p.PickedUp = new DateTime(0);
-            p.Delivered = new DateTime(0);
+            p.Scheduled = null;
+            p.PickedUp = null;
+            p.Delivered = null;
             p.DroneInParcel = new DroneParcel();
             try
             {
@@ -48,7 +48,7 @@ namespace IBL
 
                 catch (Exception ex)
                 {
-                    throw new AddingProblemException("Can't add this parcel", ex);
+                    throw new AddingProblemException(ex.Message, ex);
                 }
             }
         /// <summary>
@@ -75,17 +75,21 @@ namespace IBL
                     Scheduled = dalParcel.Scheduled
                 };
             }
-            catch
+            catch(Exception ex)
             {
-                throw new GetDetailsProblemException();
+                throw new GetDetailsProblemException(ex.Message,ex);
             }
         }
+        /// <summary>
+        /// the function brings all the parcels from the dal and add the mess details for the bl parcel
+        /// </summary>
+        /// <returns>list of parcels</returns>
         public IEnumerable<ParcelList> GetAllParcels()
         {
             try
             {
-                List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcels().ToList();
-                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+                List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcelsByCondition().ToList();
+                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomersByCondition().ToList();
                 return
                     from parcel in DOparcelsList
                     let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
@@ -101,17 +105,21 @@ namespace IBL
                         Status = parcelStatus
                     };
             }
-            catch
+            catch(Exception ex)
             {
-                throw new GetDetailsProblemException();
+                throw new GetDetailsProblemException(ex.Message,ex);
             }
         }
+        /// <summary>
+        /// the function move on the dal parcels and selects the parcel that are without drone and create from them a list
+        /// </summary>
+        /// <returns>this list of parcels witthout drone</returns>
         public IEnumerable<ParcelList> GetAllParcelsWithoutDrone()
         {
             try
             {
-                List<IDAL.DO.Parcel> DOparcelsWithoutDroneList = dl.GetParcels().ToList().FindAll(parcel => parcel.DroneId == 0);
-                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomers().ToList();
+                List<IDAL.DO.Parcel> DOparcelsWithoutDroneList = dl.GetParcelsByCondition(parcel => parcel.DroneId == 0).ToList();
+                List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomersByCondition().ToList();
                 return
                     from parcel in DOparcelsWithoutDroneList
                     let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
@@ -127,9 +135,9 @@ namespace IBL
                         Status = parcelStatus
                     };
             }
-            catch
+            catch(Exception ex)
             {
-                throw new GetDetailsProblemException();
+                throw new GetDetailsProblemException(ex.Message,ex);
             }
         }
 

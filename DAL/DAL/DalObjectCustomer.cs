@@ -61,9 +61,15 @@ namespace DalObject
         /// the function show the list of customers
         /// </summary>
         /// <returns>list of customers</returns>
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<Customer> GetCustomersByCondition(Func<Customer, bool> conditionDelegate = null)
         {
-            return from customer in DataSource.customers select customer;
+            if (conditionDelegate == null)
+                return from customer in DataSource.customers select customer;
+            else
+            {
+                List<Customer> listCustomerByCondition = DataSource.customers.FindAll(customer => conditionDelegate(customer));
+                return listCustomerByCondition;
+            }
         }
     }
 }
