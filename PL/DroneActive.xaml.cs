@@ -15,22 +15,15 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ListDrone.xaml
+    /// Interaction logic for DroneActive.xaml
     /// </summary>
-    public partial class ListDrone : Window
+    public partial class DroneActive : Window
     {
-        public ListDrone()
+        IBL.IBl bl;
+        public DroneActive(IBL.IBl bll)
         {
             InitializeComponent();
-
-        }
-        private void ListDrone_Load(object sender, EventArgs e)
-        {
-            //dgrDrones.Items = DllNotFoundException..Table;
-        }
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            bl = bll;
         }
     }
 }

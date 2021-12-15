@@ -149,7 +149,7 @@ namespace IBL
         /// the function brings all of the customers from dal and add the mess detail for bl Customer
         /// </summary>
         /// <returns>list of customer</returns>
-        public IEnumerable<CustomerList> GetAllCustomers()
+        public IEnumerable<CustomerList> GetCustomers()
         {
                 List<IDAL.DO.Customer> DOcustomersList = dl.GetCustomersByCondition().ToList();
                 List<IDAL.DO.Parcel> DOparcelsList = dl.GetParcelsByCondition().ToList();

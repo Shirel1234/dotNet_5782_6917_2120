@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="btnGetListDrones" Content="הצגת רשימת רחפנים" HorizontalAlignment="Left" Height="77" Margin="520,66,0,0" VerticalAlignment="Top" Width="251" FontSize="22" FontWeight="Bold" Click="btnGetListDrones_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="26*"/>
+
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btnGetListDrones" Content="Show list drones" HorizontalAlignment="Left" Height="54" Margin="60,31,0,0" VerticalAlignment="Top" Width="171" FontWeight="Normal" Click="btnGetListDrones_Click" Grid.Column="1" Grid.ColumnSpan="2" FontSize="16"/>
 
     </Grid>
 </Window>

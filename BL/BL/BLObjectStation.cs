@@ -101,7 +101,7 @@ namespace IBL
         /// the function brings all the stations from the dal and adds the mess details for bl  station
         /// </summary>
         /// <returns>list of station</returns>
-        public IEnumerable<BaseStationList> GetAllBaseStations()
+        public IEnumerable<BaseStationList> GetBaseStations()
         {
             try
             {
