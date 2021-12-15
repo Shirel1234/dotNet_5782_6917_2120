@@ -454,7 +454,7 @@ namespace Console_BL
         {
             try
             {
-                List<BaseStationList> baseStationsList = bl.GetAllBaseStations().ToList();
+                List<BaseStationList> baseStationsList = bl.GetBaseStations().ToList();
                 foreach (BaseStationList item in baseStationsList)
                 {
                     Console.WriteLine(item);
@@ -469,7 +469,7 @@ namespace Console_BL
         {
             try
             {
-                List<DroneList> dronesList = bl.GetAllDrones().ToList();
+                List<DroneList> dronesList = bl.GetDrones().ToList();
                 foreach (DroneList item in dronesList)
                 {
                     Console.WriteLine(item);
@@ -484,7 +484,7 @@ namespace Console_BL
         {
             try
             {
-                List<CustomerList> customersList = bl.GetAllCustomers().ToList();
+                List<CustomerList> customersList = bl.GetCustomers().ToList();
                 foreach (CustomerList item in customersList)
                 {
                     Console.WriteLine(item);
@@ -499,7 +499,7 @@ namespace Console_BL
         {
             try
             {
-                List<ParcelList> parcelsList = bl.GetAllParcels().ToList();
+                List<ParcelList> parcelsList = bl.GetParcels().ToList();
                 foreach (ParcelList item in parcelsList)
                 {
                     Console.WriteLine(item);

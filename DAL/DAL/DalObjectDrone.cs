@@ -33,9 +33,6 @@ namespace DalObject
             Drone myDrone = DataSource.drones.Find(x => x.CodeDrone == d.CodeDrone);
             if (myDrone.CodeDrone != d.CodeDrone)
                 throw new DoesntExistException("This drone doesn't exist in the system");
-            //myDrone.CodeDrone = d.CodeDrone;
-            //myDrone.ModelDrone = d.ModelDrone;
-            //myDrone.MaxWeight = d.MaxWeight;
             DataSource.drones.Remove(myDrone);
             DataSource.drones.Add(d);
         }

@@ -1,0 +1,22 @@
+﻿<Window x:Class="PL.AddDrone"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="AddDrone" Height="640" Width="800">
+    <Grid Margin="0,-58,-48,0">
+        <Label x:Name="lblAddDrone" Content="Add Drone:" HorizontalAlignment="Left" Height="52" Margin="42,111,0,0" VerticalAlignment="Top" Width="139" FontSize="22"/>
+        <Label x:Name="lblIdDrone" Content="Id:" HorizontalAlignment="Left" Height="34" Margin="112,200,0,0" VerticalAlignment="Top" Width="102" FontSize="18"/>
+        <Label x:Name="lblModelDrone" Content="Model Drone:" HorizontalAlignment="Left" Height="37" Margin="112,239,0,0" VerticalAlignment="Top" Width="130" FontSize="18"/>
+        <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="45" Margin="112,286,0,0" VerticalAlignment="Top" Width="102" FontSize="18"/>
+        <Label x:Name="lblStation" Content="id Station:" HorizontalAlignment="Left" Height="33" Margin="112,341,0,0" VerticalAlignment="Top" Width="102" FontSize="18"/>
+        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Margin="148,192,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Height="42"/>
+        <ComboBox x:Name="cmbWeight" HorizontalAlignment="Left" Height="30" Margin="214,288,0,0" VerticalAlignment="Top" Width="152"/>
+        <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="27" Margin="254,249,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+        <ComboBox x:Name="cmbFreeStations" HorizontalAlignment="Left" Height="33" Margin="216,341,0,0" VerticalAlignment="Top" Width="150"/>
+        <Button x:Name="btnAddDrone" Content="Add" HorizontalAlignment="Left" Height="43" Margin="366,423,0,0" VerticalAlignment="Top" Width="76" FontSize="18" FontWeight="Bold" Click="btnAddDrone_Click"/>
+
+    </Grid>
+</Window>

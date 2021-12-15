@@ -33,13 +33,8 @@ namespace DalObject
             BaseStation myStation = DataSource.stations.Find(x => x.CodeStation == b.CodeStation);
             if (myStation.CodeStation != b.CodeStation)
                 throw new DoesntExistException("This baseStation doesn't exist in the system");
-            myStation.CodeStation = b.CodeStation;
-            myStation.NameStation = b.NameStation;
-            myStation.ChargeSlots = b.ChargeSlots;
-            myStation.Longitude = b.Longitude;
-            myStation.Latitude = b.Latitude;
-            DataSource.stations.Remove(b);
-            DataSource.stations.Add(myStation);
+            DataSource.stations.Remove(myStation);
+            DataSource.stations.Add(b);
         }
         /// <summary>
         /// the function searches the station with the id that it got

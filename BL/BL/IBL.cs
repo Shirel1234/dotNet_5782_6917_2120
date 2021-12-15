@@ -25,11 +25,14 @@ namespace IBL
         Drone GetDrone(int idD);
         Customer GetCustomer(int idC);
         Parcel GetParcel(int idP);
-        IEnumerable<BaseStationList> GetAllBaseStations();
-        IEnumerable<DroneList> GetAllDrones();
-        IEnumerable<CustomerList> GetAllCustomers();
-        IEnumerable<ParcelList> GetAllParcels();
+        IEnumerable<BaseStationList> GetBaseStations();
+        IEnumerable<DroneList> GetDrones();
+        IEnumerable<CustomerList> GetCustomers();
+        IEnumerable<ParcelList> GetParcels();
         IEnumerable<ParcelList> GetAllParcelsWithoutDrone();
         IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions();
+        IEnumerable<DroneList> GetDronesByStatus(int num);
+        IEnumerable<DroneList> GetDronesByWeight(int num);
+
     }
 }

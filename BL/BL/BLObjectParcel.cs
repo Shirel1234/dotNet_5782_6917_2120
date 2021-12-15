@@ -84,7 +84,7 @@ namespace IBL
         /// the function brings all the parcels from the dal and add the mess details for the bl parcel
         /// </summary>
         /// <returns>list of parcels</returns>
-        public IEnumerable<ParcelList> GetAllParcels()
+        public IEnumerable<ParcelList> GetParcels()
         {
             try
             {

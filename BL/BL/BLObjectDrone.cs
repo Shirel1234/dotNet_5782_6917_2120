@@ -130,9 +130,21 @@ namespace IBL
         /// the function returns the list of drones that we update in this program
         /// </summary>
         /// <returns>list of drones</returns>
-        public IEnumerable<DroneList> GetAllDrones()
+        public IEnumerable<DroneList> GetDrones()
         {
             return BODrones;
+        }
+        public IEnumerable<DroneList> GetDronesByStatus(int num)
+        {
+            return from drone in BODrones 
+                   where (int)drone.DroneStatus==num 
+                   select drone;
+        }
+        public IEnumerable<DroneList> GetDronesByWeight(int num)
+        {
+            return from drone in BODrones
+                   where (int)drone.Weight == num
+                   select drone;
         }
 
 
