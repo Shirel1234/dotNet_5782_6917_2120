@@ -131,20 +131,20 @@ namespace IBL
         /// <returns>list of station without charge position</returns>
         public IEnumerable<BaseStationList> GetAllBaseStationsWithChargePositions()
         {
-            List<IDAL.DO.BaseStation> DOstatinsWithChargeSlotsList = dl.GetStationsByCondition().ToList().FindAll(station => station.ChargeSlots > 0);
-            return
-               from station in DOstatinsWithChargeSlotsList
-               let busyChargingPositions = BODrones.Count
-                   (drone => drone.DroneStatus == (DroneStatuses)1
-                   && drone.LocationNow.Longitude == station.Longitude
-                   && drone.LocationNow.Latitude == station.Latitude)
-               select new BaseStationList()
-               {
-                   Id = station.CodeStation,
-                   Name = station.NameStation,
-                   ChargeSlotsFree = station.ChargeSlots,
-                   ChargeSlotsCatch = busyChargingPositions
-               };
+            return from station in dl.GetStationsByCondition().ToList()
+                   where station.ChargeSlots > 0
+                   let busyChargingPositions = BODrones.Count
+                                     (drone => drone.DroneStatus == (DroneStatuses)1
+                                     && drone.LocationNow.Longitude == station.Longitude
+                                     && drone.LocationNow.Latitude == station.Latitude)
+                   select new BaseStationList()
+                   {
+                       Id = station.CodeStation,
+                       Name = station.NameStation,
+                       ChargeSlotsFree = station.ChargeSlots,
+                       ChargeSlotsCatch = station.ChargeSlots - busyChargingPositions
+                   };
+
         }
         /// <summary>
         /// the function create a list of drones in the station that got

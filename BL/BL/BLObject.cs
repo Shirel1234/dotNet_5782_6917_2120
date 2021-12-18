@@ -105,19 +105,19 @@ namespace IBL
             if (droneList.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
             //check that the drone is free
-            if (droneList.DroneStatus == (DroneStatuses)0)
+            if (droneList.DroneStatus == DroneStatuses.free)
             {
                 //create three groops by the type of priority
                 var groups = dl.GetParcelsByCondition().ToList().GroupBy(parcel => parcel.Priority);
                 List<IDAL.DO.Parcel> gNormal = new List<IDAL.DO.Parcel>();
                 List<IDAL.DO.Parcel> gExpress = new List<IDAL.DO.Parcel>();
                 List<IDAL.DO.Parcel> gEmergency = new List<IDAL.DO.Parcel>();
-                foreach (IGrouping<Priorities, IDAL.DO.Parcel> group in groups)
+                foreach (IGrouping<IDAL.DO.Priorities, IDAL.DO.Parcel> group in groups)
                 {
-                    if (group.Key == (Priorities)0)
+                    if (group.Key == IDAL.DO.Priorities.normal)
                         gNormal = group.ToList();
                     else
-                        if (group.Key == (Priorities)1)
+                        if (group.Key == IDAL.DO.Priorities.express)
                         gExpress = group.ToList();
                     else
                         gEmergency = group.ToList();
@@ -134,7 +134,7 @@ namespace IBL
                     }
                 }
                 BODrones.Remove(droneList);
-                droneList.DroneStatus =(DroneStatuses)2;
+                droneList.DroneStatus =DroneStatuses.sending;
                 BODrones.Add(droneList);
                 chosenParcel.DroneId = id;
                 chosenParcel.Scheduled = DateTime.Now;
@@ -148,7 +148,7 @@ namespace IBL
             try
             {
                 Drone drone = GetDrone(droneID);
-                if (drone.DroneStatus == (DroneStatuses)2)
+                if (drone.DroneStatus == DroneStatuses.sending)
                 {
                     IDAL.DO.Parcel p = dl.GetParcelsByCondition().ToList().Find(parcel => parcel.DroneId == droneID );
                     //if the conditions match and the parcel was found
@@ -195,7 +195,7 @@ namespace IBL
                             Weight = droneList.Weight,
                             Battery = GetBatteryDeliveredParcel(droneList, parcel),
                             LocationNow = new Location(dl.GetCustomer(parcel.TargetId).Longitude, dl.GetCustomer(parcel.TargetId).Latitude),
-                            DroneStatus = (DroneStatuses)0,
+                            DroneStatus = DroneStatuses.free,
                         };
                         BODrones.ToList().Remove(droneList);
                         BODrones.ToList().Add(newDroneListnew);
