@@ -32,7 +32,7 @@ namespace IBL
         {
             return d * (Math.PI / 180);
         }
-        private ParcelStatuses GetDateTimeToStatus(IDAL.DO.Parcel p)
+        public ParcelStatuses GetDateTimeToStatus(IDAL.DO.Parcel p)
         {
             if (p.Scheduled==null)
                 return (ParcelStatuses)0;
@@ -77,12 +77,12 @@ namespace IBL
         private ParcelStatuses GetParcelStatus(IDAL.DO.Parcel parcel)
         {
             if (parcel.Scheduled == null)
-                return (ParcelStatuses)0;
+                return ParcelStatuses.requested;
             if (parcel.PickedUp == null)
-                return (ParcelStatuses)1;
+                return ParcelStatuses.scheduled;
             if (parcel.Delivered == null)
-                return (ParcelStatuses)2;
-            return (ParcelStatuses)3;
+                return ParcelStatuses.pickedUp;
+            return ParcelStatuses.delivered;
         }
         /// <summary>
         /// the function update the status of drone, location and battery
@@ -128,10 +128,12 @@ namespace IBL
                     {
                         newDroneList.Battery = rnd.Next(0, 21);
                         //random a base station
-                        int countStations = dl.GetStationsByCondition().ToList().Count();
+                       // int countStations = dl.GetStationsByCondition().ToList().Count();
                         IDAL.DO.BaseStation[] arrBaseStation = dl.GetStationsByCondition().ToArray();
-                        IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(0, countStations)];
+                        IDAL.DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(0, 2)];
                         newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
+                        randomBaseStation.ChargeSlots--;
+                        dl.UpDateBaseStation(randomBaseStation);
                     }
                     //the drone is free
                     else
@@ -146,6 +148,8 @@ namespace IBL
                         newDroneList.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
                         //random battery between minimum of arriving to base station for charge
                         IDAL.DO.BaseStation closerBaseStation = GetCloserBaseStation(newDroneList.LocationNow);
+                        closerBaseStation.ChargeSlots--;
+                        dl.UpDateBaseStation(closerBaseStation);
                         double distance = GetDistance(newDroneList.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
                         if ((distance * free) > 100)
                             newDroneList.Battery = 100;

@@ -31,8 +31,9 @@ using System.Threading.Tasks;
                 {
                     b.CodeStation = i;
                     b.NameStation = r.Next(1000, 10000);
-                     b.Longitude = r.NextDouble()+ r.Next(30, 34);
+                    b.Longitude = r.NextDouble()+ r.Next(30, 34);
                     b.Latitude = r.NextDouble()+r.Next(34,37);
+                    b.ChargeSlots = r.Next(5, 6);
                     stations.Add(b);
                 }
                 Drone d = new Drone();
@@ -71,7 +72,7 @@ using System.Threading.Tasks;
                 p.DroneId = drone.CodeDrone;
                 if (p.DroneId != 0)
                 {
-                    arrTemp[p.DroneId] = 1;
+                    arrTemp[p.DroneId-1] = 1;
                     p.Scheduled = DateTime.Now;
                     p.PickedUp = new DateTime(0);
                     p.Delivered = new DateTime(0);
