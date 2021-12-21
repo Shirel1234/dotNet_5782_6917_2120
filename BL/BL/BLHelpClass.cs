@@ -9,6 +9,7 @@ namespace BL
 {
     public partial class BL
     {
+        Random r = new Random();
         /// <summary>
         /// the function move from cordinates to distance in km by radius and math calculation
         /// </summary>
@@ -123,16 +124,16 @@ namespace BL
                 //the drone doesn't do sending
                 else
                 {
-                    int num = rnd.Next(0, 2);
+                    int num = r.Next(0, 2);
                     newDroneList.DroneStatus = (DroneStatuses)num;
                     //the drone is in maintenace
                     if (newDroneList.DroneStatus == (DroneStatuses)1)
                     {
-                        newDroneList.Battery = rnd.Next(0, 21);
+                        newDroneList.Battery = r.Next(0, 21);
                         //random a base station
                         // int countStations = dl.GetStationsByCondition().ToList().Count();
                         DO.BaseStation[] arrBaseStation = dal.GetStationsByCondition().ToArray();
-                        DO.BaseStation randomBaseStation = arrBaseStation[rnd.Next(0, 2)];
+                        DO.BaseStation randomBaseStation = arrBaseStation[r.Next(0, 2)];
                         newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
                         randomBaseStation.ChargeSlots--;
                         dal.UpDateBaseStation(randomBaseStation);
@@ -146,7 +147,7 @@ namespace BL
                                                     select dal.GetCustomersByCondition(c => c.IdCustomer == parcel.TargetId).ToList();
                         int count = listCustomerGotParcel.Count();
                         DO.Customer[] arrCustomerGotParcel = new DO.Customer[count];
-                        DO.Customer randomCustomer = arrCustomerGotParcel[rnd.Next(count)];
+                        DO.Customer randomCustomer = arrCustomerGotParcel[r.Next(count)];
                         newDroneList.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
                         //random battery between minimum of arriving to base station for charge
                         DO.BaseStation closerBaseStation = GetCloserBaseStation(newDroneList.LocationNow);
@@ -156,7 +157,7 @@ namespace BL
                         if ((distance * free) > 100)
                             newDroneList.Battery = 100;
                         else
-                            newDroneList.Battery = rnd.Next((int)(distance * free), 101);
+                            newDroneList.Battery = r.Next((int)(distance * free), 101);
                     }
                 }
             }

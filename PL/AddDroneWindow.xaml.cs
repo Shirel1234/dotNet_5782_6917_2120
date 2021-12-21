@@ -123,6 +123,7 @@ namespace PL
             {
                 bll.UpdateDrone(newDrone.Id, newDrone.ModelDrone);
                 MessageBox.Show("The new Drone was successfully updated", "Done");
+                this.Close();
             }
             else
                 MessageBox.Show("The new Drone wasn't update", "Error");
