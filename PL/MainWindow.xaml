@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="26*"/>
-
-        </Grid.ColumnDefinitions>
-        <Button x:Name="btnGetListDrones" Content="Show list drones" HorizontalAlignment="Left" Height="54" Margin="60,31,0,0" VerticalAlignment="Top" Width="171" FontWeight="Normal" Click="btnGetListDrones_Click" Grid.Column="1" Grid.ColumnSpan="2" FontSize="16"/>
+    <Grid RenderTransformOrigin="0.5,1">
+        <Grid.Background>
+            <ImageBrush TileMode="FlipY" ImageSource="/shutterstock_1231838656132541713690573635.jpg"/>
+        </Grid.Background>
+        <Button x:Name="btnShowListDrone" Content="Show List Drones" HorizontalAlignment="Left" Height="72" Margin="608,40,0,0" VerticalAlignment="Top" Width="169" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
 
     </Grid>
 </Window>

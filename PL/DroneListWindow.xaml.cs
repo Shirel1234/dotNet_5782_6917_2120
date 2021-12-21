@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace PL
 {
     /// <summary>
@@ -20,41 +21,39 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
-        IBL.IBl bl;
-        public DroneListWindow(IBL.IBl bll)
+        BlApi.IBL bll;
+        public DroneListWindow(BlApi.IBL bl)
         {
             InitializeComponent();
-            bl = bll;
-            DroneListView.ItemsSource = bl.GetDrones();
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            bll = bl;
+            cmbStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            cmbWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            lstDroneListView.ItemsSource = bll.GetDrones();
+
+        }
+
+        private void cmbStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
+        }
+
+        private void cmbWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
         }
 
         private void btnAddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new AddDrone(bl).ShowDialog();
+            new AddDroneWindow(bll).ShowDialog();
+            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
+            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
         }
 
-        private void btnCloseDrones_Click(object sender, RoutedEventArgs e)
+        private void OpenShowDrone(object sender, MouseButtonEventArgs e)
         {
-            
-        }
-
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DroneListView.ItemsSource=bl.GetDronesByStatus((int)StatusSelector.SelectedItem);
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DroneListView.ItemsSource = bl.GetDronesByWeight((int)WeightSelector.SelectedItem);
-
-        }
-
-        private void openDroneActive(object sender, MouseButtonEventArgs e)
-        {
-            new DroneActive(bl).ShowDialog();
+            new AddDroneWindow(bll, (DroneForList)lstDroneListView.SelectedItem).ShowDialog();
+            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
+            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
         }
     }
 }

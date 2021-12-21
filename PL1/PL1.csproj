@@ -4,14 +4,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <AssemblyName>PL1</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="shutterstock_1231838656132541713690573635.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
