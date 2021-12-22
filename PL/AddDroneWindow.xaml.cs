@@ -26,6 +26,8 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
+            newDrone = new();
+            DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             grdUpdating.Visibility = Visibility.Hidden;
