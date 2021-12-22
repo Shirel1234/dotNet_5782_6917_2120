@@ -1,13 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <RootNamespace>DAL</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Dal</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DALFacade\DalFacade.csproj" />
+    <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
   </ItemGroup>
 
 </Project>

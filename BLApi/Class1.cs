@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace BL
+namespace BLApi
 {
     public class Class1
     {

@@ -20,10 +20,11 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal readonly IBL bl = BlFactory.GetBl();
-        public MainWindow()
+        BlApi.IBL bl;
+        public MainWindow(BlApi.IBL bll)
         {
             InitializeComponent();
+            bl = bll;
         }
         private void btnShowListDrone_Click(object sender, RoutedEventArgs e)
         {
