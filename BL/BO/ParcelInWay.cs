@@ -19,7 +19,7 @@ namespace BO
         public double TransportDistance { set; get; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {IsInWay}, {Priority}, {Weight}, \n{Sender}, \n{Target}, \n{LocationPickedUp}, \n{LocationTarget}, \n{TransportDistance}");
+            return String.Format($"Id: {Id}, Is In Way:{IsInWay}, Priority: {Priority}, Weight: {Weight}, Sender: {Sender}, Target: {Target}, Location Picked Up: {LocationPickedUp}, Location Target: {LocationTarget}, Transport Distance: {TransportDistance}");
         }
     }
 }

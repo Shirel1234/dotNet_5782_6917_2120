@@ -36,6 +36,8 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
+            newDrone = new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
+            DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             btnAdd.Visibility = Visibility.Hidden;
@@ -65,53 +67,53 @@ namespace PL
         }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            newDrone = new Drone();
-            if (IsFillObject())
-            {
+            //newDrone = new Drone();
+            //if (IsFillObject())
+            //{
                 BaseStationForList b = (BaseStationForList)cmbIdStation.SelectedItem;
                 bll.AddDrone(newDrone, b.Id);
                 MessageBox.Show("The new Drone was successfully added", "Done");
                 this.Close();
-            }
-            else
-                MessageBox.Show("The new Drone wasn't added", "Error");
+            //}
+            //else
+            //    MessageBox.Show("The new Drone wasn't added", "Error");
 
         }
-        private bool IsFillObject()
-        {
-            bool valid = true;
-            try
-            {
-                if (Convert.ToInt32(txtIdDrone.Text) < 0)
-                    throw new Exception("Id can't be negetive number");
-                newDrone.Id = Convert.ToInt32(txtIdDrone.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                valid = false;
-            }
-            try
-            {
-                newDrone.ModelDrone = txtModelDrone.Text;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                valid = false;
-            }
-            try
-            {
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                valid = false;
-            }
-            newDrone.MaxWeight = (WeightCategories)cmbWeightDrone.SelectedItem;
+        //private bool IsFillObject()
+        //{
+        //    bool valid = true;
+        //    try
+        //    {
+        //        if (Convert.ToInt32(txtIdDrone.Text) < 0)
+        //            throw new Exception("Id can't be negetive number");
+        //        newDrone.Id = Convert.ToInt32(txtIdDrone.Text);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        valid = false;
+        //    }
+        //    try
+        //    {
+        //        newDrone.ModelDrone = txtModelDrone.Text;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        valid = false;
+        //    }
+        //    try
+        //    {
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        valid = false;
+        //    }
+        //    newDrone.MaxWeight = (WeightCategories)cmbWeightDrone.SelectedItem;
 
-            return valid;
-        }
+        //    return valid;
+        //}
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -120,15 +122,15 @@ namespace PL
 
         private void btnUpdateDrone_Click(object sender, RoutedEventArgs e)
         {
-            newDrone = new Drone();
-            if (IsFillObject())
-            {
+            //newDrone = new Drone();
+            //if (IsFillObject())
+            //{
                 bll.UpdateDrone(newDrone.Id, newDrone.ModelDrone);
                 MessageBox.Show("The new Drone was successfully updated", "Done");
                 this.Close();
-            }
-            else
-                MessageBox.Show("The new Drone wasn't update", "Error");
+            //}
+            //else
+            //    MessageBox.Show("The new Drone wasn't update", "Error");
 
         }
 
@@ -147,12 +149,6 @@ namespace PL
             }
 
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            grdRelease.Visibility = Visibility.Visible;
-        }
-
         private void btnSchedulingForSending_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -192,12 +188,11 @@ namespace PL
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "The charging wasn't updated"); }
         }
-
-        private void btnContinueRelease_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bll.UpdateReleasingDroneFromCharge(Convert.ToInt32(txtIdDrone.Text), Convert.ToDouble(txtTimeInCharging.Text));
+                bll.UpdateReleasingDroneFromCharge(Convert.ToInt32(txtIdDrone.Text));
                 MessageBox.Show("The releasing was successfully done", "Done");
                 this.Close();
             }

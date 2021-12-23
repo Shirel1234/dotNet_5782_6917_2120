@@ -15,7 +15,7 @@ namespace DO
         public double Latitude { get; set; }
         public override string ToString()
         {
-            return String.Format($"({IdCustomer}, /n{NameCustomer},/n {Phone},/n{Longitude},/n{Latitude})");
+            return String.Format($"(IdCustomer: {IdCustomer}, NameCustomer: {NameCustomer}, Phone: {Phone}, Longitude:{Longitude}, Latitude:{Latitude})");
         }
     }
 }

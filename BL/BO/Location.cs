@@ -17,7 +17,7 @@ namespace BO
         }
         public override string ToString()
         {
-            return String.Format($"{Longitude}, {Latitude}");
+            return String.Format($"Longitude: {Longitude}, Latitude: {Latitude}");
         }
     }
 }

@@ -18,7 +18,7 @@ namespace BlApi
         void UpdateBaseStation(int id, int name, int numOfChargePositions);
         void UpdateCustomer(int id, string name, string phone);
         void UpdateSendingDroneToCharge(int id);
-        void UpdateReleasingDroneFromCharge(int id, double timeOfCharging);
+        void UpdateReleasingDroneFromCharge(int id);
         void UpdateParcelToDrone(int idD);
         void UpdateParcelPickedUpByDrone(int idD);
         void UpdateDeliveredParcelByDrone(int idD);

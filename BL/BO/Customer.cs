@@ -16,7 +16,7 @@ namespace BO
         public IEnumerable<ParcelInCustomer> TargetParcels { get; set; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Name}, {Phone}, {Location},{SendParcels},{TargetParcels}");
+            return String.Format($"Id: {Id}, {Name}, Phone: {Phone}, Location: {Location},Send Parcels: {SendParcels}, Target Parcels: {TargetParcels}");
         }
     }
 }

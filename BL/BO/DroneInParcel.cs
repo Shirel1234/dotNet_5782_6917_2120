@@ -13,7 +13,7 @@ namespace BO
       public Location LocationNow { set; get; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Battery}, {LocationNow}");
+            return String.Format($"Id: {Id}, Battery: {Battery}, LocationNow: {LocationNow}");
         }
     }
 }

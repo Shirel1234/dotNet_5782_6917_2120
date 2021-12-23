@@ -15,7 +15,7 @@ namespace BO
         public CustomerInParcel SecondSideCustomer { get; set; }
         public override string ToString()
         {
-            return string.Format($"{Id}, {Weight}, {Priority}, {Status}, {SecondSideCustomer}");
+            return string.Format($"Id: {Id}, Weight: {Weight}, Priority: {Priority}, Status: {Status}, Second Side Customer: {SecondSideCustomer}");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace DO
         // public double Battery { get; set; }
         public override string ToString()
         {
-            return String.Format($"({CodeDrone}, /n{ModelDrone},/n {MaxWeight})");
+            return String.Format($"(Code Drone: {CodeDrone}, Model Drone: {ModelDrone},Max Weight: {MaxWeight})");
         }
     }
 }

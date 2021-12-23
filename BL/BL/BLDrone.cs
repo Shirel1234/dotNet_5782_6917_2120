@@ -36,7 +36,7 @@ namespace BL
                 dal.AddDrone(doDrone);
                 tempB.ChargeSlots--;
                 dal.UpDateBaseStation(tempB);
-                dal.AddDroneCharge(d.Id, idStation);
+                dal.AddDroneCharge(d.Id, idStation,DateTime.Now);
             }
 
             catch (Exception ex)

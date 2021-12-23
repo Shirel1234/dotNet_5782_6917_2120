@@ -15,7 +15,7 @@ namespace BO
         public IEnumerable<DroneInCharge> ListDroneCharge { get; set; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Name}, {Location}, {ChargeSlots}");
+            return String.Format($"Id: {Id}, Name: {Name}, Location: {Location}, Carge slots: {ChargeSlots}");
         }
     }
 }

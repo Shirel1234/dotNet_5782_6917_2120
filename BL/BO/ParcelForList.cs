@@ -16,7 +16,7 @@ namespace BO
         public ParcelStatuses Status { get; set; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {NameSender}, {Weight}, {NameTarget}, {Priority}, {Status}");
+            return String.Format($"Id: {Id}, Name Sender: {NameSender}, Weight: {Weight}, Name Target: {NameTarget}, Priority: {Priority}, Status: {Status}");
         }
 
     }

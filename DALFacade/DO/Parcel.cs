@@ -21,7 +21,7 @@ namespace DO
         public DateTime? Delivered { get; set; }
         public override string ToString()
         {
-            return String.Format($"({CodeParcel}, /n{SenderId},/n {TargetId},/n{Weight},/n{Priority},/n{DroneId},/n {Requested},/n{Scheduled},/n{PickedUp},/n{Delivered})");
+            return String.Format($"(Code Parcel: {CodeParcel}, SenderId: {SenderId},TargetId: {TargetId}, Weight: {Weight}, Priority: {Priority}, DroneId: {DroneId}, Requested: {Requested}, Scheduled: {Scheduled}, Picked Up: {PickedUp}, Delivered: {Delivered})");
         }
 
 

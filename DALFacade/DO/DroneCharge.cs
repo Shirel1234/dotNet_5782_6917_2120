@@ -11,9 +11,10 @@ namespace DO
     {
         public int DroneID { get; set; }
         public int StationID { get; set; }
+        public DateTime? BeginingCharge { get; set; }
         public override string ToString()
         {
-            return String.Format($"({DroneID}, /n{StationID})");
+            return String.Format($"(Drone ID: {DroneID}, Station ID: {StationID}, Begining Charge: {BeginingCharge})");
         }
     }
 }

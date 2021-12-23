@@ -78,7 +78,7 @@ namespace BL
                     dal.UpDateBaseStation(closeStation);
                     //update drone Charge
                     //DroneCharge droneCharge = new DroneCharge() { Battery = droneList.Battery, Id = droneList.Id };
-                    dal.AddDroneCharge(droneList.Id, closeStation.CodeStation);
+                    dal.AddDroneCharge(droneList.Id, closeStation.CodeStation, DateTime.Now);
                 }
                 else
                     throw new UpdateProblemException("It is impossible to send this drone to charging");
@@ -86,7 +86,7 @@ namespace BL
             else
                 throw new UpdateProblemException("The drone isn't free for charging");
         }
-        public void UpdateReleasingDroneFromCharge(int id, double timeOfCharging)
+        public void UpdateReleasingDroneFromCharge(int id/*, double timeOfCharging*/)
         {
             DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
@@ -95,7 +95,7 @@ namespace BL
             {
                 //update drone
                 BODrones.Remove(droneList);
-                droneList.Battery = timeOfCharging * chargingRate;
+                droneList.Battery = Convert.ToDouble(dal.GetDroneCharge(id).BeginingCharge-DateTime.Now) * chargingRate;
                 droneList.DroneStatus = (DroneStatuses)0;
                 BODrones.Add(droneList);
                 //update station

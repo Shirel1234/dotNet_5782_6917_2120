@@ -13,7 +13,7 @@ namespace BO
         public string Name { get; set; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Name}");
+            return String.Format($"Id: {Id}, Name: {Name}");
         }
     }
 }

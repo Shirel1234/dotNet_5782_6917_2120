@@ -17,7 +17,7 @@
         </Style>
         <Style x:Key="myButtonStyle" TargetType="Button">
             <Setter Property="FontSize"
-                Value="12" />
+                Value="32" />
             <Setter Property="FontFamily"
                  Value="Consolas" />
             <Setter Property="FontWeight"
@@ -25,9 +25,9 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button Style="{StaticResource myButtonStyle}" Content="Customer" Click="btnPressCustomer_Click" Margin="10,-10,-10,10"/>
-        <Button Style = "{StaticResource myButtonStyle}" Content="Worker" />
-        <Button Style = "{StaticResource myButtonStyle}" Content="New Customer" Click="btnNewCustomer_Click"/>
+        <Button Style="{StaticResource myButtonStyle}" Content="Customer" Click="btnPressCustomer_Click" Margin="137,288,374,67"/>
+        <Button Style = "{StaticResource myButtonStyle}" Content="Worker" Margin="137,70,374,284" />
+        <Button Style = "{StaticResource myButtonStyle}" Content="New Customer" Click="btnNewCustomer_Click" Margin="133,166,378,188"/>
 
     </Grid>
 </Window>

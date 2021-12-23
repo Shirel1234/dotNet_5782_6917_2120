@@ -14,7 +14,7 @@ namespace BO
         public int ChargeSlotsCatch { set; get; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Name}, {ChargeSlotsFree}, {ChargeSlotsCatch}");
+            return String.Format($"Id: {Id}, Name:{Name}, Free Charge Slots: {ChargeSlotsFree}, Catch Charge Slots: {ChargeSlotsCatch}");
         }
     }
 }

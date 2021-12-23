@@ -98,12 +98,13 @@ namespace Dal
         {
             return DataSource.dronesCharge.Find(droneCharge => droneCharge.DroneID == idDC);
         }
-        public void AddDroneCharge(int idD, int idS)
+        public void AddDroneCharge(int idDrone, int idStation, DateTime? dateTimeBegining)
         {
             DroneCharge dc = new DroneCharge()
             {
-                DroneID = idD,
-                StationID = idS
+                DroneID = idDrone,
+                StationID = idStation,
+                BeginingCharge = dateTimeBegining
             };
             DataSource.dronesCharge.Add(dc);
         }

@@ -21,7 +21,7 @@ namespace BO
         public DateTime? Delivered { get; set; }//זמן אספקה
         public override string ToString()
         {
-            return String.Format($"{CodeParcel}, {SenderCustomer}, {TargetCustomer}, {Weight}, {DroneInParcel}, {Requested}, {Scheduled}, {PickedUp}, {Delivered}");
+            return String.Format($"Code Parcel: {CodeParcel}, Sender Customer: {SenderCustomer}, TargetCustomer: {TargetCustomer}, Weight: {Weight}, Drone In Parcel: {DroneInParcel}, Requested: {Requested}, Scheduled: {Scheduled}, PickedUp: {PickedUp}, Delivered: {Delivered}");
         }
     }
 }

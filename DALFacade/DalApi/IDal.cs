@@ -14,7 +14,7 @@ namespace DalApi
         void AddDrone(Drone d);
         void AddCustomer(Customer c);
         void AddParcel(Parcel p);
-        void AddDroneCharge(int idD, int idS);
+        void AddDroneCharge(int idD, int idS, DateTime? dateTimeBegining);
         void RemoveDroneCharge(DroneCharge dc);
         void UpDateBaseStation(BaseStation b);
         void UpDateParcel(Parcel p);

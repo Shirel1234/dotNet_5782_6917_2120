@@ -17,7 +17,7 @@ namespace BO
         public int CountParcelsInWay { get; set; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Name}, {Phone}, {CountDeliveredParcels}, {CountNotDeliveredParcels}, {CountAcceptedParcelsByCustomer}, {CountParcelsInWay}");
+            return String.Format($"Id: {Id}, Name: {Name}, Phone: {Phone}, Count Delivered Parcels: {CountDeliveredParcels}, Count NotDelivered Parcels: {CountNotDeliveredParcels}, Count Accepted Parcels By Customer: {CountAcceptedParcelsByCustomer}, Count Parcels In Way: {CountParcelsInWay}");
         }
     }
 }

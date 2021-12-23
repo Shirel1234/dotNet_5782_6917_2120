@@ -31,7 +31,7 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public void AddDroneCharge(int idD, int idS)
+        public void AddDroneCharge(int idD, int idS, DateTime? dateTime)
         {
             throw new NotImplementedException();
         }

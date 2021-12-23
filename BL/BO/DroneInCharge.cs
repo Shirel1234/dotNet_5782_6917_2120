@@ -10,9 +10,10 @@ namespace BO
     {
         public int Id { get; set; }
         public double Battery { get; set; }
+        public DateTime? DateTimeBegining { get; set; }
         public override string ToString()
         {
-            return String.Format($"{Id}, {Battery}, ");
+            return String.Format($"Id: {Id}, Battery: {Battery}, DateTime Begining:{DateTimeBegining} ");
         }
     }
 }
