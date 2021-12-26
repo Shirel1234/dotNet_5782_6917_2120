@@ -24,14 +24,18 @@
         <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="43" Margin="80,433,0,0" VerticalAlignment="Top" Width="150" FontSize="18" Click="btnAdd_Click" Background="#FFF3E9E9"/>
         <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="54" Margin="691,20,0,0" VerticalAlignment="Top" Width="75" FontSize="20" Click="btnClose_Click"/>
         <Grid x:Name="grdUpdating" HorizontalAlignment="Left" Height="521" Margin="456,74,0,0" VerticalAlignment="Top" Width="310">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="303*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="405*"/>
                 <RowDefinition Height="116*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="btnUpdateDrone" Content="Update Drone" HorizontalAlignment="Center" Height="54" Margin="0,133,0,0" VerticalAlignment="Top" Width="194" FontSize="18" Click="btnUpdateDrone_Click"/>
+            <Button x:Name="btnUpdateDrone" Content="Update Drone" HorizontalAlignment="Left" Height="54" Margin="58,133,0,0" VerticalAlignment="Top" Width="194" FontSize="18" Click="btnUpdateDrone_Click"/>
             <Button x:Name="btnSendForCharging" HorizontalAlignment="Left" Height="56" Margin="71,38,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnSendForCharging_Click" RenderTransformOrigin="0.535,2.726" Content="Sending For Charging" Visibility="Visible"/>
             <Button x:Name="btnSchedulingForSending" Content="Scheduling for sending" HorizontalAlignment="Left" Height="45" Margin="47,361,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnSchedulingForSending_Click" Visibility="Hidden" Grid.RowSpan="2"/>
-            <Button x:Name="btnReleaseDroneCharging" Content="Release from Charging" HorizontalAlignment="Center" Height="42" Margin="0,213,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="Button_Click" Visibility="Visible"/>
+            <Button x:Name="btnReleaseDroneCharging" Content="Release from Charging" HorizontalAlignment="Left" Height="42" Margin="57,213,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="Button_Click" Visibility="Visible"/>
             <Button x:Name="btnPickUpSending" Content="Pick Up Sending" HorizontalAlignment="Left" Height="36" Margin="47,31,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnPickUpSending_Click" Visibility="Hidden" Grid.Row="1"/>
             <Button x:Name="btnDelivered" Content="Delivery Sending" HorizontalAlignment="Left" Height="43" Margin="47,90,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnDelivered_Click" Visibility="Hidden" Grid.Row="1"/>
         </Grid>

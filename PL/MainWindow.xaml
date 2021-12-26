@@ -7,10 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid RenderTransformOrigin="0.5,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="265*"/>
+            <RowDefinition Height="169*"/>
+        </Grid.RowDefinitions>
         <Grid.Background>
             <ImageBrush TileMode="FlipY" ImageSource="/shutterstock_1231838656132541713690573635.jpg"/>
         </Grid.Background>
-        <Button x:Name="btnShowListDrone" Content="Show List Drones" HorizontalAlignment="Left" Height="72" Margin="608,40,0,0" VerticalAlignment="Top" Width="169" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+        <Button x:Name="btnShowListDrone" Content="Show Drones List" HorizontalAlignment="Left" Height="72" Margin="608,40,0,0" 
+                VerticalAlignment="Top" Width="169" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" 
+                Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+        <Button x:Name="btnShowListStations"  Content="Show Base Stations List" HorizontalAlignment="Left" Margin="337,40,0,0" 
+                VerticalAlignment="Top" Height="72" Width="169" FontSize="15" Click="btnShowListStations_Click" Background="{x:Null}"/>
 
     </Grid>
 </Window>

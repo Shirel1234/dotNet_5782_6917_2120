@@ -30,5 +30,9 @@ namespace PL
         {
             new DroneListWindow(bl).ShowDialog();
         }
+        private void btnShowListStations_Click(object sender, RoutedEventArgs e)
+        {
+            new BaseStationsListWindow(bl).ShowDialog();
+        }
     }
 }
