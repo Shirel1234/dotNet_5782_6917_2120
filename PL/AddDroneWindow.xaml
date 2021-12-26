@@ -18,6 +18,7 @@
         <Label x:Name="lblModelDrone" Content="Model Drone:" HorizontalAlignment="Left" Height="62" Margin="28,226,0,0" VerticalAlignment="Top" Width="209" FontSize="22"/>
         <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="38,300,0,0" VerticalAlignment="Top" Width="146" FontSize="22"/>
         <Label x:Name="lblStation" Content="Id of Station:" HorizontalAlignment="Left" Height="39" Margin="24,361,0,0" VerticalAlignment="Top" Width="169" FontSize="22"/>
+        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="45" Margin="169,162,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
         <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="31" Margin="173,232,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
         <ComboBox x:Name="cmbWeightDrone" HorizontalAlignment="Left" Height="39" Margin="161,294,0,0" VerticalAlignment="Top" Width="199" SelectedItem="{Binding MaxWeight, Mode=TwoWay}"/>
         <ComboBox x:Name="cmbIdStation" HorizontalAlignment="Left" Height="46" Margin="164,358,0,0" VerticalAlignment="Top" Width="194"/>
@@ -35,6 +36,5 @@
             <Button x:Name="btnPickUpSending" Content="Pick Up Sending" HorizontalAlignment="Left" Height="36" Margin="47,31,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnPickUpSending_Click" Visibility="Hidden" Grid.Row="1"/>
             <Button x:Name="btnDelivered" Content="Delivery Sending" HorizontalAlignment="Left" Height="43" Margin="47,90,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnDelivered_Click" Visibility="Hidden" Grid.Row="1"/>
         </Grid>
-        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="45" Margin="169,162,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
     </Grid>
 </Window>

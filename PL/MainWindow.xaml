@@ -10,7 +10,8 @@
         <Grid.Background>
             <ImageBrush TileMode="FlipY" ImageSource="/shutterstock_1231838656132541713690573635.jpg"/>
         </Grid.Background>
-        <Button x:Name="btnShowListDrone" Content="Show List Drones" HorizontalAlignment="Left" Height="72" Margin="608,40,0,0" VerticalAlignment="Top" Width="169" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+        <Button x:Name="btnShowListDrone" Content="Show List Drones" HorizontalAlignment="Left" Height="72" Margin="589,38,0,0" VerticalAlignment="Top" Width="169" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+        <Button Content="Show List Parcels" HorizontalAlignment="Left" Height="81" Margin="589,136,0,0" VerticalAlignment="Top" Width="169" FontSize="18" Background="{x:Null}" BorderBrush="#FF0C0505" Click="Button_Click"/>
 
     </Grid>
 </Window>

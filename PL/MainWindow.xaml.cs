@@ -30,5 +30,10 @@ namespace PL
         {
             new DroneListWindow(bl).ShowDialog();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ListParcels(bl).ShowDialog();
+        }
     }
 }

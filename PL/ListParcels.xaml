@@ -5,14 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ListParcels" Height="450" Width="800">
-    <Grid>
-        <ListBox x:Name="lstParcels" HorizontalAlignment="Left" Height="179" Margin="216,102,0,0" VerticalAlignment="Top" Width="320"/>
-        <Grid HorizontalAlignment="Left" Height="50" Margin="273,34,0,0" VerticalAlignment="Top" Width="207">
-            <RadioButton x:Name="rdbBySender" Content="By Sender" HorizontalAlignment="Left" Height="32" Margin="105,24,0,0" VerticalAlignment="Top" Width="99"/>
-            <RadioButton x:Name="rdbByTarget" Content="By Target" HorizontalAlignment="Left" Height="32" Margin="14,24,0,0" VerticalAlignment="Top" Width="84"/>
-            <Label x:Name="lblGrouping" Content="Grouping:" HorizontalAlignment="Left" Height="50" Margin="0,-8,0,0" VerticalAlignment="Top" Width="109" FontSize="16"/>
+        Title="ListParcels" Height="640" Width="800">
+    <Grid Margin="0,10,2,36">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="287*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Left" Height="50" Margin="79,45,0,0" VerticalAlignment="Top" Width="207">
+            <RadioButton x:Name="rdbBySender" Content="By Sender" HorizontalAlignment="Left" Height="32" Margin="105,24,0,0" VerticalAlignment="Top" Width="99" Checked="GroupingBySender"/>
+            <RadioButton x:Name="rdbByTarget" Content="By Target" HorizontalAlignment="Left" Height="32" Margin="14,24,0,0" VerticalAlignment="Top" Width="84" Click="GroupingByTarget"/>
+            <Label x:Name="lblGrouping" Content="Grouping:" Height="33" Margin="0,-8,102,0" VerticalAlignment="Top" FontSize="16"/>
         </Grid>
+        <Grid Margin="10,119,10,170">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="lsvParcels" Margin="0,23,10,10" Grid.Column="1" MouseDoubleClick="ShowThisParcel">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Code Parcel" Width="100" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Name Sender" Width="100" DisplayMemberBinding="{Binding NameSender}"/>
+                        <GridViewColumn Header="Weight" Width="100" DisplayMemberBinding="{Binding Weight}" />
+                        <GridViewColumn Header="Name Target" Width="100" DisplayMemberBinding="{Binding NameTarget}"/>
+                        <GridViewColumn Header="Priority" Width="100" DisplayMemberBinding="{Binding Priority}"/>
+                        <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}" />
+                    </GridView>
+                </ListView.View>
 
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </Grid>
+        <Grid x:Name="grdSorting" HorizontalAlignment="Left" Height="82" Margin="419,37,0,0" VerticalAlignment="Top" Width="350">
+            <Label x:Name="lblSort" Content="Sorting:" HorizontalAlignment="Left" Height="38" Margin="0,-7,0,0" VerticalAlignment="Top" Width="87" FontSize="18"/>
+            <Label Content="Status Parcel:" HorizontalAlignment="Left" Height="27" Margin="10,31,0,0" VerticalAlignment="Top" Width="89"/>
+            <ComboBox x:Name="cmbStatuses" HorizontalAlignment="Left" Height="27" Margin="87,31,0,0" VerticalAlignment="Top" Width="109" SelectionChanged="cmbStatuses_SelectionChanged"/>
+            <Label Content="Label" HorizontalAlignment="Left" Height="35" Margin="214,27,0,0" VerticalAlignment="Top" Width="79"/>
+        </Grid>
+        <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="43" Margin="546,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddParcel_Click"/>
     </Grid>
 </Window>

@@ -29,7 +29,7 @@
             <Label x:Name="lblWeightSelector" Content="Drone Max Weight:" Grid.Column="2" HorizontalAlignment="Left" Height="47" Margin="36,63,0,0" VerticalAlignment="Top" Width="154" FontSize="18"/>
             <Label x:Name="lblDroneStatus" Content="Drone Status:" HorizontalAlignment="Left" Height="34" VerticalAlignment="Top" Width="116" FontSize="18" Margin="56,67,0,0"/>
         </Grid>
-        <ListBox x:Name="lstDroneListView" HorizontalAlignment="Left" Height="318" Margin="95,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="620" MouseDoubleClick="OpenShowDrone" Background="White"/>
+        <ListBox x:Name="lstDroneListView" HorizontalAlignment="Left" Height="318" Margin="95,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="620" MouseDoubleClick="OpenShowDrone" Background="White" ItemsSource="{Binding}" SelectionChanged="lstDroneListView_SelectionChanged"/>
         <Button x:Name="btnAddDrone" Content="Add Drone" HorizontalAlignment="Left" Margin="567,404,0,0" Grid.Row="1" VerticalAlignment="Top" Height="53" Width="200" FontSize="18" Click="btnAddDrone_Click" Background="#FFEBDBDB"/>
     </Grid>
 </Window>
