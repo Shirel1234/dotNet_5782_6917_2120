@@ -28,7 +28,7 @@ namespace PL
             bll = bl;
             cmbStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             cmbWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            lstDroneListView.ItemsSource = bll.GetDrones();
+            DataContext= bll.GetDrones();
 
         }
 
@@ -55,5 +55,7 @@ namespace PL
             lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
             lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
         }
+
+       
     }
 }
