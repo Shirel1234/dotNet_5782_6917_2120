@@ -57,7 +57,8 @@ namespace PL
 
         private void ShowThisParcel(object sender, MouseButtonEventArgs e)
         {
-            new AddParcelWindow(bll, (ParcelForList)lsvParcels.SelectedItem).ShowDialog();
+            Parcel p = bll.GetParcel(((ParcelForList)lsvParcels.SelectedItem).Id);
+            new AddParcelWindow(bll, p).ShowDialog();
         }
     }
 }

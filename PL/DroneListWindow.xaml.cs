@@ -50,22 +50,15 @@ namespace PL
 
         private void OpenShowDrone(object sender, MouseButtonEventArgs e)
         {
-            new AddDroneWindow(bll, (DroneForList)lsvDrones.SelectedItem).ShowDialog();
-            lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
-            lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
-        }
-        private void GroupingByStatus(object sender, RoutedEventArgs e)
-        {
-                lsvDrones.ItemsSource = bll.GetDrones();
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvDrones.ItemsSource);
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("DroneStatus");
-                view.GroupDescriptions.Add(groupDescription);
-         
+            Drone d = bll.GetDrone(((DroneForList)lstDroneListView.SelectedItem).Id);
+            new AddDroneWindow(bll, d).ShowDialog();
+            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
+            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        private void lstDroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lsvDrones.ItemsSource = bll.GetDrones();
+
         }
     }
 }

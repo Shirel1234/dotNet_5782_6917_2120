@@ -308,7 +308,7 @@ namespace ConsoleBl
                 if (int.TryParse(Console.ReadLine(), out idD))
                 {
                     double chargingTime = double.Parse(Console.ReadLine());
-                    bl.UpdateReleasingDroneFromCharge(idD, chargingTime);
+                    bl.UpdateReleasingDroneFromCharge(idD/*, chargingTime*/);
                 }
             }
             catch (Exception ex)

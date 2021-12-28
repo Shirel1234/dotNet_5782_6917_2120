@@ -29,11 +29,12 @@ namespace PL
             newParcel = new();
             DataContext = newParcel;
         }
-        public AddParcelWindow(BlApi.IBL bl, ParcelForList p)
+        public AddParcelWindow(BlApi.IBL bl, Parcel p)
         {
             InitializeComponent();
             bll = bl;
             //newParcel = new Parcel { CodeParcel = p.Id, SenderCustomer = bll.GetParcels().ToList().Find(parcel => parcel.NameSender == p.NameSender) };
+            newParcel = p;
             DataContext = newParcel;
 
         }
