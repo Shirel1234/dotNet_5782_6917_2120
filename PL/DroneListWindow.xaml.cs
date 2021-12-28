@@ -51,11 +51,15 @@ namespace PL
 
         private void OpenShowDrone(object sender, MouseButtonEventArgs e)
         {
-            new AddDroneWindow(bll, (DroneForList)lstDroneListView.SelectedItem).ShowDialog();
+            Drone d = bll.GetDrone(((DroneForList)lstDroneListView.SelectedItem).Id);
+            new AddDroneWindow(bll, d).ShowDialog();
             lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
             lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
         }
 
-       
+        private void lstDroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

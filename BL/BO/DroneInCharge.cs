@@ -13,7 +13,7 @@ namespace BO
         public DateTime? DateTimeBegining { get; set; }
         public override string ToString()
         {
-            return String.Format($"Id: {Id}, Battery: {Battery}, DateTime Begining:{DateTimeBegining} ");
+            return String.Format($"Id: {Id}, Battery: {Battery}%, DateTime Begining:{DateTimeBegining} ");
         }
     }
 }

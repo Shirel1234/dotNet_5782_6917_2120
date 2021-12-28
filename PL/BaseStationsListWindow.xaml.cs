@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,14 +26,35 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
-            //lstStationsListView.ItemsSource = bll.GetBaseStations();
-            DataContext = bll.GetBaseStations();
-            //lstStationsListView.ItemsSource;
+            lsvStations.ItemsSource = bll.GetBaseStations();
+            //DataContext = bll.GetBaseStations();
         }
 
         private void btnAddBaseStation_Click(object sender, RoutedEventArgs e)
         {
             new AddBaseStationWindow(bll).ShowDialog();
+            lsvStations.ItemsSource = bll.GetBaseStations();
+        }
+
+        private void GroupingByAvailableChargingSlots(object sender, RoutedEventArgs e)
+        {
+            //DataContext= bll.GetParcels();
+            lsvStations.ItemsSource = bll.GetBaseStations();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvStations.ItemsSource);
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DataContext);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("ChargeSlotsFree");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+
+        private void ShowThisStation(object sender, MouseButtonEventArgs e)
+        {
+            new AddBaseStationWindow(bll,(BaseStationForList)lsvStations.SelectedItem).ShowDialog();
+            lsvStations.ItemsSource = bll.GetBaseStations();
+        }
+
+        private void btnShowStatinsWithChargeSlots_Click(object sender, RoutedEventArgs e)
+        {
+            lsvStations.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
         }
     }
 }

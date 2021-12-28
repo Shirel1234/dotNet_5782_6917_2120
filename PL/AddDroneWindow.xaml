@@ -17,7 +17,7 @@
         <Label x:Name="lblAddDrone" Content="Add Drone:" HorizontalAlignment="Left" Height="54" Margin="14,47,0,0" VerticalAlignment="Top" Width="209" FontSize="36"/>
         <Label x:Name="lblModelDrone" Content="Model Drone:" HorizontalAlignment="Left" Height="62" Margin="28,226,0,0" VerticalAlignment="Top" Width="209" FontSize="22"/>
         <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="38,300,0,0" VerticalAlignment="Top" Width="146" FontSize="22"/>
-        <Label x:Name="lblStation" Content="Id of Station:" HorizontalAlignment="Left" Height="39" Margin="24,361,0,0" VerticalAlignment="Top" Width="169" FontSize="22"/>
+        <Label x:Name="lblIdStation" Content="Id of Station:" HorizontalAlignment="Left" Height="39" Margin="24,361,0,0" VerticalAlignment="Top" Width="169" FontSize="22"/>
         <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="45" Margin="169,162,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
         <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="31" Margin="173,232,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
         <ComboBox x:Name="cmbWeightDrone" HorizontalAlignment="Left" Height="39" Margin="161,294,0,0" VerticalAlignment="Top" Width="199" SelectedItem="{Binding MaxWeight, Mode=TwoWay}"/>

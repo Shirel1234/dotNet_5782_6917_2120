@@ -32,34 +32,34 @@ namespace PL
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             grdUpdating.Visibility = Visibility.Hidden;
         }
-        public AddDroneWindow(BlApi.IBL bl, DroneForList droneList)
+        public AddDroneWindow(BlApi.IBL bl, Drone drone)
         {
             InitializeComponent();
             bll = bl;
-            newDrone = new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
+            newDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
             DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             btnAdd.Visibility = Visibility.Hidden;
-            txtIdDrone.Text = droneList.Id.ToString();
+            txtIdDrone.Text = newDrone.Id.ToString();
             txtIdDrone.IsEnabled = false;
-            txtModelDrone.Text = droneList.ModelDrone;
-            cmbWeightDrone.SelectedValue = droneList.Weight;
-            lblStation.Visibility = Visibility.Hidden;
+            txtModelDrone.Text = newDrone.ModelDrone;
+            cmbWeightDrone.SelectedValue = newDrone.MaxWeight;
+            lblIdStation.Visibility = Visibility.Hidden;
             cmbIdStation.Visibility = Visibility.Hidden;
             cmbIdStation.IsEnabled = false;
-            if (droneList.DroneStatus == DroneStatuses.free)
+            if (newDrone.DroneStatus == DroneStatuses.free)
             {
                 btnSendForCharging.Visibility = Visibility.Visible;
                 btnSchedulingForSending.Visibility = Visibility.Visible;
             }
             else
-                if (droneList.DroneStatus == DroneStatuses.maintenace)
+                if (newDrone.DroneStatus == DroneStatuses.maintenace)
                 btnReleaseDroneCharging.Visibility = Visibility.Visible;
             else
             //in sending
             {
-                if (bl.GetParcel(droneList.ParcelInWay).PickedUp == null)
+                if (bl.GetParcel(newDrone.ParcelInWay.Id).PickedUp == null)
                     btnPickUpSending.Visibility = Visibility.Visible;
                 else
                     btnDelivered.Visibility = Visibility.Hidden;

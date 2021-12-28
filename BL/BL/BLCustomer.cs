@@ -19,10 +19,10 @@ namespace BL
                 throw new AddingProblemException("The customer ID number must contain 9 digits");
             if (c.Phone.Length != 10)
                 throw new AddingProblemException("The phone number isn't valid");
-            if (c.Location.Longitude < -180 || c.Location.Longitude > 180)
-                throw new AddingProblemException("The longitude must be between -180 to 180");
-            if (c.Location.Latitude < -90 || c.Location.Latitude > 90)
-                throw new AddingProblemException("The latitude must be between -90 to 90");
+            if (c.Location.Longitude < 29.3 || c.Location.Longitude > 33.7)
+                throw new AddingProblemException("The longitude must be between 29.3 to 33.7");
+            if (c.Location.Latitude < 33.5 || c.Location.Latitude > 36.3)
+                throw new AddingProblemException("The latitude must be between 33.5 to 36.3");
             try
             {
                 DO.Customer doCustomer = new DO.Customer()

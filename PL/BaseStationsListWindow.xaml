@@ -6,30 +6,49 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="BaseStationsListWindow" Height="640" Width="800">
-    <Grid x:Name="MainGrid">
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF9CB6C7"/>
-                <GradientStop Color="#FF356F93" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+
+    <Grid Margin="0,10,2,-6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="400*"/>
+            <RowDefinition Height="287*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <Label Content="Label" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid HorizontalAlignment="Left" Height="64" Margin="69,27,0,0" VerticalAlignment="Top" Width="236">
+            <Label Content="Grouping:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-2,0,0" Height="34" Width="118" FontSize="18"/>
+            <RadioButton x:Name="rdbByAvailableChargingSlots" Content="By Number of Available Charging Slots" HorizontalAlignment="Center" Height="51" Margin="0,37,0,0" VerticalAlignment="Top" Width="228" Checked="GroupingByAvailableChargingSlots"/>
         </Grid>
-        <ListBox x:Name="lstStationsListView" HorizontalAlignment="Left" Height="376" Margin="82,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="633" MouseDoubleClick="OpenShowStation" Background="White" ItemsSource="{Binding}"/>
-        <Button x:Name="btnAddBaseStation" Content="Add Base Station" HorizontalAlignment="Left" Margin="561,451,0,0" Grid.Row="1" VerticalAlignment="Top" Height="53" Width="200" FontSize="18" Click="btnAddBaseStation_Click" Background="#FFEBDBDB"/>
+        <Grid Margin="10,119,10,170">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions >
+            <ListView x:Name="lsvStations" Margin="0,23,10,0" Grid.Column="1" MouseDoubleClick="ShowThisStation">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Code Station" Width="150" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Station Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Number of Available Charge Slots" Width="200" DisplayMemberBinding="{Binding ChargeSlotsFree}" />
+                        <GridViewColumn Header="Number of Busy Charge Slots" Width="200" DisplayMemberBinding="{Binding ChargeSlotsCatch}"/>
+                    </GridView>
+                </ListView.View>
+
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </Grid>
+        <Grid x:Name="grdSorting" HorizontalAlignment="Left" Height="82" Margin="419,37,0,0" VerticalAlignment="Top" Width="350">
+            <Label x:Name="lblSort" Content="Sorting:" HorizontalAlignment="Left" Height="38" Margin="0,-7,0,0" VerticalAlignment="Top" Width="87" FontSize="18"/>
+            <Button x:Name="btnShowStatinsWithChargeSlots"  Content="Show Statins With Available Charge Slots" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Height="31" Width="227" Click="btnShowStatinsWithChargeSlots_Click"/>
 
 
+        </Grid>
+
+        <Button x:Name="btnAddBaseStation" Content="Add Base Station" HorizontalAlignment="Left" Margin="526,526,0,0" VerticalAlignment="Top" Height="43" Width="243" FontSize="18" Click="btnAddBaseStation_Click"/>
     </Grid>
 </Window>

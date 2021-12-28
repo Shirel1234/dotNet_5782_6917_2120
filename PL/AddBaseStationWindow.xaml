@@ -6,7 +6,48 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddBaseStationWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid RenderTransformOrigin="0.557,0.625">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF8DB1C8"/>
+                <GradientStop Color="#FF356F93" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label Content="Add A New Base Station:" HorizontalAlignment="Left" Margin="36,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblIdStation" Content="ID:" HorizontalAlignment="Left" Margin="36,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.525,0.575"/>
+        <Label x:Name="lblNameStation" Content="Name:" HorizontalAlignment="Left" Margin="36,91,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblLocationStation" Content="Location:" HorizontalAlignment="Left" Margin="36,143,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblLocationLongitude" Content="Longitude:" HorizontalAlignment="Left" Margin="177,143,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblLocationLatitude" Content="Latitude:" HorizontalAlignment="Left" Margin="177,174,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAvailableChargeSlotsOfStation" Content="Number of Available Charge Slots:" HorizontalAlignment="Left" Margin="36,217,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDronesListOfStation" Content="List of Drones in Charge:" HorizontalAlignment="Left" Margin="37,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.177,0.624"/>
+        <TextBox x:Name="txtIdStation" HorizontalAlignment="Left" Margin="245,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtNameStation" HorizontalAlignment="Left" Margin="245,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLongitudeStation" HorizontalAlignment="Left" Margin="245,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLatitudeStation" HorizontalAlignment="Left" Margin="245,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtAvailableChargeSlotsOfStation" HorizontalAlignment="Left" Margin="245,221,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ListView x:Name="lsvDronesListOfStation" Margin="245,273,185,27" MouseDoubleClick="ShowThisDrone" SelectionChanged="lsvDronesListOfStation_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="100" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Battery}"/>
+                    <GridViewColumn Header="Charging Start Time" Width="150" DisplayMemberBinding="{Binding DateTimeBegining}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btnAddStation"  Content="Add" HorizontalAlignment="Left" Margin="43,335,0,0" VerticalAlignment="Top" Height="46" Width="134" Click="btnAddStation_Click" Background="#FFF3E9E9"/>
+        <Button x:Name="btnCloseWindow" Content="Close" HorizontalAlignment="Left" Margin="688,10,0,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnClose_Click"/>
+        <!--<Grid x:Name="grdUpdating" HorizontalAlignment="Left" Height="332" Margin="657,64,0,0" VerticalAlignment="Top" Width="132">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="303*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="405*"/>
+                <RowDefinition Height="116*"/>
+            </Grid.RowDefinitions>-->
+        <Button x:Name="btnUpdateStation" Content="Update Base Station" HorizontalAlignment="Left" Margin="577,73,0,0" VerticalAlignment="Top" Height="39" Width="181" FontSize="18" Click="btnUpdate_Click" Background="#FFF3E9E9"/>
+        <!--</Grid>-->
+
     </Grid>
 </Window>
