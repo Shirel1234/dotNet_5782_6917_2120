@@ -37,11 +37,11 @@ namespace PL
             newStation = bll.GetBaseStation(bs.Id);
             DataContext = newStation;
             btnAddStation.Visibility = Visibility.Hidden;
-            txtIdStation.Text = newStation.Id.ToString();
-            txtNameStation.Text = newStation.Name.ToString();
-            txtLongitudeStation.Text = newStation.Location.Longitude.ToString();
-            txtLatitudeStation.Text = newStation.Location.Latitude.ToString();
-            txtAvailableChargeSlotsOfStation.Text = newStation.ChargeSlots.ToString();
+            //txtIdStation.Text = newStation.Id.ToString();
+            //txtNameStation.Text = newStation.Name.ToString();
+            //txtLongitudeStation.Text = newStation.Location.Longitude.ToString();
+            //txtLatitudeStation.Text = newStation.Location.Latitude.ToString();
+            //txtAvailableChargeSlotsOfStation.Text = newStation.ChargeSlots.ToString();
             lsvDronesListOfStation.ItemsSource = newStation.ListDroneCharge.ToList();
             txtIdStation.IsEnabled = false;
             txtLongitudeStation.IsEnabled = false;
