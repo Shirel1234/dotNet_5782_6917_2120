@@ -27,7 +27,7 @@
         <TextBox x:Name="txtPhoneCustomer" HorizontalAlignment="Left" Margin="245,108,0,0" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtLongitudeCustomer" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtLatitudeCustomer" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ListView x:Name="lsvSentParcels" Margin="245,217,168,114" MouseDoubleClick="ShowThisParcelFromSent">
+        <ListView x:Name="lsvSentParcels" Margin="245,217,96,114" MouseDoubleClick="ShowThisParcelFromSent">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="60" DisplayMemberBinding="{Binding Id, Mode=OneWay}"/>
@@ -38,7 +38,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="lsvAcceptedParcels" Margin="245,331,168,10" MouseDoubleClick="ShowThisParcelFromAccepted">
+        <ListView x:Name="lsvAcceptedParcels" Margin="245,331,96,10" MouseDoubleClick="ShowThisParcelFromAccepted">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="60" DisplayMemberBinding="{Binding Id}"/>
@@ -49,10 +49,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btnAddCustomer"  Content="Add" HorizontalAlignment="Left" Margin="637,336,0,0" VerticalAlignment="Top" Height="46" Width="134" Click="btnAddCustomer_Click" Background="#FFF3E9E9"/>
+        <Button x:Name="btnAddCustomer"  Content="Add" HorizontalAlignment="Left" Margin="624,147,0,0" VerticalAlignment="Top" Height="46" Width="134" Click="btnAddCustomer_Click" Background="#FFF3E9E9"/>
         <Button x:Name="btnCloseWindow" Content="Close" HorizontalAlignment="Left" Margin="688,10,0,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnClose_Click"/>
         <Button x:Name="btnUpdateCustomer" Content="Update Customer" HorizontalAlignment="Left" Margin="577,73,0,0" VerticalAlignment="Top" Height="39" Width="181" FontSize="18" Click="btnUpdate_Click" Background="#FFF3E9E9"/>
-        
+
         <!--</Grid>-->
 
     </Grid>
