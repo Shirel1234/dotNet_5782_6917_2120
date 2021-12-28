@@ -60,5 +60,12 @@ namespace PL
             Parcel p = bll.GetParcel(((ParcelForList)lsvParcels.SelectedItem).Id);
             new AddParcelWindow(bll, p).ShowDialog();
         }
+
+        private void btbRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            lsvParcels.ItemsSource = bll.GetParcels();
+            rdbBySender.IsChecked = false;
+            rdbByTarget.IsChecked = false;
+        }
     }
 }

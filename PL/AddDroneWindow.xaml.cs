@@ -30,6 +30,10 @@ namespace PL
             DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
+            txtBattery.IsEnabled = false;
+            cmbStatus.IsEnabled = false;
+            txtLongitude.IsEnabled = false;
+            txtLatitude.IsEnabled = false;
             grdUpdating.Visibility = Visibility.Hidden;
         }
         public AddDroneWindow(BlApi.IBL bl, Drone drone)
@@ -40,6 +44,7 @@ namespace PL
             DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
+            cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             btnAdd.Visibility = Visibility.Hidden;
             txtIdDrone.Text = newDrone.Id.ToString();
             txtIdDrone.IsEnabled = false;
@@ -199,6 +204,12 @@ namespace PL
             catch (Exception ex) { MessageBox.Show(ex.Message, "The charging wasn't updated"); }
 
 
+        }
+
+        private void ShowThisParcel(object sender, MouseButtonEventArgs e)
+        {
+            Parcel p = bll.GetParcel(((ParcelInCustomer)lsvParcelInWay.SelectedItem).Id);
+            new AddParcelWindow(bll, p).ShowDialog();
         }
     }
 }

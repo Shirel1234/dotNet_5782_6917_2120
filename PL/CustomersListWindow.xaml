@@ -16,16 +16,16 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="lsvCustomers" Margin="0,23,10,10" Grid.Column="1" MouseDoubleClick="ShowThisCustomer">
+            <ListView x:Name="lsvCustomers" Margin="0,23,0,10" Grid.Column="1" MouseDoubleClick="ShowThisCustomer">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}"/>
-                            <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="Phone" Width="100" DisplayMemberBinding="{Binding Phone}" />
-                            <GridViewColumn Header="Count Delivered Parcels" Width="100" DisplayMemberBinding="{Binding CountDeliveredParcels}"/>
-                            <GridViewColumn Header="Count Not Delivered Parcels" Width="100" DisplayMemberBinding="{Binding CountNotDeliveredParcels}"/>
-                            <GridViewColumn Header="Count Accepted Parcels By Customer" Width="100" DisplayMemberBinding="{Binding CountAcceptedParcelsByCustomer}" />
-                            <GridViewColumn Header="Count Parce ls In Way" Width="100" DisplayMemberBinding="{Binding CountParcelsInWay}" />
+                        <GridViewColumn Header="Id" Width="70" DisplayMemberBinding="{Binding Id}"/>
+                            <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Phone" Width="90" DisplayMemberBinding="{Binding Phone}" />
+                            <GridViewColumn Header="Number of Delivered Parcels" Width="150" DisplayMemberBinding="{Binding CountDeliveredParcels}"/>
+                            <GridViewColumn Header="Number of Not Delivered Parcels" Width="150" DisplayMemberBinding="{Binding CountNotDeliveredParcels}"/>
+                            <GridViewColumn Header="Number of Accepted Parcels By Customer" Width="150" DisplayMemberBinding="{Binding CountAcceptedParcelsByCustomer}" />
+                            <GridViewColumn Header="Number of Parcels In Way" Width="150" DisplayMemberBinding="{Binding CountParcelsInWay}" />
                     </GridView>
                 </ListView.View>
 
@@ -40,7 +40,7 @@
                 </ListView.GroupStyle>
             </ListView>
         </Grid>
-        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="546,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddDrone_Click"/>
+        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="546,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddCustomer_Click"/>
         <Label x:Name="lblCustomer" Content="Customers:" HorizontalAlignment="Left" Height="52" Margin="10,67,0,0" VerticalAlignment="Top" Width="239" FontSize="20"/>
     </Grid>
 </Window>

@@ -39,5 +39,10 @@ namespace PL
         {
             new ListParcels(bl).ShowDialog();
         }
+
+        private void btnShowListCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomersListWindow(bl).ShowDialog();
+        }
     }
 }

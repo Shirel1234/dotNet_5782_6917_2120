@@ -56,5 +56,11 @@ namespace PL
         {
             lsvStations.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
         }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            lsvStations.ItemsSource = bll.GetBaseStations();
+            rdbByAvailableChargingSlots.IsChecked = false;
+        }
     }
 }

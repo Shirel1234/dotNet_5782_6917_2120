@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,17 +26,17 @@ namespace PL
             InitializeComponent();
             bll = bl;
             lsvCustomers.ItemsSource = bll.GetCustomers();
-
         }
 
         private void ShowThisCustomer(object sender, MouseButtonEventArgs e)
         {
-
+            Customer c=bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
+            new AddCustomerWindow(bll,c).ShowDialog();
         }
 
-        private void btnAddDrone_Click(object sender, RoutedEventArgs e)
+        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            //new AddCustomerWindow(bll).ShowDialog();
+            new AddCustomerWindow(bll).ShowDialog();
         }
     }
 }

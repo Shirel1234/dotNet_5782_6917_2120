@@ -30,18 +30,18 @@ namespace PL
             DataContext = newCustomer;
             btnUpdateCustomer.Visibility = Visibility.Hidden;
         }
-        public AddCustomerWindow(BlApi.IBL bl,CustomerForList c)
+        public AddCustomerWindow(BlApi.IBL bl,Customer c)
         {
             InitializeComponent();
             bll = bl;
-            newCustomer = bll.GetCustomer(c.Id);
+            newCustomer = c;
             DataContext = newCustomer;
             btnAddCustomer.Visibility = Visibility.Hidden;
-            txtIdCustomer.Text = newCustomer.Id.ToString();
-            txtNameCustomer.Text = newCustomer.Name.ToString();
-            txtPhoneCustomer.Text = newCustomer.Phone.ToString();
-            txtLongitudeCustomer.Text = newCustomer.Location.Longitude.ToString();
-            txtLatitudeCustomer.Text = newCustomer.Location.Latitude.ToString();
+            //txtIdCustomer.Text = newCustomer.Id.ToString();
+            //txtNameCustomer.Text = newCustomer.Name.ToString();
+            //txtPhoneCustomer.Text = newCustomer.Phone.ToString();
+            //txtLongitudeCustomer.Text = newCustomer.Location.Longitude.ToString();
+            //txtLatitudeCustomer.Text = newCustomer.Location.Latitude.ToString();
             lsvSentParcels.ItemsSource = newCustomer.SendParcels.ToList();
             lsvAcceptedParcels.ItemsSource = newCustomer.TargetParcels.ToList();
             txtIdCustomer.IsEnabled = false;
