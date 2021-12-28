@@ -39,8 +39,8 @@ namespace PL
 
         private void GroupingByTarget(object sender, RoutedEventArgs e)
         {
-            listParcels.ItemsSource = bll.GetParcels();
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listParcels.ItemsSource);
+            lsvParcels.ItemsSource = bll.GetParcels();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvParcels.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("NameTarget");
             view.GroupDescriptions.Add(groupDescription);
         }
@@ -57,7 +57,7 @@ namespace PL
 
         private void ShowThisParcel(object sender, MouseButtonEventArgs e)
         {
-            new ListParcels(bll, (ParcelForList)lsvParcels.SelectedItem).ShowDialog();
+            new AddParcelWindow(bll, (ParcelForList)lsvParcels.SelectedItem).ShowDialog();
         }
     }
 }

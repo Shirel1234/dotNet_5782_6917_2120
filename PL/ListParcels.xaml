@@ -11,7 +11,7 @@
             <RowDefinition Height="287*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid HorizontalAlignment="Left" Height="50" Margin="79,45,0,0" VerticalAlignment="Top" Width="207">
+        <Grid x:Name="grdGrouping" HorizontalAlignment="Left" Height="50" Margin="79,45,0,0" VerticalAlignment="Top" Width="207">
             <RadioButton x:Name="rdbBySender" Content="By Sender" HorizontalAlignment="Left" Height="32" Margin="105,24,0,0" VerticalAlignment="Top" Width="99" Checked="GroupingBySender"/>
             <RadioButton x:Name="rdbByTarget" Content="By Target" HorizontalAlignment="Left" Height="32" Margin="14,24,0,0" VerticalAlignment="Top" Width="84" Click="GroupingByTarget"/>
             <Label x:Name="lblGrouping" Content="Grouping:" Height="33" Margin="0,-8,102,0" VerticalAlignment="Top" FontSize="16"/>

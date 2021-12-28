@@ -26,36 +26,46 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
-            cmbStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            cmbWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            DataContext= bll.GetDrones();
-
+            cmbStatuses.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            lsvDrones.ItemsSource= bll.GetDrones();
         }
 
-        private void cmbStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbStatuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
+            lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
         }
 
-        private void cmbWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
+            lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
         }
 
         private void btnAddDrone_Click(object sender, RoutedEventArgs e)
         {
             new AddDroneWindow(bll).ShowDialog();
-            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
-            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
+            lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
+            lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
         }
 
         private void OpenShowDrone(object sender, MouseButtonEventArgs e)
         {
-            new AddDroneWindow(bll, (DroneForList)lstDroneListView.SelectedItem).ShowDialog();
-            lstDroneListView.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeightSelector.SelectedItem));
-            lstDroneListView.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatusSelector.SelectedItem));
+            new AddDroneWindow(bll, (DroneForList)lsvDrones.SelectedItem).ShowDialog();
+            lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
+            lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
+        }
+        private void GroupingByStatus(object sender, RoutedEventArgs e)
+        {
+                lsvDrones.ItemsSource = bll.GetDrones();
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvDrones.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("DroneStatus");
+                view.GroupDescriptions.Add(groupDescription);
+         
         }
 
-       
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            lsvDrones.ItemsSource = bll.GetDrones();
+        }
     }
 }
