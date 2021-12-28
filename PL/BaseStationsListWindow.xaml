@@ -50,5 +50,6 @@
         </Grid>
 
         <Button x:Name="btnAddBaseStation" Content="Add Base Station" HorizontalAlignment="Left" Margin="526,526,0,0" VerticalAlignment="Top" Height="43" Width="243" FontSize="18" Click="btnAddBaseStation_Click"/>
+        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="679,27,0,0" VerticalAlignment="Top" Height="32" Width="71" Click="btnRefresh_Click"/>
     </Grid>
 </Window>

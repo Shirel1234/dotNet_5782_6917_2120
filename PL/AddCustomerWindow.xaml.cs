@@ -34,13 +34,14 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
+            newCustomer = c;
             DataContext = newCustomer;
             btnAddCustomer.Visibility = Visibility.Hidden;
-            txtIdCustomer.Text = newCustomer.Id.ToString();
-            txtNameCustomer.Text = newCustomer.Name.ToString();
-            txtPhoneCustomer.Text = newCustomer.Phone.ToString();
-            txtLongitudeCustomer.Text = newCustomer.Location.Longitude.ToString();
-            txtLatitudeCustomer.Text = newCustomer.Location.Latitude.ToString();
+            //txtIdCustomer.Text = newCustomer.Id.ToString();
+            //txtNameCustomer.Text = newCustomer.Name.ToString();
+            //txtPhoneCustomer.Text = newCustomer.Phone.ToString();
+            //txtLongitudeCustomer.Text = newCustomer.Location.Longitude.ToString();
+            //txtLatitudeCustomer.Text = newCustomer.Location.Latitude.ToString();
             lsvSentParcels.ItemsSource = newCustomer.SendParcels.ToList();
             lsvAcceptedParcels.ItemsSource = newCustomer.TargetParcels.ToList();
             txtIdCustomer.IsEnabled = false;

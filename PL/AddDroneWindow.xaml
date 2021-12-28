@@ -13,16 +13,27 @@
                 <GradientStop Color="#FF356F93" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Label x:Name="lblIdDrone" Content="Id:" HorizontalAlignment="Left" Height="54" Margin="40,166,0,0" VerticalAlignment="Top" Width="209" FontSize="22"/>
+        <Label x:Name="lblIdDrone" Content="Id:" HorizontalAlignment="Left" Height="54" Margin="38,121,0,0" VerticalAlignment="Top" Width="209" FontSize="22"/>
         <Label x:Name="lblAddDrone" Content="Add Drone:" HorizontalAlignment="Left" Height="54" Margin="14,47,0,0" VerticalAlignment="Top" Width="209" FontSize="36"/>
-        <Label x:Name="lblModelDrone" Content="Model Drone:" HorizontalAlignment="Left" Height="62" Margin="28,226,0,0" VerticalAlignment="Top" Width="209" FontSize="22"/>
-        <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="38,300,0,0" VerticalAlignment="Top" Width="146" FontSize="22"/>
-        <Label x:Name="lblIdStation" Content="Id of Station:" HorizontalAlignment="Left" Height="39" Margin="24,361,0,0" VerticalAlignment="Top" Width="169" FontSize="22"/>
-        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="45" Margin="169,162,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
-        <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="31" Margin="173,232,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
-        <ComboBox x:Name="cmbWeightDrone" HorizontalAlignment="Left" Height="39" Margin="161,294,0,0" VerticalAlignment="Top" Width="199" SelectedItem="{Binding MaxWeight, Mode=TwoWay}"/>
-        <ComboBox x:Name="cmbIdStation" HorizontalAlignment="Left" Height="46" Margin="164,358,0,0" VerticalAlignment="Top" Width="194"/>
-        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="43" Margin="80,433,0,0" VerticalAlignment="Top" Width="150" FontSize="18" Click="btnAdd_Click" Background="#FFF3E9E9"/>
+        <Label x:Name="lblModelDrone" Content="Model Drone:" HorizontalAlignment="Left" Height="62" Margin="38,175,0,0" VerticalAlignment="Top" Width="209" FontSize="22"/>
+        <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="40,216,0,0" VerticalAlignment="Top" Width="146" FontSize="22"/>
+        <Label x:Name="lblIdStation" Content="Id of Station For Charging:" HorizontalAlignment="Left" Height="39" Margin="19,482,0,0" VerticalAlignment="Top" Width="199" FontSize="16"/>
+        <Label x:Name="lblBattery" Content="Battery:" HorizontalAlignment="Left" Margin="40,273,0,0" VerticalAlignment="Top" Width="78"/>
+        <Label x:Name="lblStatus" Content="Status:" HorizontalAlignment="Left" Margin="42,309,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblParcelInWay" Content="Parcel In Way:" HorizontalAlignment="Left" Margin="20,348,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.147,-1.293" Width="100"/>
+        <Label x:Name="lblLocation" Content="Location:" HorizontalAlignment="Left" Margin="38,379,0,0" VerticalAlignment="Top" Width="94"/>
+        <Label x:Name="lblLongitude" Content="Longitude:" HorizontalAlignment="Left" Margin="129,379,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblLatitude" Content="Latitude:" HorizontalAlignment="Left" Margin="129,410,0,0" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="45" Margin="173,121,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
+        <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="31" Margin="186,180,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
+        <ComboBox x:Name="cmbWeightDrone" HorizontalAlignment="Left" Height="39" Margin="191,221,0,0" VerticalAlignment="Top" Width="200" SelectedItem="{Binding MaxWeight, Mode=TwoWay}"/>
+        <ComboBox x:Name="cmbIdStation" HorizontalAlignment="Left" Height="46" Margin="257,488,0,0" VerticalAlignment="Top" Width="194"/>
+        <ComboBox x:Name="cmbStatus" HorizontalAlignment="Left" Margin="191,306,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtBattery" HorizontalAlignment="Left" Margin="191,273,0,0" Text="{Binding Battery, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLongitude" HorizontalAlignment="Left" Margin="212,383,0,0" Text="{Binding Location.Longitude, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLatitude" HorizontalAlignment="Left" Margin="212,418,0,0" Text="{Binding Location.Latitude, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="43" Margin="20,527,0,0" VerticalAlignment="Top" Width="150" FontSize="18" Click="btnAdd_Click" Background="#FFF3E9E9"/>
         <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="54" Margin="691,20,0,0" VerticalAlignment="Top" Width="75" FontSize="20" Click="btnClose_Click"/>
         <Grid x:Name="grdUpdating" HorizontalAlignment="Left" Height="521" Margin="456,74,0,0" VerticalAlignment="Top" Width="310">
             <Grid.ColumnDefinitions>
@@ -40,5 +51,21 @@
             <Button x:Name="btnPickUpSending" Content="Pick Up Sending" HorizontalAlignment="Left" Height="36" Margin="47,31,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnPickUpSending_Click" Visibility="Hidden" Grid.Row="1"/>
             <Button x:Name="btnDelivered" Content="Delivery Sending" HorizontalAlignment="Left" Height="43" Margin="47,90,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnDelivered_Click" Visibility="Hidden" Grid.Row="1"/>
         </Grid>
+        <ListView x:Name="lsvParcelInWay" Margin="104,340,10,244" MouseDoubleClick="ShowThisParcel">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="60" DisplayMemberBinding="{Binding Id, Mode=OneWay}"/>
+                    <GridViewColumn Header="Is In Way" Width="60" DisplayMemberBinding="{Binding IsInWay, Mode=OneWay}"/>
+                    <GridViewColumn Header="Priority" Width="60" DisplayMemberBinding="{Binding Priority, Mode=OneWay}"/>
+                    <GridViewColumn Header="Weight" Width="60" DisplayMemberBinding="{Binding Weight, Mode=OneWay}"/>
+                    <GridViewColumn Header="Sender" Width="60" DisplayMemberBinding="{Binding Sender, Mode=OneWay}"/>
+                    <GridViewColumn Header="Target" Width="60" DisplayMemberBinding="{Binding Target, Mode=OneWay}"/>
+                    <GridViewColumn Header="Pickeding Up Location" Width="130" DisplayMemberBinding="{Binding LocationPickedUp, Mode=OneWay}"/>
+                    <GridViewColumn Header="Target Location" Width="90" DisplayMemberBinding="{Binding LocationTarget, Mode=OneWay}"/>
+                    <GridViewColumn Header="Transport Distance" Width="110" DisplayMemberBinding="{Binding TransportDistance, Mode=OneWay}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>

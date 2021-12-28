@@ -49,6 +49,7 @@
             <Label Content="Status Parcel:" HorizontalAlignment="Left" Height="27" Margin="10,31,0,0" VerticalAlignment="Top" Width="89"/>
             <ComboBox x:Name="cmbStatuses" HorizontalAlignment="Left" Height="27" Margin="87,31,0,0" VerticalAlignment="Top" Width="109" SelectionChanged="cmbStatuses_SelectionChanged"/>
             <Label Content="Label" HorizontalAlignment="Left" Height="35" Margin="214,27,0,0" VerticalAlignment="Top" Width="79"/>
+            <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="298,4,0,0" VerticalAlignment="Top" Height="27" Width="52" Click="btbRefresh_Click"/>
         </Grid>
         <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="43" Margin="546,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddParcel_Click"/>
     </Grid>
