@@ -28,6 +28,7 @@ namespace PL
             bll = bl;
             newParcel = new();
             DataContext = newParcel;
+            grdForUpdateParcel.Visibility = Visibility.Hidden;
         }
         public AddParcelWindow(BlApi.IBL bl, Parcel p)
         {
@@ -37,6 +38,34 @@ namespace PL
             newParcel = p;
             DataContext = newParcel;
 
+        }
+
+        private void txtIdParcel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtSchedule_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ShowDrone(object sender, MouseButtonEventArgs e)
+        {
+            Drone d = bll.GetDrone(Convert.ToInt32(lsbDroneInParcel.SelectedItem));
+            new AddDroneWindow(bll, d);
+        }
+
+        private void ShowSenderCustomer(object sender, MouseButtonEventArgs e)
+        {
+            Customer c = bll.GetCustomer(((CustomerInParcel)cmbSenders.SelectedValue).Id);
+            new AddCustomerWindow(bll, c);
+        }
+
+        private void ShowTargetCustomer(object sender, MouseButtonEventArgs e)
+        {
+            Customer c = bll.GetCustomer(((CustomerInParcel)cmbTargets.SelectedValue).Id);
+            new AddCustomerWindow(bll, c);
         }
     }
 }

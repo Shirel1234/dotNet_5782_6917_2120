@@ -30,11 +30,10 @@ namespace PL
             DataContext = newCustomer;
             btnUpdateCustomer.Visibility = Visibility.Hidden;
         }
-        public AddCustomerWindow(BlApi.IBL bl,CustomerForList c)
+        public AddCustomerWindow(BlApi.IBL bl,Customer c)
         {
             InitializeComponent();
             bll = bl;
-            newCustomer = bll.GetCustomer(c.Id);
             DataContext = newCustomer;
             btnAddCustomer.Visibility = Visibility.Hidden;
             txtIdCustomer.Text = newCustomer.Id.ToString();
