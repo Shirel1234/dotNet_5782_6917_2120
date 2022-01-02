@@ -25,9 +25,20 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button Style="{StaticResource myButtonStyle}" Content="Customer" Click="btnPressCustomer_Click" Margin="137,288,374,67"/>
-        <Button Style = "{StaticResource myButtonStyle}" Content="Worker" Margin="137,70,374,284" />
-        <Button Style = "{StaticResource myButtonStyle}" Content="New Customer" Click="btnNewCustomer_Click" Margin="133,166,378,188"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/KOGAPAS00383_TP_V-e1575969085714.jpg"/>
+        </Grid.Background>
+        <Button Style="{StaticResource myButtonStyle}" Content="Customer" Click="btnPressCustomer_Click" Margin="46,344,609,24" Background="#FFEA8B42" BorderBrush="#FFD66318"/>
+        <Button x:Name="btnWorker" Style = "{StaticResource myButtonStyle}" Content="Worker" Margin="582,343,51,28" Background="#FFEA8B42" Click="Button_Click" />
+        <Button Style = "{StaticResource myButtonStyle}" Content="New Customer" Click="btnNewCustomer_Click" Margin="268,341,299,24" Background="#FFEA8B42"/>
+        <Label x:Name="lblWellcome" Content="Wellcome" HorizontalAlignment="Left" Height="152" VerticalAlignment="Top" Width="460" FontSize="72" Background="{x:Null}" FontFamily="Rockwell Extra Bold" Margin="148,16,0,0">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF1B4889" Offset="0.142"/>
+                    <GradientStop Color="#FFEB7610" Offset="0.907"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
 
     </Grid>
 </Window>

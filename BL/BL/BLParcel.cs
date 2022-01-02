@@ -140,6 +140,10 @@ namespace BL
                 throw new GetDetailsProblemException(ex.Message, ex);
             }
         }
+        public void RemoveParcel(int id)
+        {
+            dal.RemoveParcel(id);
+        }
 
     }
 }

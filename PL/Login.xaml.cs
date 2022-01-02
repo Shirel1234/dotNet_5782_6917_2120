@@ -26,12 +26,16 @@ namespace PL
 
         private void btnPressCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow(bl).ShowDialog();
         }
 
         private void btnNewCustomer_Click(object sender, RoutedEventArgs e)
         {
-            // new AddCustomer(bl).ShowDialog();
+            new AddCustomerWindow(bl).ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow(bl).ShowDialog();
         }
     }
 }

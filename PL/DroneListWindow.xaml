@@ -12,7 +12,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid HorizontalAlignment="Left" Height="69" Margin="79,45,0,0" VerticalAlignment="Top" Width="245">
-            <RadioButton x:Name="rdbByStatus" Content="By Status" HorizontalAlignment="Left" Height="32" Margin="14,24,0,0" VerticalAlignment="Top" Width="84" Click="GroupingByStatus"/>
+            <RadioButton x:Name="rdbByStatus" Content="By Status" HorizontalAlignment="Left" Height="32" Margin="14,24,0,0" VerticalAlignment="Top" Width="84" Checked="GroupingByStatus"/>
             <Label x:Name="lblGrouping" Content="Grouping:" Height="33" Margin="0,-8,102,0" VerticalAlignment="Top" FontSize="16"/>
             <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Height="20" Margin="143,21,0,0" VerticalAlignment="Top" Width="62" Click="btnRefresh_Click"/>
         </Grid>
@@ -49,7 +49,7 @@
             <Label x:Name="lblSort" Content="Sorting:" HorizontalAlignment="Left" Height="38" Margin="10,3,0,0" VerticalAlignment="Top" Width="87" FontSize="18"/>
             <Label x:Name="lblDroneStatus" Content="Drone Status:" HorizontalAlignment="Left" Height="27" Margin="0,31,0,0" VerticalAlignment="Top" Width="89"/>
             <ComboBox x:Name="cmbStatuses" HorizontalAlignment="Left" Height="27" Margin="79,41,0,0" VerticalAlignment="Top" Width="88" SelectionChanged="cmbStatuses_SelectionChanged"/>
-            <ComboBox x:Name="cmbWeight" HorizontalAlignment="Left" Height="27" Margin="288,39,0,0" VerticalAlignment="Top" Width="88" SelectionChanged="cmbStatuses_SelectionChanged"/>
+            <ComboBox x:Name="cmbWeight" HorizontalAlignment="Left" Height="27" Margin="288,39,0,0" VerticalAlignment="Top" Width="88" SelectionChanged="cmbWeight_SelectionChanged"/>
             <Label x:Name="lblDroneWeight" Content="Drone Max Weight:" HorizontalAlignment="Left" Height="35" Margin="177,33,0,0" VerticalAlignment="Top" Width="118"/>
         </Grid>
         <Button x:Name="btnAddDrone" Content="Add Drone" HorizontalAlignment="Left" Height="43" Margin="546,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddDrone_Click"/>

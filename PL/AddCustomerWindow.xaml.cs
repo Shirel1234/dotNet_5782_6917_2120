@@ -29,6 +29,8 @@ namespace PL
             newCustomer = new();
             DataContext = newCustomer;
             btnUpdateCustomer.Visibility = Visibility.Hidden;
+            grdShowCustomer.Visibility = Visibility.Hidden;
+
         }
         public AddCustomerWindow(BlApi.IBL bl,Customer c)
         {

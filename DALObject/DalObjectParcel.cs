@@ -71,5 +71,12 @@ namespace Dal
                 return listParcelByCondition;
             }
         }
+        public void RemoveParcel(int id)
+        {
+            Parcel p = DataSource.parcels.Find(parcel => parcel.CodeParcel == id);
+            if(p.CodeParcel==0)
+                throw new DoesntExistException ("This parcel doesn't exist in the system");
+            DataSource.parcels.Remove(p);
+        }
     }
 }

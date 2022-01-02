@@ -66,60 +66,25 @@ namespace PL
             {
                 if (bl.GetParcel(newDrone.ParcelInWay.Id).PickedUp == null)
                     btnPickUpSending.Visibility = Visibility.Visible;
-                else
+                else 
                     btnDelivered.Visibility = Visibility.Hidden;
             }
         }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //newDrone = new Drone();
-            //if (IsFillObject())
-            //{
+            try
+            {
                 BaseStationForList b = (BaseStationForList)cmbIdStation.SelectedItem;
                 bll.AddDrone(newDrone, b.Id);
                 MessageBox.Show("The new Drone was successfully added", "Done");
                 this.Close();
-            //}
-            //else
-            //    MessageBox.Show("The new Drone wasn't added", "Error");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message , "The new Drone wasn't added");
+            }
 
         }
-        //private bool IsFillObject()
-        //{
-        //    bool valid = true;
-        //    try
-        //    {
-        //        if (Convert.ToInt32(txtIdDrone.Text) < 0)
-        //            throw new Exception("Id can't be negetive number");
-        //        newDrone.Id = Convert.ToInt32(txtIdDrone.Text);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        valid = false;
-        //    }
-        //    try
-        //    {
-        //        newDrone.ModelDrone = txtModelDrone.Text;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        valid = false;
-        //    }
-        //    try
-        //    {
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        valid = false;
-        //    }
-        //    newDrone.MaxWeight = (WeightCategories)cmbWeightDrone.SelectedItem;
-
-        //    return valid;
-        //}
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

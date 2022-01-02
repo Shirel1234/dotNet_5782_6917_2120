@@ -110,5 +110,9 @@ namespace Dal
         {
             throw new NotImplementedException();
         }
+        public void RemoveParcel(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -34,5 +34,6 @@ namespace BlApi
         IEnumerable<BaseStationForList> GetAllBaseStationsWithChargePositions();
         IEnumerable<DroneForList> GetDronesByStatus(int num);
         IEnumerable<DroneForList> GetDronesByWeight(int num);
+        void RemoveParcel(int id);
     }
 }

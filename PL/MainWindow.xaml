@@ -7,22 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid RenderTransformOrigin="0.5,1">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="265*"/>
-            <RowDefinition Height="169*"/>
-        </Grid.RowDefinitions>
+
         <Grid.Background>
             <ImageBrush TileMode="FlipY" ImageSource="/shutterstock_1231838656132541713690573635.jpg"/>
         </Grid.Background>
-        <Button x:Name="btnShowListDrone" Content="Show Drones List" HorizontalAlignment="Left" Height="72" Margin="589,38,0,0" 
-                VerticalAlignment="Top" Width="169" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" 
+        <Button x:Name="btnShowListDrone" Content="Show Drones List" HorizontalAlignment="Left" Height="60" Margin="589,24,0,0" 
+                VerticalAlignment="Top" Width="180" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" 
                 Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
-        <Button Content="Show Parcels List" HorizontalAlignment="Left" Height="81" Margin="589,136,0,0" VerticalAlignment="Top" Width="169" FontSize="18" Background="{x:Null}" BorderBrush="#FF0C0505" Click="Button_Click"/>
-        <Button x:Name="btnShowListStations"  Content="Show Base Stations List" HorizontalAlignment="Left" Margin="589,251,0,0" 
-                VerticalAlignment="Top" Height="77" Width="169" FontSize="15" Click="btnShowListStations_Click" Background="{x:Null}" Grid.RowSpan="2"
+        <Button Content="Show Parcels List" HorizontalAlignment="Left" Height="60" Margin="589,0,0,0" VerticalAlignment="Center" Width="180" FontSize="20" Background="{x:Null}" BorderBrush="#FF0C0505" Click="Button_Click"/>
+        <Button x:Name="btnShowListStations"  Content="Show Base Stations List" HorizontalAlignment="Left" Margin="589,103,0,0" 
+                VerticalAlignment="Top" Height="60" Width="180" FontSize="20" Click="btnShowListStations_Click" Background="{x:Null}"
                 BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
-        <Button x:Name="btnShowListCustomers" Content="Show Customers List" HorizontalAlignment="Left" Margin="400,38,0,0" VerticalAlignment="Top" Height="72" Width="152"
-                FontSize="15" Click="btnShowListCustomers_Click" Background="{x:Null}" Grid.RowSpan="2"
-                BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+        <Button x:Name="btnShowListCustomers" Content="Show Customers List" HorizontalAlignment="Left" Margin="588,263,0,0" VerticalAlignment="Top" Height="60" Width="180"
+                FontSize="18" Click="btnShowListCustomers_Click" Background="{x:Null}"
+                BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Grid.RowSpan="2"/>
     </Grid>
 </Window>

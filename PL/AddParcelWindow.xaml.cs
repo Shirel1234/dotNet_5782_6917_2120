@@ -29,6 +29,12 @@ namespace PL
             newParcel = new();
             DataContext = newParcel;
             grdForUpdateParcel.Visibility = Visibility.Hidden;
+            grdCmbAddParcel.Visibility = Visibility.Visible;
+            cmbPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            cmbSenders.ItemsSource = bll.GetCustomers();
+            cmbTargets.ItemsSource = bll.GetCustomers();
+
         }
         public AddParcelWindow(BlApi.IBL bl, Parcel p)
         {
@@ -37,19 +43,10 @@ namespace PL
             //newParcel = new Parcel { CodeParcel = p.Id, SenderCustomer = bll.GetParcels().ToList().Find(parcel => parcel.NameSender == p.NameSender) };
             newParcel = p;
             DataContext = newParcel;
-
+            grdShowParcel.Visibility = Visibility.Visible;
+            if (newParcel.Scheduled == null)
+                btnRemoveParcel.Visibility = Visibility.Visible;
         }
-
-        private void txtIdParcel_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void txtSchedule_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ShowDrone(object sender, MouseButtonEventArgs e)
         {
             Drone d = bll.GetDrone(Convert.ToInt32(lsbDroneInParcel.SelectedItem));
@@ -66,6 +63,34 @@ namespace PL
         {
             Customer c = bll.GetCustomer(((CustomerInParcel)cmbTargets.SelectedValue).Id);
             new AddCustomerWindow(bll, c);
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            newParcel.SenderCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbSenders.SelectedItem).Id, Name = ((CustomerForList)cmbSenders.SelectedItem).Name };
+            newParcel.TargetCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbTargets.SelectedItem).Id, Name = ((CustomerForList)cmbTargets.SelectedItem).Name };
+            try
+            {
+                bll.AddParcel(newParcel);
+                MessageBox.Show("The new parcel was successfully added", "Done");
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message , "ERROR");
+            }
+        }
+
+        private void btnRemoveParcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bll.RemoveParcel(newParcel.CodeParcel);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
     }
 }

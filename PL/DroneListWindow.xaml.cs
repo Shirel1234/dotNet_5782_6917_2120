@@ -72,6 +72,7 @@ namespace PL
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             lsvDrones.ItemsSource = bll.GetDrones();
+            rdbByStatus.IsChecked = false;
 
         }
     }

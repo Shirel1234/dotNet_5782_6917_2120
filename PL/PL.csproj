@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="714b_large.jpg" />
+    <None Remove="KOGAPAS00383_TP_V-e1575969085714.jpg" />
     <None Remove="shutterstock_1231838656132541713690573635.jpg" />
   </ItemGroup>
 
@@ -17,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="714b_large.jpg" />
+    <Resource Include="KOGAPAS00383_TP_V-e1575969085714.jpg" />
     <Resource Include="shutterstock_1231838656132541713690573635.jpg" />
   </ItemGroup>
 

@@ -53,6 +53,7 @@ namespace PL
         private void btnAddParcel_Click(object sender, RoutedEventArgs e)
         {
             new AddParcelWindow(bll).ShowDialog();
+            lsvParcels.ItemsSource = bll.GetParcels();
         }
 
         private void ShowThisParcel(object sender, MouseButtonEventArgs e)
