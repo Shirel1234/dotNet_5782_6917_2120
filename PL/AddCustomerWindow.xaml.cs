@@ -33,6 +33,7 @@ namespace PL
         public AddCustomerWindow(BlApi.IBL bl,Customer c)
         {
             InitializeComponent();
+            lblWindowTitle.Content = "Update a Customer:";
             bll = bl;
             newCustomer = c;
             DataContext = newCustomer;

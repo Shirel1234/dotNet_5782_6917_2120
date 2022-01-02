@@ -39,14 +39,15 @@ namespace BL
             chargingRate = arr[4];
             List<DO.Parcel> listParcels = dal.GetParcelsByCondition().ToList();
             IEnumerable<DroneForList> tempBoDrones = from DO.Drone item in dal.GetDronesByCondition().ToList()
+                                                     let updatedDrone= GetUpdatedDetailDrone(item)
                                                   select new DroneForList()
                                                   {
                                                       Id = item.CodeDrone,
                                                       ModelDrone = item.ModelDrone,
                                                       Weight = (WeightCategories)item.MaxWeight,
-                                                      DroneStatus = GetUpdatedDetailDrone(item).DroneStatus,
-                                                      LocationNow = GetUpdatedDetailDrone(item).LocationNow,
-                                                      Battery = GetUpdatedDetailDrone(item).Battery,
+                                                      DroneStatus = updatedDrone.DroneStatus,
+                                                      LocationNow = updatedDrone.LocationNow,
+                                                      Battery = updatedDrone.Battery,
                                                       ParcelInWay = 0
                                                   };
             BODrones = tempBoDrones.ToList();
