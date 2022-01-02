@@ -24,7 +24,7 @@
             <ListView x:Name="lsvStations" Margin="0,23,10,0" Grid.Column="1" MouseDoubleClick="ShowThisStation">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Code Station" Width="150" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Station Code" Width="150" DisplayMemberBinding="{Binding Id}"/>
                         <GridViewColumn Header="Station Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
                         <GridViewColumn Header="Number of Available Charge Slots" Width="200" DisplayMemberBinding="{Binding ChargeSlotsFree}" />
                         <GridViewColumn Header="Number of Busy Charge Slots" Width="200" DisplayMemberBinding="{Binding ChargeSlotsCatch}"/>

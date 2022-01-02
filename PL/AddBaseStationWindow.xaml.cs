@@ -33,6 +33,7 @@ namespace PL
         public AddBaseStationWindow(BlApi.IBL bl,BaseStationForList bs)
         {
             InitializeComponent();
+            lblWindowTitle.Content = "Update A Base Station:";
             bll = bl;
             newStation = bll.GetBaseStation(bs.Id);
             DataContext = newStation;
