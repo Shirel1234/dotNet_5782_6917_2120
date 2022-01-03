@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,12 +32,37 @@ namespace PL
         private void btnNewCustomer_Click(object sender, RoutedEventArgs e)
         {
             new AddCustomerWindow(bl).ShowDialog();
+            btnCustomer.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow(bl).ShowDialog();
         }
+
+        private void EnterById(object sender, RoutedEventArgs e)
+        {
+            if (txtId.Text.Length < 9)
+                MessageBox.Show("The id is wrong", "ERROR");
+            else
+            {
+                try
+                {
+                    Customer c = bl.GetCustomer(Convert.ToInt32(txtId.Text));
+                    if (c.IsWorker == true)
+                        btnWorker.Visibility = Visibility.Visible;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "The Customer wasn't found");
+                    btnNewCustomer.Visibility = Visibility.Visible;
+                }
+            }
+            
+
+        }
+
+      
     }
 }
 

@@ -22,6 +22,7 @@
                         <GridViewColumn Header="Id" Width="70" DisplayMemberBinding="{Binding Id}"/>
                             <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name}"/>
                             <GridViewColumn Header="Phone" Width="90" DisplayMemberBinding="{Binding Phone}" />
+                            <GridViewColumn Header="Is Worker" Width="90" DisplayMemberBinding="{Binding IsWorker}" />
                             <GridViewColumn Header="Number of Delivered Parcels" Width="150" DisplayMemberBinding="{Binding CountDeliveredParcels}"/>
                             <GridViewColumn Header="Number of Not Delivered Parcels" Width="150" DisplayMemberBinding="{Binding CountNotDeliveredParcels}"/>
                             <GridViewColumn Header="Number of Accepted Parcels By Customer" Width="150" DisplayMemberBinding="{Binding CountAcceptedParcelsByCustomer}" />

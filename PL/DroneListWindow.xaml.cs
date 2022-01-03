@@ -73,7 +73,6 @@ namespace PL
         {
             lsvDrones.ItemsSource = bll.GetDrones();
             rdbByStatus.IsChecked = false;
-
         }
     }
 }
