@@ -47,6 +47,7 @@ namespace PL
             txtIdStation.IsEnabled = false;
             txtLongitudeStation.IsEnabled = false;
             txtLatitudeStation.IsEnabled = false;
+            
         }
 
         private void btnAddStation_Click(object sender, RoutedEventArgs e)
@@ -91,6 +92,24 @@ namespace PL
         private void lsvDronesListOfStation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void txtIdStation_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.integrityInputCheck(e);
+        }
+        private void integrityInputCheck(KeyEventArgs e)
+        {
+            // Allow errows, Back and delete keys:
+            if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Right || e.Key == Key.Left || e.Key == Key.Decimal)
+                return;
+            // Allow only digits:
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsDigit(c))
+                if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
+                    return;
+            e.Handled = true;
+            MessageBox.Show("Only digits alowed!");
         }
     }
 }
