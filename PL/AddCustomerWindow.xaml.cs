@@ -27,6 +27,7 @@ namespace PL
             InitializeComponent();
             bll = bl;
             newCustomer = new();
+            newCustomer.Location = new Location(0,0);
             DataContext = newCustomer;
             btnUpdateCustomer.Visibility = Visibility.Hidden;
             grdShowCustomer.Visibility = Visibility.Hidden;
@@ -56,6 +57,7 @@ namespace PL
         {
             try
             {
+                
                 bll.AddCustomer(newCustomer);
                 MessageBox.Show("The new Customer was successfully added", "Done");
                 this.Close();

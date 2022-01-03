@@ -23,8 +23,8 @@
         <TextBox x:Name="txtIdCustomer" HorizontalAlignment="Left" Margin="245,49,0,0" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtNameCustomer" HorizontalAlignment="Left" Margin="245,77,0,0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtPhoneCustomer" HorizontalAlignment="Left" Margin="245,108,0,0" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtLongitudeCustomer" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtLatitudeCustomer" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLongitudeCustomer" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding (Location.Longitude), Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLatitudeCustomer" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding (Location.Latitude), Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Grid x:Name="grdShowCustomer" Margin="10,217,0,0">
             <Label x:Name="lblAcceptedParcels" Content="List of Parcels The Customer Got:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.177,0.624"/>
             <Label x:Name="lblSentParcels" Content="List of Parcels The Customer Sent:" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="197"/>

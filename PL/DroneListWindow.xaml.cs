@@ -22,6 +22,7 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         BlApi.IBL bll;
+        bool if_selected_changed = false;
         public DroneListWindow(BlApi.IBL bl)
         {
             InitializeComponent();
@@ -34,11 +35,13 @@ namespace PL
         private void cmbStatuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
+            this.if_selected_changed = true;
         }
 
         private void cmbWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
+            this.if_selected_changed = true;
         }
 
         private void btnAddDrone_Click(object sender, RoutedEventArgs e)
@@ -52,8 +55,14 @@ namespace PL
         {
             Drone d = bll.GetDrone(((DroneForList)lsvDrones.SelectedItem).Id);
             new AddDroneWindow(bll, d).ShowDialog();
-            lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
-            lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
+            if (this.if_selected_changed)
+            {
+                lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
+                lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
+            }
+            else
+                lsvDrones.ItemsSource = bll.GetDrones();
+
         }
 
         //private void lstDroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
