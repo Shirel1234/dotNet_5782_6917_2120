@@ -19,10 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{B8B1650A-9AAB-416C-BBB8-B5015FF6FBD6}"
 	ProjectSection(SolutionItems) = preProject
-		Customer.xml = Customer.xml
+		CustomersXml.xml = CustomersXml.xml
 		dal-config.xml = dal-config.xml
-		DroneXml.xml = DroneXml.xml
-		ParcelXml.xml = ParcelXml.xml
+		DronesChargeXML.xml = DronesChargeXML.xml
+		DronesXml.xml = DronesXml.xml
+		ParcelsXml.xml = ParcelsXml.xml
+		StationsXml.xml = StationsXml.xml
 	EndProjectSection
 EndProject
 Global

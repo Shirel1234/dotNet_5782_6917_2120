@@ -15,19 +15,37 @@ namespace Dal
 {
     sealed class DalXml : IDal
     {
-        #region singelton
         static readonly IDal instance = new DalXml();
         public static IDal Instance { get => instance; }
-        //DalXml() { }
         XElement baseStationRoot;
-        string baseStationPath = @"baseStationXml.xml";
+        string baseStationPath = @"StationsXml.xml";
+        string dronesPath = @"DronesXml.xml";//XMLSerializer
+        string customersPath = @"CustomersXml.xml";//XMLSerializer
+        string parcelsPath = @"ParcelsXml.xml";//XMLSerializer
+        string dronesChargePath = @"DronesChargeXml.xml";//XMLSerializer
+
         public DalXml()
         {
+            //not necessary if every CRUD operation calls these functions
             if (!File.Exists(baseStationPath))
                 CreateFiles();
             else
                 LoadData();
+            List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (droneList==null)
+                 initXML();
         }
+        private void initXML()
+        {
+            DataSource.Initialize();
+            //only once
+            XMLTools.SaveListToXMLSerializer(DataSource.drones, @"DronesXml.xml");
+            XMLTools.SaveListToXMLSerializer(DataSource.parcels, @"ParcelsXml.xml");
+            XMLTools.SaveListToXMLSerializer(DataSource.customers, @"CustomerslXml.xml");
+            XMLTools.SaveListToXMLSerializer(DataSource.stations, @"DronesChargeXml.xml");
+            SaveStationsListLinq(DataSource.stations);
+        }
+        #region XElementBaseStation
         private void CreateFiles()
         {
             baseStationRoot = new XElement("baseStations");
@@ -58,33 +76,15 @@ namespace Dal
                                             )
                                         )
                                         );
-        DalXml() 
-        {
-            DataSource.Initialize();
-            XMLTools.LoadListFromXMLSerializer(DroneList, @"DroneXml.xml");
-            XMLTools.LoadListFromXMLSerializer(BaseStationList, @"BaseStationXml.xml");
-            XMLTools.LoadListFromXMLSerializer(CustomersList, @"CustomerXml.xml");
-            XMLTools.LoadListFromXMLSerializer(ParcelsList, @"ParcelXml.xml");
-        }
-        #endregion
-
             baseStationRoot.Save(baseStationPath);
         }
-        // XElement ConvertBaseStation()
-        #region base station function
-        #region DS XML Files
-        string dronesPath = @"DronesXml.xml";//XMLSerializer
-        string customersPath = @"CustomersXml.xml";//XMLSerializer
-        string stationsPath = @"StationsXml.xml";//XElement
-        string parcelsPath = @"ParcelsXml.xml";//XMLSerializer
-        string dronesChargePath = @"DronesChargeXml.xml";//XMLSerializer
         #endregion
 
         #region Adding
         public void AddStation(BaseStation b)
         {
             BaseStation bs = GetStation(b.CodeStation);
-            if(bs != null)
+            if(bs.CodeStation!= 0)
                 throw new AlreadyExistException("The base station already exist in the system");
             XElement id = new XElement("id", b.CodeStation);
             XElement name= new XElement("name", b.NameStation);
@@ -99,75 +99,6 @@ namespace Dal
         public void AddDrone(Drone drone)
         {
             List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
-        public void UpDateBaseStation(BaseStation b)
-        {
-            BaseStation baseStation = GetStation(b.CodeStation);
-            if (baseStation == null)
-                throw new DoesntExistException("This base station doesn't exist in the system");
-            XElement baseStationElement = (from bs in baseStationRoot.Elements()
-                                           where Convert.ToInt32(bs.Element("id").Value) == b.CodeStation
-                                           select bs).FirstOrDefault();
-            baseStationElement.Element("name").Value = Convert.ToString(b.NameStation);
-            baseStationElement.Element("numOfChargeSlots").Value= Convert.ToString(b.ChargeSlots);
-            baseStationElement.Element("location").Element("longitude").Value= Convert.ToString(b.Longitude);
-            baseStationElement.Element("location").Element("latitude").Value= Convert.ToString(b.Latitude);
-
-            baseStationRoot.Save(baseStationPath);
-        }
-        public BaseStation GetStation(int idS)
-        {
-            LoadData();
-            BaseStation baseStation;
-            try
-            {
-                baseStation = (from bs in baseStationRoot.Elements()
-                             where Convert.ToInt32(bs.Element("id").Value) == idS
-                               select new BaseStation()
-                               {
-                                   CodeStation = Convert.ToInt32(bs.Element("id").Value),
-                                   NameStation = Convert.ToInt32(bs.Element("name").Value),
-                                   ChargeSlots = Convert.ToInt32(bs.Element("numOfChargeSlots").Value),
-                                   Longitude = Convert.ToDouble(bs.Element("location").Element("longitude").Value),
-                                   Latitude = Convert.ToDouble(bs.Element("location").Element("latitude").Value),
-                               }).FirstOrDefault();
-            }
-            catch
-            {
-                baseStation = default;
-            }
-            return baseStation;
-        }
-        public IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null)
-        {
-            LoadData();
-            IEnumerable<BaseStation> stations;
-            try
-            {
-                stations = (from bs in baseStationRoot.Elements()
-                            select new BaseStation()
-                            {
-                                CodeStation = Convert.ToInt32(bs.Element("id").Value),
-                                NameStation = Convert.ToInt32(bs.Element("name").Value),
-                                ChargeSlots = Convert.ToInt32(bs.Element("numOfChargeSlots").Value),
-                                Longitude = Convert.ToDouble(bs.Element("location").Element("longitude").Value),
-                                Latitude = Convert.ToDouble(bs.Element("location").Element("latitude").Value)
-                            }
-                          );
-            }
-            catch
-            {
-                stations = null;
-            }
-            return stations;
-        }
-        #endregion
-        #region drone function
-        public void AddDrone(Drone d)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-        public void AddCustomer(Customer c)
             Drone dron1 = droneList.FirstOrDefault(d => d.CodeDrone == drone.CodeDrone);
 
             if (dron1.CodeDrone != 0)
@@ -227,7 +158,18 @@ namespace Dal
         #region UpDateing
         public void UpDateBaseStation(BaseStation b)
         {
-            throw new NotImplementedException();
+            BaseStation baseStation = GetStation(b.CodeStation);
+            if (baseStation.CodeStation == 0)
+                throw new DoesntExistException("This base station doesn't exist in the system");
+            XElement baseStationElement = (from bs in baseStationRoot.Elements()
+                                           where Convert.ToInt32(bs.Element("id").Value) == b.CodeStation
+                                           select bs).FirstOrDefault();
+            baseStationElement.Element("name").Value = Convert.ToString(b.NameStation);
+            baseStationElement.Element("numOfChargeSlots").Value = Convert.ToString(b.ChargeSlots);
+            baseStationElement.Element("location").Element("longitude").Value = Convert.ToString(b.Longitude);
+            baseStationElement.Element("location").Element("latitude").Value = Convert.ToString(b.Latitude);
+
+            baseStationRoot.Save(baseStationPath);
         }
         public void UpDateParcel(Parcel parcel)
         {
@@ -299,13 +241,33 @@ namespace Dal
 
             XMLTools.SaveListToXMLSerializer<Parcel>(parcelList, parcelsPath);
         }
-#endregion
+        #endregion
 
         #region Geting
         public BaseStation GetStation(int idS)
         {
-            throw new NotImplementedException();
+            LoadData();
+            BaseStation baseStation;
+            try
+            {
+                baseStation = (from bs in baseStationRoot.Elements()
+                               where Convert.ToInt32(bs.Element("id").Value) == idS
+                               select new BaseStation()
+                               {
+                                   CodeStation = Convert.ToInt32(bs.Element("id").Value),
+                                   NameStation = Convert.ToInt32(bs.Element("name").Value),
+                                   ChargeSlots = Convert.ToInt32(bs.Element("numOfChargeSlots").Value),
+                                   Longitude = Convert.ToDouble(bs.Element("location").Element("longitude").Value),
+                                   Latitude = Convert.ToDouble(bs.Element("location").Element("latitude").Value),
+                               }).FirstOrDefault();
+            }
+            catch
+            {
+                baseStation = default;
+            }
+            return baseStation;
         }
+
 
         public Drone GetDrone(int id)
         {
@@ -346,8 +308,28 @@ namespace Dal
         #region GettingAllByCondition
         public IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null)
         {
-            throw new NotImplementedException();
+            LoadData();
+            IEnumerable<BaseStation> stations;
+            try
+            {
+                stations = (from bs in baseStationRoot.Elements()
+                            select new BaseStation()
+                            {
+                                CodeStation = Convert.ToInt32(bs.Element("id").Value),
+                                NameStation = Convert.ToInt32(bs.Element("name").Value),
+                                ChargeSlots = Convert.ToInt32(bs.Element("numOfChargeSlots").Value),
+                                Longitude = Convert.ToDouble(bs.Element("location").Element("longitude").Value),
+                                Latitude = Convert.ToDouble(bs.Element("location").Element("latitude").Value)
+                            }
+                          );
+            }
+            catch
+            {
+                stations = null;
+            }
+            return stations;
         }
+
 
         public IEnumerable<Parcel> GetParcelsByCondition(Func<Parcel, bool> conditionDelegate = null)
         {
