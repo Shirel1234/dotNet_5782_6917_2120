@@ -33,7 +33,7 @@ namespace Dal
         {
             BaseStation myStation = DataSource.stations.Find(x => x.CodeStation == b.CodeStation);
             if (myStation.CodeStation != b.CodeStation)
-                throw new DoesntExistException("This baseStation doesn't exist in the system");
+                throw new DoesntExistException("This base station doesn't exist in the system");
             DataSource.stations.Remove(myStation);
             DataSource.stations.Add(b);
         }
