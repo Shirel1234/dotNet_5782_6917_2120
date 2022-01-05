@@ -58,6 +58,7 @@ namespace Dal
                                             )
                                         )
                                         );
+            
         DalXml() 
         {
             DataSource.Initialize();
