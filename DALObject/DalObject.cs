@@ -78,21 +78,6 @@ namespace Dal
             if (d.CodeDrone == idD)
                 throw new DoesntExistException("drone does not exist");
         }
-        /// <summary>
-        /// the function searches the parcels that have not drone
-        /// </summary>
-        /// <returns></returns>
-        //public IEnumerable<Parcel> GetParcels(Predicate<Parcel> conditionDelegate)
-        //{
-        //    List<Parcel> lstParcelWithoutDrone = DataSource.parcels.FindAll(parcel => conditionDelegate(parcel));
-        //    return lstParcelWithoutDrone;//האם זה בסדר שיתכן ויחזיר רשימה ריקה, או שיש לבדוק זאת ולזרוק חריגה אם כן?כנ"ל לגבי כל המתודות לעיל המחזירות רשימות
-        //}
-        /// <summary>
-        /// the function searches for the stations that have free slots of charge and creates a new list with them
-        /// </summary>
-        /// <returns>the new list of stations with free charge slots</returns>
-        /// template<class T, class K>
-
 
         public DroneCharge GetDroneCharge(int idDC)
         {

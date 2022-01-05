@@ -14,8 +14,8 @@
         <Button x:Name="btnShowListDrone" Content="Show Drones List" HorizontalAlignment="Left" Height="60" Margin="589,24,0,0" 
                 VerticalAlignment="Top" Width="180" FontSize="20" Click="btnShowListDrone_Click" Cursor="AppStarting" 
                 Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
-        <Button x:Name="btnShowParcelsList" Content="Show Parcels List" HorizontalAlignment="Left" Height="60" Margin="589,0,0,0" VerticalAlignment="Center" Width="180" FontSize="20" Background="{x:Null}" BorderBrush="#FF0C0505" Click="btnShowParcelsList"/>
-        <Button x:Name="btnShowListStations"  Content="Show Base Stations List" HorizontalAlignment="Left" Margin="589,103,0,0" 
+        <Button x:Name="btnShowParcelList" Content="Show Parcels List" HorizontalAlignment="Left" Height="60" Margin="589,0,0,0" VerticalAlignment="Center" Width="180" FontSize="20" Background="{x:Null}" BorderBrush="#FF0C0505" Click="btnShowParcelsList"/>
+        <Button x:Name="btnShowStationList"  Content="Show Base Stations List" HorizontalAlignment="Left" Margin="589,103,0,0" 
                 VerticalAlignment="Top" Height="60" Width="180" FontSize="20" Click="btnShowListStations_Click" Background="{x:Null}"
                 BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
         <Button x:Name="btnShowListCustomers" Content="Show Customers List" HorizontalAlignment="Left" Margin="588,263,0,0" VerticalAlignment="Top" Height="60" Width="180"
