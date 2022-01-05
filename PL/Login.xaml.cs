@@ -34,6 +34,7 @@ namespace PL
         {
             new AddCustomerWindow(bl).ShowDialog();
             btnCustomer.Visibility = Visibility.Visible;
+            btnWorker.Visibility = Visibility.Visible;
             btnNewCustomer.Visibility = Visibility.Hidden;
         }
 

@@ -3,7 +3,7 @@
 	<dal>xml</dal>
 	<dal-packages>
 		<data>DalObject</data>
-		<xml>namespace="DL" class="DLXml</xml>
-		<oracle> namespace="DL_O" class="DLDbOracle"> DLOracle</oracle>
+		<xml>namespace="Dal" class="DalXml">DalXml</xml>
+		<oracle> namespace="DL_O" class="DLDbOracle">DLOracle</oracle>
 	</dal-packages>
 </config>
