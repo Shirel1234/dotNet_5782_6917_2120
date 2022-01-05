@@ -11,6 +11,7 @@ namespace BO
         public int Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
+        public bool IsWorker { get; set; }
         public int CountDeliveredParcels { get; set; }
         public int CountNotDeliveredParcels { get; set; }
         public int CountAcceptedParcelsByCustomer { get; set; }

@@ -12,6 +12,7 @@ namespace BO
         public string Name { get; set; }
         public string Phone { get; set; }
         public Location Location { get; set; }
+        public bool IsWorker { get; set; }
         public IEnumerable<ParcelInCustomer> SendParcels { get; set; }
         public IEnumerable<ParcelInCustomer> TargetParcels { get; set; }
         public override string ToString()

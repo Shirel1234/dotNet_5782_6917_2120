@@ -173,7 +173,7 @@ namespace PL
 
         private void ShowThisParcel(object sender, MouseButtonEventArgs e)
         {
-            Parcel p = bll.GetParcel(((ParcelInCustomer)lsvParcelInWay.SelectedItem).Id);
+            Parcel p = bll.GetParcel(((ParcelInCustomer)lsbParcelInWay.SelectedItem).Id);
             new AddParcelWindow(bll, p).ShowDialog();
         }
     }

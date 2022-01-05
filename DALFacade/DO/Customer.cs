@@ -13,9 +13,10 @@ namespace DO
         public string Phone { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+        public bool IsWorker { get; set; }
         public override string ToString()
         {
-            return String.Format($"(IdCustomer: {IdCustomer}, NameCustomer: {NameCustomer}, Phone: {Phone}, Longitude:{Longitude}, Latitude:{Latitude})");
+            return String.Format($"(IdCustomer: {IdCustomer}, NameCustomer: {NameCustomer}, Phone: {Phone}, Longitude:{Longitude}, Latitude:{Latitude} Is Worker: {IsWorker})");
         }
     }
 }
