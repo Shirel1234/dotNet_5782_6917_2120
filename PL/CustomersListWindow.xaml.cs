@@ -38,5 +38,10 @@ namespace PL
         {
             new AddCustomerWindow(bll).ShowDialog();
         }
+
+        private void lsvCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

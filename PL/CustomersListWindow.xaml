@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ListParcels" Height="640" Width="800">
+        Title="ListParcels" Height="640" Width="1200">
     <Grid Margin="0,10,2,36">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF8DB1C8"/>
+                <GradientStop Color="#FF356F93" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="287*"/>
             <RowDefinition Height="2*"/>
@@ -14,19 +20,20 @@
         <Grid Margin="10,119,10,170">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="265*"/>
+                <ColumnDefinition Width="513*"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="lsvCustomers" Margin="0,23,0,10" Grid.Column="1" MouseDoubleClick="ShowThisCustomer">
+            <ListView x:Name="lsvCustomers" Margin="0,23,0,-19" Grid.Column="1" MouseDoubleClick="ShowThisCustomer" SelectionChanged="lsvCustomers_SelectionChanged" Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="70" DisplayMemberBinding="{Binding Id}"/>
-                            <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="Phone" Width="90" DisplayMemberBinding="{Binding Phone}" />
-                            <GridViewColumn Header="Is Worker" Width="90" DisplayMemberBinding="{Binding IsWorker}" />
-                            <GridViewColumn Header="Number of Delivered Parcels" Width="150" DisplayMemberBinding="{Binding CountDeliveredParcels}"/>
-                            <GridViewColumn Header="Number of Not Delivered Parcels" Width="150" DisplayMemberBinding="{Binding CountNotDeliveredParcels}"/>
-                            <GridViewColumn Header="Number of Accepted Parcels By Customer" Width="150" DisplayMemberBinding="{Binding CountAcceptedParcelsByCustomer}" />
-                            <GridViewColumn Header="Number of Parcels In Way" Width="150" DisplayMemberBinding="{Binding CountParcelsInWay}" />
+                        <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Phone" Width="90" DisplayMemberBinding="{Binding Phone}" />
+                        <GridViewColumn Header="Is Worker" Width="90" DisplayMemberBinding="{Binding IsWorker}" />
+                        <GridViewColumn Header="Number of Delivered Parcels" Width="200" DisplayMemberBinding="{Binding CountDeliveredParcels}"/>
+                        <GridViewColumn Header="Number of Not Delivered Parcels" Width="200" DisplayMemberBinding="{Binding CountNotDeliveredParcels}"/>
+                        <GridViewColumn Header="Number of Accepted Parcels By Customer" Width="250" DisplayMemberBinding="{Binding CountAcceptedParcelsByCustomer}" />
+                        <GridViewColumn Header="Number of Parcels In Way" Width="200" DisplayMemberBinding="{Binding CountParcelsInWay}" />
                     </GridView>
                 </ListView.View>
 
@@ -41,7 +48,7 @@
                 </ListView.GroupStyle>
             </ListView>
         </Grid>
-        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="546,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddCustomer_Click"/>
-        <Label x:Name="lblCustomer" Content="Customers:" HorizontalAlignment="Left" Height="52" Margin="10,67,0,0" VerticalAlignment="Top" Width="239" FontSize="20"/>
+        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="965,480,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddCustomer_Click"/>
+        <Label x:Name="lblCustomer" Content="Customers:" HorizontalAlignment="Left" Height="52" Margin="10,27,0,0" VerticalAlignment="Top" Width="239" FontSize="20"/>
     </Grid>
 </Window>
