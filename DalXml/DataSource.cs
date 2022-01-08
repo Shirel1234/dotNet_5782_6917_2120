@@ -7,14 +7,17 @@ using DO;
 
 namespace Dal
 {
-    static class DataSource
+   public static class DataSource
     {
         internal static Random r = new Random();
-        internal static List<BaseStation> stations = new List<BaseStation>();
-        internal static List<Customer> customers = new List<Customer>();
-        internal static List<Drone> drones = new List<Drone>();
-        internal static List<Parcel> parcels = new List<Parcel>();
-        internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
+        public static List<BaseStation> stations = new List<BaseStation>();
+        public static List<Customer> customers = new List<Customer>();
+        public static List<Drone> drones = new List<Drone>();
+        public static List<Parcel> parcels = new List<Parcel>();
+        public static List<DroneCharge> dronesCharge = new List<DroneCharge>();
+
+        internal static List<BaseStation> Stations { get => stations; set => stations = value; }
+
         internal class Config
         {
             internal static int countIdParcel = 200;
@@ -34,8 +37,10 @@ namespace Dal
                 b.Longitude = r.NextDouble() + r.Next(30, 34);
                 b.Latitude = r.NextDouble() + r.Next(34, 37);
                 b.ChargeSlots = r.Next(5, 6);
-                stations.Add(b);
+                Stations.Add(b);
             }
+            //   XMLTools.SaveListToXMLSerializer(DataSource.stations, @"DronesChargeXml.xml");
+           DalXml.SaveStationsListLinq(Stations);
             Drone d = new Drone();
             for (int i = 1; i < 6; i++)
             {
@@ -46,6 +51,7 @@ namespace Dal
                 // d.Battery = (double)r.Next(0, 101);
                 drones.Add(d);
             }
+            XMLTools.SaveListToXMLSerializer(DataSource.drones, @"DronesXml.xml");
             Customer c = new Customer();
             for (int i = 1; i < 11; i++)
             {
@@ -56,6 +62,7 @@ namespace Dal
                 c.Latitude = r.NextDouble() + r.Next(34, 37);
                 customers.Add(c);
             }
+            XMLTools.SaveListToXMLSerializer(DataSource.customers, @"CustomerslXml.xml");
             Parcel p = new Parcel();
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
@@ -85,6 +92,7 @@ namespace Dal
                 }
                 parcels.Add(p);
             }
+            XMLTools.SaveListToXMLSerializer(parcels, @"ParcelsXml.xml");
         }
     }
 }

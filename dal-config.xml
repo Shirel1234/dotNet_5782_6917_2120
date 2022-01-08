@@ -2,8 +2,7 @@
 <config>
 	<dal>xml</dal>
 	<dal-packages>
-		<data>DalObject</data>
-		<xml>namespace="Dal" class="DalXml">DalXml</xml>
-		<oracle> namespace="DL_O" class="DLDbOracle">DLOracle</oracle>
+		<list namespace="Dal" class="DalObject">DalObject</list>
+		<xml namespace="Dal" class="DalXml">DalXml</xml>
 	</dal-packages>
 </config>

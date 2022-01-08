@@ -24,27 +24,16 @@ namespace Dal
         string parcelsPath = @"ParcelsXml.xml";//XMLSerializer
         string dronesChargePath = @"DronesChargeXml.xml";//XMLSerializer
 
-        public DalXml()
+        private DalXml()
         {
             //not necessary if every CRUD operation calls these functions
             if (!File.Exists(baseStationPath))
                 CreateFiles();
             else
                 LoadData();
-            List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
-            if (droneList==null)
-                 initXML();
-        }
-        private void initXML()
-        {
             DataSource.Initialize();
-            //only once
-            XMLTools.SaveListToXMLSerializer(DataSource.drones, @"DronesXml.xml");
-            XMLTools.SaveListToXMLSerializer(DataSource.parcels, @"ParcelsXml.xml");
-            XMLTools.SaveListToXMLSerializer(DataSource.customers, @"CustomerslXml.xml");
-            XMLTools.SaveListToXMLSerializer(DataSource.stations, @"DronesChargeXml.xml");
-            SaveStationsListLinq(DataSource.stations);
         }
+        
         #region XElementBaseStation
         private void CreateFiles()
         {

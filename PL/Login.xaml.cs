@@ -32,7 +32,7 @@ namespace PL
 
         private void btnNewCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new AddCustomerWindow(bl).ShowDialog();
+            new AddCustomerWindow(bl, false).ShowDialog();
             btnCustomer.Visibility = Visibility.Visible;
             btnWorker.Visibility = Visibility.Visible;
             btnNewCustomer.Visibility = Visibility.Hidden;

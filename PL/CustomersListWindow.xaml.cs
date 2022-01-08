@@ -36,7 +36,7 @@ namespace PL
 
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new AddCustomerWindow(bll).ShowDialog();
+            new AddCustomerWindow(bll, true).ShowDialog();
         }
     }
 }
