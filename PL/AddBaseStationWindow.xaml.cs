@@ -29,6 +29,7 @@ namespace PL
             newStation = new();
             DataContext = newStation;
             btnUpdateStation.Visibility = Visibility.Hidden;
+            newStation.Location = new Location(0, 0);
         }
         public AddBaseStationWindow(BlApi.IBL bl,BaseStationForList bs)
         {

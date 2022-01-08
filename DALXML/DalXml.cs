@@ -15,60 +15,19 @@ namespace Dal
 {
     sealed class DalXml : IDal
     {
-        static readonly IDal instance = new DalXml();
-        public static IDal Instance { get => instance; }
+        #region singelton
+        static readonly DalXml instance = new DalXml();
+        public static DalXml Instance { get => instance; }
         XElement baseStationRoot;
         string baseStationPath = @"StationsXml.xml";
         string dronesPath = @"DronesXml.xml";//XMLSerializer
         string customersPath = @"CustomersXml.xml";//XMLSerializer
         string parcelsPath = @"ParcelsXml.xml";//XMLSerializer
         string dronesChargePath = @"DronesChargeXml.xml";//XMLSerializer
-
+        #endregion
         private DalXml()
         {
-            //not necessary if every CRUD operation calls these functions
-            if (!File.Exists(baseStationPath))
-                CreateFiles();
-            else
-                LoadData();
-            DataSource.Initialize();
         }
-        
-        #region XElementBaseStation
-        private void CreateFiles()
-        {
-            baseStationRoot = new XElement("baseStations");
-            baseStationRoot.Save(baseStationPath);
-        }
-        private void LoadData()
-        {
-            try
-            {
-                baseStationRoot = XElement.Load(baseStationPath);
-            }
-            catch
-            {
-                throw new Exception("File upload problem");
-            }
-        }
-        public void SaveStationsListLinq(List<BaseStation> stationsList)
-        {
-            baseStationRoot = new XElement("baseStations",
-                                        from bs in stationsList
-                                        select new XElement("baseStation",
-                                        new XElement("id", bs.CodeStation),
-                                        new XElement("name", bs.NameStation),
-                                        new XElement("numOfChargeSlots", bs.ChargeSlots),
-                                        new XElement("location",
-                                            new XElement("longitude", bs.Longitude),
-                                            new XElement("latitude", bs.Latitude)
-                                            )
-                                        )
-                                        );
-            baseStationRoot.Save(baseStationPath);
-        }
-        #endregion
-
         #region Adding
         public void AddStation(BaseStation b)
         {
@@ -235,7 +194,7 @@ namespace Dal
         #region Geting
         public BaseStation GetStation(int idS)
         {
-            LoadData();
+            XMLTools.LoadListFromXMLElement(baseStationPath);
             BaseStation baseStation;
             try
             {
@@ -297,7 +256,7 @@ namespace Dal
         #region GettingAllByCondition
         public IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null)
         {
-            LoadData();
+            XMLTools.LoadListFromXMLElement(baseStationPath);
             IEnumerable<BaseStation> stations;
             try
             {
@@ -321,13 +280,14 @@ namespace Dal
 
 
         public IEnumerable<Parcel> GetParcelsByCondition(Func<Parcel, bool> conditionDelegate = null)
-        {
-            List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-            var v = from item in parcelList
-                    select item; //item.Clone();
-            if (conditionDelegate == null)
-                return v.AsEnumerable().OrderByDescending(p => p.CodeParcel);
-            return v.Where(conditionDelegate).OrderByDescending(p => p.CodeParcel);
+         {
+                List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+                var v = from item in parcelList
+                        select item; //item.Clone();
+                if (conditionDelegate == null)
+                    return v.AsEnumerable().OrderByDescending(p => p.CodeParcel);
+                return v.Where(conditionDelegate).OrderByDescending(p => p.CodeParcel);
+            
         }
 
         public IEnumerable<Drone> GetDronesByCondition(Func<Drone, bool> conditionDelegate = null)
@@ -352,7 +312,13 @@ namespace Dal
         #endregion
         public double[] AskElectrical()
         {
-            throw new NotImplementedException();
+            double[] arrElectrical = new double[5];
+            arrElectrical[0] = DataSourceXml.Config.Free;
+            arrElectrical[1] = DataSourceXml.Config.Easy;
+            arrElectrical[2] = DataSourceXml.Config.Medium;
+            arrElectrical[3] = DataSourceXml.Config.Heavy;
+            arrElectrical[4] = DataSourceXml.Config.ChargingRate;
+            return arrElectrical;
         }
     }
 }

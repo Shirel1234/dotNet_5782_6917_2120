@@ -19,8 +19,9 @@ namespace PL
     /// </summary>
     public partial class Login : Window
     {
+        
         internal readonly IBL bl = BlFactory.GetBl();
-        public Login()
+         public Login()
         {
             InitializeComponent();
         }

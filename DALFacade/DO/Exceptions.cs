@@ -33,16 +33,18 @@ namespace DO
         protected InvalidInputException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
     }
-    public class XMLFileLoadCreateException : Exception
+
+    public class LoadingException : Exception
     {
-        public XMLFileLoadCreateException() : base() { }
-        public XMLFileLoadCreateException(string message) : base(message) { }
-        public XMLFileLoadCreateException(string message, string mess, Exception inner) : base(message, inner) { }
-        protected XMLFileLoadCreateException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        string filePath;
+        public LoadingException() : base() { }
+        public LoadingException(string message) : base(message) { }
+        public LoadingException(string message, Exception inner) : base(message, inner) { }
+
+        public LoadingException(string path, string messege, Exception inner) => filePath = path;
+        protected LoadingException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
     }
-    
-
 }
 
 
