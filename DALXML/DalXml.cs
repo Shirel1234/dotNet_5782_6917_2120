@@ -16,8 +16,8 @@ namespace Dal
     sealed class DalXml : IDal
     {
         #region singelton
-        static readonly DalXml instance = new DalXml();
-        public static DalXml Instance { get => instance; }
+        static readonly IDal instance = new DalXml();
+        public static IDal Instance { get => instance; }
         XElement baseStationRoot;
         string baseStationPath = @"StationsXml.xml";
         string dronesPath = @"DronesXml.xml";//XMLSerializer
@@ -27,6 +27,9 @@ namespace Dal
         #endregion
         private DalXml()
         {
+            //In the first time
+            //DataSourceXml.Initialize();
+
         }
         #region Adding
         public void AddStation(BaseStation b)
@@ -42,7 +45,7 @@ namespace Dal
             XElement location = new XElement("location", longitude, latitude);
 
             baseStationRoot.Add(new XElement("baseStation", id, name, numOfChargeSlots, location));
-            baseStationRoot.Save(baseStationPath);
+            XMLTools.SaveListToXMLElement(baseStationRoot, baseStationPath);
         }
         public void AddDrone(Drone drone)
         {
@@ -256,7 +259,7 @@ namespace Dal
         #region GettingAllByCondition
         public IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null)
         {
-            XMLTools.LoadListFromXMLElement(baseStationPath);
+            baseStationRoot=XMLTools.LoadListFromXMLElement(baseStationPath);
             IEnumerable<BaseStation> stations;
             try
             {

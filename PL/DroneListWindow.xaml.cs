@@ -65,11 +65,6 @@ namespace PL
 
         }
 
-        //private void lstDroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-
-        //}
-
         private void GroupingByStatus(object sender, RoutedEventArgs e)
         {
             lsvDrones.ItemsSource = bll.GetDrones();

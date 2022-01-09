@@ -52,8 +52,9 @@ namespace PL
                 try
                 {
                     Customer c = bl.GetCustomer(Convert.ToInt32(txtId.Text));
-                    if (c.IsWorker == true)
-                        btnWorker.Visibility = Visibility.Visible;
+                   // if (c.IsWorker == true)
+                    btnWorker.Visibility = Visibility.Visible;
+                    btnCustomer.Visibility = Visibility.Visible;
                 }
                 catch (Exception ex)
                 {
