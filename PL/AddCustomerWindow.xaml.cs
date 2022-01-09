@@ -17,6 +17,7 @@ namespace PL
 {
     /// <summary>
     /// Interaction logic for AddCustomerWindow.xaml
+    ///constructor for adding a customer
     /// </summary>
     public partial class AddCustomerWindow : Window
     {
@@ -34,6 +35,7 @@ namespace PL
             if (!IsWorker)
                 ckbIsWorker.Visibility = Visibility.Hidden;
         }
+        ///constructor for updating or showing a customer
         public AddCustomerWindow(BlApi.IBL bl,Customer c)
         {
             InitializeComponent();
@@ -58,14 +60,19 @@ namespace PL
         {
             try
             {
-                
-                bll.AddCustomer(newCustomer);
-                MessageBox.Show("The new Customer was successfully added", "Done");
-                this.Close();
+                //txtIdCustomer.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                if (txtIdCustomer.Text == "" || txtNameCustomer.Text == "" || txtPhoneCustomer.Text == "" || txtLongitudeCustomer.Text == "" || txtLatitudeCustomer.Text == "")
+                    MessageBox.Show("One or more of the fields are empty. Please complete the missing information.");
+                else
+                {
+                    bll.AddCustomer(newCustomer);
+                    MessageBox.Show("The new Customer was successfully added.", "Done");
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "The Customer could not be added");
+                MessageBox.Show(ex.Message, "The Customer could not be added.");
             }
         }
 
@@ -73,9 +80,15 @@ namespace PL
         {
             try
             {
-                bll.UpdateCustomer(newCustomer.Id, newCustomer.Name, newCustomer.Phone);
-                MessageBox.Show("The customer was successfully updated", "Done");
-                this.Close();
+                Customer c = bll.GetCustomer(newCustomer.Id);
+                if(txtNameCustomer.Text == c.Name && txtPhoneCustomer.Text == c.Phone)
+                    MessageBox.Show("No field updated.");
+                else
+                {
+                    bll.UpdateCustomer(newCustomer.Id, newCustomer.Name, newCustomer.Phone);
+                    MessageBox.Show("The customer was successfully updated", "Done");
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
