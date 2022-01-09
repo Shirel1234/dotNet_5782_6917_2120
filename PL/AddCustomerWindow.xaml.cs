@@ -23,7 +23,7 @@ namespace PL
     {
         BlApi.IBL bll;
         Customer newCustomer;
-        public AddCustomerWindow(BlApi.IBL bl)
+        public AddCustomerWindow(BlApi.IBL bl, bool IsWorker)
         {
             InitializeComponent();
             bll = bl;
@@ -32,6 +32,8 @@ namespace PL
             DataContext = newCustomer;
             btnUpdateCustomer.Visibility = Visibility.Hidden;
             grdShowCustomer.Visibility = Visibility.Hidden;
+            if (!IsWorker)
+                ckbIsWorker.Visibility = Visibility.Hidden;
         }
         ///constructor for updating or showing a customer
         public AddCustomerWindow(BlApi.IBL bl,Customer c)

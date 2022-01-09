@@ -37,6 +37,7 @@ namespace PL
 
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
+            new AddCustomerWindow(bll, true).ShowDialog();
             new AddCustomerWindow(bll).ShowDialog();
             lsvCustomers.ItemsSource = bll.GetCustomers();
         }

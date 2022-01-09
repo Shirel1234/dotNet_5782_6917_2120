@@ -35,6 +35,7 @@ namespace PL
             //txtLatitudeStation.Clear();
             //txtAvailableChargeSlotsOfStation.Clear();
             btnUpdateStation.Visibility = Visibility.Hidden;
+            newStation.Location = new Location(0, 0);
         }
         public AddBaseStationWindow(BlApi.IBL bl,BaseStationForList bs)
         {
@@ -42,13 +43,9 @@ namespace PL
             lblWindowTitle.Content = "Update A Base Station:";
             bll = bl;
             newStation = bll.GetBaseStation(bs.Id);
+            newStation.Location = new Location(0, 0);
             DataContext = newStation;
             btnAddStation.Visibility = Visibility.Hidden;
-            //txtIdStation.Text = newStation.Id.ToString();
-            //txtNameStation.Text = newStation.Name.ToString();
-            //txtLongitudeStation.Text = newStation.Location.Longitude.ToString();
-            //txtLatitudeStation.Text = newStation.Location.Latitude.ToString();
-            //txtAvailableChargeSlotsOfStation.Text = newStation.ChargeSlots.ToString();
             lsvDronesListOfStation.ItemsSource = newStation.ListDroneCharge.ToList();
             txtIdStation.IsEnabled = false;
             txtLongitudeStation.IsEnabled = false;

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DO;
 
 namespace Dal
 {
-    static class DataSource
+    class DataSourceXml
     {
         internal static Random r = new Random();
         internal static List<BaseStation> stations = new List<BaseStation>();
@@ -41,11 +41,11 @@ namespace Dal
             {
                 d.CodeDrone = i;
                 d.ModelDrone = "model no." + i + "";
-                // d.Status = (DroneStatuses)r.Next(0, 3);
                 d.MaxWeight = (WeightCategories)r.Next(0, 3);
-                // d.Battery = (double)r.Next(0, 101);
                 drones.Add(d);
             }
+            XMLTools.SaveListToXMLSerializer(drones, @"DronesXml.xml");
+
             Customer c = new Customer();
             for (int i = 1; i < 11; i++)
             {
@@ -56,6 +56,7 @@ namespace Dal
                 c.Latitude = r.NextDouble() + r.Next(34, 37);
                 customers.Add(c);
             }
+            XMLTools.SaveListToXMLSerializer(customers, @"CustomerslXml.xml");
             Parcel p = new Parcel();
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
@@ -85,6 +86,8 @@ namespace Dal
                 }
                 parcels.Add(p);
             }
+            XMLTools.SaveListToXMLSerializer(parcels, @"ParcelsXml.xml");
+
         }
     }
 }

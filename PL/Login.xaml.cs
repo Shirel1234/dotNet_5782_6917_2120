@@ -19,8 +19,9 @@ namespace PL
     /// </summary>
     public partial class Login : Window
     {
+        
         internal readonly IBL bl = BlFactory.GetBl();
-        public Login()
+         public Login()
         {
             InitializeComponent();
 
@@ -33,7 +34,7 @@ namespace PL
 
         private void btnNewCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new AddCustomerWindow(bl).ShowDialog();
+            new AddCustomerWindow(bl, false).ShowDialog();
             btnCustomer.Visibility = Visibility.Visible;
             btnNewCustomer.Visibility = Visibility.Hidden;
         }
