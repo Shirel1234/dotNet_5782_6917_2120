@@ -13,17 +13,27 @@
                 <GradientStop Color="#FF356F93" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Label x:Name="lblIdDrone" Content="Id:" HorizontalAlignment="Left" Height="54" Margin="38,75,0,0" VerticalAlignment="Top" Width="47" FontSize="20"/>
-        <Label x:Name="lblAddDrone" Content="Add Drone:" HorizontalAlignment="Left" Height="54" Margin="14,7,0,0" VerticalAlignment="Top" Width="209" FontSize="36"/>
-        <Label x:Name="lblModelDrone" Content="Model Drone:" HorizontalAlignment="Left" Height="62" Margin="36,143,0,0" VerticalAlignment="Top" Width="209" FontSize="20"/>
-        <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="38,206,0,0" VerticalAlignment="Top" Width="146" FontSize="20"/>
+        <Label x:Name="lblTitleDrone" Content="Add Drone:" HorizontalAlignment="Left" Height="54" Margin="14,7,0,0" VerticalAlignment="Top" Width="209" FontSize="20"/>
+        <Label x:Name="lblIdDrone" Content="Id:" HorizontalAlignment="Left" Height="54" Margin="30,84,0,0" VerticalAlignment="Top" Width="47" FontSize="20"/>
+        <Label x:Name="lblModelDrone" Content="Model of Drone:" HorizontalAlignment="Left" Height="48" Margin="30,156,0,0" VerticalAlignment="Top" Width="210" FontSize="20"/>
+        <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="30,212,0,0" VerticalAlignment="Top" Width="146" FontSize="20"/>
+        <Label x:Name="lblIdStation" Content="Station For Charging:" HorizontalAlignment="Left" Height="39" Margin="31,482,0,0" VerticalAlignment="Top" Width="255" FontSize="20"/>
+        <Label x:Name="lblBattery" Content="Battery:" HorizontalAlignment="Left" Margin="30,264,0,0" VerticalAlignment="Top" Width="78" FontSize="20"/>
+        <Label x:Name="lblStatus" Content="Status:" HorizontalAlignment="Left" Margin="30,301,0,0" VerticalAlignment="Top" Width="100" FontSize="20"/>
+        <Label x:Name="lblParcelInWay" Content="Parcel In Way:" HorizontalAlignment="Left" Margin="31,345,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.147,-1.293" Width="150" FontSize="20"/>
+        <Label x:Name="lblLocation" Content="Location:" HorizontalAlignment="Left" Margin="30,382,0,0" VerticalAlignment="Top" Width="94" FontSize="20"/>
+        <Label x:Name="lblLongitude" Content="Longitude:" HorizontalAlignment="Left" Margin="118,385,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label x:Name="lblLatitude" Content="Latitude:" HorizontalAlignment="Left" Margin="118,419,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.31,1.577"/>
 
-        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="40" Margin="77,83,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
-        <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="40" Margin="191,152,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
-        <ComboBox x:Name="cmbWeightDrone" HorizontalAlignment="Left" Height="39" Margin="191,213,0,0" VerticalAlignment="Top" Width="200" SelectedItem="{Binding MaxWeight, Mode=TwoWay}"/>
-        <Label x:Name="lblIdStation" Content="Id of Station For Charging:" HorizontalAlignment="Left" Height="39" Margin="29,270,0,0" VerticalAlignment="Top" Width="238" FontSize="20"/>
-        <ComboBox x:Name="cmbIdStation" HorizontalAlignment="Left" Height="30" Margin="272,278,0,0" VerticalAlignment="Top" Width="300"/>
-        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="43" Margin="188,547,0,0" VerticalAlignment="Top" Width="150" FontSize="18" Click="btnAdd_Click" Background="#FFF3E9E9"/>
+        <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="45" Margin="77,89,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
+        <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="32" Margin="201,164,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
+        <ComboBox x:Name="cmbWeightDrone" HorizontalAlignment="Left" Height="39" Margin="191,221,0,0" VerticalAlignment="Top" Width="200" SelectedItem="{Binding MaxWeight, Mode=TwoWay}"/>
+        <ComboBox x:Name="cmbIdStation" HorizontalAlignment="Left" Height="46" Margin="257,488,0,0" VerticalAlignment="Top" Width="194"/>
+        <ComboBox x:Name="cmbStatus" HorizontalAlignment="Left" Margin="191,306,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtBattery" HorizontalAlignment="Left" Margin="191,273,0,0" Text="{Binding Battery, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLongitude" HorizontalAlignment="Left" Margin="232,391,0,0" Text="{Binding Location.Longitude, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtLatitude" HorizontalAlignment="Left" Margin="232,418,0,0" Text="{Binding Location.Latitude, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="43" Margin="20,527,0,0" VerticalAlignment="Top" Width="150" FontSize="18" Click="btnAdd_Click" Background="#FFF3E9E9"/>
         <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="54" Margin="691,20,0,0" VerticalAlignment="Top" Width="75" FontSize="20" Click="btnClose_Click"/>
         <Grid x:Name="grdUpdating" HorizontalAlignment="Left" Height="521" Margin="502,74,0,0" VerticalAlignment="Top" Width="310">
             <Grid.ColumnDefinitions>

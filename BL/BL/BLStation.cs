@@ -47,22 +47,22 @@ namespace BL
         /// <param name="id">id of station</param>
         /// <param name="name">name of station</param>
         /// <param name="numOfChargePositions"> number of charge position</param>
-        public void UpdateBaseStation(int id, int name, int numOfChargePositions)
+        public void UpdateBaseStation(int id, int name, int numOfChargeSlots)
         {
             if (id < 0)
                 throw new UpdateProblemException("The ID number must be a positive number");
-            if (numOfChargePositions < 0)
+            if (numOfChargeSlots < 0)
                 throw new UpdateProblemException("The number of the charging positions must be a positive number");
             DO.BaseStation tempB = dal.GetStation(id);
             if (name != 0)
                 tempB.NameStation = name;
-            if (numOfChargePositions != 0)
+            if (numOfChargeSlots != 0)
             {
-                int busyChargingPositions = BODrones.Count
-                    (drone => drone.DroneStatus == (DroneStatuses)1
+                int busyChargeSlots = BODrones.Count
+                    (drone => drone.DroneStatus == DroneStatuses.maintenace
                     && drone.LocationNow.Longitude == tempB.Longitude
                     && drone.LocationNow.Latitude == tempB.Latitude);
-                tempB.ChargeSlots = numOfChargePositions - busyChargingPositions;
+                tempB.ChargeSlots = numOfChargeSlots - busyChargeSlots;
             }
             try
             {
@@ -109,7 +109,7 @@ namespace BL
                 return
                     from station in DOstatinsList
                     let busyChargingPositions = BODrones.Count
-                   (drone => drone.DroneStatus == (DroneStatuses)1
+                   (drone => drone.DroneStatus == DroneStatuses.maintenace
                    && drone.LocationNow.Longitude == station.Longitude
                    && drone.LocationNow.Latitude == station.Latitude)
                     select new BaseStationForList()
@@ -134,7 +134,7 @@ namespace BL
             return from station in dal.GetStationsByCondition().ToList()
                    where station.ChargeSlots > 0
                    let busyChargingPositions = BODrones.Count
-                                     (drone => drone.DroneStatus == (DroneStatuses)1
+                                     (drone => drone.DroneStatus == DroneStatuses.maintenace
                                      && drone.LocationNow.Longitude == station.Longitude
                                      && drone.LocationNow.Latitude == station.Latitude)
                    select new BaseStationForList()

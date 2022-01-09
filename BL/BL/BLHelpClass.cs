@@ -37,12 +37,12 @@ namespace BL
         public ParcelStatuses GetDateTimeToStatus(DO.Parcel p)
         {
             if (p.Scheduled == null)
-                return (ParcelStatuses)0;
+                return ParcelStatuses.requested;
             if (p.PickedUp == null)
-                return (ParcelStatuses)1;
+                return ParcelStatuses.scheduled;
             if (p.Delivered == null)
-                return (ParcelStatuses)2;
-            return (ParcelStatuses)4;
+                return ParcelStatuses.pickedUp;
+            return ParcelStatuses.delivered;
         }
         /// <summary>
         /// the function moves on the base stations and find the closer station to the location 
@@ -102,9 +102,9 @@ namespace BL
                 //if this parcel was found
                 if (p.CodeParcel != defaultP.CodeParcel)
                 {
-                    newDroneList.DroneStatus = (DroneStatuses)2;
+                    newDroneList.DroneStatus = DroneStatuses.sending;
                     //if the parcel was scheduled but not pickedUp
-                    if (GetDateTimeToStatus(p) == (ParcelStatuses)1)
+                    if (GetDateTimeToStatus(p) == ParcelStatuses.scheduled)
                         newDroneList.LocationNow = GetLocationNotPickedUp(p);
                     //the parcel was scheduled and pickedUp
                     else
@@ -127,7 +127,7 @@ namespace BL
                     int num = r.Next(0, 2);
                     newDroneList.DroneStatus = (DroneStatuses)num;
                     //the drone is in maintenace
-                    if (newDroneList.DroneStatus == (DroneStatuses)1)
+                    if (newDroneList.DroneStatus == DroneStatuses.maintenace)
                     {
                         newDroneList.Battery = r.Next(0, 21);
                         //random a base station
@@ -170,10 +170,10 @@ namespace BL
         private double GetElectricityUseOfBattery(double distance, WeightCategories weight)
         {
             //if the parcel has an easy weight
-            if (weight == (WeightCategories)0)
+            if (weight == WeightCategories.easy)
                 return distance * easy;
             else
-                if (weight == (WeightCategories)1)
+                if (weight == WeightCategories.medium)
                 //if the parcel has a medium weight
                 return distance * medium;
             else

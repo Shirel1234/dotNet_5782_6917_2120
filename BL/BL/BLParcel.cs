@@ -124,7 +124,7 @@ namespace BL
                     from parcel in DOparcelsWithoutDroneList
                     let senderName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.SenderId).NameCustomer
                     let receiverName = DOcustomersList.Find(customer => customer.IdCustomer == parcel.TargetId).NameCustomer
-                    let parcelStatus = (ParcelStatuses)0
+                    let parcelStatus = ParcelStatuses.requested
                     select new ParcelForList()
                     {
                         Id = parcel.CodeParcel,

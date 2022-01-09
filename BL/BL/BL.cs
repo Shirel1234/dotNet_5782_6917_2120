@@ -61,7 +61,7 @@ namespace BL
             DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
-            if (droneList.DroneStatus == (DroneStatuses)0)
+            if (droneList.DroneStatus == DroneStatuses.free)
             {
                 DO.BaseStation closeStation = GetCloserBaseStation(droneList.LocationNow);
                 double minDistance = GetDistance(new Location(closeStation.Longitude, closeStation.Latitude), droneList.LocationNow);
@@ -72,7 +72,7 @@ namespace BL
                     droneList.Battery -= minDistance * free;
                     droneList.LocationNow.Longitude = closeStation.Longitude;
                     droneList.LocationNow.Latitude = closeStation.Latitude;
-                    droneList.DroneStatus = (DroneStatuses)1;
+                    droneList.DroneStatus = DroneStatuses.maintenace;
                     BODrones.Add(droneList);
                     //update station
                     closeStation.ChargeSlots--;
@@ -92,12 +92,12 @@ namespace BL
             DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
-            if (droneList.DroneStatus == (DroneStatuses)1)
+            if (droneList.DroneStatus == DroneStatuses.maintenace)
             {
                 //update drone
                 BODrones.Remove(droneList);
                 droneList.Battery = Convert.ToDouble(dal.GetDroneCharge(id).BeginingCharge-DateTime.Now) * chargingRate;
-                droneList.DroneStatus = (DroneStatuses)0;
+                droneList.DroneStatus = DroneStatuses.free;
                 BODrones.Add(droneList);
                 //update station
                 DO.BaseStation myStation = dal.GetStationsByCondition().ToList().Find(station => station.Longitude == droneList.LocationNow.Longitude && station.Latitude == droneList.LocationNow.Latitude);
@@ -121,6 +121,7 @@ namespace BL
                 var groups = dal.GetParcelsByCondition().ToList().GroupBy(parcel => parcel.Priority);
                 List<DO.Parcel> gNormal = new List<DO.Parcel>();
                 List<DO.Parcel> gExpress = new List<DO.Parcel>();
+
                 List<DO.Parcel> gEmergency = new List<DO.Parcel>();
                 foreach (IGrouping<DO.Priorities, DO.Parcel> group in groups)
                 {
@@ -193,7 +194,7 @@ namespace BL
                 if (droneList.Id == id)
                 {
                     DO.Parcel parcel = dal.GetParcel(droneList.ParcelInWay);
-                    if (GetDateTimeToStatus(parcel) != (ParcelStatuses)2)
+                    if (GetDateTimeToStatus(parcel) != ParcelStatuses.pickedUp)
                         throw new UpdateProblemException("Impossible to deliver the parcel");
                     else
                     {

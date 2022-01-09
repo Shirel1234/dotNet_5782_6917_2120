@@ -39,6 +39,7 @@ namespace PL
         public AddParcelWindow(BlApi.IBL bl, Parcel p)
         {
             InitializeComponent();
+            lblWindowTitle.Content = "Update a Parcel:";
             bll = bl;
             //newParcel = new Parcel { CodeParcel = p.Id, SenderCustomer = bll.GetParcels().ToList().Find(parcel => parcel.NameSender == p.NameSender) };
             newParcel = p;
