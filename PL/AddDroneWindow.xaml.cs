@@ -30,10 +30,7 @@ namespace PL
             DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
-            txtBattery.IsEnabled = false;
-            cmbStatus.IsEnabled = false;
-            txtLongitude.IsEnabled = false;
-            txtLatitude.IsEnabled = false;
+            grdShowDrone.Visibility = Visibility.Hidden;
             grdUpdating.Visibility = Visibility.Hidden;
         }
         public AddDroneWindow(BlApi.IBL bl, Drone drone)
@@ -46,10 +43,10 @@ namespace PL
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             btnAdd.Visibility = Visibility.Hidden;
-            txtIdDrone.Text = newDrone.Id.ToString();
+            //txtIdDrone.Text = newDrone.Id.ToString();
             txtIdDrone.IsEnabled = false;
-            txtModelDrone.Text = newDrone.ModelDrone;
-            cmbWeightDrone.SelectedValue = newDrone.MaxWeight;
+           // txtModelDrone.Text = newDrone.ModelDrone;
+           // cmbWeightDrone.SelectedValue = newDrone.MaxWeight;
             lblIdStation.Visibility = Visibility.Hidden;
             cmbIdStation.Visibility = Visibility.Hidden;
             cmbIdStation.IsEnabled = false;

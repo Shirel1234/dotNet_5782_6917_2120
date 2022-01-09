@@ -135,8 +135,8 @@ namespace BL
                     Phone = dalCustomer.Phone,
                     Location = new Location(dalCustomer.Longitude, dalCustomer.Latitude),
                     SendParcels = GetSendParcels(id),
-                    TargetParcels = GetTargetParcel(id)
-
+                    TargetParcels = GetTargetParcel(id),
+                    IsWorker= dalCustomer.IsWorker
                 };
             }
             catch (Exception ex)

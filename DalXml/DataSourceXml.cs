@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal
 {
@@ -27,6 +28,7 @@ namespace Dal
         public static void Initialize()
         {
             BaseStation b = new BaseStation();
+            XElement baseStationRoot=new XElement("baseStation", 0, 0, 0,0);
             for (int i = 1; i < 3; i++)
             {
                 b.CodeStation = i;
@@ -35,7 +37,17 @@ namespace Dal
                 b.Latitude = r.NextDouble() + r.Next(34, 37);
                 b.ChargeSlots = r.Next(5, 6);
                 stations.Add(b);
+                XElement id = new XElement("id", i);
+                XElement name = new XElement("name", r.Next(1000, 10000));
+                XElement numOfChargeSlots = new XElement("numOfChargeSlots", r.Next(5, 6));
+                XElement longitude = new XElement("longitude", r.NextDouble() + r.Next(30, 34));
+                XElement latitude = new XElement("latitude", r.NextDouble() + r.Next(34, 37));
+                XElement location = new XElement("location", longitude, latitude);
+                baseStationRoot.Add(new XElement("baseStation", id, name, numOfChargeSlots, location));
+
             }
+            XMLTools.SaveListToXMLElement(baseStationRoot, @"StationsXml.xml");
+
             Drone d = new Drone();
             for (int i = 1; i < 6; i++)
             {
@@ -56,7 +68,7 @@ namespace Dal
                 c.Latitude = r.NextDouble() + r.Next(34, 37);
                 customers.Add(c);
             }
-            XMLTools.SaveListToXMLSerializer(customers, @"CustomerslXml.xml");
+            XMLTools.SaveListToXMLSerializer(customers, @"CustomersXml.xml");
             Parcel p = new Parcel();
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
