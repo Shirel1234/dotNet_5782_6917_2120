@@ -48,7 +48,7 @@
                 <ColumnDefinition Width="22*"/>
                 <ColumnDefinition Width="274*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="lblBattery" Content="Battery:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="78" FontSize="20"/>
+            <!--<Label x:Name="lblBattery" Content="Battery:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="78" FontSize="20"/>
             <Label x:Name="lblStatus" Content="Status:" HorizontalAlignment="Left" Margin="5,46,0,0" VerticalAlignment="Top" Width="100" FontSize="20"/>
             <Label x:Name="lblParcelInWay" Content="Parcel In Way:" HorizontalAlignment="Left" Margin="5,87,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.147,-1.293" Width="135" FontSize="20"/>
             <Label x:Name="lblLocation" Content="Location:" HorizontalAlignment="Left" Margin="5,130,0,0" VerticalAlignment="Top" Width="94" FontSize="20"/>

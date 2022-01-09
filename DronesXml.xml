@@ -30,4 +30,9 @@
     <ModelDrone>num10</ModelDrone>
     <MaxWeight>medium</MaxWeight>
   </Drone>
+  <Drone>
+    <CodeDrone>123</CodeDrone>
+    <ModelDrone>xxx</ModelDrone>
+    <MaxWeight>easy</MaxWeight>
+  </Drone>
 </ArrayOfDrone>
