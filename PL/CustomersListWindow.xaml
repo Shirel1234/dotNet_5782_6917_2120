@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="265*"/>
                 <ColumnDefinition Width="513*"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="lsvCustomers" Margin="0,23,0,-19" Grid.Column="1" MouseDoubleClick="ShowThisCustomer" SelectionChanged="lsvCustomers_SelectionChanged" Grid.ColumnSpan="2">
+            <ListView x:Name="lsvCustomers" Margin="10,28,16,-24" Grid.Column="1" MouseDoubleClick="ShowThisCustomer" SelectionChanged="lsvCustomers_SelectionChanged" Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="70" DisplayMemberBinding="{Binding Id}"/>
@@ -33,7 +33,7 @@
                         <GridViewColumn Header="Number of Delivered Parcels" Width="200" DisplayMemberBinding="{Binding CountDeliveredParcels}"/>
                         <GridViewColumn Header="Number of Not Delivered Parcels" Width="200" DisplayMemberBinding="{Binding CountNotDeliveredParcels}"/>
                         <GridViewColumn Header="Number of Accepted Parcels By Customer" Width="250" DisplayMemberBinding="{Binding CountAcceptedParcelsByCustomer}" />
-                        <GridViewColumn Header="Number of Parcels In Way" Width="200" DisplayMemberBinding="{Binding CountParcelsInWay}" />
+                        <GridViewColumn Header="Number of Parcels In Way" Width="175" DisplayMemberBinding="{Binding CountParcelsInWay}" />
                     </GridView>
                 </ListView.View>
 
@@ -48,7 +48,7 @@
                 </ListView.GroupStyle>
             </ListView>
         </Grid>
-        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="965,480,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddCustomer_Click"/>
+        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="949,478,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddCustomer_Click"/>
         <Label x:Name="lblCustomer" Content="Customers:" HorizontalAlignment="Left" Height="52" Margin="10,27,0,0" VerticalAlignment="Top" Width="239" FontSize="20"/>
     </Grid>
 </Window>

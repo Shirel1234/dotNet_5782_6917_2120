@@ -60,7 +60,7 @@ namespace PL
             {
                 //txtIdCustomer.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 if (txtIdCustomer.Text == "" || txtNameCustomer.Text == "" || txtPhoneCustomer.Text == "" || txtLongitudeCustomer.Text == "" || txtLatitudeCustomer.Text == "")
-                    MessageBox.Show("One or more of the fields are empty. Please complete the missing information.");
+                    MessageBox.Show("One or more of the fields are empty. Please complete the missing information.", "Error");
                 else
                 {
                     bll.AddCustomer(newCustomer);
@@ -80,7 +80,7 @@ namespace PL
             {
                 Customer c = bll.GetCustomer(newCustomer.Id);
                 if(txtNameCustomer.Text == c.Name && txtPhoneCustomer.Text == c.Phone)
-                    MessageBox.Show("No field updated.");
+                    MessageBox.Show("No field updated.", "Error");
                 else
                 {
                     bll.UpdateCustomer(newCustomer.Id, newCustomer.Name, newCustomer.Phone);
@@ -108,6 +108,106 @@ namespace PL
         {
             Parcel p = bll.GetParcel(((ParcelInCustomer)lsvAcceptedParcels.SelectedItem).Id);
             new AddParcelWindow(bll, p).ShowDialog();
+        }
+
+        private void txtIdCustomer_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.integrityInputCheck(e);
+        }
+        private void integrityInputCheck(KeyEventArgs e)
+        {
+            // Allow errows, Back and delete keys:
+            if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Right || e.Key == Key.Left || e.Key == Key.Decimal)
+                return;
+            // Allow only digits:
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (txtNameCustomer.IsFocused)
+                if (char.IsWhiteSpace(c) || char.IsLetter(c))
+                    return;
+                else
+                {
+                    e.Handled = true;
+                    MessageBox.Show("Only letters or spaces alowed!");
+                    return;
+                }
+            if (char.IsDigit(c))
+                if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
+                    return;
+            //for longitude and latitude of location, allow a point to be only once and not in the beginning of the number
+            if (txtLongitudeCustomer.IsFocused || txtLatitudeCustomer.IsFocused)
+                if (txtLongitudeCustomer.IsFocused)
+                {
+                    if (!txtLongitudeCustomer.Text.Contains("."))
+                        if (e.Key == Key.OemPeriod && !(txtLongitudeCustomer.Text.Equals("0") || txtLongitudeCustomer.Text.Equals("")))
+                            return;
+                }
+                else
+                    if (!txtLatitudeCustomer.Text.Contains("."))
+                        if (e.Key == Key.OemPeriod && !(txtLatitudeCustomer.Text.Equals("0") || txtLatitudeCustomer.Text.Equals("")))
+                            return;
+            e.Handled = true;
+            MessageBox.Show("Only digits alowed!");
+        }
+
+        private void txtIdCustomer_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!btnCloseWindow.IsKeyboardFocused)
+                if (!txtIdCustomer.Text.Equals("") && txtIdCustomer.Text.Length < 9)
+                    MessageBox.Show("The id must contain 9 digits", "ERROR");
+        }
+
+        private void txtNameCustomer_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.integrityInputCheck(e);
+        }
+        private void txtPhoneCustomer_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.integrityInputCheck(e);
+        }
+        private void txtLongitudeCustomer_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.integrityInputCheck(e);
+        }
+
+        private void txtLatitudeCustomer_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.integrityInputCheck(e);
+        }
+
+        private void txtLongitudeCustomer_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!btnCloseWindow.IsKeyboardFocused && !txtLongitudeCustomer.Text.Equals(""))
+                if (Convert.ToDouble(txtLongitudeCustomer.Text) < 29.3 || Convert.ToDouble(txtLongitudeCustomer.Text) > 33.7)
+                {
+                    MessageBox.Show("The longitude must be between 29.3 to 33.7", "Error");
+                    txtLongitudeCustomer.Clear();
+                }
+        }
+
+        private void txtLatitudeCustomer_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!btnCloseWindow.IsKeyboardFocused && !txtLatitudeCustomer.Text.Equals(""))
+                if (Convert.ToDouble(txtLatitudeCustomer.Text) < 33.5 || Convert.ToDouble(txtLatitudeCustomer.Text) > 36.3)
+                {
+                    MessageBox.Show("The latitude must be between 33.5 to 36.3", "Error");
+                    txtLatitudeCustomer.Clear();
+                }
+        }
+        /// <summary>
+        /// check if the phone number contains 10 digits and starts with '05'
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtPhoneCustomer_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!btnCloseWindow.IsKeyboardFocused)
+            {
+                if (!txtPhoneCustomer.Text.Equals("") && txtPhoneCustomer.Text.Length < 10)
+                    MessageBox.Show("The phone number must contain 10 digits", "ERROR");
+                else
+                    if (!txtPhoneCustomer.Text.Equals("") && !txtPhoneCustomer.Text.StartsWith("05"))
+                        MessageBox.Show("The phone number must start with '05'", "ERROR");
+            }
         }
     }
 }

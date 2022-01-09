@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ListDrones" Height="640" Width="800">
+        Title="ListDrones" Height="640" Width="950">
     <Grid Margin="0,10,2,36">
         <Grid.RowDefinitions>
             <RowDefinition Height="287*"/>
@@ -29,7 +29,7 @@
                             <GridViewColumn Header="Weight" Width="100" DisplayMemberBinding="{Binding Weight}" />
                             <GridViewColumn Header="Drone Status" Width="100" DisplayMemberBinding="{Binding DroneStatus}"/>
                             <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Battery}"/>
-                            <GridViewColumn Header="Location Now" Width="100" DisplayMemberBinding="{Binding LocationNow}" />
+                            <GridViewColumn Header="Location Now" Width="200" DisplayMemberBinding="{Binding LocationNow}" />
                             <GridViewColumn Header="Parcel In Way" Width="100" DisplayMemberBinding="{Binding ParcelInWay}" />
                     </GridView>
                 </ListView.View>

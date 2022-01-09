@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-
     public struct BaseStation
     {
         public int CodeStation { get; set; }

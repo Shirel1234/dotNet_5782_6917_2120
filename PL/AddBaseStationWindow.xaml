@@ -19,13 +19,13 @@
         <Label x:Name="lblLocationStation" Content="Location:" HorizontalAlignment="Left" Margin="36,143,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblLocationLongitude" Content="Longitude:" HorizontalAlignment="Left" Margin="177,143,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblLocationLatitude" Content="Latitude:" HorizontalAlignment="Left" Margin="177,174,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblAvailableChargeSlotsOfStation" Content="Number of Available Charge Slots:" HorizontalAlignment="Left" Margin="36,217,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAvailableChargeSlotsOfStation" Content="Number of Charge Slots:" HorizontalAlignment="Left" Margin="36,217,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblDronesListOfStation" Content="List of Drones in Charge:" HorizontalAlignment="Left" Margin="37,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.177,0.624"/>
         <TextBox x:Name="txtIdStation" HorizontalAlignment="Left" Margin="245,49,0,0" Text="{Binding Id, Mode=TwoWay, NotifyOnTargetUpdated=True, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtIdStation_PreviewKeyDown"/>
-        <TextBox x:Name="txtNameStation" HorizontalAlignment="Left" Margin="245,91,0,0" Text="{Binding Name, Mode=TwoWay, NotifyOnTargetUpdated=True, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtLongitudeStation" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtLatitudeStation" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtAvailableChargeSlotsOfStation" HorizontalAlignment="Left" Margin="245,221,0,0" Text="{Binding ChargeSlots, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtNameStation" HorizontalAlignment="Left" Margin="245,91,0,0" Text="{Binding Name, Mode=TwoWay, NotifyOnTargetUpdated=True, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtNameStation_PreviewKeyDown"/>
+        <TextBox x:Name="txtLongitudeStation" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLongitudeStation_PreviewKeyDown" LostFocus="txtLongitudeStation_LostFocus"/>
+        <TextBox x:Name="txtLatitudeStation" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLatitudeStation_PreviewKeyDown" LostFocus="txtLatitudeStation_LostFocus"/>
+        <TextBox x:Name="txtAvailableChargeSlotsOfStation" HorizontalAlignment="Left" Margin="245,221,0,0" Text="{Binding ChargeSlots, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtAvailableChargeSlotsOfStation_PreviewKeyDown"/>
         <ListView x:Name="lsvDronesListOfStation" Margin="245,273,185,27" MouseDoubleClick="ShowThisDrone" SelectionChanged="lsvDronesListOfStation_SelectionChanged">
             <ListView.View>
                 <GridView>
@@ -35,9 +35,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btnAddStation"  Content="Add" HorizontalAlignment="Left" Margin="43,335,0,0" VerticalAlignment="Top" Height="46" Width="134" Click="btnAddStation_Click" Background="#FFF3E9E9"/>
+        <Button x:Name="btnAddStation"  Content="Add" HorizontalAlignment="Left" Margin="624,147,0,0" VerticalAlignment="Top" Height="40" Width="134" FontSize="18" Click="btnAddStation_Click" Background="#FFF3E9E9"/>
         <Button x:Name="btnCloseWindow" Content="Close" HorizontalAlignment="Left" Margin="688,10,0,0" VerticalAlignment="Top" Height="26" Width="70" Click="btnClose_Click"/>
-        <Button x:Name="btnUpdateStation" Content="Update Base Station" HorizontalAlignment="Left" Margin="577,73,0,0" VerticalAlignment="Top" Height="39" Width="181" FontSize="18" Click="btnUpdate_Click" Background="#FFF3E9E9"/>
+        <Button x:Name="btnUpdateStation" Content="Update" HorizontalAlignment="Left" Margin="624,73,0,0" VerticalAlignment="Top" Height="39" Width="134" FontSize="18" Click="btnUpdate_Click" Background="#FFF3E9E9"/>
+        <TextBlock x:Name="txtIdComments" HorizontalAlignment="Left" Margin="245,67,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="Collapsed" Foreground="Red"/>
         <!--</Grid>-->
 
     </Grid>

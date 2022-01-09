@@ -7,9 +7,15 @@
         mc:Ignorable="d"
         Title="AddParcelWindow" Height="640" Width="1000">
     <Grid Margin="25,0,-1,16">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF8DB1C8"/>
+                <GradientStop Color="#FF356F93" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Label x:Name="lblIdParcel" Content="Id:" HorizontalAlignment="Left" Height="29" Margin="103,61,0,0" VerticalAlignment="Top" Width="70" FontSize="18"/>
         <TextBox x:Name="txtIdParcel" HorizontalAlignment="Left" Height="29" Margin="145,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="133" FontSize="18" Text="{Binding CodeParcel, Mode=TwoWay}"/>
-        <Label x:Name="lblNameSender" Content="Sender Name:" HorizontalAlignment="Left" Height="38" Margin="11,107,0,0" VerticalAlignment="Top" Width="128" FontSize="18"/>
+        <Label x:Name="lblNameSender" Content="Sender Name:" HorizontalAlignment="Left" Height="38" Margin="10,118,0,0" VerticalAlignment="Top" Width="128" FontSize="18"/>
         <Label x:Name="NameTarget" Content="Target Name:" HorizontalAlignment="Left" Height="38" Margin="7,181,0,0" VerticalAlignment="Top" Width="128" FontSize="18"/>
         <Label x:Name="lblWeight" Content="Weight:" HorizontalAlignment="Left" Height="38" Margin="56,254,0,0" VerticalAlignment="Top" Width="128" FontSize="18"/>
         <Label x:Name="lblPriority" Content="Priority:" HorizontalAlignment="Left" Height="38" Margin="59,303,0,0" VerticalAlignment="Top" Width="128" FontSize="18"/>
@@ -27,15 +33,15 @@
             <Label x:Name="lblShowPriority" Content="{Binding Priority, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" FontSize="18" Height="40"/>
 
         </Grid>
-        <Label Content="Add A New Parcel:" HorizontalAlignment="Left" Height="35" Margin="73,24,0,0" VerticalAlignment="Top" Width="304" FontSize="18"/>
+        <Label x:Name="lblWindowTitle" Content="Add A New Parcel:" HorizontalAlignment="Left" Height="35" Margin="73,24,0,0" VerticalAlignment="Top" Width="304" FontSize="18"/>
         <Grid x:Name="grdForUpdateParcel" HorizontalAlignment="Center" Height="210" Margin="0,414,0,0" VerticalAlignment="Top" Width="986">
             <Label x:Name="lblDroneInParcel" Content="Drone In Parcel:" HorizontalAlignment="Left" Margin="42,111,0,0" VerticalAlignment="Top" FontSize="18" MouseDoubleClick="ShowDrone"/>
             <Label x:Name="lblScheduled" Content="Scheduled:" HorizontalAlignment="Left" Height="40" Margin="232,5,0,0" VerticalAlignment="Top" Width="95" FontSize="14"/>
             <Label x:Name="lblRequested" Content="Requested:" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" FontSize="14" Height="34" Width="94"/>
             <Label x:Name="lblPickedUp" Content="Picked Up:" HorizontalAlignment="Left" Height="41" Margin="472,5,0,0" VerticalAlignment="Top" Width="100" FontSize="14"/>
-            <Label x:Name="lblDelivered" Content="Delivered:" HorizontalAlignment="Left" Height="44" Margin="718,5,0,0" VerticalAlignment="Top" Width="100" FontSize="18"/>
+            <Label x:Name="lblDelivered" Content="Delivered:" HorizontalAlignment="Left" Height="44" Margin="705,2,0,0" VerticalAlignment="Top" Width="100" FontSize="18"/>
             <ListBox x:Name="lsbDroneInParcel" HorizontalAlignment="Left" Height="34" Margin="181,119,0,0" VerticalAlignment="Top" Width="291" FontSize="16" MouseDoubleClick="ShowDrone"/>
-            <TextBox x:Name="txtDeliverd" HorizontalAlignment="Left" Height="26" Margin="829,15,0,0" Text="{Binding Delivered, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" />
+            <TextBox x:Name="txtDeliverd" HorizontalAlignment="Left" Height="26" Margin="810,8,0,0" Text="{Binding Delivered, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" />
             <TextBox x:Name="txtPickedUp" HorizontalAlignment="Left" Height="24" Margin="550,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" Text="{Binding PickedUp, Mode=TwoWay}"/>
             <TextBox x:Name="txtSchedule" HorizontalAlignment="Left" Height="24" Margin="326,10,0,0" Text="{Binding Scheduled, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
             <TextBox x:Name="txtRequest" HorizontalAlignment="Left" Height="34" Margin="87,9,0,0" Text="{Binding Requested, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"/>

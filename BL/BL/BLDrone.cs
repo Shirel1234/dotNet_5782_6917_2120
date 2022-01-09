@@ -23,7 +23,7 @@ namespace BL
             if (tempB.CodeStation != idStation)
                 throw new AddingProblemException("The station doesn't exist");
             d.Battery = rnd.Next(20, 41);
-            d.DroneStatus = (DroneStatuses)1;
+            d.DroneStatus = DroneStatuses.maintenace;
             d.LocationNow = new Location(tempB.Longitude, tempB.Latitude);
             try
             {

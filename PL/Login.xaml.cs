@@ -23,6 +23,7 @@ namespace PL
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void btnPressCustomer_Click(object sender, RoutedEventArgs e)
@@ -34,7 +35,6 @@ namespace PL
         {
             new AddCustomerWindow(bl).ShowDialog();
             btnCustomer.Visibility = Visibility.Visible;
-            btnWorker.Visibility = Visibility.Visible;
             btnNewCustomer.Visibility = Visibility.Hidden;
         }
 
@@ -45,7 +45,7 @@ namespace PL
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             if (txtId.Text.Length < 9)
-                MessageBox.Show("The id is wrong", "ERROR");
+                MessageBox.Show("The id must contain 9 digits", "ERROR");
             else
             {
                 try

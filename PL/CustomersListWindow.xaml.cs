@@ -32,11 +32,13 @@ namespace PL
         {
             Customer c=bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
             new AddCustomerWindow(bll,c).ShowDialog();
+            lsvCustomers.ItemsSource = bll.GetCustomers();
         }
 
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
             new AddCustomerWindow(bll).ShowDialog();
+            lsvCustomers.ItemsSource = bll.GetCustomers();
         }
 
         private void lsvCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
