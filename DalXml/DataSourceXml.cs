@@ -28,7 +28,7 @@ namespace Dal
         public static void Initialize()
         {
             BaseStation b = new BaseStation();
-            XElement baseStationRoot=new XElement("baseStation", 0, 0, 0,0);
+            XElement baseStationRoot=new XElement("Station", 0, 0, 0,0);
             for (int i = 1; i < 3; i++)
             {
                 b.CodeStation = i;
@@ -43,7 +43,7 @@ namespace Dal
                 XElement longitude = new XElement("longitude", r.NextDouble() + r.Next(30, 34));
                 XElement latitude = new XElement("latitude", r.NextDouble() + r.Next(34, 37));
                 XElement location = new XElement("location", longitude, latitude);
-                baseStationRoot.Add(new XElement("baseStation", id, name, numOfChargeSlots, location));
+                baseStationRoot.Add(new XElement("Station", id, name, numOfChargeSlots, location));
 
             }
             XMLTools.SaveListToXMLElement(baseStationRoot, @"StationsXml.xml");

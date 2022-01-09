@@ -44,7 +44,7 @@ namespace Dal
             XElement latitude = new XElement("latitude", b.Latitude);
             XElement location = new XElement("location", longitude, latitude);
 
-            baseStationRoot.Add(new XElement("baseStation", id, name, numOfChargeSlots, location));
+            baseStationRoot.Add(new XElement("Station", id, name, numOfChargeSlots, location));
             XMLTools.SaveListToXMLElement(baseStationRoot, baseStationPath);
         }
         public void AddDrone(Drone drone)
@@ -261,9 +261,7 @@ namespace Dal
         {
             baseStationRoot=XMLTools.LoadListFromXMLElement(baseStationPath);
             IEnumerable<BaseStation> stations;
-            try
-            {
-                stations = (from bs in baseStationRoot.Elements()
+            stations = (from bs in baseStationRoot.Elements()
                             select new BaseStation()
                             {
                                 CodeStation = Convert.ToInt32(bs.Element("id").Value),
@@ -271,13 +269,7 @@ namespace Dal
                                 ChargeSlots = Convert.ToInt32(bs.Element("numOfChargeSlots").Value),
                                 Longitude = Convert.ToDouble(bs.Element("location").Element("longitude").Value),
                                 Latitude = Convert.ToDouble(bs.Element("location").Element("latitude").Value)
-                            }
-                          );
-            }
-            catch
-            {
-                stations = null;
-            }
+                            });
             return stations;
         }
 
@@ -286,7 +278,7 @@ namespace Dal
          {
                 List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
                 var v = from item in parcelList
-                        select item; //item.Clone();
+                        select item; 
                 if (conditionDelegate == null)
                     return v.AsEnumerable().OrderByDescending(p => p.CodeParcel);
                 return v.Where(conditionDelegate).OrderByDescending(p => p.CodeParcel);

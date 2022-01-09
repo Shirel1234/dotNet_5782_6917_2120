@@ -1,2 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<baseStation>0000<baseStation><id>1</id><name>8797</name><numOfChargeSlots>-12</numOfChargeSlots><location><longitude>33.000487557146926</longitude><latitude>36.149194442736544</latitude></location></baseStation><baseStation><id>2</id><name>6032</name><numOfChargeSlots>-67</numOfChargeSlots><location><longitude>32.24029369011535</longitude><latitude>34.03875987047272</latitude></location></baseStation></baseStation>
+<StationXml.xml>
+	<Station>
+		<id>1</id>
+		<name>1234</name>
+		<numOfChargeSlots>85</numOfChargeSlots>
+		<location>
+			<longitude>35.247013370574926</longitude>
+			<latitude>33.17444718371818</latitude>
+		</location>
+	</Station>
+	<Station>
+		<id>2</id>
+		<name>1444</name>
+		<numOfChargeSlots>30</numOfChargeSlots>
+		<location>
+			<longitude>34.247013370574926</longitude>
+			<latitude>32.17444718371818</latitude>
+		</location>
+	</Station>
+	<Station>
+		<id>483113105</id>
+		<latitude>31.668161154197602</latitude>
+		<longitude>34.313288361957895</longitude>
+		<chargeSlots>35</chargeSlots>
+		<name>Eilat</name>
+	</Station>
+	
+</StationXml.xml>
