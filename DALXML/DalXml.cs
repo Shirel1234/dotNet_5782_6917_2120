@@ -103,7 +103,7 @@ namespace Dal
         }
         #endregion
 
-        #region UpDateing
+        #region Updateing
         public void UpDateBaseStation(BaseStation b)
         {
             BaseStation baseStation = GetStation(b.CodeStation);
@@ -191,7 +191,7 @@ namespace Dal
         }
         #endregion
 
-        #region Geting
+        #region Getting
         public BaseStation GetStation(int idS)
         {
             XMLTools.LoadListFromXMLElement(baseStationPath);
