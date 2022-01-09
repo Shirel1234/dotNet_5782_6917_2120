@@ -63,6 +63,8 @@ namespace BL
                     && drone.LocationNow.Longitude == tempB.Longitude
                     && drone.LocationNow.Latitude == tempB.Latitude);
                 tempB.ChargeSlots = numOfChargeSlots - busyChargeSlots;
+                if (tempB.ChargeSlots < 0)
+                    throw new UpdateProblemException("The number of the charge slots is smaller than the number of the busy charge slots in this station.");
             }
             try
             {
