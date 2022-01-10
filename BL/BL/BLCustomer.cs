@@ -75,8 +75,7 @@ namespace BL
         {
             try
             {
-                IEnumerable<ParcelInCustomer> sendParcels = from parcel in dal.GetParcelsByCondition()
-                                                          where parcel.SenderId == id
+                IEnumerable<ParcelInCustomer> sendParcels = from parcel in dal.GetParcelsByCondition( parcel=>parcel.SenderId == id)
                                                           select new ParcelInCustomer
                                                           {
                                                               Id = parcel.CodeParcel,
@@ -101,13 +100,12 @@ namespace BL
         {
             try
             {
-                IEnumerable<ParcelInCustomer> sendParcels = from parcel in dal.GetParcelsByCondition()
-                                                          where parcel.SenderId == id
+                IEnumerable<ParcelInCustomer> sendParcels = from parcel in dal.GetParcelsByCondition( parcel=>parcel.TargetId == id)
                                                           select new ParcelInCustomer
                                                           {
                                                               Id = parcel.CodeParcel,
                                                               Priority = (Priorities)parcel.Priority,
-                                                              SecondSideCustomer = new CustomerInParcel() { Id = parcel.TargetId, Name = dal.GetCustomer(parcel.TargetId).NameCustomer },
+                                                              SecondSideCustomer = new CustomerInParcel() { Id = parcel.SenderId, Name = dal.GetCustomer(parcel.SenderId).NameCustomer },
                                                               Weight = (WeightCategories)parcel.Weight,
                                                               Status = (ParcelStatuses)GetParcelStatus(parcel)
                                                           };

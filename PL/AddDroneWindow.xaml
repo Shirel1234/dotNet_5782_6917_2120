@@ -17,13 +17,7 @@
         <Label x:Name="lblIdDrone" Content="Id:" HorizontalAlignment="Left" Height="54" Margin="30,84,0,0" VerticalAlignment="Top" Width="47" FontSize="20"/>
         <Label x:Name="lblModelDrone" Content="Model of Drone:" HorizontalAlignment="Left" Height="48" Margin="30,156,0,0" VerticalAlignment="Top" Width="210" FontSize="20"/>
         <Label x:Name="lblWeightDrone" Content="Weight:" HorizontalAlignment="Left" Height="39" Margin="30,212,0,0" VerticalAlignment="Top" Width="146" FontSize="20"/>
-        <Label x:Name="lblIdStation" Content="Station For Charging:" HorizontalAlignment="Left" Height="39" Margin="31,482,0,0" VerticalAlignment="Top" Width="255" FontSize="20"/>
-        <Label x:Name="lblBattery" Content="Battery:" HorizontalAlignment="Left" Margin="30,264,0,0" VerticalAlignment="Top" Width="78" FontSize="20"/>
-        <Label x:Name="lblStatus" Content="Status:" HorizontalAlignment="Left" Margin="30,301,0,0" VerticalAlignment="Top" Width="100" FontSize="20"/>
-        <Label x:Name="lblParcelInWay" Content="Parcel In Way:" HorizontalAlignment="Left" Margin="31,345,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.147,-1.293" Width="150" FontSize="20"/>
-        <Label x:Name="lblLocation" Content="Location:" HorizontalAlignment="Left" Margin="30,382,0,0" VerticalAlignment="Top" Width="94" FontSize="20"/>
-        <Label x:Name="lblLongitude" Content="Longitude:" HorizontalAlignment="Left" Margin="118,385,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Label x:Name="lblLatitude" Content="Latitude:" HorizontalAlignment="Left" Margin="118,419,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.31,1.577"/>
+        <Label x:Name="lblIdStation" Content="Station For Charging:" HorizontalAlignment="Left" Height="39" Margin="31,270,0,0" VerticalAlignment="Top" Width="255" FontSize="20"/>
 
         <TextBox x:Name="txtIdDrone" HorizontalAlignment="Left" Height="22" Margin="77,93,0,0" Text="{Binding Id, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" PreviewKeyDown="txtIdDrone_PreviewKeyDown"/>
         <TextBox x:Name="txtModelDrone" HorizontalAlignment="Left" Height="32" Margin="201,164,0,0" Text="{Binding ModelDrone, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" PreviewKeyDown="txtModelDrone_PreviewKeyDown"/>
