@@ -74,7 +74,7 @@
   </Customer>
   <Customer>
     <IdCustomer>827344825</IdCustomer>
-    <NameCustomer>customer10</NameCustomer>
+    <NameCustomer>a</NameCustomer>
     <Phone>050-2168284</Phone>
     <Longitude>33.45591172271218</Longitude>
     <Latitude>35.249803287093435</Latitude>
@@ -87,5 +87,13 @@
     <Longitude>32.1111</Longitude>
     <Latitude>34.555</Latitude>
     <IsWorker>true</IsWorker>
+  </Customer>
+  <Customer>
+    <IdCustomer>111111111</IdCustomer>
+    <NameCustomer>aaa</NameCustomer>
+    <Phone>0509999999</Phone>
+    <Longitude>30</Longitude>
+    <Latitude>34</Latitude>
+    <IsWorker>false</IsWorker>
   </Customer>
 </ArrayOfCustomer>

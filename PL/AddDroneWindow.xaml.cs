@@ -26,7 +26,7 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
-            newDrone = new();
+            //newDrone = new();
             DataContext = newDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
@@ -218,10 +218,12 @@ namespace PL
             e.Handled = true;
             MessageBox.Show("Only digits alowed!");
         }
+
         private void txtIdDrone_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             this.integrityInputCheck(e);
         }
+
         private void txtModelDrone_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             this.integrityInputCheck(e);
@@ -236,6 +238,7 @@ namespace PL
         {
             this.integrityInputCheck(e);
         }
+
         private void txtLongitude_LostFocus(object sender, RoutedEventArgs e)
         {
             if (!btnClose.IsKeyboardFocused && !txtLongitude.Text.Equals(""))

@@ -22,6 +22,8 @@ namespace BL
             DO.BaseStation tempB = dal.GetStation(idStation);
             if (tempB.CodeStation != idStation)
                 throw new AddingProblemException("The station doesn't exist");
+            if (tempB.ChargeSlots <= 0)
+                throw new AddingProblemException("Sorry, there are no charging slots available at the base station you selected.\n Please try another base station.");
             d.Battery = rnd.Next(20, 41);
             d.DroneStatus = DroneStatuses.maintenace;
             d.LocationNow = new Location(tempB.Longitude, tempB.Latitude);

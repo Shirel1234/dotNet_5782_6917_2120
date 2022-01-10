@@ -26,8 +26,8 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
-            newStation = new();
-            newStation.Location = new Location(0, 0);
+            //newStation = new();
+            //newStation.Location = new Location(0, 0);
             DataContext = newStation;
             txtIdStation.Clear();
             //txtNameStation.Clear();
@@ -35,7 +35,6 @@ namespace PL
             //txtLatitudeStation.Clear();
             //txtAvailableChargeSlotsOfStation.Clear();
             btnUpdateStation.Visibility = Visibility.Hidden;
-            newStation.Location = new Location(0, 0);
         }
         public AddBaseStationWindow(BlApi.IBL bl,BaseStationForList bs)
         {

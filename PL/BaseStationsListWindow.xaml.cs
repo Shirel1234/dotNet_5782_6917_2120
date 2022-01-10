@@ -26,7 +26,14 @@ namespace PL
         {
             InitializeComponent();
             bll = bl;
-            lsvStations.ItemsSource = bll.GetBaseStations();
+            try
+            {
+                lsvStations.ItemsSource = bll.GetBaseStations();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
             //DataContext = bll.GetBaseStations();
         }
 

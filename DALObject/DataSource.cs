@@ -33,7 +33,7 @@ namespace Dal
                 b.NameStation = r.Next(1000, 10000);
                 b.Longitude = r.NextDouble() + r.Next(30, 34);
                 b.Latitude = r.NextDouble() + r.Next(34, 37);
-                b.ChargeSlots = r.Next(5, 6);
+                b.ChargeSlots = r.Next(10,13);
                 stations.Add(b);
             }
             Drone d = new Drone();
@@ -51,7 +51,7 @@ namespace Dal
             {
                 c.IdCustomer = r.Next(100000000, 1000000000);
                 c.NameCustomer = "customer" + i;
-                c.Phone = "050-" + r.Next(1000000, 10000000) + "";
+                c.Phone = "050" + r.Next(1000000, 10000000) + "";
                 c.Longitude = r.NextDouble() + r.Next(30, 34);
                 c.Latitude = r.NextDouble() + r.Next(34, 37);
                 customers.Add(c);

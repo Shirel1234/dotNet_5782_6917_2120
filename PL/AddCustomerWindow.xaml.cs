@@ -155,7 +155,10 @@ namespace PL
         {
             if (!btnCloseWindow.IsKeyboardFocused)
                 if (!txtIdCustomer.Text.Equals("") && txtIdCustomer.Text.Length < 9)
+                {
                     MessageBox.Show("The id must contain 9 digits", "ERROR");
+                    txtIdCustomer.Clear();
+                }
         }
 
         private void txtNameCustomer_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -205,10 +208,18 @@ namespace PL
             if (!btnCloseWindow.IsKeyboardFocused)
             {
                 if (!txtPhoneCustomer.Text.Equals("") && txtPhoneCustomer.Text.Length < 10)
+                {
                     MessageBox.Show("The phone number must contain 10 digits", "ERROR");
+                    txtPhoneCustomer.Clear();
+                }
                 else
+                {
                     if (!txtPhoneCustomer.Text.Equals("") && !txtPhoneCustomer.Text.StartsWith("05"))
+                    {
                         MessageBox.Show("The phone number must start with '05'", "ERROR");
+                        txtPhoneCustomer.Clear();
+                    }
+                }
             }
         }
     }
