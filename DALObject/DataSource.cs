@@ -57,6 +57,7 @@ namespace Dal
                 customers.Add(c);
             }
             Parcel p = new Parcel();
+            int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
                 p.CodeParcel = Config.countIdParcel++;
@@ -65,7 +66,6 @@ namespace Dal
                 p.Weight = (WeightCategories)r.Next(0, 3);
                 p.Priority = (Priorities)r.Next(0, 3);
                 p.Requested = DateTime.Now;
-                int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
                 int numDrone = m;
                 var listDrones = from droneMatchW in drones where droneMatchW.MaxWeight >= p.Weight select droneMatchW;
                 var drone = listDrones.FirstOrDefault(d => arrTemp[d.CodeDrone - 1] == 0);

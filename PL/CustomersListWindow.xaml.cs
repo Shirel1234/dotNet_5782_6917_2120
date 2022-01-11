@@ -23,22 +23,43 @@ namespace PL
         BlApi.IBL bll;
         public CustomersListWindow(BlApi.IBL bl)
         {
-            InitializeComponent();
-            bll = bl;
-            lsvCustomers.ItemsSource = bll.GetCustomers();
+            try
+            {
+                InitializeComponent();
+                bll = bl;
+                lsvCustomers.ItemsSource = bll.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void ShowThisCustomer(object sender, MouseButtonEventArgs e)
         {
-            Customer c=bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
-            new AddCustomerWindow(bll,c).ShowDialog();
-            lsvCustomers.ItemsSource = bll.GetCustomers();
+            try
+            {
+                Customer c = bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
+                new AddCustomerWindow(bll, c).ShowDialog();
+                lsvCustomers.ItemsSource = bll.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new AddCustomerWindow(bll, true).ShowDialog();
-            lsvCustomers.ItemsSource = bll.GetCustomers();
+            try
+            {
+                new AddCustomerWindow(bll, true).ShowDialog();
+                lsvCustomers.ItemsSource = bll.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void lsvCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)

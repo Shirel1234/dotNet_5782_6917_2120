@@ -20,14 +20,14 @@
         <Label x:Name="lblLocationStation" Content="Location:" HorizontalAlignment="Left" Margin="36,143,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblLocationLongitude" Content="Longitude:" HorizontalAlignment="Left" Margin="177,143,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblLocationLatitude" Content="Latitude:" HorizontalAlignment="Left" Margin="177,174,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtIdCustomer" HorizontalAlignment="Left" Margin="245,49,0,0" Text="{Binding Path=Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="9" PreviewKeyDown="txtIdCustomer_PreviewKeyDown" LostFocus="txtIdCustomer_LostFocus"/>
+        <TextBox x:Name="txtIdCustomer" HorizontalAlignment="Left" Margin="245,49,0,0" Text="{Binding Path=Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="9" PreviewKeyDown="txtIdCustomer_PreviewKeyDown" LostFocus="txtIdCustomer_LostFocus" PreviewMouseDown="txtIdCustomer_PreviewMouseDown"/>
         <TextBox x:Name="txtNameCustomer" HorizontalAlignment="Left" Margin="245,77,0,0" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtNameCustomer_PreviewKeyDown"/>
         <TextBox x:Name="txtPhoneCustomer" HorizontalAlignment="Left" Margin="245,108,0,0" Text="{Binding Path=Phone, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="10" LostFocus="txtPhoneCustomer_LostFocus" PreviewKeyDown="txtPhoneCustomer_PreviewKeyDown"/>
-        <TextBox x:Name="txtLongitudeCustomer" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Path=Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLongitudeCustomer_PreviewKeyDown" LostFocus="txtLongitudeCustomer_LostFocus"/>
-        <TextBox x:Name="txtLatitudeCustomer" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Path=Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLatitudeCustomer_PreviewKeyDown" LostFocus="txtLatitudeCustomer_LostFocus"/>
+        <TextBox x:Name="txtLongitudeCustomer" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Path=Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLongitudeCustomer_PreviewKeyDown" LostFocus="txtLongitudeCustomer_LostFocus" PreviewMouseDown="txtLongitudeCustomer_PreviewMouseDown"/>
+        <TextBox x:Name="txtLatitudeCustomer" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Path=Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLatitudeCustomer_PreviewKeyDown" LostFocus="txtLatitudeCustomer_LostFocus" PreviewMouseDown="txtLatitudeCustomer_PreviewMouseDown"/>
         <Grid x:Name="grdShowCustomer" Margin="10,217,0,0">
             <Label x:Name="lblAcceptedParcels" Content="List of Parcels The Customer Got:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.177,0.624"/>
-            <Label x:Name="lblSentParcels" Content="List of Parcels The Customer Sent:" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="197"/>
+            <Label x:Name="lblSentParcels" Content="List of Parcels The Customer Sent:" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="197"/>
             <ListView x:Name="lsvSentParcels" Margin="200,10,168,114" MouseDoubleClick="ShowThisParcelFromSent">
                 <ListView.View>
                     <GridView>
@@ -35,28 +35,26 @@
                         <GridViewColumn Header="Weight" Width="60" DisplayMemberBinding="{Binding Weight}" />
                         <GridViewColumn Header="Priority" Width="60" DisplayMemberBinding="{Binding Priority}"/>
                         <GridViewColumn Header="Status" Width="60" DisplayMemberBinding="{Binding Status}"/>
-                        <GridViewColumn Header="The Recieving Customer" Width="130" DisplayMemberBinding="{Binding SecondSideCustomer}"/>
+                        <GridViewColumn Header="The Recieving Customer" Width="200" DisplayMemberBinding="{Binding SecondSideCustomer}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView x:Name="lsvAcceptedParcels" Margin="200,130,168,10" MouseDoubleClick="ShowThisParcelFromAccepted" >
+            <ListView x:Name="lsvAcceptedParcels" Margin="200,109,168,10" MouseDoubleClick="ShowThisParcelFromAccepted" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="ID" Width="60" DisplayMemberBinding="{Binding Id}"/>
                         <GridViewColumn Header="Weight" Width="60" DisplayMemberBinding="{Binding Weight}"/>
                         <GridViewColumn Header="Priority" Width="60" DisplayMemberBinding="{Binding Priority}"/>
                         <GridViewColumn Header="Status" Width="60" DisplayMemberBinding="{Binding Status}"/>
-                        <GridViewColumn Header="The Sending Customer" Width="130" DisplayMemberBinding="{Binding SecondSideCustomer}"/>
+                        <GridViewColumn Header="The Sending Customer" Width="200" DisplayMemberBinding="{Binding SecondSideCustomer}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
         <Button x:Name="btnAddCustomer"  Content="Add" HorizontalAlignment="Left" Margin="450,154,0,0" VerticalAlignment="Top" Height="46" Width="134" Click="btnAddCustomer_Click" Background="#FFF3E9E9"/>
-        <Button x:Name="btnCloseWindow" Content="Close" HorizontalAlignment="Left" Margin="688,0,0,398" Width="70" Click="btnClose_Click" Height="26" VerticalAlignment="Bottom"/>
+        <Button x:Name="btnCloseWindow" Content="Close" HorizontalAlignment="Left" Margin="688,0,0,377" Width="70" Click="btnClose_Click" Height="26" VerticalAlignment="Bottom"/>
         <Button x:Name="btnUpdateCustomer" Content="Update Customer" HorizontalAlignment="Left" Margin="577,73,0,0" VerticalAlignment="Top" Height="39" Width="181" FontSize="18" Click="btnUpdate_Click" Background="#FFF3E9E9"/>
-        <CheckBox x:Name="ckbIsWorker" Content="Is Worker" HorizontalAlignment="Left" Height="31" Margin="450,86,0,0" VerticalAlignment="Top" Width="108" FontSize="18"/>
-
-        <!--</Grid>-->
+        <CheckBox x:Name="ckbIsWorker" Content="Is Worker"  HorizontalAlignment="Left" Height="31" Margin="450,86,0,0" VerticalAlignment="Top" Width="108" FontSize="18" Checked="ckbIsWorker_Checked"/>
 
     </Grid>
 </Window>

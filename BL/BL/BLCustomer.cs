@@ -32,6 +32,7 @@ namespace BL
                     Phone = c.Phone,
                     Longitude = c.Location.Longitude,
                     Latitude = c.Location.Latitude,
+                    IsWorker = c.IsWorker
                 };
                 dal.AddCustomer(doCustomer);
             }
@@ -48,7 +49,7 @@ namespace BL
         /// <param name="id"> id of customer</param>
         /// <param name="name"> name of customer</param>
         /// <param name="phone"> phone of customer</param>
-        public void UpdateCustomer(int id, string name, string phone)
+        public void UpdateCustomer(int id, string name, string phone,bool isWorker)
         {
             if (id < 100000000 || id > 999999999)
                 throw new UpdateProblemException("The customer ID number must contain 9 digits");
@@ -59,6 +60,7 @@ namespace BL
                     tempC.NameCustomer = name;
                 if (!phone.Equals("0"))
                     tempC.Phone = phone;
+                tempC.IsWorker = isWorker;
                 dal.UpDateCustomer(tempC);
             }
             catch (Exception ex)
@@ -75,16 +77,15 @@ namespace BL
         {
             try
             {
-                IEnumerable<ParcelInCustomer> sendParcels = from parcel in dal.GetParcelsByCondition( parcel=>parcel.SenderId == id)
-                                                          select new ParcelInCustomer
-                                                          {
-                                                              Id = parcel.CodeParcel,
-                                                              Priority = (Priorities)parcel.Priority,
-                                                              SecondSideCustomer = new CustomerInParcel() { Id = parcel.TargetId, Name = dal.GetCustomer(parcel.TargetId).NameCustomer },
-                                                              Weight = (WeightCategories)parcel.Weight,
-                                                              Status = (ParcelStatuses)GetParcelStatus(parcel)
-                                                          };
-                return sendParcels;
+                return from parcel in dal.GetParcelsByCondition( parcel=>parcel.SenderId == id)
+                       select new ParcelInCustomer
+                       {
+                           Id = parcel.CodeParcel,
+                           Priority = (Priorities)parcel.Priority,
+                           SecondSideCustomer = new CustomerInParcel() { Id = parcel.TargetId, Name = dal.GetCustomer(parcel.TargetId).NameCustomer },
+                           Weight = (WeightCategories)parcel.Weight,
+                           Status = (ParcelStatuses)GetParcelStatus(parcel)
+                       };
             }
             catch
             {
@@ -100,16 +101,15 @@ namespace BL
         {
             try
             {
-                IEnumerable<ParcelInCustomer> sendParcels = from parcel in dal.GetParcelsByCondition( parcel=>parcel.TargetId == id)
-                                                          select new ParcelInCustomer
-                                                          {
-                                                              Id = parcel.CodeParcel,
-                                                              Priority = (Priorities)parcel.Priority,
-                                                              SecondSideCustomer = new CustomerInParcel() { Id = parcel.SenderId, Name = dal.GetCustomer(parcel.SenderId).NameCustomer },
-                                                              Weight = (WeightCategories)parcel.Weight,
-                                                              Status = (ParcelStatuses)GetParcelStatus(parcel)
-                                                          };
-                return sendParcels;
+                return from parcel in dal.GetParcelsByCondition( parcel=>parcel.TargetId == id)
+                       select new ParcelInCustomer
+                       {
+                           Id = parcel.CodeParcel,
+                           Priority = (Priorities)parcel.Priority,
+                           SecondSideCustomer = new CustomerInParcel() { Id = parcel.SenderId, Name = dal.GetCustomer(parcel.SenderId).NameCustomer },
+                           Weight = (WeightCategories)parcel.Weight,
+                           Status = (ParcelStatuses)GetParcelStatus(parcel)
+                       };
             }
             catch
             {

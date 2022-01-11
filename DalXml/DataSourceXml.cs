@@ -35,11 +35,11 @@ namespace Dal
                 b.NameStation = r.Next(1000, 10000);
                 b.Longitude = r.NextDouble() + r.Next(30, 34);
                 b.Latitude = r.NextDouble() + r.Next(34, 37);
-                b.ChargeSlots = r.Next(5, 6);
+                b.ChargeSlots = r.Next(10,13);
                 stations.Add(b);
                 XElement id = new XElement("id", i);
                 XElement name = new XElement("name", r.Next(1000, 10000));
-                XElement numOfChargeSlots = new XElement("numOfChargeSlots", r.Next(5, 6));
+                XElement numOfChargeSlots = new XElement("numOfChargeSlots", r.Next(10,13));
                 XElement longitude = new XElement("longitude", r.NextDouble() + r.Next(30, 34));
                 XElement latitude = new XElement("latitude", r.NextDouble() + r.Next(34, 37));
                 XElement location = new XElement("location", longitude, latitude);
@@ -69,7 +69,9 @@ namespace Dal
                 customers.Add(c);
             }
             XMLTools.SaveListToXMLSerializer(customers, @"CustomersXml.xml");
+
             Parcel p = new Parcel();
+            int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
                 p.CodeParcel = Config.countIdParcel++;
@@ -78,7 +80,6 @@ namespace Dal
                 p.Weight = (WeightCategories)r.Next(0, 3);
                 p.Priority = (Priorities)r.Next(0, 3);
                 p.Requested = DateTime.Now;
-                int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
                 int numDrone = m;
                 var listDrones = from droneMatchW in drones where droneMatchW.MaxWeight >= p.Weight select droneMatchW;
                 var drone = listDrones.FirstOrDefault(d => arrTemp[d.CodeDrone - 1] == 0);

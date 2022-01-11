@@ -28,7 +28,7 @@ namespace Dal
         private DalXml()
         {
             //In the first time
-            //DataSourceXml.Initialize();
+            DataSourceXml.Initialize();
 
         }
         #region Adding
@@ -282,7 +282,6 @@ namespace Dal
                 if (conditionDelegate == null)
                     return v.AsEnumerable().OrderByDescending(p => p.CodeParcel);
                 return v.Where(conditionDelegate).OrderByDescending(p => p.CodeParcel);
-            
         }
 
         public IEnumerable<Drone> GetDronesByCondition(Func<Drone, bool> conditionDelegate = null)

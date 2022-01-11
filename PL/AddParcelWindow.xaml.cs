@@ -24,54 +24,88 @@ namespace PL
         Parcel newParcel;
         public AddParcelWindow(BlApi.IBL bl)
         {
-            InitializeComponent();
-            bll = bl;
-            newParcel = new();
-            DataContext = newParcel;
-            grdForUpdateParcel.Visibility = Visibility.Hidden;
-            grdCmbAddParcel.Visibility = Visibility.Visible;
-            cmbPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-            cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            cmbSenders.ItemsSource = bll.GetCustomers();
-            cmbTargets.ItemsSource = bll.GetCustomers();
-
+            try
+            {
+                InitializeComponent();
+                bll = bl;
+                newParcel = new();
+                DataContext = newParcel;
+                grdForUpdateParcel.Visibility = Visibility.Hidden;
+                grdCmbAddParcel.Visibility = Visibility.Visible;
+                cmbPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+                cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+                cmbSenders.ItemsSource = bll.GetCustomers();
+                cmbTargets.ItemsSource = bll.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
         public AddParcelWindow(BlApi.IBL bl, Parcel p)
         {
-            InitializeComponent();
-            lblWindowTitle.Content = "Update a Parcel:";
-            bll = bl;
-            //newParcel = new Parcel { CodeParcel = p.Id, SenderCustomer = bll.GetParcels().ToList().Find(parcel => parcel.NameSender == p.NameSender) };
-            newParcel = p;
-            DataContext = newParcel;
-            grdShowParcel.Visibility = Visibility.Visible;
-            if (newParcel.Scheduled == null)
-                btnRemoveParcel.Visibility = Visibility.Visible;
+            try
+            {
+                InitializeComponent();
+                lblWindowTitle.Content = "Update a Parcel:";
+                bll = bl;
+                //newParcel = new Parcel { CodeParcel = p.Id, SenderCustomer = bll.GetParcels().ToList().Find(parcel => parcel.NameSender == p.NameSender) };
+                newParcel = p;
+                DataContext = newParcel;
+                grdShowParcel.Visibility = Visibility.Visible;
+                if (newParcel.Scheduled == null)
+                    btnRemoveParcel.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
         private void ShowDrone(object sender, MouseButtonEventArgs e)
         {
-            Drone d = bll.GetDrone(Convert.ToInt32(lsbDroneInParcel.SelectedItem));
-            new AddDroneWindow(bll, d);
+            try
+            {
+                Drone d = bll.GetDrone(Convert.ToInt32(lsbDroneInParcel.SelectedItem));
+                new AddDroneWindow(bll, d);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void ShowSenderCustomer(object sender, MouseButtonEventArgs e)
         {
-            Customer c = bll.GetCustomer(((CustomerInParcel)cmbSenders.SelectedValue).Id);
-            new AddCustomerWindow(bll, c);
+            try
+            {
+                Customer c = bll.GetCustomer(((CustomerInParcel)cmbSenders.SelectedValue).Id);
+                new AddCustomerWindow(bll, c);
+            }
+             catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void ShowTargetCustomer(object sender, MouseButtonEventArgs e)
         {
-            Customer c = bll.GetCustomer(((CustomerInParcel)cmbTargets.SelectedValue).Id);
-            new AddCustomerWindow(bll, c);
+            try
+            {
+                Customer c = bll.GetCustomer(((CustomerInParcel)cmbTargets.SelectedValue).Id);
+                new AddCustomerWindow(bll, c);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            newParcel.SenderCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbSenders.SelectedItem).Id, Name = ((CustomerForList)cmbSenders.SelectedItem).Name };
-            newParcel.TargetCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbTargets.SelectedItem).Id, Name = ((CustomerForList)cmbTargets.SelectedItem).Name };
+        { 
             try
             {
+                newParcel.SenderCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbSenders.SelectedItem).Id, Name = ((CustomerForList)cmbSenders.SelectedItem).Name };
+                newParcel.TargetCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbTargets.SelectedItem).Id, Name = ((CustomerForList)cmbTargets.SelectedItem).Name };
                 bll.AddParcel(newParcel);
                 MessageBox.Show("The new parcel was successfully added", "Done");
                 this.Close();

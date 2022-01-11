@@ -16,7 +16,7 @@ namespace BlApi
         void AddParcel(Parcel p);
         void UpdateDrone(int id, string model);
         void UpdateBaseStation(int id, int name, int numOfChargeSlots);
-        void UpdateCustomer(int id, string name, string phone);
+        void UpdateCustomer(int id, string name, string phone,bool isWorker);
         void UpdateSendingDroneToCharge(int id);
         void UpdateReleasingDroneFromCharge(int id);
         void UpdateParcelToDrone(int idD);
