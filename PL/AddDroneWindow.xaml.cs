@@ -1,6 +1,8 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +23,15 @@ namespace PL
     public partial class AddDroneWindow : Window
     {
         BlApi.IBL bll;
-        Drone newDrone;
+        Drone myDrone;
+        BackgroundWorker worker;
+        bool Auto;
         public AddDroneWindow(BlApi.IBL bl)
         {
             InitializeComponent();
             bll = bl;
-            newDrone = new();
-            DataContext = newDrone;
+            myDrone = new();
+            DataContext = myDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             grdShowDrone.Visibility = Visibility.Hidden;
@@ -38,36 +42,105 @@ namespace PL
             InitializeComponent();
             lblTitleDrone.Content = "Update Drone:";
             bll = bl;
-            newDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
-            DataContext = newDrone;
+            myDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
+            DataContext = myDrone;
             cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
             cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             btnAdd.Visibility = Visibility.Hidden;
-            //txtIdDrone.Text = newDrone.Id.ToString();
             txtIdDrone.IsEnabled = false;
-           // txtModelDrone.Text = newDrone.ModelDrone;
-           // cmbWeightDrone.SelectedValue = newDrone.MaxWeight;
             lblIdStation.Visibility = Visibility.Hidden;
             cmbIdStation.Visibility = Visibility.Hidden;
             cmbIdStation.IsEnabled = false;
-            if (newDrone.DroneStatus == DroneStatuses.free)
+            if (myDrone.DroneStatus == DroneStatuses.free)
             {
                 btnSendForCharging.Visibility = Visibility.Visible;
                 btnSchedulingForSending.Visibility = Visibility.Visible;
             }
             else
-                if (newDrone.DroneStatus == DroneStatuses.maintenace)
+                if (myDrone.DroneStatus == DroneStatuses.maintenace)
                 btnReleaseDroneCharging.Visibility = Visibility.Visible;
             else
             //in sending
             {
-                if (bl.GetParcel(newDrone.ParcelInWay.Id).PickedUp == null)
+                if (bl.GetParcel(myDrone.ParcelInWay.Id).PickedUp == null)
                     btnPickUpSending.Visibility = Visibility.Visible;
                 else 
                     btnDelivered.Visibility = Visibility.Hidden;
             }
         }
+        //private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    bll.StartSimulator(myDrone.Id, update, stop);
+        //    //Stopwatch stopwatch = new Stopwatch();
+        //    //stopwatch.Start();
+        //    //while (worker.WorkerReportsProgress)
+        //    //{ 
+        //    //// BackgroundWorker worker = sender as BackgroundWorker;
+        //    //int length = (int)e.Argument;
+        //    //    //the drone is free
+        //    //    if (newDrone.DroneStatus == DroneStatuses.free)
+        //    //    {
+        //    //        //the drone send to charging
+        //    //        if (newDrone.Battery <= 0)
+        //    //        { 
+        //    //            bll.UpdateSendingDroneToCharge(newDrone.Id);
+        //    //             for (int i = 1; i <= length; i++)
+        //    //              {
+        //    //                 if (worker.CancellationPending == true)
+        //    //                {
+        //    //                e.Cancel = true;
+        //    //                e.Result = stopwatch.ElapsedMilliseconds; // Unnecessary
+        //    //                break;
+        //    //                 }
+        //    //                 else
+        //    //                  {
+        //    //                {
+
+        //    //                    // Perform a time consuming operation and report progress.
+        //    //                    System.Threading.Thread.Sleep(500);
+        //    //                    worker.ReportProgress(i * 100 / length);
+        //    //                }
+        //    //            }
+        //    //        }
+
+        //    //    e.Result = stopwatch.ElapsedMilliseconds;
+        //    //}
+        //}
+        //private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        //{
+        //    int progress = e.ProgressPercentage;
+        //    resultLabel.Content = (progress + "%");
+        //   // resultProgressBar.Value = progress;
+        //}
+        //private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    if (e.Cancelled == true)
+        //    {
+        //        // e.Result throw System.InvalidOperationException
+        //        resultLabel.Content = "Canceled!";
+        //    }
+        //    else if (e.Error != null)
+        //    {
+        //        // e.Result throw System.Reflection.TargetInvocationException
+        //        resultLabel.Content = "Error: " + e.Error.Message; //Exception Message
+        //    }
+        //    else
+        //    {
+        //        long result = (long)e.Result;
+        //        if (result < 1000)
+        //            resultLabel.Content = "Done after " + result + " ms.";
+        //        else
+        //            resultLabel.Content = "Done after " + result / 1000 + " sec.";
+        //    }
+        //}
+        /// <summary>
+        /// the function update the drone view by ReportProgress
+        /// </summary>
+        private void updateDroneView() => worker.ReportProgress(0);
+
+        private bool IsStop() { return worker.CancellationPending; }
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -77,7 +150,7 @@ namespace PL
                 else
                 {
                     BaseStationForList b = (BaseStationForList)cmbIdStation.SelectedItem;
-                    bll.AddDrone(newDrone, b.Id);
+                    bll.AddDrone(myDrone, b.Id);
                     MessageBox.Show("The new Drone was successfully added", "Done");
                     this.Close();
                 }
@@ -101,7 +174,7 @@ namespace PL
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {
-                    bll.UpdateDrone(newDrone.Id, newDrone.ModelDrone);
+                    bll.UpdateDrone(myDrone.Id, myDrone.ModelDrone);
                     MessageBox.Show("The new Drone was successfully updated", "Done");
                     this.Close();
                 }
@@ -254,6 +327,30 @@ namespace PL
                     MessageBox.Show("The latitude must be between 33.5 to 36.3", "Error");
                     txtLatitude.Clear();
                 }
+        }
+
+        private void btnSimulator_Click(object sender, RoutedEventArgs e)
+        {
+            Auto = true;
+            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
+            worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, updateDroneView, IsStop);
+            worker.ProgressChanged += (sender, args) => updateDroneView();
+            worker.RunWorkerCompleted += (sender, args) => Auto = false;
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.RunWorkerAsync(myDrone.Id);
+            //if (worker.IsBusy != true)
+            //    // Start the asynchronous operation. 
+            //    worker.RunWorkerAsync(12);
+
+        }
+
+        private void btnStopSimulator_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (worker.WorkerSupportsCancellation == true)
+                // Cancel the asynchronous operation.
+                worker.CancelAsync();
         }
     }
 }

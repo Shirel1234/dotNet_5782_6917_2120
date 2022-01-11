@@ -23,8 +23,8 @@ namespace BL
         /*public static*/ double medium;
         /*public static*/ double heavy;
         /*public static*/ double chargingRate;
-
-        #region
+        #endregion
+        #region BoDrones
         public static Random rnd = new Random();
         
         List<DroneForList> BODrones = new List<DroneForList>();
@@ -52,6 +52,8 @@ namespace BL
                                                   };
             BODrones = tempBoDrones.ToList();
         }
+        #endregion
+        #region Updating
         /// <summary>
         /// the function finds the details of this drone and sending it to charge in the closer base station
         /// </summary>
@@ -61,7 +63,7 @@ namespace BL
             DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
-            if (droneList.DroneStatus == DroneStatuses.free)
+            if (droneList.DroneStatus == DroneStatuses.free|| droneList.DroneStatus == DroneStatuses.maintenace)
             {
                 DO.BaseStation closeStation = GetCloserBaseStation(droneList.LocationNow);
                 double minDistance = GetDistance(new Location(closeStation.Longitude, closeStation.Latitude), droneList.LocationNow);
@@ -96,7 +98,13 @@ namespace BL
             {
                 //update drone
                 BODrones.Remove(droneList);
-                droneList.Battery = Convert.ToDouble(dal.GetDroneCharge(id).BeginingCharge-DateTime.Now) * chargingRate;
+                TimeSpan timeCharge = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(id).BeginingCharge);
+                double battery = Convert.ToDouble(timeCharge.Seconds) * chargingRate;
+                if (battery > 100)
+                    droneList.Battery = 100;
+                else
+                    droneList.Battery = battery;
+
                 droneList.DroneStatus = DroneStatuses.free;
                 BODrones.Add(droneList);
                 //update station
@@ -223,8 +231,13 @@ namespace BL
             }
         }
         #endregion
+        #region Simulator
+        public void StartSimulator(int id, Action updateDelegate, Func<bool> stopDelegate)
+        {
+            new Simulator(id, updateDelegate, stopDelegate, this);
+        }
+        #endregion
     }
 }
-        #endregion
     
     

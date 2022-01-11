@@ -54,18 +54,18 @@ namespace BL
         {
             double minDistance = 10000000;
             DO.BaseStation closeStation = new DO.BaseStation();
-            foreach (var item in dal.GetStationsByCondition().ToList())
+            foreach (var (item, distance) in from item in dal.GetStationsByCondition().ToList()
+                                             let distance = GetDistance(new Location(item.Longitude, item.Latitude), l)
+                                             where minDistance > distance && item.ChargeSlots>0
+                                             select (item, distance))
             {
-                double distance = GetDistance(new Location(item.Longitude, item.Latitude), l);
-                if (minDistance > distance)
-                {
-                    minDistance = distance;
-                    closeStation = item;
-                }
+                minDistance = distance;
+                closeStation = item;
             }
+
             return closeStation;
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -94,6 +94,21 @@ namespace BL
         private DroneForList GetUpdatedDetailDrone(DO.Drone d)
         {
             DroneForList newDroneList = new DroneForList();
+            DO.DroneCharge droneCharge = dal.GetDronesChargeByCondition().FirstOrDefault(dc=>dc.DroneID==d.CodeDrone);
+            if (droneCharge.DroneID!=0)
+            {
+                newDroneList.DroneStatus = DroneStatuses.maintenace;
+                DO.BaseStation baseStation = dal.GetStation(droneCharge.StationID);
+                newDroneList.LocationNow =new Location(baseStation.Longitude, baseStation.Latitude);
+                TimeSpan dateTimeCharge = (TimeSpan)(DateTime.Now - droneCharge.BeginingCharge);
+                double battery = Convert.ToDouble(dateTimeCharge.Seconds * chargingRate);
+                if (battery > 100)
+                    newDroneList.Battery = 100;
+                else
+                    newDroneList.Battery = battery;
+
+                return newDroneList;
+            }
             try
             {
                 DO.Parcel defaultP = default;
@@ -136,7 +151,9 @@ namespace BL
                         DO.BaseStation randomBaseStation = arrBaseStation[r.Next(0, 2)];
                         newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
                         randomBaseStation.ChargeSlots--;
+                        dal.AddDroneCharge(d.CodeDrone, randomBaseStation.CodeStation, DateTime.Now );
                         dal.UpDateBaseStation(randomBaseStation);
+                        
                     }
                     //the drone is free
                     else

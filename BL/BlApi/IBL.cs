@@ -35,5 +35,7 @@ namespace BlApi
         IEnumerable<DroneForList> GetDronesByStatus(int num);
         IEnumerable<DroneForList> GetDronesByWeight(int num);
         void RemoveParcel(int id);
+        void StartSimulator(int id, Action updateDelegate, Func<bool> stopDelegate);
+
     }
 }
