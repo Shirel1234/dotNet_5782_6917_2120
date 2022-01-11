@@ -29,6 +29,8 @@ namespace DalApi
         IEnumerable<Parcel> GetParcelsByCondition(Func<Parcel, bool> conditionDelegate = null);
         IEnumerable<Drone> GetDronesByCondition(Func<Drone, bool> conditionDelegate = null);
         IEnumerable<Customer> GetCustomersByCondition(Func<Customer, bool> conditionDelegate = null);
+        IEnumerable<DroneCharge> GetDronesChargeByCondition(Func<DroneCharge, bool> conditionDelegate = null);
+
         double[] AskElectrical();
         void RemoveParcel(int id);
     }

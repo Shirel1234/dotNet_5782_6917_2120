@@ -28,7 +28,8 @@ namespace Dal
         private DalXml()
         {
             //In the first time
-            DataSourceXml.Initialize();
+            //DataSourceXml.Initialize();
+            baseStationRoot = XMLTools.LoadListFromXMLElement(baseStationPath);
 
         }
         #region Adding
@@ -302,6 +303,15 @@ namespace Dal
             if (conditionDelegate == null)
                 return v.AsEnumerable().OrderByDescending(c => c.IdCustomer);
             return v.Where(conditionDelegate).OrderByDescending(c => c.IdCustomer);
+        }
+        public IEnumerable<DroneCharge> GetDronesChargeByCondition(Func<DroneCharge, bool> conditionDelegate = null)
+        {
+            List<DroneCharge> droneChargeList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesChargePath);
+            var v = from item in droneChargeList
+                    select item; //item.Clone();
+            if (conditionDelegate == null)
+                return v.AsEnumerable().OrderByDescending(dc => dc.DroneID);
+            return v.Where(conditionDelegate).OrderByDescending(dc => dc.DroneID);
         }
         #endregion
         public double[] AskElectrical()

@@ -28,25 +28,26 @@ namespace Dal
         public static void Initialize()
         {
             BaseStation b = new BaseStation();
-            XElement baseStationRoot=new XElement("Station", 0, 0, 0,0);
+            //XElement baseStationRoot = new XElement("Station", 0, 0, 0, 0);
+            XElement baseStationRoot = XMLTools.LoadListFromXMLElement(@"StationsXml.xml");
             for (int i = 1; i < 3; i++)
             {
                 b.CodeStation = i;
                 b.NameStation = r.Next(1000, 10000);
                 b.Longitude = r.NextDouble() + r.Next(30, 34);
                 b.Latitude = r.NextDouble() + r.Next(34, 37);
-                b.ChargeSlots = r.Next(10,13);
+                b.ChargeSlots = r.Next(10, 50);
                 stations.Add(b);
                 XElement id = new XElement("id", i);
-                XElement name = new XElement("name", r.Next(1000, 10000));
-                XElement numOfChargeSlots = new XElement("numOfChargeSlots", r.Next(10,13));
-                XElement longitude = new XElement("longitude", r.NextDouble() + r.Next(30, 34));
-                XElement latitude = new XElement("latitude", r.NextDouble() + r.Next(34, 37));
+                XElement name = new XElement("name", b.NameStation);
+                XElement numOfChargeSlots = new XElement("numOfChargeSlots", b.ChargeSlots);
+                XElement longitude = new XElement("longitude", b.Longitude);
+                XElement latitude = new XElement("latitude", b.Latitude);
                 XElement location = new XElement("location", longitude, latitude);
                 baseStationRoot.Add(new XElement("Station", id, name, numOfChargeSlots, location));
+                XMLTools.SaveListToXMLElement(baseStationRoot, @"StationsXml.xml");
 
             }
-            XMLTools.SaveListToXMLElement(baseStationRoot, @"StationsXml.xml");
 
             Drone d = new Drone();
             for (int i = 1; i < 6; i++)
@@ -57,6 +58,8 @@ namespace Dal
                 drones.Add(d);
             }
             XMLTools.SaveListToXMLSerializer(drones, @"DronesXml.xml");
+            dronesCharge.Add(new DroneCharge() { DroneID = 1, StationID = 1111, BeginingCharge = DateTime.Now });
+            XMLTools.SaveListToXMLSerializer(dronesCharge, @"DronesChargeXml.xml");
 
             Customer c = new Customer();
             for (int i = 1; i < 11; i++)

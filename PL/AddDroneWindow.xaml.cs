@@ -1,6 +1,8 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,9 @@ namespace PL
     public partial class AddDroneWindow : Window
     {
         BlApi.IBL bll;
-        Drone newDrone;
+        Drone myDrone;
+        BackgroundWorker worker;
+        bool Auto;
         public AddDroneWindow(BlApi.IBL bl)
         {
             try
@@ -93,7 +97,7 @@ namespace PL
                 else
                 {
                     BaseStationForList b = (BaseStationForList)cmbIdStation.SelectedItem;
-                    bll.AddDrone(newDrone, b.Id);
+                    bll.AddDrone(myDrone, b.Id);
                     MessageBox.Show("The new Drone was successfully added", "Done");
                     this.Close();
                 }
@@ -117,7 +121,7 @@ namespace PL
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {
-                    bll.UpdateDrone(newDrone.Id, newDrone.ModelDrone);
+                    bll.UpdateDrone(myDrone.Id, myDrone.ModelDrone);
                     MessageBox.Show("The new Drone was successfully updated", "Done");
                     this.Close();
                 }
@@ -284,19 +288,36 @@ namespace PL
 
         private void txtLatitude_LostFocus(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (!btnClose.IsKeyboardFocused && !txtLatitude.Text.Equals(""))
-                    if (Convert.ToDouble(txtLatitude.Text) < 33.5 || Convert.ToDouble(txtLatitude.Text) > 36.3)
-                    {
-                        MessageBox.Show("The latitude must be between 33.5 to 36.3", "Error");
-                        txtLatitude.Clear();
-                    }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error");
-            }
+            if (!btnClose.IsKeyboardFocused && !txtLatitude.Text.Equals(""))
+                if (Convert.ToDouble(txtLatitude.Text) < 33.5 || Convert.ToDouble(txtLatitude.Text) > 36.3)
+                {
+                    MessageBox.Show("The latitude must be between 33.5 to 36.3", "Error");
+                    txtLatitude.Clear();
+                }
+        }
+
+        private void btnSimulator_Click(object sender, RoutedEventArgs e)
+        {
+            Auto = true;
+            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
+            worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, updateDroneView, IsStop);
+            worker.ProgressChanged += (sender, args) => updateDroneView();
+            worker.RunWorkerCompleted += (sender, args) => Auto = false;
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.RunWorkerAsync(myDrone.Id);
+            //if (worker.IsBusy != true)
+            //    // Start the asynchronous operation. 
+            //    worker.RunWorkerAsync(12);
+
+        }
+
+        private void btnStopSimulator_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (worker.WorkerSupportsCancellation == true)
+                // Cancel the asynchronous operation.
+                worker.CancelAsync();
         }
     }
 }

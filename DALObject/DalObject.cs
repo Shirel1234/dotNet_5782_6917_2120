@@ -107,5 +107,15 @@ namespace Dal
             arrElectrical[4] = DataSource.Config.ChargingRate;
             return arrElectrical;
         }
+        public IEnumerable<DroneCharge> GetDronesChargeByCondition(Func<DroneCharge, bool> conditionDelegate = null)
+        {
+            if (conditionDelegate == null)
+                return DataSource.dronesCharge;
+            else
+            {
+                List<DroneCharge> listDronesChargeByCondition = DataSource.dronesCharge.FindAll(droneCharge => conditionDelegate(droneCharge));
+                return listDronesChargeByCondition;
+            }
+        }
     }
 }
