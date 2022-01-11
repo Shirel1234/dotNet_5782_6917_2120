@@ -56,7 +56,7 @@ namespace BL
             DO.BaseStation tempB = dal.GetStation(id);
             if (name != 0)
                 tempB.NameStation = name;
-            if (numOfChargeSlots != 0)
+            if (numOfChargeSlots >= 0)
             {
                 int busyChargeSlots = BODrones.Count
                     (drone => drone.DroneStatus == DroneStatuses.maintenace
@@ -64,7 +64,7 @@ namespace BL
                     && drone.LocationNow.Latitude == tempB.Latitude);
                 tempB.ChargeSlots = numOfChargeSlots - busyChargeSlots;
                 if (tempB.ChargeSlots < 0)
-                    throw new UpdateProblemException("The number of the charge slots is smaller than the number of the busy charge slots in this station.");
+                    throw new UpdateProblemException("ERROR. The number of the charge slots you entered is smaller than the number of the busy charge slots in this station.\nIt's impossible.");
             }
             try
             {
@@ -135,7 +135,7 @@ namespace BL
         {
             return from station in dal.GetStationsByCondition().ToList()
                    where station.ChargeSlots > 0
-                   let busyChargingPositions = BODrones.Count
+                   let busyChargingSlots = BODrones.Count
                                      (drone => drone.DroneStatus == DroneStatuses.maintenace
                                      && drone.LocationNow.Longitude == station.Longitude
                                      && drone.LocationNow.Latitude == station.Latitude)
@@ -144,7 +144,7 @@ namespace BL
                        Id = station.CodeStation,
                        Name = station.NameStation,
                        ChargeSlotsFree = station.ChargeSlots,
-                       ChargeSlotsCatch = station.ChargeSlots - busyChargingPositions
+                       ChargeSlotsCatch = busyChargingSlots
                    };
 
         }

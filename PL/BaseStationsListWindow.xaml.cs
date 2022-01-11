@@ -21,50 +21,90 @@ namespace PL
     public partial class BaseStationsListWindow : Window
     {
         BlApi.IBL bll;
-       
+        #region constructor
         public BaseStationsListWindow(BlApi.IBL bl)
         {
-            InitializeComponent();
-            bll = bl;
-            lsvStations.ItemsSource = bll.GetBaseStations();
-            //DataContext = bll.GetBaseStations();
+            try
+            {
+                InitializeComponent();
+                bll = bl;
+                lsvStations.ItemsSource = bll.GetBaseStations();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
-
+        #endregion
+        #region buttons and clicks events
         private void btnAddBaseStation_Click(object sender, RoutedEventArgs e)
         {
-            new AddBaseStationWindow(bll).ShowDialog();
-            lsvStations.ItemsSource = bll.GetBaseStations();
-            rdbByAvailableChargingSlots.IsChecked = false;
+            try
+            {
+                new AddBaseStationWindow(bll).ShowDialog();
+                lsvStations.ItemsSource = bll.GetBaseStations();
+                rdbByAvailableChargingSlots.IsChecked = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void GroupingByAvailableChargingSlots(object sender, RoutedEventArgs e)
         {
-            //DataContext= bll.GetParcels();
-            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DataContext);
-
-            lsvStations.ItemsSource = bll.GetBaseStations();
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvStations.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("ChargeSlotsFree");
-            view.GroupDescriptions.Add(groupDescription);
+            try
+            {
+                lsvStations.ItemsSource = bll.GetBaseStations();
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvStations.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("ChargeSlotsFree");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void ShowThisStation(object sender, MouseButtonEventArgs e)
         {
-            new AddBaseStationWindow(bll,(BaseStationForList)lsvStations.SelectedItem).ShowDialog();
-            lsvStations.ItemsSource = bll.GetBaseStations();
-            rdbByAvailableChargingSlots.IsChecked = false;
+            try
+            {
+                new AddBaseStationWindow(bll, (BaseStationForList)lsvStations.SelectedItem).ShowDialog();
+                lsvStations.ItemsSource = bll.GetBaseStations();
+                rdbByAvailableChargingSlots.IsChecked = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void btnShowStatinsWithChargeSlots_Click(object sender, RoutedEventArgs e)
         {
-            lsvStations.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
-            rdbByAvailableChargingSlots.IsChecked = false;
+            try
+            {
+                lsvStations.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
+                rdbByAvailableChargingSlots.IsChecked = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            lsvStations.ItemsSource = bll.GetBaseStations();
-            rdbByAvailableChargingSlots.IsChecked = false;
+            try
+            {
+                lsvStations.ItemsSource = bll.GetBaseStations();
+                rdbByAvailableChargingSlots.IsChecked = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
+        #endregion
     }
 }

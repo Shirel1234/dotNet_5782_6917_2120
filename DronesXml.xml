@@ -3,7 +3,7 @@
   <Drone>
     <CodeDrone>1</CodeDrone>
     <ModelDrone>model no.1</ModelDrone>
-    <MaxWeight>easy</MaxWeight>
+    <MaxWeight>medium</MaxWeight>
   </Drone>
   <Drone>
     <CodeDrone>2</CodeDrone>

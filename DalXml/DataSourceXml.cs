@@ -72,6 +72,7 @@ namespace Dal
                 customers.Add(c);
             }
             XMLTools.SaveListToXMLSerializer(customers, @"CustomersXml.xml");
+
             Parcel p = new Parcel();
             int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)

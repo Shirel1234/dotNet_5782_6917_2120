@@ -29,8 +29,8 @@
                             <GridViewColumn Header="Weight" Width="100" DisplayMemberBinding="{Binding Weight}" />
                             <GridViewColumn Header="Drone Status" Width="100" DisplayMemberBinding="{Binding DroneStatus}"/>
                             <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Battery}"/>
-                            <GridViewColumn Header="Location Now" Width="200" DisplayMemberBinding="{Binding LocationNow}" />
-                            <GridViewColumn Header="Parcel In Way" Width="100" DisplayMemberBinding="{Binding ParcelInWay}" />
+                            <GridViewColumn Header="Location Now" Width="300" DisplayMemberBinding="{Binding LocationNow}" />
+                            <GridViewColumn Header="Parcel In Way" Width="80" DisplayMemberBinding="{Binding ParcelInWay}" />
                     </GridView>
                 </ListView.View>
 

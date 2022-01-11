@@ -16,15 +16,13 @@ namespace BL
         public static IBL Instance { get => instance; }
 
         internal IDal dal = DalFactory.GetDal();
-        //public static IDAL.DO.IDal dl;
-        //BL() { }
-        /*public static*/ double free;
-        /*public static*/ double easy;
-        /*public static*/ double medium;
-        /*public static*/ double heavy;
-        /*public static*/ double chargingRate;
-        #endregion
-        #region BoDrones
+        double free;
+        double easy;
+        double medium;
+        double heavy;
+        double chargingRate;
+
+        #region
         public static Random rnd = new Random();
         
         List<DroneForList> BODrones = new List<DroneForList>();

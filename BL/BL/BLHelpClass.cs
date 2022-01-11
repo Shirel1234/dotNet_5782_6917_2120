@@ -148,7 +148,11 @@ namespace BL
                         //random a base station
                         // int countStations = dl.GetStationsByCondition().ToList().Count();
                         DO.BaseStation[] arrBaseStation = dal.GetStationsByCondition().ToArray();
-                        DO.BaseStation randomBaseStation = arrBaseStation[r.Next(0, 2)];
+                        int randomNumOfStationForCharge = r.Next(0, 2);
+                        DO.BaseStation randomBaseStation = arrBaseStation[randomNumOfStationForCharge];
+                        //check if the station which was randomed has available charge slots. If not, the other station must have.
+                        if (randomBaseStation.ChargeSlots <= 0)
+                            randomBaseStation = arrBaseStation[1 - randomNumOfStationForCharge];
                         newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
                         randomBaseStation.ChargeSlots--;
                         dal.AddDroneCharge(d.CodeDrone, randomBaseStation.CodeStation, DateTime.Now );

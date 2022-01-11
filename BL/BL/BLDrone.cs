@@ -22,6 +22,8 @@ namespace BL
             DO.BaseStation tempB = dal.GetStation(idStation);
             if (tempB.CodeStation != idStation)
                 throw new AddingProblemException("The station doesn't exist");
+            if (tempB.ChargeSlots <= 0)
+                throw new AddingProblemException("Sorry, there are no charging slots available at the base station you selected.\n Please try another base station.");
             d.Battery = rnd.Next(20, 41);
             d.DroneStatus = DroneStatuses.maintenace;
             d.LocationNow = new Location(tempB.Longitude, tempB.Latitude);
@@ -37,24 +39,23 @@ namespace BL
                 tempB.ChargeSlots--;
                 dal.UpDateBaseStation(tempB);
                 dal.AddDroneCharge(d.Id, idStation,DateTime.Now);
+                //add this drone to the bo drones
+                BODrones.Add(new DroneForList()
+                {
+                    Id = d.Id,
+                    ModelDrone=d.ModelDrone,
+                    Weight=d.MaxWeight,
+                    Battery=d.Battery,
+                    DroneStatus=d.DroneStatus,
+                    LocationNow=d.LocationNow,
+                    ParcelInWay=d.ParcelInWay.Id
+                }) ;
             }
 
             catch (Exception ex)
             {
                 throw new AddingProblemException(ex.Message, ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
             }
-            //add this drone to the bo drones
-            DroneForList boDrone = new DroneForList()
-            {
-                Id = d.Id,
-                ModelDrone = d.ModelDrone,
-                Weight = d.MaxWeight,
-                DroneStatus = d.DroneStatus,
-                Battery = d.Battery,
-                LocationNow = d.LocationNow,
-                ParcelInWay = 0
-            };
-            BODrones.Add(boDrone);
         }
         /// <summary>
         /// the funcrion gets new details of drone, checks them and throw matching errors
@@ -71,15 +72,16 @@ namespace BL
                 DO.Drone tempD = dal.GetDrone(id);
                 tempD.ModelDrone = model;
                 dal.UpDateDrone(tempD);
+                //update this drone in the bo drones
+                DroneForList boDrone = BODrones.Find(drone => drone.Id == id);
+                BODrones.Remove(boDrone);
+                boDrone.ModelDrone = model;
+                BODrones.Add(boDrone);
             }
             catch (Exception ex)
             {
                 throw new UpdateProblemException(ex.Message, ex);
             }
-            DroneForList boDrone = BODrones.Find(drone => drone.Id == id);
-            BODrones.Remove(boDrone);
-            boDrone.ModelDrone = model;
-            BODrones.Add(boDrone);
         }
         /// <summary>
         /// the function brings from the list of drones in bl and create new dron by this information

@@ -42,6 +42,7 @@ namespace Dal
             myCustomer.Phone = c.Phone;
             myCustomer.Longitude = c.Longitude;
             myCustomer.Latitude = c.Latitude;
+            myCustomer.IsWorker = c.IsWorker;
             DataSource.customers.Remove(c);
             DataSource.customers.Add(myCustomer);
         }

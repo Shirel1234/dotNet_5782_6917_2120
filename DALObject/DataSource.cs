@@ -33,7 +33,7 @@ namespace Dal
                 b.NameStation = r.Next(1000, 10000);
                 b.Longitude = r.NextDouble() + r.Next(30, 34);
                 b.Latitude = r.NextDouble() + r.Next(34, 37);
-                b.ChargeSlots = r.Next(5, 6);
+                b.ChargeSlots = r.Next(10,13);
                 stations.Add(b);
             }
             Drone d = new Drone();
@@ -51,12 +51,13 @@ namespace Dal
             {
                 c.IdCustomer = r.Next(100000000, 1000000000);
                 c.NameCustomer = "customer" + i;
-                c.Phone = "050-" + r.Next(1000000, 10000000) + "";
+                c.Phone = "050" + r.Next(1000000, 10000000) + "";
                 c.Longitude = r.NextDouble() + r.Next(30, 34);
                 c.Latitude = r.NextDouble() + r.Next(34, 37);
                 customers.Add(c);
             }
             Parcel p = new Parcel();
+            int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
                 p.CodeParcel = Config.countIdParcel++;
@@ -65,7 +66,6 @@ namespace Dal
                 p.Weight = (WeightCategories)r.Next(0, 3);
                 p.Priority = (Priorities)r.Next(0, 3);
                 p.Requested = DateTime.Now;
-                int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
                 int numDrone = m;
                 var listDrones = from droneMatchW in drones where droneMatchW.MaxWeight >= p.Weight select droneMatchW;
                 var drone = listDrones.FirstOrDefault(d => arrTemp[d.CodeDrone - 1] == 0);
