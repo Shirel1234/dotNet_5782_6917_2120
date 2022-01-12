@@ -21,17 +21,20 @@ namespace PL
     public partial class AddParcelWindow : Window
     {
         BlApi.IBL bll;
-        Parcel newParcel;
+        Parcel myParcel;
         public AddParcelWindow(BlApi.IBL bl)
         {
             try
             {
                 InitializeComponent();
                 bll = bl;
-                newParcel = new();
-                DataContext = newParcel;
+                myParcel = new();
+                DataContext = myParcel;
                 grdForUpdateParcel.Visibility = Visibility.Hidden;
-                grdCmbAddParcel.Visibility = Visibility.Visible;
+                grdShowParcel.Visibility = Visibility.Hidden;
+                lblIdParcel.Visibility = Visibility.Hidden;
+                txtIdParcel.Visibility = Visibility.Hidden;
+                //btnRemoveParcel.Visibility = Visibility.Hidden;
                 cmbPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
                 cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 cmbSenders.ItemsSource = bll.GetCustomers();
@@ -49,11 +52,14 @@ namespace PL
                 InitializeComponent();
                 lblWindowTitle.Content = "Update a Parcel:";
                 bll = bl;
-                //newParcel = new Parcel { CodeParcel = p.Id, SenderCustomer = bll.GetParcels().ToList().Find(parcel => parcel.NameSender == p.NameSender) };
-                newParcel = p;
-                DataContext = newParcel;
+                myParcel = p;
+                DataContext = myParcel;
                 grdShowParcel.Visibility = Visibility.Visible;
-                if (newParcel.Scheduled == null)
+                grdCmbAddParcel.Visibility = Visibility.Hidden;
+                cmbPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+                cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+                btnAdd.Visibility = Visibility.Hidden;
+                if (myParcel.Scheduled < DateTime.Now)
                     btnRemoveParcel.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
@@ -65,8 +71,11 @@ namespace PL
         {
             try
             {
-                Drone d = bll.GetDrone(Convert.ToInt32(lsbDroneInParcel.SelectedItem));
-                new AddDroneWindow(bll, d);
+                if(myParcel.DroneInParcel.Id!=0)
+                {
+                    Drone d = bll.GetDrone(myParcel.DroneInParcel.Id);
+                    new AddDroneWindow(bll, d).ShowDialog();
+                }
             }
             catch (Exception ex)
             {
@@ -78,8 +87,8 @@ namespace PL
         {
             try
             {
-                Customer c = bll.GetCustomer(((CustomerInParcel)cmbSenders.SelectedValue).Id);
-                new AddCustomerWindow(bll, c);
+                Customer c = bll.GetCustomer(((CustomerInParcel)lblShowSender.Content).Id);
+                new AddCustomerWindow(bll, c).ShowDialog();
             }
              catch (Exception ex)
             {
@@ -91,8 +100,8 @@ namespace PL
         {
             try
             {
-                Customer c = bll.GetCustomer(((CustomerInParcel)cmbTargets.SelectedValue).Id);
-                new AddCustomerWindow(bll, c);
+                Customer c = bll.GetCustomer(((CustomerInParcel)lblShowTarget.Content).Id);
+                new AddCustomerWindow(bll, c).ShowDialog();
             }
             catch (Exception ex)
             {
@@ -104,11 +113,17 @@ namespace PL
         { 
             try
             {
-                newParcel.SenderCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbSenders.SelectedItem).Id, Name = ((CustomerForList)cmbSenders.SelectedItem).Name };
-                newParcel.TargetCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbTargets.SelectedItem).Id, Name = ((CustomerForList)cmbTargets.SelectedItem).Name };
-                bll.AddParcel(newParcel);
-                MessageBox.Show("The new parcel was successfully added", "Done");
-                this.Close();
+                if(cmbSenders.SelectedIndex==-1 || cmbTargets.SelectedIndex==-1)
+                     MessageBox.Show("One or more of the details are empty. Please complete the missing information.", "ERROR");
+                else
+                {
+                    myParcel.SenderCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbSenders.SelectedItem).Id, Name = ((CustomerForList)cmbSenders.SelectedItem).Name };
+                    myParcel.TargetCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbTargets.SelectedItem).Id, Name = ((CustomerForList)cmbTargets.SelectedItem).Name };
+                    bll.AddParcel(myParcel);
+                    MessageBox.Show("The new parcel was successfully added", "Done");
+                    this.Close();
+                }
+                
             }
             catch(Exception ex)
             {
@@ -120,12 +135,19 @@ namespace PL
         {
             try
             {
-                bll.RemoveParcel(newParcel.CodeParcel);
+                bll.RemoveParcel(myParcel.CodeParcel);
+                MessageBox.Show("The parcel was successfully removed", "Done");
+                this.Close();
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
+        }
+
+        private void lsbDroneInParcel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

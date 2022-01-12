@@ -18,4 +18,22 @@
       <latitude>36.19098672465933</latitude>
     </location>
   </Station>
+  <Station>
+    <id>3</id>
+    <name>333</name>
+    <numOfChargeSlots>18</numOfChargeSlots>
+    <location>
+      <longitude>33.586</longitude>
+      <latitude>36.1</latitude>
+    </location>
+  </Station>
+  <Station>
+    <id>4</id>
+    <name>444</name>
+    <numOfChargeSlots>0</numOfChargeSlots>
+    <location>
+      <longitude>32.874</longitude>
+      <latitude>35.744</latitude>
+    </location>
+  </Station>
 </StationsXml.xml>

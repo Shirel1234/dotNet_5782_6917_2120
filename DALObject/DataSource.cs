@@ -17,7 +17,7 @@ namespace Dal
         internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
         internal class Config
         {
-            internal static int countIdParcel = 200;
+            internal static int countIdParcel = 100010;
             internal static double Free { get => 0.01; }
             internal static double Easy { get => 0.011; }
             internal static double Medium { get => 0.012; }
@@ -60,7 +60,7 @@ namespace Dal
             int[] arrTemp = new int[5] { 0, 0, 0, 0, 0 };
             for (int i = 0, j = 9, m = 0; i < 10; i++, j--, m++)
             {
-                p.CodeParcel = Config.countIdParcel++;
+                p.CodeParcel = 100000 + i;
                 p.SenderId = customers[i].IdCustomer;
                 p.TargetId = customers[j].IdCustomer;
                 p.Weight = (WeightCategories)r.Next(0, 3);

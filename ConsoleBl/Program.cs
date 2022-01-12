@@ -1,16 +1,4 @@
-﻿//using System;
-
-//namespace ConsoleBl
-//{
-//    class Program
-//    {
-//        static void Main(string[] args)
-//        {
-//            Console.WriteLine("Hello World!");
-//        }
-//    }
-//}
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -277,7 +265,7 @@ namespace ConsoleBl
                 {
                     string newName = Console.ReadLine();
                     string newPhone = Console.ReadLine();
-                    bl.UpdateCustomer(idC, newName, newPhone);
+                    bl.UpdateCustomer(idC, newName, newPhone,true);
                 }
             }
             catch (Exception ex)

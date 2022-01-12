@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="ListParcels" Height="640" Width="800">
     <Grid Margin="0,10,2,36">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF8DB1C8"/>
+                <GradientStop Color="#FF356F93" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="16*"/>
@@ -52,7 +58,6 @@
             <Label x:Name="lblSort" Content="Sorting:" HorizontalAlignment="Left" Height="38" Margin="0,-7,0,0" VerticalAlignment="Top" Width="87" FontSize="18"/>
             <Label Content="Status Parcel:" HorizontalAlignment="Left" Height="27" Margin="10,31,0,0" VerticalAlignment="Top" Width="89"/>
             <ComboBox x:Name="cmbStatuses" HorizontalAlignment="Left" Height="27" Margin="87,31,0,0" VerticalAlignment="Top" Width="109" SelectionChanged="cmbStatuses_SelectionChanged"/>
-            <Label Content="Label" HorizontalAlignment="Left" Height="35" Margin="214,27,0,0" VerticalAlignment="Top" Width="79"/>
             <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="298,4,0,0" VerticalAlignment="Top" Height="27" Width="52" Click="btbRefresh_Click"/>
         </Grid>
         <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="43" Margin="356,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddParcel_Click" Grid.Column="1"/>

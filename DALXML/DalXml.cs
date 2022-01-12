@@ -240,7 +240,8 @@ namespace Dal
 
         public Parcel GetParcel(int id)
         {
-            List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            List<Parcel> parcelList = GetParcelsByCondition().ToList();
+            //List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
             int index = parcelList.FindIndex(p => p.CodeParcel == id);
             if (index == -1)
                 throw new DoesntExistException("This parcel does not exist");

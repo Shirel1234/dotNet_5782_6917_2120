@@ -100,7 +100,7 @@ namespace PL
         {
             try
             {
-                if (txtIdDrone.Text == "0" || txtIdDrone.Text == "" || txtModelDrone.Text == "0" || txtModelDrone.Text == "" || cmbWeightDrone.Text == "" || cmbIdStation.Text == "")
+                if (txtIdDrone.Text == "" || txtModelDrone.Text == "" || cmbWeightDrone.Text == "" || cmbIdStation.Text == "")
                     MessageBox.Show("One or more of the fields are empty. Please complete the missing information.", "Error");
                 else
                 {
@@ -125,7 +125,8 @@ namespace PL
         {
             try
             {
-                if (txtModelDrone.Text == "0" || txtModelDrone.Text == "")
+                Drone d = bll.GetDrone(myDrone.Id);
+                if (txtModelDrone.Text == Convert.ToString(d.ModelDrone))
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {
@@ -209,8 +210,11 @@ namespace PL
         {
             try
             {
-                Parcel p = bll.GetParcel(((ParcelInCustomer)lsbParcelInWay.SelectedItem).Id);
-                new AddParcelWindow(bll, p).ShowDialog();
+                if (!lsbParcelInWay.Items.IsEmpty)
+                {
+                    Parcel p = bll.GetParcel(((ParcelInCustomer)lsbParcelInWay.SelectedItem).Id);
+                    new AddParcelWindow(bll, p).ShowDialog();
+                }
             }
             catch (Exception ex)
             {
@@ -336,6 +340,10 @@ namespace PL
                 worker.CancelAsync();
         }
 
-        
+        private void txtIdDrone_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (txtIdDrone.Text == "0")
+                txtIdDrone.Clear();
+        }
     }
 }

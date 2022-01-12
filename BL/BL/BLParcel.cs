@@ -61,12 +61,20 @@ namespace BL
             try
             {
                 DO.Parcel dalParcel = dal.GetParcel(id);
+                DroneForList d= BODrones.Find(drone => drone.Id == dalParcel.DroneId);
+                DroneInParcel droneInParcel = new DroneInParcel();
+                if (d != null)
+                {
+                    droneInParcel.Id = dalParcel.DroneId;
+                    droneInParcel.Battery = d.Battery;
+                    droneInParcel.LocationNow = d.LocationNow;
+                }
                 return new Parcel()
                 {
                     CodeParcel = dalParcel.CodeParcel,
                     SenderCustomer = new CustomerInParcel() { Id = dalParcel.SenderId, Name = dal.GetCustomer(dalParcel.SenderId).NameCustomer },
                     TargetCustomer = new CustomerInParcel() { Id = dalParcel.TargetId, Name = dal.GetCustomer(dalParcel.TargetId).NameCustomer },
-                    DroneInParcel = new DroneInParcel() { Id = dalParcel.DroneId, Battery = BODrones.Find(drone => drone.Id == dalParcel.DroneId).Battery, LocationNow = BODrones.Find(drone => drone.Id == dalParcel.DroneId).LocationNow },
+                    DroneInParcel = droneInParcel,
                     Weight = (WeightCategories)dalParcel.Weight,
                     Priority = (Priorities)dalParcel.Priority,
                     Delivered = dalParcel.Delivered,

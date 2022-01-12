@@ -26,7 +26,7 @@
   </Customer>
   <Customer>
     <IdCustomer>940245339</IdCustomer>
-    <NameCustomer>customer4</NameCustomer>
+    <NameCustomer>aaa</NameCustomer>
     <Phone>050-5063459</Phone>
     <Longitude>32.81894131834569</Longitude>
     <Latitude>36.99847686197538</Latitude>
@@ -78,6 +78,22 @@
     <Phone>050-4796634</Phone>
     <Longitude>32.42717724918722</Longitude>
     <Latitude>36.93551886637486</Latitude>
+    <IsWorker>false</IsWorker>
+  </Customer>
+  <Customer>
+    <IdCustomer>315842120</IdCustomer>
+    <NameCustomer>yisca</NameCustomer>
+    <Phone>0527117307</Phone>
+    <Longitude>31</Longitude>
+    <Latitude>34</Latitude>
+    <IsWorker>true</IsWorker>
+  </Customer>
+  <Customer>
+    <IdCustomer>111111111</IdCustomer>
+    <NameCustomer>Moshe</NameCustomer>
+    <Phone>0501111111</Phone>
+    <Longitude>31</Longitude>
+    <Latitude>34</Latitude>
     <IsWorker>false</IsWorker>
   </Customer>
 </ArrayOfCustomer>

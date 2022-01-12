@@ -21,6 +21,7 @@ namespace PL
     public partial class CustomersListWindow : Window
     {
         BlApi.IBL bll;
+        #region constructor
         public CustomersListWindow(BlApi.IBL bl)
         {
             try
@@ -34,13 +35,17 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        #endregion
+        #region buttons and clicks events
         private void ShowThisCustomer(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                Customer c = bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
-                new AddCustomerWindow(bll, c).ShowDialog();
+                if(!lsvCustomers.Items.IsEmpty)
+                {
+                    Customer c = bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
+                    new AddCustomerWindow(bll, c).ShowDialog();
+                }
                 lsvCustomers.ItemsSource = bll.GetCustomers();
             }
             catch (Exception ex)
@@ -61,6 +66,6 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        #endregion
     }
 }

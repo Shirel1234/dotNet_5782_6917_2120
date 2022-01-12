@@ -14,7 +14,7 @@ namespace BL
         #region singleton
         static readonly IBL instance = new BL();
         public static IBL Instance { get => instance; }
-
+        #endregion
         internal IDal dal = DalFactory.GetDal();
         double free;
         double easy;
@@ -238,7 +238,7 @@ namespace BL
             new Simulator(id, updateDelegate, stopDelegate, this);
         }
         #endregion
+
     }
-}
-    
-    
+}    
+
