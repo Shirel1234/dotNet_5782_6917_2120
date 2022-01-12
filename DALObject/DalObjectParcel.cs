@@ -25,7 +25,7 @@ namespace Dal
         public void AddParcel(Parcel p)
         {
             if (CheckParcel(p.CodeParcel))
-                throw new AlreadyExistException("The bus already exist in the system");
+                throw new AlreadyExistException("The parcel already exists in the system");
             DataSource.parcels.Add(p);
         }
         public void UpDateParcel(Parcel p)

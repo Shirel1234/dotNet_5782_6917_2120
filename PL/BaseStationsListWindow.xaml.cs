@@ -37,20 +37,35 @@ namespace PL
         }
         #endregion
         #region buttons and clicks events
+        /// <summary>
+        /// open the window of adding base station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddBaseStation_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 new AddBaseStationWindow(bll).ShowDialog();
-                lsvStations.ItemsSource = bll.GetBaseStations();
-                rdbByAvailableChargingSlots.IsChecked = false;
+                //when you back to this window, check which viewing to show
+                if (rdbByAvailableChargingSlots.IsChecked == true)
+                    this.GroupingByAvailableChargingSlots(sender, e);
+                else
+                    if (lsvStations.ItemsSource == bll.GetAllBaseStationsWithChargePositions())
+                        lsvStations.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
+                    else
+                        lsvStations.ItemsSource = bll.GetBaseStations();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        /// <summary>
+        /// view of the list with grouping by number of available charging slots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GroupingByAvailableChargingSlots(object sender, RoutedEventArgs e)
         {
             try
@@ -65,21 +80,37 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        /// <summary>
+        /// enable to open the station window from the stations list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowThisStation(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                new AddBaseStationWindow(bll, (BaseStationForList)lsvStations.SelectedItem).ShowDialog();
-                lsvStations.ItemsSource = bll.GetBaseStations();
-                rdbByAvailableChargingSlots.IsChecked = false;
+                //only if there are items in the list
+                if(!lsvStations.Items.IsEmpty)
+                    new AddBaseStationWindow(bll, (BaseStationForList)lsvStations.SelectedItem).ShowDialog();
+                //when you back to this window, show the updated last view
+                if (rdbByAvailableChargingSlots.IsChecked == true)
+                    this.GroupingByAvailableChargingSlots(sender, e);
+                else
+                    if (lsvStations.ItemsSource == bll.GetAllBaseStationsWithChargePositions())
+                         lsvStations.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
+                    else
+                         lsvStations.ItemsSource = bll.GetBaseStations();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        /// <summary>
+        /// view of the list of stations with available charging slots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnShowStatinsWithChargeSlots_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -92,7 +123,11 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        /// <summary>
+        /// refresh the view of the list to be the original
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             try

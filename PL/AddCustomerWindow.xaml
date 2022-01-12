@@ -26,8 +26,8 @@
         <TextBox x:Name="txtLongitudeCustomer" HorizontalAlignment="Left" Margin="245,147,0,0" Text="{Binding Path=Location.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLongitudeCustomer_PreviewKeyDown" LostFocus="txtLongitudeCustomer_LostFocus" PreviewMouseDown="txtLongitudeCustomer_PreviewMouseDown"/>
         <TextBox x:Name="txtLatitudeCustomer" HorizontalAlignment="Left" Margin="245,182,0,0" Text="{Binding Path=Location.Latitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewKeyDown="txtLatitudeCustomer_PreviewKeyDown" LostFocus="txtLatitudeCustomer_LostFocus" PreviewMouseDown="txtLatitudeCustomer_PreviewMouseDown"/>
         <Grid x:Name="grdShowCustomer" Margin="10,217,0,0">
-            <Label x:Name="lblAcceptedParcels" Content="List of Parcels The Customer Got:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.177,0.624"/>
-            <Label x:Name="lblSentParcels" Content="List of Parcels The Customer Sent:" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="197"/>
+            <Label x:Name="lblAcceptedParcels" Content="List of Parcels The Customer Sent:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.177,0.624"/>
+            <Label x:Name="lblSentParcels" Content="List of Parcels The Customer Got:" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="197"/>
             <ListView x:Name="lsvSentParcels" Margin="200,10,168,114" MouseDoubleClick="ShowThisParcelFromSent">
                 <ListView.View>
                     <GridView>

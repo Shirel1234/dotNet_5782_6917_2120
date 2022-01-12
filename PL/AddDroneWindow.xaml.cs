@@ -34,8 +34,8 @@ namespace PL
             {
                 InitializeComponent();
                 bll = bl;
-                newDrone = new();
-                DataContext = newDrone;
+                myDrone = new();
+                DataContext = myDrone;
                 cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
                 grdShowDrone.Visibility = Visibility.Hidden;
@@ -53,8 +53,8 @@ namespace PL
                 InitializeComponent();
                 lblTitleDrone.Content = "Update Drone:";
                 bll = bl;
-                newDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
-                DataContext = newDrone;
+                myDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
+                DataContext = myDrone;
                 cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
                 cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
@@ -66,18 +66,18 @@ namespace PL
                 lblIdStation.Visibility = Visibility.Hidden;
                 cmbIdStation.Visibility = Visibility.Hidden;
                 cmbIdStation.IsEnabled = false;
-                if (newDrone.DroneStatus == DroneStatuses.free)
+                if (myDrone.DroneStatus == DroneStatuses.free)
                 {
                     btnSendForCharging.Visibility = Visibility.Visible;
                     btnSchedulingForSending.Visibility = Visibility.Visible;
                 }
                 else
-                    if (newDrone.DroneStatus == DroneStatuses.maintenace)
+                    if (myDrone.DroneStatus == DroneStatuses.maintenace)
                     btnReleaseDroneCharging.Visibility = Visibility.Visible;
                 else
                 //in sending
                 {
-                    if (bl.GetParcel(newDrone.ParcelInWay.Id).PickedUp == null)
+                    if (bl.GetParcel(myDrone.ParcelInWay.Id).PickedUp == null)
                         btnPickUpSending.Visibility = Visibility.Visible;
                     else
                         btnDelivered.Visibility = Visibility.Hidden;
@@ -92,7 +92,7 @@ namespace PL
         {
             try
             {
-                if (txtIdDrone.Text == "0" || txtIdDrone.Text == "" || txtModelDrone.Text == "0" || txtModelDrone.Text == "" || cmbWeightDrone.Text == "" || cmbIdStation.Text == "")
+                if (txtIdDrone.Text == "" || txtModelDrone.Text == "" || cmbWeightDrone.Text == "" || cmbIdStation.Text == "")
                     MessageBox.Show("One or more of the fields are empty. Please complete the missing information.", "Error");
                 else
                 {
@@ -117,7 +117,8 @@ namespace PL
         {
             try
             {
-                if (txtModelDrone.Text == "0" || txtModelDrone.Text == "")
+                Drone d = bll.GetDrone(myDrone.Id);
+                if (txtModelDrone.Text == Convert.ToString(d.ModelDrone))
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {
@@ -201,8 +202,11 @@ namespace PL
         {
             try
             {
-                Parcel p = bll.GetParcel(((ParcelInCustomer)lsbParcelInWay.SelectedItem).Id);
-                new AddParcelWindow(bll, p).ShowDialog();
+                if (!lsbParcelInWay.Items.IsEmpty)
+                {
+                    Parcel p = bll.GetParcel(((ParcelInCustomer)lsbParcelInWay.SelectedItem).Id);
+                    new AddParcelWindow(bll, p).ShowDialog();
+                }
             }
             catch (Exception ex)
             {
@@ -298,14 +302,14 @@ namespace PL
 
         private void btnSimulator_Click(object sender, RoutedEventArgs e)
         {
-            Auto = true;
-            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
-            worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, updateDroneView, IsStop);
-            worker.ProgressChanged += (sender, args) => updateDroneView();
-            worker.RunWorkerCompleted += (sender, args) => Auto = false;
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.RunWorkerAsync(myDrone.Id);
+            //Auto = true;
+            //worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
+            //worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, updateDroneView, IsStop);
+            //worker.ProgressChanged += (sender, args) => updateDroneView();
+            //worker.RunWorkerCompleted += (sender, args) => Auto = false;
+            //worker.WorkerReportsProgress = true;
+            //worker.WorkerSupportsCancellation = true;
+            //worker.RunWorkerAsync(myDrone.Id);
             //if (worker.IsBusy != true)
             //    // Start the asynchronous operation. 
             //    worker.RunWorkerAsync(12);
@@ -318,6 +322,12 @@ namespace PL
             if (worker.WorkerSupportsCancellation == true)
                 // Cancel the asynchronous operation.
                 worker.CancelAsync();
+        }
+
+        private void txtIdDrone_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (txtIdDrone.Text == "0")
+                txtIdDrone.Clear();
         }
     }
 }

@@ -126,7 +126,7 @@ namespace PL
             try
             {
                 ///only if there are drones in the list
-                if(newStation.ListDroneCharge.Count() != 0)
+                if(!lsvDronesListOfStation.Items.IsEmpty)
                 {
                     Drone d = bll.GetDrone(((DroneInCharge)lsvDronesListOfStation.SelectedItem).Id);
                     new AddDroneWindow(bll, d).ShowDialog();

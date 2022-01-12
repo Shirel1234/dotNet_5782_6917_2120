@@ -121,8 +121,11 @@ namespace PL
         {
             try
             {
-                Parcel p = bll.GetParcel(((ParcelInCustomer)lsvSentParcels.SelectedItem).Id);
-                new AddParcelWindow(bll, p).ShowDialog();
+                if(!lsvSentParcels.Items.IsEmpty)
+                {
+                    Parcel p = bll.GetParcel(((ParcelInCustomer)lsvSentParcels.SelectedItem).Id);
+                    new AddParcelWindow(bll, p).ShowDialog();
+                } 
             }
             catch (Exception ex)
             {
@@ -133,8 +136,11 @@ namespace PL
         {
             try
             {
-                Parcel p = bll.GetParcel(((ParcelInCustomer)lsvAcceptedParcels.SelectedItem).Id);
-                new AddParcelWindow(bll, p).ShowDialog();
+                if(!lsvAcceptedParcels.Items.IsEmpty)
+                {
+                    Parcel p = bll.GetParcel(((ParcelInCustomer)lsvAcceptedParcels.SelectedItem).Id);
+                    new AddParcelWindow(bll, p).ShowDialog();
+                }
             }
             catch (Exception ex)
             {

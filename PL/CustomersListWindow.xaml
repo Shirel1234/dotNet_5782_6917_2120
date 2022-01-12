@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="265*"/>
                 <ColumnDefinition Width="513*"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="lsvCustomers" Margin="10,28,16,-24" Grid.Column="1" MouseDoubleClick="ShowThisCustomer" SelectionChanged="lsvCustomers_SelectionChanged" Grid.ColumnSpan="2">
+            <ListView x:Name="lsvCustomers" Margin="10,28,16,-24" Grid.Column="1" MouseDoubleClick="ShowThisCustomer" Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="70" DisplayMemberBinding="{Binding Id}"/>
