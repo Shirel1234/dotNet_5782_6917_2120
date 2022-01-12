@@ -62,9 +62,5 @@ namespace PL
             }
         }
 
-        private void lsvCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

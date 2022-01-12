@@ -6,38 +6,18 @@
     <BeginingCharge>2022-01-11T14:04:14.1398758+02:00</BeginingCharge>
   </DroneCharge>
   <DroneCharge>
-    <DroneID>3</DroneID>
-    <StationID>2</StationID>
-    <BeginingCharge>2022-01-11T14:04:31.1173638+02:00</BeginingCharge>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneID>2</DroneID>
-    <StationID>1</StationID>
-    <BeginingCharge>2022-01-11T14:04:31.1290491+02:00</BeginingCharge>
-  </DroneCharge>
-  <DroneCharge>
     <DroneID>5</DroneID>
     <StationID>1</StationID>
     <BeginingCharge>2022-01-11T14:47:31.9209581+02:00</BeginingCharge>
   </DroneCharge>
   <DroneCharge>
+    <DroneID>2</DroneID>
+    <StationID>2</StationID>
+    <BeginingCharge>2022-01-12T15:04:03.8061502+02:00</BeginingCharge>
+  </DroneCharge>
+  <DroneCharge>
     <DroneID>3</DroneID>
-    <StationID>2</StationID>
-    <BeginingCharge>2022-01-11T15:51:45.413446+02:00</BeginingCharge>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneID>4</DroneID>
-    <StationID>2</StationID>
-    <BeginingCharge>2022-01-11T15:54:32.7749177+02:00</BeginingCharge>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneID>4</DroneID>
-    <StationID>2</StationID>
-    <BeginingCharge>2022-01-11T15:54:32.7978265+02:00</BeginingCharge>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneID>4</DroneID>
-    <StationID>2</StationID>
-    <BeginingCharge>2022-01-11T15:54:32.8144224+02:00</BeginingCharge>
+    <StationID>1</StationID>
+    <BeginingCharge>2022-01-12T17:43:59.6996182+02:00</BeginingCharge>
   </DroneCharge>
 </ArrayOfDroneCharge>
