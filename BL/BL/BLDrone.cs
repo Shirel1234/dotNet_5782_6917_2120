@@ -63,19 +63,19 @@ namespace BL
         /// </summary>
         /// <param name="id">id of drone</param>
         /// <param name="model"> model of drone</param>
-        public void UpdateDrone(int id, string model)
+        public void UpdateDrone(Drone myDrone)
         {
-            if (id < 0)
+            if (myDrone.Id < 0)
                 throw new UpdateProblemException("The ID number must be a positive number");
             try
             {
-                DO.Drone tempD = dal.GetDrone(id);
-                tempD.ModelDrone = model;
+                DO.Drone tempD = dal.GetDrone(myDrone.Id);
+                tempD.ModelDrone = myDrone.ModelDrone;
                 dal.UpDateDrone(tempD);
                 //update this drone in the bo drones
-                DroneForList boDrone = BODrones.Find(drone => drone.Id == id);
+                DroneForList boDrone = BODrones.Find(drone => drone.Id == myDrone.Id);
                 BODrones.Remove(boDrone);
-                boDrone.ModelDrone = model;
+                boDrone.ModelDrone = myDrone.ModelDrone;
                 BODrones.Add(boDrone);
             }
             catch (Exception ex)

@@ -14,12 +14,12 @@ namespace BlApi
         void AddDrone(Drone d, int idStation);
         void AddCustomer(Customer c);
         void AddParcel(Parcel p);
-        void UpdateDrone(int id, string model);
+        void UpdateDrone(Drone d);
         void UpdateBaseStation(int id, int name, int numOfChargeSlots);
         void UpdateCustomer(int id, string name, string phone,bool isWorker);
         void UpdateSendingDroneToCharge(int id);
         void UpdateReleasingDroneFromCharge(int id);
-        void UpdateParcelToDrone(int idD);
+        bool UpdateParcelToDrone(int idD);
         void UpdateParcelPickedUpByDrone(int idD);
         void UpdateDeliveredParcelByDrone(int idD);
         BaseStation GetBaseStation(int idS);

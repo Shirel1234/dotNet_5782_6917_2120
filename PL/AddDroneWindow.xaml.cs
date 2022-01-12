@@ -55,21 +55,29 @@ namespace PL
                 bll = bl;
                 myDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
                 DataContext = myDrone;
-                cmbWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-                cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
-                cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-                btnAdd.Visibility = Visibility.Hidden;
+                //cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
+                //cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
                 //txtIdDrone.Text = newDrone.Id.ToString();
-                txtIdDrone.IsEnabled = false;
                 // txtModelDrone.Text = newDrone.ModelDrone;
                 // cmbWeightDrone.SelectedValue = newDrone.MaxWeight;
+                cmbWeightDrone.Visibility = Visibility.Hidden;
+                txtStatus.Visibility = Visibility.Visible;
+                btnAdd.Visibility = Visibility.Hidden;
                 lblIdStation.Visibility = Visibility.Hidden;
                 cmbIdStation.Visibility = Visibility.Hidden;
-                cmbIdStation.IsEnabled = false;
+
+                txtStatus.IsEnabled = false;
+                txtIdDrone.IsEnabled = false;
+                txtLatitude.IsEnabled = false;
+                txtLongitude.IsEnabled = false;
+                txtBattery.IsEnabled = false;
+                lsbParcelInWay.IsEnabled = false;
+
                 if (myDrone.DroneStatus == DroneStatuses.free)
                 {
                     btnSendForCharging.Visibility = Visibility.Visible;
                     btnSchedulingForSending.Visibility = Visibility.Visible;
+
                 }
                 else
                     if (myDrone.DroneStatus == DroneStatuses.maintenace)
@@ -122,7 +130,7 @@ namespace PL
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {
-                    bll.UpdateDrone(myDrone.Id, myDrone.ModelDrone);
+                    bll.UpdateDrone(myDrone);
                     MessageBox.Show("The new Drone was successfully updated", "Done");
                     this.Close();
                 }
@@ -218,10 +226,10 @@ namespace PL
             // Allow errows, Back and delete keys:
             if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Right || e.Key == Key.Left || e.Key == Key.Decimal
                 || e.Key == Key.CapsLock || e.Key == Key.NumLock || e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
-                e.Key == Key.LeftShift || e.Key == Key.RightShift || e.Key == Key.NumPad0|| e.Key == Key.NumPad1|| 
+                e.Key == Key.LeftShift || e.Key == Key.RightShift || e.Key == Key.NumPad0 || e.Key == Key.NumPad1 ||
                 e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5 ||
-                e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9|| e.Key==Key.Enter)
-                    
+                e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.Enter)
+
                 return;
             // Allow only digits:
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
@@ -299,17 +307,25 @@ namespace PL
                     txtLatitude.Clear();
                 }
         }
+        private void UpdateDroneView(Drone drone)
+        {
+            txtBattery.Text = drone.Battery.ToString();
+            txtLongitude.Text = drone.LocationNow.Longitude.ToString();
+            txtLatitude.Text = drone.LocationNow.Latitude.ToString();
+        }
 
+        private void Update() => worker.ReportProgress(0);
+        private bool IsStop() => worker.CancellationPending;
         private void btnSimulator_Click(object sender, RoutedEventArgs e)
         {
-            //Auto = true;
-            //worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
-            //worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, updateDroneView, IsStop);
-            //worker.ProgressChanged += (sender, args) => updateDroneView();
-            //worker.RunWorkerCompleted += (sender, args) => Auto = false;
-            //worker.WorkerReportsProgress = true;
-            //worker.WorkerSupportsCancellation = true;
-            //worker.RunWorkerAsync(myDrone.Id);
+            Auto = true;
+            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
+            worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, Update, IsStop);
+            worker.ProgressChanged += (sender, args) => UpdateDroneView(myDrone);
+            worker.RunWorkerCompleted += (sender, args) => Auto = false;
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.RunWorkerAsync(myDrone.Id);
             //if (worker.IsBusy != true)
             //    // Start the asynchronous operation. 
             //    worker.RunWorkerAsync(12);

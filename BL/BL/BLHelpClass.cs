@@ -216,26 +216,35 @@ namespace BL
             newBattery -= GetElectricityUseOfBattery(distance, (WeightCategories)parcel.Weight);
             return newBattery;
         }
-        private DO.Parcel GetParcelToDrone(List<DO.Parcel> parcels, DroneForList droneList)
+        /// <summary>
+        /// the function search
+        /// </summary>
+        /// <param name="parcels">list posibble of parcels for scheduling</param>
+        /// <param name="droneList">drone for match it parcel </param>
+        /// <returns></returns>
+        private ParcelForList GetParcelToDrone(List<ParcelForList> parcels, DroneForList droneList)
         {
-            DO.Parcel chosenParcel = default;
+            ParcelForList chosenParcel = default;
             //list of parcels that matching the weight
-            var matchWeightParcels = from item in parcels
+            IEnumerable<ParcelForList> matchWeightParcels = from item in parcels
                                      where ((int)item.Weight) <= ((int)droneList.Weight)
                                      select item;
             //find the closer parcel
-            if (matchWeightParcels.ToList().Count != 0)
+            if (matchWeightParcels.ToArray()[0].Id!=0)
             {
-                List<DO.Parcel> closerParcels = (List<DO.Parcel>)(from parcel in matchWeightParcels
-                                                                            let customer = dal.GetCustomer(parcel.SenderId)
-                                                                            let distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow)
-                                                                            orderby distance
-                                                                            select parcel);
+                List<ParcelForList> closerParcels = (List<ParcelForList>)(from parcel in matchWeightParcels
+                                                                          let customer = dal.GetCustomersByCondition().FirstOrDefault(c => c.NameCustomer == parcel.NameSender)
+                                                                          let distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow)
+                                                                          orderby distance
+                                                                          select parcel)  ;
+
                 //search the parcel that its battery will be enough
                 foreach (var item in closerParcels)
                 {
-                    Location locationSender = new Location(dal.GetCustomer(item.SenderId).Longitude, dal.GetCustomer(item.SenderId).Latitude);
-                    Location locationTarget = new Location(dal.GetCustomer(item.TargetId).Longitude, dal.GetCustomer(item.TargetId).Latitude);
+                    DO.Customer customerSender = dal.GetCustomersByCondition().FirstOrDefault(c => c.NameCustomer == item.NameSender);
+                    DO.Customer customerTarget = dal.GetCustomersByCondition().FirstOrDefault(c => c.NameCustomer == item.NameTarget);
+                    Location locationSender = new Location(dal.GetCustomer(customerSender.IdCustomer).Longitude, dal.GetCustomer(customerSender.IdCustomer).Latitude);
+                    Location locationTarget = new Location(dal.GetCustomer(customerTarget.IdCustomer).Longitude, dal.GetCustomer(customerTarget.IdCustomer).Latitude);
                     double chargeBattery = GetDistance(droneList.LocationNow, locationSender) * free;
                     double distanceSenderToTarget = GetDistance(locationSender, locationTarget);
                     chargeBattery += GetElectricityUseOfBattery(distanceSenderToTarget, (WeightCategories)item.Weight);

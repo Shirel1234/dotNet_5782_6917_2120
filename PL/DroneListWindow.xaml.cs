@@ -32,7 +32,8 @@ namespace PL
                 bll = bl;
                 cmbStatuses.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
                 cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-                lsvDrones.ItemsSource = bll.GetDrones();
+                DataContext = new List<DroneForList>(bll.GetDrones());
+                //lsvDrones.ItemsSource = bll.GetDrones();
             }
             catch (Exception ex)
             {
@@ -159,6 +160,7 @@ namespace PL
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvDrones.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("DroneStatus");
                 view.GroupDescriptions.Add(groupDescription);
+
             }
             catch (Exception ex)
             {

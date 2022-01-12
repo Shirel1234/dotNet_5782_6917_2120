@@ -21,11 +21,11 @@ namespace BL
         double medium;
         double heavy;
         double chargingRate;
-
+        #endregion
         #region
         public static Random rnd = new Random();
         
-        List<DroneForList> BODrones = new List<DroneForList>();
+        public List<DroneForList> BODrones = new List<DroneForList>();
         BL()
         {
             //dl = new DalObject.DalObject();
@@ -113,7 +113,7 @@ namespace BL
             }
 
         }
-        public void UpdateParcelToDrone(int id)
+        public bool UpdateParcelToDrone(int id)
         {
             DO.Parcel chosenParcel = default;
             //bring the details of this drone
@@ -150,12 +150,15 @@ namespace BL
                             throw new UpdateProblemException("Parcel wasn't found");
                     }
                 }
+                if (GetBatteryDeliveredParcel(droneList, chosenParcel) > droneList.Battery)
+                    return false;
                 BODrones.Remove(droneList);
                 droneList.DroneStatus = DroneStatuses.sending;
                 BODrones.Add(droneList);
                 chosenParcel.DroneId = id;
                 chosenParcel.Scheduled = DateTime.Now;
                 dal.UpDateParcel(chosenParcel);
+                return true;
             }
             throw new UpdateProblemException("This drone isn't free");
 

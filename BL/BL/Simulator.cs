@@ -11,39 +11,90 @@ namespace BL
 {
    internal class Simulator
     {
-        private const double VELOCITY = 1.0;
-        private const int DELAY = 500;
+        private const double VELOCITY = 1.0;//מהירות
+        private const int DELAY = 500;//מחזור בשניות
         private const double TIME_STEP = DELAY/1000;
         private const double STEP = VELOCITY / TIME_STEP;
        public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL bl)
         {
-            Drone myDrone = bl.GetDrone(id);
+            Stopwatch stopwatch = new Stopwatch();
+            Drone myDrone;
+            stopwatch.Start();
+            lock (bl)
+            {
+                myDrone = bl.GetDrone(id);
+            }
             while (stopDelegate()==false)
             {
-                while(bl.GetAllParcelsWithoutDrone().Count()!=0)
+                switch((DroneStatuses)myDrone.DroneStatus)
                 {
-                    while (myDrone.Battery >= 0 && myDrone.DroneStatus==DroneStatuses.free)
+                    case DroneStatuses.free:
                     {
-                        bl.UpdateParcelToDrone(id);
-                        updateDelegate();
-                        bl.UpdateParcelPickedUpByDrone(id);
-                        System.Threading.Thread.Sleep(500);
-                        updateDelegate();
-                        bl.UpdateDeliveredParcelByDrone(id);
-                        System.Threading.Thread.Sleep(500);
-                        updateDelegate();
+                          if(!bl.UpdateParcelToDrone(myDrone.Id))
+                          {
+                                bl.UpdateSendingDroneToCharge(myDrone.Id);
+                                myDrone = bl.GetDrone(myDrone.Id);
+                          }
+
+                            break;
                     }
-                    bl.UpdateSendingDroneToCharge(id);
-                    updateDelegate();
-                    bl.UpdateReleasingDroneFromCharge(id);
-                    updateDelegate();
+                    case DroneStatuses.maintenace:
+                    {
+                            lock (bl)
+                            {
+                                if (myDrone.Battery == 100)
+                                {
+                                    bl.UpdateReleasingDroneFromCharge(myDrone.Id);
+                                    myDrone = bl.GetDrone(myDrone.Id);
+                                }
+
+                                else
+                                {
+                                    myDrone.Battery += VELOCITY * bl.dal.AskElectrical()[4];
+                                    System.Threading.Thread.Sleep(DELAY);
+                                    if (myDrone.Battery > 100)
+                                        myDrone.Battery = 100;
+                                    bl.UpdateDrone(myDrone);
+                                }
+                            }
+                            break;
+
+                        }
+                    case DroneStatuses.sending:
+                    {
+                            lock(bl)
+                            {
+                                Parcel p = bl.GetParcel(myDrone.ParcelInWay.Id);
+                                if(!myDrone.ParcelInWay.IsInWay)
+                                {
+                                    if(myDrone.ParcelInWay.TransportDistance/ VELOCITY<=((TimeSpan)(DateTime.Now-p.Scheduled)).Seconds)
+                                    {
+
+                                    }
+                                }
+                                
+
+                                //    updateDelegate();
+                                //    bl.UpdateParcelPickedUpByDrone(myDrone.Id);
+                                //    System.Threading.Thread.Sleep(500);
+                                //    updateDelegate();
+                                //    bl.UpdateDeliveredParcelByDrone(myDrone.Id);
+                                //    System.Threading.Thread.Sleep(500);
+                                //    updateDelegate();
+                                //}
+                                //bl.UpdateSendingDroneToCharge(myDrone.Id);
+                                //updateDelegate();
+                                //bl.UpdateReleasingDroneFromCharge(myDrone.Id);
+                                //updateDelegate();
 
 
+                            }
+                            break;
+                    }
                 }
 
             }
-        }
+       }
 
-
-    }
+   }
 }

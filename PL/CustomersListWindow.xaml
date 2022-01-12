@@ -48,7 +48,7 @@
                 </ListView.GroupStyle>
             </ListView>
         </Grid>
-        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="949,478,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddCustomer_Click"/>
+        <Button x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Height="43" Margin="949,478,0,0" VerticalAlignment="Top" Width="223" FontSize="18" />
         <Label x:Name="lblCustomer" Content="Customers:" HorizontalAlignment="Left" Height="52" Margin="10,27,0,0" VerticalAlignment="Top" Width="239" FontSize="20"/>
     </Grid>
 </Window>
