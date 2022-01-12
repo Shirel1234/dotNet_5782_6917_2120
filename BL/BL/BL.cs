@@ -123,7 +123,7 @@ namespace BL
             //check that the drone is free
             if (droneList.DroneStatus == DroneStatuses.free)
             {
-                //create three groops by the type of priority
+                //create three groups by the type of priority
                 var groups = dal.GetParcelsByCondition().ToList().GroupBy(parcel => parcel.Priority);
                 List<DO.Parcel> gNormal = new List<DO.Parcel>();
                 List<DO.Parcel> gExpress = new List<DO.Parcel>();
