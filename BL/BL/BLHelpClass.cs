@@ -93,71 +93,93 @@ namespace BL
         /// <returns> drone of list</returns>
         private DroneForList GetUpdatedDetailDrone(DO.Drone d)
         {
-            DroneForList newDroneList = new DroneForList();
-            DO.DroneCharge droneCharge = dal.GetDronesChargeByCondition().FirstOrDefault(dc=>dc.DroneID==d.CodeDrone);
-            if (droneCharge.DroneID!=0)
-            {
-                newDroneList.DroneStatus = DroneStatuses.maintenace;
-                DO.BaseStation baseStation = dal.GetStation(droneCharge.StationID);
-                newDroneList.LocationNow =new Location(baseStation.Longitude, baseStation.Latitude);
-                TimeSpan dateTimeCharge = (TimeSpan)(DateTime.Now - droneCharge.BeginingCharge);
-                double battery = Convert.ToDouble(dateTimeCharge.Seconds * chargingRate);
-                if (battery > 100)
-                    newDroneList.Battery = 100;
-                else
-                    newDroneList.Battery = battery;
-
-                return newDroneList;
-            }
             try
             {
-                DO.Parcel defaultP = default;
+                //if the drone is in charge
+                DroneForList newDrone = new DroneForList();
+                DO.DroneCharge droneCharge = dal.GetDronesChargeByCondition().FirstOrDefault(dc => dc.DroneID == d.CodeDrone);
+                if (droneCharge.DroneID != 0)
+                {
+                    newDrone.DroneStatus = DroneStatuses.maintenace;
+                    DO.BaseStation baseStation = dal.GetStation(droneCharge.StationID);
+                    newDrone.LocationNow = new Location(baseStation.Longitude, baseStation.Latitude);
+                    TimeSpan dateTimeCharge = (TimeSpan)(DateTime.Now - droneCharge.BeginingCharge);
+                    double battery = Convert.ToDouble(dateTimeCharge.Seconds * chargingRate);
+                    if (battery > 100)
+                        newDrone.Battery = 100;
+                    else
+                        newDrone.Battery = battery;
+                    newDrone.ParcelInWay = 0;
+                    return newDrone;
+                }
+                //DO.Parcel defaultP = default;
                 //find the parcel of this drone that was scheduled or pickedUp
                 DO.Parcel p = dal.GetParcelsByCondition().ToList().Find(parcel => parcel.DroneId == d.CodeDrone && (GetParcelStatus(parcel) == ParcelStatuses.pickedUp || GetParcelStatus(parcel) == ParcelStatuses.scheduled));
                 //if this parcel was found
-                if (p.CodeParcel != defaultP.CodeParcel)
+                if (p.CodeParcel != 0)
                 {
-                    newDroneList.DroneStatus = DroneStatuses.sending;
+                    newDrone.DroneStatus = DroneStatuses.sending;
+                    newDrone.ParcelInWay = p.CodeParcel;
                     //if the parcel was scheduled but not pickedUp
                     if (GetDateTimeToStatus(p) == ParcelStatuses.scheduled)
-                        newDroneList.LocationNow = GetLocationNotPickedUp(p);
+                        newDrone.LocationNow = GetLocationNotPickedUp(p);
                     //the parcel was scheduled and pickedUp
                     else
-                        newDroneList.LocationNow = new Location(dal.GetCustomer(p.SenderId).Longitude, dal.GetCustomer(p.SenderId).Latitude);
-                    //calculate the battry by the minimum distance that the drone needs to pass
-                    Location locationTarget = new Location(dal.GetCustomersByCondition().ToList().Find(c => c.IdCustomer == p.TargetId).Longitude, dal.GetCustomersByCondition().ToList().Find(c => c.IdCustomer == p.TargetId).Latitude);
-                    double distanceDroneToTarget = GetDistance(newDroneList.LocationNow, locationTarget);
-                    double distanceTargetToCloserStation = GetDistance(locationTarget, new Location(GetCloserBaseStation(locationTarget).Longitude, GetCloserBaseStation(locationTarget).Latitude));
+                    {
+                        DO.Customer c = dal.GetCustomer(p.SenderId);
+                        newDrone.LocationNow = new Location(c.Longitude, c.Latitude);
+                    }
+                    //calculate the battery by the minimum distance that the drone needs to pass
+                    List<DO.Customer> customerList = dal.GetCustomersByCondition().ToList();
+                    DO.Customer cust = customerList.Find(c => c.IdCustomer == p.TargetId);
+                    Location locationTarget = new Location(cust.Longitude, cust.Latitude);
+                    double distanceDroneToTarget = GetDistance(newDrone.LocationNow, locationTarget);
+                    DO.BaseStation b = GetCloserBaseStation(locationTarget);
+                    Location l = new Location(b.Longitude, b.Latitude);
+                    double distanceTargetToCloserStation = GetDistance(locationTarget, l);
                     double minCharge;
                     //if the parcel has an easy weight
                     minCharge = GetElectricityUseOfBattery(distanceDroneToTarget + distanceTargetToCloserStation, (WeightCategories)p.Weight);
                     if (minCharge > 100)
-                        newDroneList.Battery = 100;
+                        newDrone.Battery = 100;
                     else
-                        newDroneList.Battery = r.Next((int)minCharge, 101);
+                    {
+                        int intMinCharge = Convert.ToInt32(minCharge);
+                        newDrone.Battery = r.NextDouble()+ r.Next(intMinCharge, 101);
+                    }
                 }
                 //the drone doesn't do sending
                 else
                 {
                     int num = r.Next(0, 2);
-                    newDroneList.DroneStatus = (DroneStatuses)num;
+                    newDrone.DroneStatus = (DroneStatuses)num;
+                    newDrone.ParcelInWay = 0;
                     //the drone is in maintenace
-                    if (newDroneList.DroneStatus == DroneStatuses.maintenace)
+                    if (newDrone.DroneStatus == DroneStatuses.maintenace)
                     {
-                        newDroneList.Battery = r.Next(0, 21);
+                        newDrone.Battery = r.Next(0, 21);
+                        DO.BaseStation baseStation;
                         //random a base station
-                        // int countStations = dl.GetStationsByCondition().ToList().Count();
-                        DO.BaseStation[] arrBaseStation = dal.GetStationsByCondition().ToArray();
-                        int randomNumOfStationForCharge = r.Next(0, 2);
-                        DO.BaseStation randomBaseStation = arrBaseStation[randomNumOfStationForCharge];
-                        //check if the station which was randomed has available charge slots. If not, the other station must have.
-                        if (randomBaseStation.ChargeSlots <= 0)
-                            randomBaseStation = arrBaseStation[1 - randomNumOfStationForCharge];
-                        newDroneList.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
-                        randomBaseStation.ChargeSlots--;
-                        dal.AddDroneCharge(d.CodeDrone, randomBaseStation.CodeStation, DateTime.Now );
-                        dal.UpDateBaseStation(randomBaseStation);
-                        
+                        if (d.CodeDrone % 2 != 0)
+                        {
+                            baseStation = dal.GetStation(1);
+                            newDrone.LocationNow = new Location(baseStation.Longitude, baseStation.Latitude);
+                        }
+                        else
+                        {
+                            baseStation = dal.GetStation(2);
+                            newDrone.LocationNow = new Location(baseStation.Longitude, baseStation.Latitude);
+                        }
+                        //DO.BaseStation[] arrBaseStation = dal.GetStationsByCondition().ToArray();
+                        //int randomNumOfStationForCharge = r.Next(0, 2);
+                        //DO.BaseStation randomBaseStation = arrBaseStation[randomNumOfStationForCharge];
+                        ////check if the station which was randomed has available charge slots. If not, the other station must have.
+                        //if (randomBaseStation.ChargeSlots <= 0)
+                        //    randomBaseStation = arrBaseStation[1 - randomNumOfStationForCharge];
+                        //newDrone.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
+                        baseStation.ChargeSlots--;
+                        dal.AddDroneCharge(d.CodeDrone, baseStation.CodeStation, DateTime.Now);
+                        dal.UpDateBaseStation(baseStation);
                     }
                     //the drone is free
                     else
@@ -169,24 +191,25 @@ namespace BL
                         int count = listCustomerGotParcel.Count();
                         DO.Customer[] arrCustomerGotParcel = new DO.Customer[count];
                         DO.Customer randomCustomer = arrCustomerGotParcel[r.Next(count)];
-                        newDroneList.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
+                        newDrone.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
                         //random battery between minimum of arriving to base station for charge
-                        DO.BaseStation closerBaseStation = GetCloserBaseStation(newDroneList.LocationNow);
+                        DO.BaseStation closerBaseStation = GetCloserBaseStation(newDrone.LocationNow);
                         closerBaseStation.ChargeSlots--;
                         dal.UpDateBaseStation(closerBaseStation);
-                        double distance = GetDistance(newDroneList.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
+                        double distance = GetDistance(newDrone.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
                         if ((distance * free) > 100)
-                            newDroneList.Battery = 100;
+                            newDrone.Battery = 100;
                         else
-                            newDroneList.Battery = r.Next((int)(distance * free), 101);
+                            newDrone.Battery = r.Next((int)(distance * free), 101);
                     }
                 }
+                return newDrone;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message, "\n");
+                throw new GetDetailsProblemException(ex.Message);
             }
-            return newDroneList;
+            
         }
         private double GetElectricityUseOfBattery(double distance, WeightCategories weight)
         {
@@ -222,7 +245,6 @@ namespace BL
         /// <param name="parcels">list posibble of parcels for scheduling</param>
         /// <param name="droneList">drone for match it parcel </param>
         /// <returns></returns>
-
         private DO.Parcel GetParcelToDrone(List<DO.Parcel> parcels, DroneForList droneList)
         {
             DO.Parcel chosenParcel = default;

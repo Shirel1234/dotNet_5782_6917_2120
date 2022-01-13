@@ -39,16 +39,17 @@
         </Grid>
         <Label x:Name="lblWindowTitle" Content="Add A New Parcel:" HorizontalAlignment="Left" Height="35" Margin="11,21,0,0" VerticalAlignment="Top" Width="304" FontSize="18"/>
         <Grid x:Name="grdForUpdateParcel" HorizontalAlignment="Center" Height="210" Margin="0,414,0,0" VerticalAlignment="Top" Width="986">
-            <Label x:Name="lblDroneInParcel" Content="Drone In Parcel:" HorizontalAlignment="Left" Margin="42,111,0,0" VerticalAlignment="Top" FontSize="18" MouseDoubleClick="ShowDrone"/>
+            <Label x:Name="lblDroneInParcel" Content="Drone In Parcel:" HorizontalAlignment="Left" Margin="42,111,0,0" VerticalAlignment="Top" FontSize="18"/>
             <Label x:Name="lblScheduled" Content="Scheduled:" HorizontalAlignment="Left" Height="40" Margin="246,5,0,0" VerticalAlignment="Top" Width="95" FontSize="16"/>
             <Label x:Name="lblRequested" Content="Requested:" HorizontalAlignment="Left" Margin="11,5,0,0" VerticalAlignment="Top" Height="34" Width="94" FontSize="16"/>
             <Label x:Name="lblPickedUp" Content="Picked Up:" HorizontalAlignment="Left" Height="41" Margin="484,3,0,0" VerticalAlignment="Top" Width="100" FontSize="16"/>
             <Label x:Name="lblDelivered" Content="Delivered:" HorizontalAlignment="Left" Height="44" Margin="725,4,0,0" VerticalAlignment="Top" Width="100" FontSize="16" RenderTransformOrigin="1.437,0.737"/>
-            <TextBox x:Name="txtDroneInParcel" IsEnabled="False" Text="{Binding DroneInParcel, Mode=OneWay}" HorizontalAlignment="Left" Height="34" Margin="181,115,0,0" VerticalAlignment="Top" Width="531" FontSize="16" MouseDoubleClick="ShowDrone"/>
+            <TextBox x:Name="txtDroneInParcel" IsEnabled="False" Text="{Binding DroneInParcel, Mode=OneWay}" HorizontalAlignment="Left" Height="34" Margin="181,115,0,0" VerticalAlignment="Top" Width="769" FontSize="16"/>
             <TextBox x:Name="txtDeliverd" IsEnabled="False" HorizontalAlignment="Left" Height="26" Margin="810,8,0,0" Text="{Binding Delivered, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" />
             <TextBox x:Name="txtPickedUp" IsEnabled="False" HorizontalAlignment="Left" Height="26" Margin="572,8,0,0" Text="{Binding PickedUp, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
             <TextBox x:Name="txtSchedule" IsEnabled="False" HorizontalAlignment="Left" Height="26" Margin="339,8,0,0" Text="{Binding Scheduled, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.934,0.632"/>
             <TextBox x:Name="txtRequest" IsEnabled="False" HorizontalAlignment="Left" Height="26" Margin="101,8,0,0" Text="{Binding Requested, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+            <Button x:Name="btnOpenDroneWindow" Visibility="Hidden" Content="Show Drone" HorizontalAlignment="Left" Margin="42,150,0,0" VerticalAlignment="Top" Width="129" RenderTransformOrigin="0.34,-0.424" Height="34" Click="btnOpenDroneWindow_Click"/>
         </Grid>
         <Button x:Name="btnRemoveParcel" Content="Remove Parcel" HorizontalAlignment="Left" Height="61" Margin="784,60,0,0" VerticalAlignment="Top" Width="176" FontSize="20" Click="btnRemoveParcel_Click" Visibility="Hidden"/>
     </Grid>

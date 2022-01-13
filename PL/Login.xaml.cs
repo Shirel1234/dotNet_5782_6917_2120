@@ -24,7 +24,6 @@ namespace PL
          public Login()
         {
             InitializeComponent();
-
         }
 
         private void btnPressCustomer_Click(object sender, RoutedEventArgs e)

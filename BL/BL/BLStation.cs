@@ -155,12 +155,14 @@ namespace BL
         /// <returns>list of drones in this station</returns>
         public IEnumerable<DroneInCharge> GetChargesDrone(DO.BaseStation dalStation)
         {
+            IEnumerable<DO.DroneCharge> dalDronesCharge = dal.GetDronesChargeByCondition();
             IEnumerable<DroneInCharge> dronesCharge = from boDrone in BODrones
-                                                    where boDrone.DroneStatus == DroneStatuses.maintenace && boDrone.LocationNow.Longitude == dalStation.Longitude && boDrone.LocationNow.Latitude == dalStation.Latitude
-                                                    select new DroneInCharge
-                                                    {
-                                                        Battery = boDrone.Battery,
-                                                        Id = boDrone.Id,
+                                                      where boDrone.DroneStatus == DroneStatuses.maintenace && boDrone.LocationNow.Longitude == dalStation.Longitude && boDrone.LocationNow.Latitude == dalStation.Latitude
+                                                      select new DroneInCharge
+                                                      {
+                                                          Battery = boDrone.Battery,
+                                                          Id = boDrone.Id,
+                                                          DateTimeBegining = dalDronesCharge.ToList().Find(dc => dc.DroneID == boDrone.Id).BeginingCharge
                                                     };
             if (dronesCharge.Count() == 0)
                 dronesCharge = new List<DroneInCharge>();

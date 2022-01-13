@@ -227,7 +227,9 @@ namespace ConsoleBl
                 if (int.TryParse(Console.ReadLine(), out idD))
                 {
                     string newModel = Console.ReadLine();
-                    bl.UpdateDrone(idD, newModel);
+                    Drone d = bl.GetDrone(idD);
+                    d.ModelDrone = newModel;
+                    bl.UpdateDrone(d);
                 }
             }
             catch (Exception ex)

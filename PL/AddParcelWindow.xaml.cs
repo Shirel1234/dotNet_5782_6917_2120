@@ -59,23 +59,12 @@ namespace PL
                 cmbPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
                 cmbWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 btnAdd.Visibility = Visibility.Hidden;
-                if (myParcel.Scheduled < DateTime.Now)
+                if (myParcel.Scheduled == null)
                     btnRemoveParcel.Visibility = Visibility.Visible;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR");
-            }
-        }
-        private void ShowDrone(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                if(myParcel.DroneInParcel.Id!=0)
-                {
-                    Drone d = bll.GetDrone(myParcel.DroneInParcel.Id);
-                    new AddDroneWindow(bll, d).ShowDialog();
-                }
+                if (myParcel.DroneInParcel.Id != 0)
+                    btnOpenDroneWindow.Visibility = Visibility.Visible;
+                else
+                    txtDroneInParcel.Text = "The parcel has not yet been scheduled";
             }
             catch (Exception ex)
             {
@@ -145,9 +134,20 @@ namespace PL
             }
         }
 
-        private void lsbDroneInParcel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void btnOpenDroneWindow_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (myParcel.DroneInParcel.Id != 0)
+                {
+                    Drone d = bll.GetDrone(myParcel.DroneInParcel.Id);
+                    new AddDroneWindow(bll, d).ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
     }
 }

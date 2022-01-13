@@ -28,7 +28,7 @@ namespace Dal
         private DalXml()
         {
             //In the first time
-            //DataSourceXml.Initialize();
+            DataSourceXml.Initialize();
             baseStationRoot = XMLTools.LoadListFromXMLElement(baseStationPath);
 
         }
@@ -169,13 +169,9 @@ namespace Dal
         {
             List<DroneCharge> droneChargeList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesChargePath);
 
-            DroneCharge droneCharge = GetDroneCharge(dc.DroneID);
+            //DroneCharge droneCharge = GetDroneCharge(dc.DroneID);
 
-            if (droneCharge.DroneID == 0)
-            {
-                throw new DoesntExistException("This drone charge does not exist");
-            }
-             droneChargeList.Remove(droneCharge);
+             droneChargeList.Remove(dc);
 
             XMLTools.SaveListToXMLSerializer<DroneCharge>(droneChargeList, dronesChargePath);
         }

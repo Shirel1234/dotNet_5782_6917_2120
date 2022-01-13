@@ -19,11 +19,11 @@ namespace Dal
         internal class Config
         {
             internal static int countIdParcel = 100010;
-            internal static double Free { get => 0.01; }
-            internal static double Easy { get => 0.011; }
-            internal static double Medium { get => 0.012; }
-            internal static double Heavy { get => 0.013; }
-            internal static double ChargingRate { get => 10.25; }
+            internal static double Free { get => 0.001; }
+            internal static double Easy { get => 0.0011; }
+            internal static double Medium { get => 0.0012; }
+            internal static double Heavy { get => 0.0013; }
+            internal static double ChargingRate { get => 3; }
         }
         public static void Initialize()
         {
@@ -37,7 +37,7 @@ namespace Dal
                 drones.Add(d);
             }
             XMLTools.SaveListToXMLSerializer(drones, @"DronesXml.xml");
-            dronesCharge.Add(new DroneCharge() { DroneID = 1, StationID = 1111, BeginingCharge = DateTime.Now });
+            dronesCharge.Add(new DroneCharge() { DroneID = 1, StationID = 1, BeginingCharge = DateTime.Now });
             XMLTools.SaveListToXMLSerializer(dronesCharge, @"DronesChargeXml.xml");
 
             Customer c = new Customer();
@@ -45,7 +45,7 @@ namespace Dal
             {
                 c.IdCustomer = r.Next(100000000, 1000000000);
                 c.NameCustomer = "customer" + i;
-                c.Phone = "050-" + r.Next(1000000, 10000000) + "";
+                c.Phone = "050" + r.Next(1000000, 10000000) + "";
                 c.Longitude = r.NextDouble() + r.Next(30, 34);
                 c.Latitude = r.NextDouble() + r.Next(34, 37);
                 c.IsWorker = true;
