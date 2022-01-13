@@ -36,7 +36,7 @@
                         <GridViewColumn Header="Drone Status" Width="90" DisplayMemberBinding="{Binding DroneStatus, Mode=OneWay}"/>
                         <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Battery, Mode=OneWay}"/>
                         <GridViewColumn Header="Location Now" Width="350" DisplayMemberBinding="{Binding LocationNow, Mode=OneWay}"/>
-                        <GridViewColumn Header="Parcel In Way" Width="300" DisplayMemberBinding="{Binding ParcelInWay, Mode=OneWay}"/>
+                        <GridViewColumn Header="Parcel In Way" Width="90" DisplayMemberBinding="{Binding ParcelInWay, Mode=OneWay}"/>
                     </GridView>
                 </ListView.View>
 

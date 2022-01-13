@@ -145,7 +145,7 @@ namespace BL
                     else
                     {
                         int intMinCharge = Convert.ToInt32(minCharge);
-                        newDrone.Battery = r.NextDouble()+ r.Next(intMinCharge, 101);
+                        newDrone.Battery = r.Next(intMinCharge, 101);
                     }
                 }
                 //the drone doesn't do sending
