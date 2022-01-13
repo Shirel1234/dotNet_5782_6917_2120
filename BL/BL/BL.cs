@@ -251,7 +251,8 @@ namespace BL
                     parcel.Delivered = DateTime.Now;
                     dal.UpDateParcel(parcel);
                 }
-                throw new UpdateProblemException("The drone list doesn't exist");
+                else
+                   throw new UpdateProblemException("The drone list doesn't exist");
             }
             catch
             {

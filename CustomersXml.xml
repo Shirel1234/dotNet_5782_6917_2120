@@ -1,92 +1,100 @@
 <?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <IdCustomer>718180330</IdCustomer>
+    <IdCustomer>789258185</IdCustomer>
     <NameCustomer>customer1</NameCustomer>
-    <Phone>0507247966</Phone>
-    <Longitude>31.40744355246771</Longitude>
-    <Latitude>35.4243241070883</Latitude>
+    <Phone>0502944118</Phone>
+    <Longitude>32.74675805156434</Longitude>
+    <Latitude>34.882678318714106</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>209149063</IdCustomer>
+    <IdCustomer>323906917</IdCustomer>
+    <NameCustomer>Shirel</NameCustomer>
+    <Phone>0584118663</Phone>
+    <Longitude>32</Longitude>
+    <Latitude>34</Latitude>
+    <IsWorker>true</IsWorker>
+  </Customer>
+  <Customer>
+    <IdCustomer>422745435</IdCustomer>
     <NameCustomer>customer2</NameCustomer>
-    <Phone>0509771482</Phone>
-    <Longitude>33.0464025750041</Longitude>
-    <Latitude>35.96813680462918</Latitude>
+    <Phone>0503356331</Phone>
+    <Longitude>32.152185638971716</Longitude>
+    <Latitude>34.85824563301087</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>714189151</IdCustomer>
+    <IdCustomer>569541402</IdCustomer>
     <NameCustomer>customer3</NameCustomer>
-    <Phone>0505706630</Phone>
-    <Longitude>31.089794667479488</Longitude>
-    <Latitude>34.777712329187295</Latitude>
+    <Phone>0505403658</Phone>
+    <Longitude>30.74652000365151</Longitude>
+    <Latitude>34.327267479303885</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>214107307</IdCustomer>
+    <IdCustomer>121254561</IdCustomer>
     <NameCustomer>customer4</NameCustomer>
-    <Phone>0508242077</Phone>
-    <Longitude>32.76540617680429</Longitude>
-    <Latitude>35.02425075696048</Latitude>
+    <Phone>0507974891</Phone>
+    <Longitude>33.73463951830502</Longitude>
+    <Latitude>36.4079255840778</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>560300530</IdCustomer>
+    <IdCustomer>371347721</IdCustomer>
     <NameCustomer>customer5</NameCustomer>
-    <Phone>0502487498</Phone>
-    <Longitude>33.932501927918054</Longitude>
-    <Latitude>36.73772445541701</Latitude>
+    <Phone>0508560589</Phone>
+    <Longitude>31.060736305108637</Longitude>
+    <Latitude>35.99216140899442</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>477296017</IdCustomer>
+    <IdCustomer>244169351</IdCustomer>
     <NameCustomer>customer6</NameCustomer>
-    <Phone>0506962621</Phone>
-    <Longitude>32.90215768613953</Longitude>
-    <Latitude>35.893436353604045</Latitude>
+    <Phone>0504054014</Phone>
+    <Longitude>31.596875953300334</Longitude>
+    <Latitude>35.284258552027985</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>437816370</IdCustomer>
+    <IdCustomer>304590984</IdCustomer>
     <NameCustomer>customer7</NameCustomer>
-    <Phone>0504086794</Phone>
-    <Longitude>31.079332048110352</Longitude>
-    <Latitude>35.970872871564175</Latitude>
+    <Phone>0501424613</Phone>
+    <Longitude>30.0227854224028</Longitude>
+    <Latitude>36.15164551751299</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>949006871</IdCustomer>
+    <IdCustomer>871370201</IdCustomer>
     <NameCustomer>customer8</NameCustomer>
-    <Phone>0507581534</Phone>
-    <Longitude>31.531016693697783</Longitude>
-    <Latitude>36.18125744591526</Latitude>
+    <Phone>0503940698</Phone>
+    <Longitude>30.143456781349823</Longitude>
+    <Latitude>35.08427810719436</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>165854788</IdCustomer>
+    <IdCustomer>729801640</IdCustomer>
     <NameCustomer>customer9</NameCustomer>
-    <Phone>0504027640</Phone>
-    <Longitude>32.705248270046546</Longitude>
-    <Latitude>34.42115428271757</Latitude>
+    <Phone>0507602386</Phone>
+    <Longitude>31.213675129792502</Longitude>
+    <Latitude>34.81740544355353</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>801874968</IdCustomer>
+    <IdCustomer>199302919</IdCustomer>
     <NameCustomer>customer10</NameCustomer>
-    <Phone>0501080413</Phone>
-    <Longitude>33.6699677955685</Longitude>
-    <Latitude>34.979453090103085</Latitude>
+    <Phone>0508748339</Phone>
+    <Longitude>33.808087599374396</Longitude>
+    <Latitude>34.327584068443436</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>315842120</IdCustomer>
-    <NameCustomer>Yisca</NameCustomer>
-    <Phone>0527117307</Phone>
-    <Longitude>32.548712</Longitude>
-    <Latitude>35.147895</Latitude>
-    <IsWorker>true</IsWorker>
+    <IdCustomer>313232109</IdCustomer>
+    <NameCustomer>tav</NameCustomer>
+    <Phone>0541117488</Phone>
+    <Longitude>32.1111</Longitude>
+    <Latitude>34.12121</Latitude>
+    <IsWorker>false</IsWorker>
   </Customer>
   <Customer>
     <IdCustomer>111111111</IdCustomer>

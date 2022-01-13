@@ -188,7 +188,7 @@ namespace BL
                         var listCustomerGotParcel = from parcel in dal.GetParcelsByCondition().ToList()
                                                     where parcel.Delivered <= DateTime.Now
                                                     select dal.GetCustomersByCondition().ToList().Find(c => c.IdCustomer == parcel.TargetId);
-                        if(listCustomerGotParcel.Count() != 0)
+                        if (listCustomerGotParcel.Count() != 0)
                         {
                             int count = listCustomerGotParcel.Count();
                             DO.Customer[] arrCustomerGotParcel = new DO.Customer[count];
@@ -213,7 +213,7 @@ namespace BL
             {
                 throw new GetDetailsProblemException(ex.Message);
             }
-            
+
         }
         private double GetElectricityUseOfBattery(double distance, WeightCategories weight)
         {

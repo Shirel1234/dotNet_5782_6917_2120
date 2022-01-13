@@ -70,6 +70,9 @@ namespace PL
         }
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            btnCustomer.Visibility = Visibility.Hidden;
+            btnNewCustomer.Visibility = Visibility.Hidden;
+            btnWorker.Visibility = Visibility.Hidden;
             if (txtId.Text.Length < 9)
                 MessageBox.Show("The id must contain 9 digits", "ERROR");
             else

@@ -28,7 +28,7 @@ namespace Dal
         private DalXml()
         {
             //In the first time
-            //DataSourceXml.Initialize();
+           // DataSourceXml.Initialize();
             baseStationRoot = XMLTools.LoadListFromXMLElement(baseStationPath);
 
         }

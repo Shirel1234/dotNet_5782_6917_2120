@@ -3,10 +3,19 @@
   <Station>
     <id>1</id>
     <name>8606</name>
-    <numOfChargeSlots>13</numOfChargeSlots>
+    <numOfChargeSlots>12</numOfChargeSlots>
     <location>
       <longitude>31.228072863644023</longitude>
       <latitude>35.94812648601277</latitude>
+    </location>
+  </Station>
+  <Station>
+    <id>1</id>
+    <name>7802</name>
+    <numOfChargeSlots>46</numOfChargeSlots>
+    <location>
+      <longitude>32.600578538887476</longitude>
+      <latitude>34.25856285693988</latitude>
     </location>
   </Station>
   <Station>
@@ -14,8 +23,8 @@
     <name>8488</name>
     <numOfChargeSlots>22</numOfChargeSlots>
     <location>
-      <longitude>33.11835351591853</longitude>
-      <latitude>36.19098672465933</latitude>
+      <longitude>31.441166785751083</longitude>
+      <latitude>35.42333197101174</latitude>
     </location>
   </Station>
 </StationsXml.xml>
