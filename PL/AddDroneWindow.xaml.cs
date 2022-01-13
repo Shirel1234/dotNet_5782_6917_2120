@@ -307,11 +307,12 @@ namespace PL
                     txtLatitude.Clear();
                 }
         }
-        private void UpdateDroneView(Drone drone)
+        private void UpdateDroneView()
         {
-            txtBattery.Text = drone.Battery.ToString();
-            txtLongitude.Text = drone.LocationNow.Longitude.ToString();
-            txtLatitude.Text = drone.LocationNow.Latitude.ToString();
+            Drone drone = bll.GetDrone(myDrone.Id);
+            txtBattery.Text = myDrone.Battery.ToString();
+            txtLongitude.Text = myDrone.LocationNow.Longitude.ToString();
+            txtLatitude.Text = myDrone.LocationNow.Latitude.ToString();
         }
 
         private void Update() => worker.ReportProgress(0);
@@ -321,7 +322,7 @@ namespace PL
             Auto = true;
             worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
             worker.DoWork += (sender, args) => bll.StartSimulator((int)args.Argument, Update, IsStop);
-            worker.ProgressChanged += (sender, args) => UpdateDroneView(myDrone);
+            worker.ProgressChanged += (sender, args) => UpdateDroneView();
             worker.RunWorkerCompleted += (sender, args) => Auto = false;
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;

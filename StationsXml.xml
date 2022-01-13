@@ -2,11 +2,11 @@
 <StationsXml.xml>
   <Station>
     <id>1</id>
-    <name>8606</name>
-    <numOfChargeSlots>12</numOfChargeSlots>
+    <name>7802</name>
+    <numOfChargeSlots>43</numOfChargeSlots>
     <location>
-      <longitude>31.228072863644023</longitude>
-      <latitude>35.94812648601277</latitude>
+      <longitude>32.600578538887476</longitude>
+      <latitude>34.25856285693988</latitude>
     </location>
   </Station>
   <Station>
@@ -21,7 +21,7 @@
   <Station>
     <id>2</id>
     <name>8488</name>
-    <numOfChargeSlots>22</numOfChargeSlots>
+    <numOfChargeSlots>20</numOfChargeSlots>
     <location>
       <longitude>31.441166785751083</longitude>
       <latitude>35.42333197101174</latitude>
