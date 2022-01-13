@@ -155,8 +155,8 @@ namespace BL
                 from customer in DOcustomersList
                 let numOfDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && parcel.Delivered != null)
                 let numOfNotDeliveredParcels = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && parcel.Delivered == null)
-                let numOfParcelsInWay = DOparcelsList.Count(parcel => parcel.SenderId == customer.IdCustomer && parcel.PickedUp == null)
-                let numOfAcceptedParcels = DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && parcel.Requested != null)
+                let numOfParcelsInWay = DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && parcel.PickedUp != null)
+                let numOfAcceptedParcels = DOparcelsList.Count(parcel => parcel.TargetId == customer.IdCustomer && parcel.Delivered != null)
                 select new CustomerForList()
                 {
                     Id = customer.IdCustomer,

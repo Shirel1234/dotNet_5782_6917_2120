@@ -9,6 +9,7 @@ namespace BL
 {
     public partial class BL
     {
+        #region drone functions
         /// <summary>
         /// the function checks the details and throw errors in step and then adds a new drone to the list of drones
         /// </summary>
@@ -157,4 +158,5 @@ namespace BL
                    select drone;
         }
     }
+    #endregion
 }

@@ -6,9 +6,9 @@
     <TargetId>199302919</TargetId>
     <Weight>easy</Weight>
     <Priority>emergency</Priority>
-    <DroneId>1</DroneId>
+    <DroneId>5</DroneId>
     <Requested>2022-01-13T07:52:29.8979104+02:00</Requested>
-    <Scheduled>2022-01-13T07:52:29.9000463+02:00</Scheduled>
+    <Scheduled>2022-01-13T09:38:47.7728016+02:00</Scheduled>
     <PickedUp>2022-01-13T09:20:32.8505571+02:00</PickedUp>
     <Delivered>2022-01-13T09:21:52.5586717+02:00</Delivered>
   </Parcel>

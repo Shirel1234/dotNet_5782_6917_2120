@@ -28,6 +28,7 @@ namespace PL
         Drone myDrone;
         BackgroundWorker worker;
         bool Auto;
+        #region constructors
         public AddDroneWindow(BlApi.IBL bl)
         {
             try
@@ -82,7 +83,7 @@ namespace PL
                 }
                 else
                     if (myDrone.DroneStatus == DroneStatuses.maintenace)
-                    btnReleaseDroneCharging.Visibility = Visibility.Visible;
+                        btnReleaseDroneCharging.Visibility = Visibility.Visible;
                 else
                 //in sending
                 {
@@ -97,6 +98,8 @@ namespace PL
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+        #endregion
+        #region buttons and clicks events
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -221,6 +224,8 @@ namespace PL
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+        #endregion
+        #region checking input integrity
         private void integrityInputCheck(KeyEventArgs e)
         {
             // Allow errows, Back and delete keys:
@@ -345,6 +350,6 @@ namespace PL
             if (txtIdDrone.Text == "0")
                 txtIdDrone.Clear();
         }
-
+        #endregion
     }
 }

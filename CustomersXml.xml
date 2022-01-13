@@ -104,4 +104,12 @@
     <Latitude>33.6</Latitude>
     <IsWorker>false</IsWorker>
   </Customer>
+  <Customer>
+    <IdCustomer>315842120</IdCustomer>
+    <NameCustomer>Yisca</NameCustomer>
+    <Phone>0527117307</Phone>
+    <Longitude>32.5584</Longitude>
+    <Latitude>35.554897</Latitude>
+    <IsWorker>true</IsWorker>
+  </Customer>
 </ArrayOfCustomer>

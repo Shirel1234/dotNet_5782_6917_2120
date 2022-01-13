@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainCustomerWindow : Window
     {
+        #region
         BlApi.IBL bll;
         int idCustomer;
         public MainCustomerWindow(BlApi.IBL bl, int id)
@@ -55,7 +56,7 @@ namespace PL
         private void btnShowTargeted_Click(object sender, RoutedEventArgs e)
         {
             lsvParcelsTarget.Visibility = Visibility.Visible;
-
         }
+        #endregion
     }
 }

@@ -22,6 +22,11 @@ namespace PL
     {
         BlApi.IBL bll;
         Parcel myParcel;
+        #region constructors
+        /// <summary>
+        /// ctor for adding
+        /// </summary>
+        /// <param name="bl"></param>
         public AddParcelWindow(BlApi.IBL bl)
         {
             try
@@ -45,12 +50,17 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
+        /// <summary>
+        /// ctor for showing the parcel
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="p"></param>
         public AddParcelWindow(BlApi.IBL bl, Parcel p)
         {
             try
             {
                 InitializeComponent();
-                lblWindowTitle.Content = "Update a Parcel:";
+                lblWindowTitle.Content = "View a Parcel:";
                 bll = bl;
                 myParcel = p;
                 DataContext = myParcel;
@@ -71,7 +81,8 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
+        #endregion
+        #region buttons and clicks events
         private void ShowSenderCustomer(object sender, MouseButtonEventArgs e)
         {
             try
@@ -149,5 +160,6 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
+        #endregion
     }
 }

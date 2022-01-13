@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region
         BlApi.IBL bl;
         public MainWindow(BlApi.IBL bll)
         {
@@ -35,8 +36,6 @@ namespace PL
             new BaseStationsListWindow(bl).ShowDialog();
         }
 
-       
-
         private void btnShowListCustomers_Click(object sender, RoutedEventArgs e)
         {
             new CustomersListWindow(bl).ShowDialog();
@@ -47,5 +46,6 @@ namespace PL
             new ListParcels(bl).ShowDialog();
 
         }
+        #endregion
     }
 }
