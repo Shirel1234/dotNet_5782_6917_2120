@@ -12,7 +12,7 @@
   <Station>
     <id>2</id>
     <name>8488</name>
-    <numOfChargeSlots>23</numOfChargeSlots>
+    <numOfChargeSlots>22</numOfChargeSlots>
     <location>
       <longitude>33.11835351591853</longitude>
       <latitude>36.19098672465933</latitude>

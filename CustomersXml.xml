@@ -88,4 +88,12 @@
     <Latitude>35.147895</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
+  <Customer>
+    <IdCustomer>111111111</IdCustomer>
+    <NameCustomer>aaa</NameCustomer>
+    <Phone>0511111111</Phone>
+    <Longitude>32.5</Longitude>
+    <Latitude>33.6</Latitude>
+    <IsWorker>false</IsWorker>
+  </Customer>
 </ArrayOfCustomer>

@@ -102,6 +102,11 @@ namespace BL
                     DO.Customer dalTarget = dal.GetCustomer(dalParcel.TargetId);
                     Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
                     Location locationT = new Location(dalTarget.Longitude, dalTarget.Longitude);
+                    bool pIsInWay;
+                    if (dalParcel.PickedUp == null)
+                        pIsInWay = false;
+                    else
+                        pIsInWay = true;
                     p = new ParcelInWay
                     {
                         Id = dalParcel.CodeParcel,
@@ -109,7 +114,7 @@ namespace BL
                         Weight = (WeightCategories)dalParcel.Weight,
                         Sender = new CustomerInParcel() { Id = dalParcel.SenderId, Name = dal.GetCustomer(dalParcel.SenderId).NameCustomer },
                         Target = new CustomerInParcel() { Id = dalParcel.TargetId, Name = dal.GetCustomer(dalParcel.TargetId).NameCustomer },
-                        IsInWay = true,
+                        IsInWay = pIsInWay,
                         LocationPickedUp = locationS,
                         LocationTarget = locationT,
                         TransportDistance = GetDistance(locationS, locationT)

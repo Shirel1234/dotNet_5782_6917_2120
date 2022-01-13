@@ -40,6 +40,7 @@ namespace PL
                 cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
                 grdShowDrone.Visibility = Visibility.Hidden;
                 grdUpdating.Visibility = Visibility.Hidden;
+                grdParcelInWay.Visibility = Visibility.Hidden;
             }
             catch (Exception ex)
             {
@@ -53,13 +54,8 @@ namespace PL
                 InitializeComponent();
                 lblTitleDrone.Content = "Update Drone:";
                 bll = bl;
-                myDrone = drone; //new Drone() { Id= droneList.Id, ModelDrone=droneList.ModelDrone, MaxWeight=droneList.Weight};
+                myDrone = drone; 
                 DataContext = myDrone;
-                //cmbIdStation.ItemsSource = bll.GetAllBaseStationsWithChargePositions();
-                //cmbStatus.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-                //txtIdDrone.Text = newDrone.Id.ToString();
-                // txtModelDrone.Text = newDrone.ModelDrone;
-                // cmbWeightDrone.SelectedValue = newDrone.MaxWeight;
                 cmbWeightDrone.Visibility = Visibility.Hidden;
                 txtStatus.Visibility = Visibility.Visible;
                 btnAdd.Visibility = Visibility.Hidden;
@@ -71,13 +67,18 @@ namespace PL
                 txtLatitude.IsEnabled = false;
                 txtLongitude.IsEnabled = false;
                 txtBattery.IsEnabled = false;
-                lsbParcelInWay.IsEnabled = false;
-
+                if (drone.ParcelInWay.Id != 0)
+                {
+                    grdParcelInWay.Visibility = Visibility.Visible;
+                    if (drone.ParcelInWay.IsInWay)
+                        txtStatusParcel.Text = "Picked up";
+                    else
+                        txtStatusParcel.Text = "Waiting to be picked up";
+                }
                 if (myDrone.DroneStatus == DroneStatuses.free)
                 {
                     btnSendForCharging.Visibility = Visibility.Visible;
                     btnSchedulingForSending.Visibility = Visibility.Visible;
-
                 }
                 else
                     if (myDrone.DroneStatus == DroneStatuses.maintenace)
@@ -205,13 +206,13 @@ namespace PL
             catch (Exception ex) { MessageBox.Show(ex.Message, "The charging wasn't updated"); }
         }
 
-        private void ShowThisParcel(object sender, MouseButtonEventArgs e)
+        private void btnShowParcel_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!lsbParcelInWay.Items.IsEmpty)
+                if (myDrone.ParcelInWay.Id != 0)
                 {
-                    Parcel p = bll.GetParcel(((ParcelInCustomer)lsbParcelInWay.SelectedItem).Id);
+                    Parcel p = bll.GetParcel(myDrone.ParcelInWay.Id);
                     new AddParcelWindow(bll, p).ShowDialog();
                 }
             }
@@ -344,5 +345,6 @@ namespace PL
             if (txtIdDrone.Text == "0")
                 txtIdDrone.Clear();
         }
+
     }
 }
