@@ -187,11 +187,15 @@ namespace BL
                         //random a customer that got at least one parcel
                         var listCustomerGotParcel = from parcel in dal.GetParcelsByCondition().ToList()
                                                     where parcel.Delivered <= DateTime.Now
-                                                    select dal.GetCustomersByCondition(c => c.IdCustomer == parcel.TargetId).ToList();
-                        int count = listCustomerGotParcel.Count();
-                        DO.Customer[] arrCustomerGotParcel = new DO.Customer[count];
-                        DO.Customer randomCustomer = arrCustomerGotParcel[r.Next(0,count)];
-                        newDrone.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
+                                                    select dal.GetCustomersByCondition().ToList().Find(c => c.IdCustomer == parcel.TargetId);
+                        if(listCustomerGotParcel.Count() != 0)
+                        {
+                            int count = listCustomerGotParcel.Count();
+                            DO.Customer[] arrCustomerGotParcel = new DO.Customer[count];
+                            arrCustomerGotParcel = listCustomerGotParcel.ToArray();
+                            DO.Customer randomCustomer = arrCustomerGotParcel[r.Next(count)];
+                            newDrone.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
+                        }
                         //random battery between minimum of arriving to base station for charge
                         DO.BaseStation baseStation = GetCloserBaseStation(newDrone.LocationNow);
                         DO.BaseStation closerBaseStation = baseStation;

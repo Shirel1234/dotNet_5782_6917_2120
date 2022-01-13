@@ -32,7 +32,6 @@ namespace BL
             {
                 DO.Parcel doParcel = new DO.Parcel()
                 {
-                    CodeParcel = p.CodeParcel,
                     SenderId = p.SenderCustomer.Id,
                     TargetId = p.TargetCustomer.Id,
                     Weight = (DO.WeightCategories)p.Weight,

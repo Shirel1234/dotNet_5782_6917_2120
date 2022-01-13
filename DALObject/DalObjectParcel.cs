@@ -24,8 +24,7 @@ namespace Dal
         /// <param name="p"> a parcel</param>
         public void AddParcel(Parcel p)
         {
-            if (CheckParcel(p.CodeParcel))
-                throw new AlreadyExistException("The parcel already exists in the system");
+            p.CodeParcel = DataSource.Config.countIdParcel++;
             DataSource.parcels.Add(p);
         }
         public void UpDateParcel(Parcel p)
@@ -33,7 +32,7 @@ namespace Dal
             Parcel myParcel = DataSource.parcels.Find(x => x.CodeParcel == p.CodeParcel);
             if (myParcel.CodeParcel != p.CodeParcel)
                 throw new DoesntExistException("This parcel doesn't exist in the system");
-            myParcel.CodeParcel = p.CodeParcel;//נראה לי מיותר לעדכן, כי אף פעם לא משנים את מספר הזיהוי וגם בודקים באמצעותו קודם
+            myParcel.CodeParcel = p.CodeParcel;
             myParcel.SenderId = p.SenderId;
             myParcel.TargetId = p.TargetId;
             myParcel.Weight = p.Weight;

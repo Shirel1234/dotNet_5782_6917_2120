@@ -74,14 +74,14 @@ namespace Dal
                 {
                     arrTemp[p.DroneId - 1] = 1;
                     p.Scheduled = DateTime.Now;
-                    p.PickedUp = new DateTime(0);
-                    p.Delivered = new DateTime(0);
+                    p.PickedUp = null;
+                    p.Delivered = null;
                 }
                 else
                 {
-                    p.Scheduled = new DateTime(0);
-                    p.PickedUp = new DateTime(0);
-                    p.Delivered = new DateTime(0);
+                    p.Scheduled = null;
+                    p.PickedUp = null;
+                    p.Delivered = null;
                 }
                 parcels.Add(p);
             }

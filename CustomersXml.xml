@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <IdCustomer>323906917</IdCustomer>
+    <IdCustomer>718180330</IdCustomer>
     <NameCustomer>customer1</NameCustomer>
     <Phone>0501512707</Phone>
     <Longitude>32.43670147212069</Longitude>

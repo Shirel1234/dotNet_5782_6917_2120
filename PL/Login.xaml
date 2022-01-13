@@ -29,7 +29,7 @@
             <ImageBrush ImageSource="/KOGAPAS00383_TP_V-e1575969085714.jpg"/>
         </Grid.Background>
         <Button x:Name="btnCustomer" Style="{StaticResource myButtonStyle}" Content="Customer" Click="btnPressCustomer_Click" Margin="190,344,422,24" Background="#FFEA8B42" BorderBrush="#FFD66318" Visibility="Hidden"/>
-        <Button x:Name="btnWorker" Style = "{StaticResource myButtonStyle}" Content="Worker" Margin="426,343,207,28" Background="#FFEA8B42" Click="Button_Click" Visibility="Hidden" />
+        <Button x:Name="btnWorker" Style = "{StaticResource myButtonStyle}" Content="Worker" Margin="426,343,207,28" Background="#FFEA8B42" Click="btnWorker_Click" Visibility="Hidden" />
         <Button x:Name="btnNewCustomer" Style = "{StaticResource myButtonStyle}" Content="New Customer" Click="btnNewCustomer_Click" Margin="268,341,299,24" Background="#FFEA8B42" Visibility="Hidden"/>
         <Label x:Name="lblWellcome" Content="Wellcome" HorizontalAlignment="Left" Height="152" VerticalAlignment="Top" Width="460" FontSize="72" Background="{x:Null}" FontFamily="Rockwell Extra Bold" Margin="148,16,0,0">
             <Label.Foreground>
@@ -42,7 +42,7 @@
         <Grid HorizontalAlignment="Left" Height="155" Margin="173,106,0,0" VerticalAlignment="Top" Width="560">
             <Label x:Name="lblId" Content="Enter id:" HorizontalAlignment="Left" Height="52" Margin="20,26,0,0" VerticalAlignment="Top" Width="104" FontSize="22" Foreground="#FFEB7610" FontWeight="Bold" FontStyle="Normal" FontFamily="Arial Rounded MT Bold" Background="{x:Null}"/>
             <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="124,20,0,0" TextWrapping="Wrap" 
-                     VerticalAlignment="Top" Width="175" Height="52" FontSize="18" Background="{x:Null}" MaxLength="9" />
+                     VerticalAlignment="Top" Width="175" Height="52" FontSize="18" Background="{x:Null}" MaxLength="9" PreviewKeyDown="txtId_PreviewKeyDown" />
         </Grid>
         <Button x:Name="btnOk" Content="ok" HorizontalAlignment="Left" Margin="510,122,0,0" VerticalAlignment="Top" Height="62" Width="58" Foreground="#FF0B0A09" FontSize="36" FontWeight="Bold" Click="btnOk_Click">
             <Button.Background>

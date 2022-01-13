@@ -165,7 +165,8 @@ namespace BL
                     CountDeliveredParcels = numOfDeliveredParcels,
                     CountNotDeliveredParcels = numOfNotDeliveredParcels,
                     CountParcelsInWay = numOfParcelsInWay,
-                    CountAcceptedParcelsByCustomer = numOfAcceptedParcels
+                    CountAcceptedParcelsByCustomer = numOfAcceptedParcels,
+                    IsWorker=customer.IsWorker
                 };
         }
 
