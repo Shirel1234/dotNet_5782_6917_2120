@@ -11,8 +11,8 @@ namespace BL
 {
    internal class Simulator
     {
-        private const double VELOCITY = 1.0;//מהירות
-        private const int DELAY = 500;//מחזור בשניות
+        private const double VELOCITY = 1.0;
+        private const int DELAY = 500;
         private const double TIME_STEP = DELAY/1000;
         private const double STEP = VELOCITY / TIME_STEP;
        public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL bl)
@@ -34,6 +34,7 @@ namespace BL
                           {
                                 bl.UpdateSendingDroneToCharge(myDrone.Id);
                                 myDrone = bl.GetDrone(myDrone.Id);
+                                updateDelegate();
                           }
 
                             break;
@@ -46,6 +47,7 @@ namespace BL
                                 {
                                     bl.UpdateReleasingDroneFromCharge(myDrone.Id);
                                     myDrone = bl.GetDrone(myDrone.Id);
+                                    updateDelegate();
                                 }
 
                                 else
@@ -55,6 +57,7 @@ namespace BL
                                     if (myDrone.Battery > 100)
                                         myDrone.Battery = 100;
                                     bl.UpdateDrone(myDrone);
+                                    updateDelegate();
                                 }
                             }
                             break;
