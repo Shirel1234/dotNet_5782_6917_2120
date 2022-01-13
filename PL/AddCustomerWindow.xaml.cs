@@ -40,7 +40,10 @@ namespace PL
                 btnUpdateCustomer.Visibility = Visibility.Hidden;
                 grdShowCustomer.Visibility = Visibility.Hidden;
                 if (IsWorker)
+                {
+                    //ckbIsWorker.IsChecked = false;
                     ckbIsWorker.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception ex)
             {
@@ -60,8 +63,6 @@ namespace PL
                 btnAddCustomer.Visibility = Visibility.Hidden;
                 if (c.IsWorker)
                     ckbIsWorker.Visibility = Visibility.Visible;
-                else
-                    ckbIsWorker.Visibility = Visibility.Hidden;
                 lsvSentParcels.ItemsSource = newCustomer.SendParcels.ToList();
                 lsvAcceptedParcels.ItemsSource = newCustomer.TargetParcels.ToList();
                 txtIdCustomer.IsEnabled = false;
@@ -99,7 +100,7 @@ namespace PL
             try
             {
                 Customer c = bll.GetCustomer(newCustomer.Id);
-                if(txtNameCustomer.Text == c.Name && txtPhoneCustomer.Text == c.Phone && !ckbIsWorker.IsChecked.Value)
+                if(txtNameCustomer.Text == c.Name && txtPhoneCustomer.Text == c.Phone && ckbIsWorker.IsChecked.Value)
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {

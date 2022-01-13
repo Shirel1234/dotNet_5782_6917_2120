@@ -37,6 +37,18 @@ namespace PL
         }
         #endregion
         #region buttons and clicks events
+        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new AddCustomerWindow(bll, true).ShowDialog();
+                lsvCustomers.ItemsSource = bll.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+        }
         private void ShowThisCustomer(object sender, MouseButtonEventArgs e)
         {
             try
@@ -46,19 +58,6 @@ namespace PL
                     Customer c = bll.GetCustomer(((CustomerForList)lsvCustomers.SelectedItem).Id);
                     new AddCustomerWindow(bll, c).ShowDialog();
                 }
-                lsvCustomers.ItemsSource = bll.GetCustomers();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR");
-            }
-        }
-
-        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                new AddCustomerWindow(bll, true).ShowDialog();
                 lsvCustomers.ItemsSource = bll.GetCustomers();
             }
             catch (Exception ex)

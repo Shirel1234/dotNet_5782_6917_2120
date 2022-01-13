@@ -28,7 +28,7 @@ namespace Dal
         private DalXml()
         {
             //In the first time
-            DataSourceXml.Initialize();
+            //DataSourceXml.Initialize();
             baseStationRoot = XMLTools.LoadListFromXMLElement(baseStationPath);
 
         }
@@ -83,13 +83,7 @@ namespace Dal
         {
             List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
 
-            Parcel parc1 = parcelList.FirstOrDefault(p => p.CodeParcel == parcel.CodeParcel);
-
-            if (parc1.CodeParcel != 0)
-            {
-                throw new AlreadyExistException("The parcel already exist in the system");
-            }
-
+            parcel.CodeParcel = DataSourceXml.Config.countIdParcel++;
             parcelList.Add(parcel);
 
             XMLTools.SaveListToXMLSerializer<Parcel>(parcelList, parcelsPath);
@@ -237,7 +231,6 @@ namespace Dal
         public Parcel GetParcel(int id)
         {
             List<Parcel> parcelList = GetParcelsByCondition().ToList();
-            //List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
             int index = parcelList.FindIndex(p => p.CodeParcel == id);
             if (index == -1)
                 throw new DoesntExistException("This parcel does not exist");
