@@ -54,7 +54,7 @@ namespace BL
 
             catch (Exception ex)
             {
-                throw new AddingProblemException(ex.Message, ex);//למה שלא נזרוק הלאה את החריגה שכבר קיבלנו???
+                throw new AddingProblemException(ex.Message, ex);
             }
         }
         /// <summary>
@@ -94,20 +94,15 @@ namespace BL
             {
                 DO.Drone dalDrone = dal.GetDrone(id);
                 DroneForList boDrone = BODrones.Find(boDrone => boDrone.Id == id);
-                DO.Parcel dalParcel = dal.GetParcelsByCondition().ToList().Find(p => p.DroneId == id);
-                DO.Customer dalSender = dal.GetCustomer(dalParcel.SenderId);
-                DO.Customer dalTarget = dal.GetCustomer(dalParcel.TargetId);
-                Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
-                Location locationT = new Location(dalTarget.Longitude, dalTarget.Longitude);
-                return new Drone
+                ParcelInWay p = new ParcelInWay();
+                if (boDrone.ParcelInWay != 0)
                 {
-                    Id = dalDrone.CodeDrone,
-                    ModelDrone = dalDrone.ModelDrone,
-                    DroneStatus = boDrone.DroneStatus,
-                    MaxWeight = (WeightCategories)dalDrone.MaxWeight,
-                    Battery = boDrone.Battery,
-                    LocationNow = boDrone.LocationNow,
-                    ParcelInWay = new ParcelInWay
+                    DO.Parcel dalParcel = dal.GetParcelsByCondition().ToList().Find(p => p.DroneId == id);
+                    DO.Customer dalSender = dal.GetCustomer(dalParcel.SenderId);
+                    DO.Customer dalTarget = dal.GetCustomer(dalParcel.TargetId);
+                    Location locationS = new Location(dalSender.Longitude, dalSender.Longitude);
+                    Location locationT = new Location(dalTarget.Longitude, dalTarget.Longitude);
+                    p = new ParcelInWay
                     {
                         Id = dalParcel.CodeParcel,
                         Priority = (Priorities)dalParcel.Priority,
@@ -118,8 +113,17 @@ namespace BL
                         LocationPickedUp = locationS,
                         LocationTarget = locationT,
                         TransportDistance = GetDistance(locationS, locationT)
-                    }
-
+                    };
+                }
+                return new Drone
+                {
+                    Id = dalDrone.CodeDrone,
+                    ModelDrone = dalDrone.ModelDrone,
+                    DroneStatus = boDrone.DroneStatus,
+                    MaxWeight = (WeightCategories)dalDrone.MaxWeight,
+                    Battery = boDrone.Battery,
+                    LocationNow = boDrone.LocationNow,
+                    ParcelInWay = p
                 };
             }
             catch (Exception ex)

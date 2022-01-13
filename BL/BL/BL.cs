@@ -21,7 +21,6 @@ namespace BL
         double medium;
         double heavy;
         double chargingRate;
-        #endregion
         #region
         public static Random rnd = new Random();
         
@@ -46,7 +45,7 @@ namespace BL
                                                       DroneStatus = updatedDrone.DroneStatus,
                                                       LocationNow = updatedDrone.LocationNow,
                                                       Battery = updatedDrone.Battery,
-                                                      ParcelInWay = 0
+                                                      ParcelInWay = updatedDrone.ParcelInWay
                                                   };
             BODrones = tempBoDrones.ToList();
         }
@@ -58,60 +57,72 @@ namespace BL
         /// <param name="id"> id of drone</param>
         public void UpdateSendingDroneToCharge(int id)
         {
-            DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
-            if (droneList.Id == 0)
+            DroneForList drone = BODrones.Find(droneL => droneL.Id == id);
+            if (drone.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
-            if (droneList.DroneStatus == DroneStatuses.free|| droneList.DroneStatus == DroneStatuses.maintenace)
+            if (drone.DroneStatus == DroneStatuses.free || drone.DroneStatus == DroneStatuses.maintenace)
             {
-                DO.BaseStation closeStation = GetCloserBaseStation(droneList.LocationNow);
-                double minDistance = GetDistance(new Location(closeStation.Longitude, closeStation.Latitude), droneList.LocationNow);
-                if (droneList.Battery >= minDistance * free && closeStation.ChargeSlots > 0)
+                DO.BaseStation closeStation = GetCloserBaseStation(drone.LocationNow);
+                double minDistance = GetDistance(new Location(closeStation.Longitude, closeStation.Latitude), drone.LocationNow);
+                if (drone.Battery >= minDistance * free) 
                 {
-                    //update drone
-                    BODrones.Remove(droneList);
-                    droneList.Battery -= minDistance * free;
-                    droneList.LocationNow.Longitude = closeStation.Longitude;
-                    droneList.LocationNow.Latitude = closeStation.Latitude;
-                    droneList.DroneStatus = DroneStatuses.maintenace;
-                    BODrones.Add(droneList);
-                    //update station
-                    closeStation.ChargeSlots--;
-                    dal.UpDateBaseStation(closeStation);
-                    //update drone Charge
-                    //DroneCharge droneCharge = new DroneCharge() { Battery = droneList.Battery, Id = droneList.Id };
-                    dal.AddDroneCharge(droneList.Id, closeStation.CodeStation, DateTime.Now);
+                    if(closeStation.ChargeSlots > 0)
+                    {
+                        //update drone
+                        BODrones.Remove(drone);
+                        drone.Battery -= minDistance * free;
+                        drone.LocationNow.Longitude = closeStation.Longitude;
+                        drone.LocationNow.Latitude = closeStation.Latitude;
+                        drone.DroneStatus = DroneStatuses.maintenace;
+                        BODrones.Add(drone);
+                        //update station
+                        closeStation.ChargeSlots--;
+                        dal.UpDateBaseStation(closeStation);
+                        //update drone Charge
+                        //DroneCharge droneCharge = new DroneCharge() { Battery = droneList.Battery, Id = droneList.Id };
+                        dal.AddDroneCharge(drone.Id, closeStation.CodeStation, DateTime.Now);
+                    }
+                    else
+                        throw new UpdateProblemException("It is impossible to send this drone to charging.\nThere are not available charge slots in the closer station.");
                 }
                 else
-                    throw new UpdateProblemException("It is impossible to send this drone to charging");
+                    throw new UpdateProblemException("It is impossible to send this drone to charging.\nThere drone does not have enough battery to reach the closer station.");
             }
             else
                 throw new UpdateProblemException("The drone isn't free for charging");
         }
         public void UpdateReleasingDroneFromCharge(int id/*, double timeOfCharging*/)
         {
-            DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
-            if (droneList.Id == 0)
+            DroneForList drone = BODrones.Find(droneL => droneL.Id == id);
+            if (drone.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
-            if (droneList.DroneStatus == DroneStatuses.maintenace)
+            try
             {
-                //update drone
-                BODrones.Remove(droneList);
-                TimeSpan timeCharge = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(id).BeginingCharge);
-                double battery = Convert.ToDouble(timeCharge.Seconds) * chargingRate;
-                if (battery > 100)
-                    droneList.Battery = 100;
-                else
-                    droneList.Battery = battery;
+                if (drone.DroneStatus == DroneStatuses.maintenace)
+                {
+                    //update drone
+                    BODrones.Remove(drone);
+                    TimeSpan timeCharge = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(id).BeginingCharge);
+                    double battery = Convert.ToDouble(timeCharge.Seconds) * chargingRate + drone.Battery;
+                    if (battery > 100)
+                        drone.Battery = 100;
+                    else
+                        drone.Battery = battery;
 
-                droneList.DroneStatus = DroneStatuses.free;
-                BODrones.Add(droneList);
-                //update station
-                DO.BaseStation myStation = dal.GetStationsByCondition().ToList().Find(station => station.Longitude == droneList.LocationNow.Longitude && station.Latitude == droneList.LocationNow.Latitude);
-                myStation.ChargeSlots++;
-                dal.UpDateBaseStation(myStation);
-                dal.RemoveDroneCharge(dal.GetDroneCharge(droneList.Id));
+                    drone.DroneStatus = DroneStatuses.free;
+                    BODrones.Add(drone);
+                    DO.DroneCharge dc = dal.GetDroneCharge(drone.Id);
+                    //update station
+                    DO.BaseStation myStation = dal.GetStationsByCondition().ToList().Find(station => station.CodeStation==dc.StationID);
+                    myStation.ChargeSlots++;
+                    dal.UpDateBaseStation(myStation);
+                    dal.RemoveDroneCharge(dal.GetDroneCharge(drone.Id));
+                } 
             }
-
+            catch(Exception ex)
+            {
+                throw new UpdateProblemException(ex.Message);
+            }
         }
         public bool UpdateParcelToDrone(int id)
         {
@@ -120,48 +131,54 @@ namespace BL
             DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
                 throw new UpdateProblemException("This drone doesn't exist");
-            //check that the drone is free
-            if (droneList.DroneStatus == DroneStatuses.free)
+            try
             {
-                //create three groups by the type of priority
-                var groups = dal.GetParcelsByCondition().ToList().GroupBy(parcel => parcel.Priority);
-                List<DO.Parcel> gNormal = new List<DO.Parcel>();
-                List<DO.Parcel> gExpress = new List<DO.Parcel>();
+                //check that the drone is free
+                if (droneList.DroneStatus == DroneStatuses.free)
+                {
+                    //create three groups by the type of priority
+                    var groups = dal.GetParcelsByCondition().ToList().GroupBy(parcel => parcel.Priority);
+                    List<DO.Parcel> gNormal = new List<DO.Parcel>();
+                    List<DO.Parcel> gExpress = new List<DO.Parcel>();
 
-                List<DO.Parcel> gEmergency = new List<DO.Parcel>();
-                foreach (IGrouping<DO.Priorities, DO.Parcel> group in groups)
-                {
-                    if (group.Key == DO.Priorities.normal)
-                        gNormal = group.ToList();
-                    else
-                        if (group.Key == DO.Priorities.express)
-                        gExpress = group.ToList();
-                    else
-                        gEmergency = group.ToList();
-                }
-                chosenParcel = GetParcelToDrone(gEmergency, droneList);
-                if (chosenParcel.CodeParcel == default)
-                {
-                    chosenParcel = GetParcelToDrone(gExpress, droneList);
+                    List<DO.Parcel> gEmergency = new List<DO.Parcel>();
+                    foreach (IGrouping<DO.Priorities, DO.Parcel> group in groups)
+                    {
+                        if (group.Key == DO.Priorities.normal)
+                            gNormal = group.ToList();
+                        else
+                            if (group.Key == DO.Priorities.express)
+                            gExpress = group.ToList();
+                        else
+                            gEmergency = group.ToList();
+                    }
+                    chosenParcel = GetParcelToDrone(gEmergency, droneList);
                     if (chosenParcel.CodeParcel == default)
                     {
                         chosenParcel = GetParcelToDrone(gExpress, droneList);
                         if (chosenParcel.CodeParcel == default)
-                            throw new UpdateProblemException("Parcel wasn't found");
+                        {
+                            chosenParcel = GetParcelToDrone(gExpress, droneList);
+                            if (chosenParcel.CodeParcel == default)
+                                throw new UpdateProblemException("Parcel wasn't found");
+                        }
                     }
+                    if (GetBatteryDeliveredParcel(droneList, chosenParcel) > droneList.Battery)
+                        return false;
+                    BODrones.Remove(droneList);
+                    droneList.DroneStatus = DroneStatuses.sending;
+                    BODrones.Add(droneList);
+                    chosenParcel.DroneId = id;
+                    chosenParcel.Scheduled = DateTime.Now;
+                    dal.UpDateParcel(chosenParcel);
+                    return true;
                 }
-                if (GetBatteryDeliveredParcel(droneList, chosenParcel) > droneList.Battery)
-                    return false;
-                BODrones.Remove(droneList);
-                droneList.DroneStatus = DroneStatuses.sending;
-                BODrones.Add(droneList);
-                chosenParcel.DroneId = id;
-                chosenParcel.Scheduled = DateTime.Now;
-                dal.UpDateParcel(chosenParcel);
-                return true;
+                throw new UpdateProblemException("This drone isn't free");
             }
-            throw new UpdateProblemException("This drone isn't free");
-
+            catch (Exception ex)
+            {
+                throw new UpdateProblemException(ex.Message);
+            }
         }
         public void UpdateParcelPickedUpByDrone(int droneID)
         {
@@ -199,26 +216,26 @@ namespace BL
             try
             {
                 //update drone
-                DroneForList droneList = BODrones.ToList().Find(drone => drone.Id == id);
-                if (droneList.Id == id)
+                DroneForList drone = BODrones.ToList().Find(drone => drone.Id == id);
+                if (drone.Id == id)
                 {
-                    DO.Parcel parcel = dal.GetParcel(droneList.ParcelInWay);
+                    DO.Parcel parcel = dal.GetParcel(drone.ParcelInWay);
                     if (GetDateTimeToStatus(parcel) != ParcelStatuses.pickedUp)
                         throw new UpdateProblemException("Impossible to deliver the parcel");
                     else
                     {
-                        DroneForList newDroneListnew = new DroneForList
+                        DroneForList newDrone = new DroneForList
                         {
-                            Id = droneList.Id,
-                            ModelDrone = droneList.ModelDrone,
-                            ParcelInWay = droneList.ParcelInWay,
-                            Weight = droneList.Weight,
-                            Battery = GetBatteryDeliveredParcel(droneList, parcel),
+                            Id = drone.Id,
+                            ModelDrone = drone.ModelDrone,
+                            ParcelInWay = 0,
+                            Weight = drone.Weight,
+                            Battery = GetBatteryDeliveredParcel(drone, parcel),
                             LocationNow = new Location(dal.GetCustomer(parcel.TargetId).Longitude, dal.GetCustomer(parcel.TargetId).Latitude),
                             DroneStatus = DroneStatuses.free,
                         };
-                        BODrones.ToList().Remove(droneList);
-                        BODrones.ToList().Add(newDroneListnew);
+                        BODrones.ToList().Remove(drone);
+                        BODrones.ToList().Add(newDrone);
                     }
                     //update parcel
                     parcel.Delivered = DateTime.Now;

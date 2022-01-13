@@ -154,7 +154,16 @@ namespace PL
                 MessageBox.Show(ex.Message, "The charging wasn't updated");
 
             }
-
+        }
+        private void btnReleaseDroneCharging_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bll.UpdateReleasingDroneFromCharge(Convert.ToInt32(txtIdDrone.Text));
+                MessageBox.Show("The releasing was successfully done", "Done");
+                this.Close();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "The charging wasn't updated"); }
         }
         private void btnSchedulingForSending_Click(object sender, RoutedEventArgs e)
         {
@@ -191,16 +200,6 @@ namespace PL
             {
                 bll.UpdateParcelPickedUpByDrone(Convert.ToInt32(txtIdDrone.Text));
                 MessageBox.Show("The picking up was successfully done", "Done");
-                this.Close();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "The charging wasn't updated"); }
-        }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                bll.UpdateReleasingDroneFromCharge(Convert.ToInt32(txtIdDrone.Text));
-                MessageBox.Show("The releasing was successfully done", "Done");
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "The charging wasn't updated"); }

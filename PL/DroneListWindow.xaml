@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ListDrones" Height="640" Width="950">
+        Title="ListDrones" Height="640" Width="1000">
     <Grid Margin="0,10,2,36">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -27,16 +27,16 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="lsvDrones" Margin="0,23,10,0" Grid.Column="1" MouseDoubleClick="OpenShowDrone" ItemsSource="{Binding}" DataContext="{Binding}">
+            <ListView x:Name="lsvDrones" Margin="52,0,42,-25" Grid.Column="1" MouseDoubleClick="OpenShowDrone" ItemsSource="{Binding}" DataContext="{Binding}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Header="ModelDrone" Width="150" DisplayMemberBinding="{Binding ModelDrone}"/>
-                        <GridViewColumn Header="Weight" Width="200" DisplayMemberBinding="{Binding Weight}" />
-                        <GridViewColumn Header="Drone Status" Width="200" DisplayMemberBinding="{Binding DroneStatus}"/>
-                        <GridViewColumn Header="Battery" Width="200" DisplayMemberBinding="{Binding Battery}"/>
-                        <GridViewColumn Header="Location Now" Width="200" DisplayMemberBinding="{Binding LocationNow}"/>
-                        <GridViewColumn Header="Parcel In Way" Width="200" DisplayMemberBinding="{Binding ParcelInWay}"/>
+                        <GridViewColumn Header="Id" Width="40" DisplayMemberBinding="{Binding Id, Mode=TwoWay}"/>
+                        <GridViewColumn Header="ModelDrone" Width="80" DisplayMemberBinding="{Binding ModelDrone, Mode=OneWay}"/>
+                        <GridViewColumn Header="Weight" Width="70" DisplayMemberBinding="{Binding Weight, Mode=OneWay}" />
+                        <GridViewColumn Header="Drone Status" Width="90" DisplayMemberBinding="{Binding DroneStatus, Mode=OneWay}"/>
+                        <GridViewColumn Header="Battery" Width="50" DisplayMemberBinding="{Binding Battery, Mode=OneWay}"/>
+                        <GridViewColumn Header="Location Now" Width="350" DisplayMemberBinding="{Binding LocationNow, Mode=OneWay}"/>
+                        <GridViewColumn Header="Parcel In Way" Width="200" DisplayMemberBinding="{Binding ParcelInWay, Mode=OneWay}"/>
                     </GridView>
                 </ListView.View>
 
