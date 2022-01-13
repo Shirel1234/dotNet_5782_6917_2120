@@ -27,7 +27,7 @@
         <ComboBox x:Name="cmbIdStation" HorizontalAlignment="Left" Height="28" Margin="228,242,0,0" VerticalAlignment="Top" Width="250"/>
         <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="43" Margin="20,527,0,0" VerticalAlignment="Top" Width="150" FontSize="18" Click="btnAdd_Click" Background="#FFF3E9E9"/>
         <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Height="54" Margin="673,24,0,0" VerticalAlignment="Top" Width="75" FontSize="20" Click="btnClose_Click"/>
-        <Grid x:Name="grdUpdating" HorizontalAlignment="Left" Height="554" Margin="454,86,0,0" VerticalAlignment="Top" Width="312">
+        <Grid x:Name="grdUpdating" HorizontalAlignment="Left" Height="554" Margin="436,86,0,0" VerticalAlignment="Top" Width="312">
             <Button x:Name="btnUpdateDrone" Content="Update Drone" HorizontalAlignment="Left" Height="54" Margin="104,133,0,0" VerticalAlignment="Top" Width="194" FontSize="18" Click="btnUpdateDrone_Click"/>
             <Button x:Name="btnSendForCharging" HorizontalAlignment="Left" Height="56" Margin="87,38,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnSendForCharging_Click" RenderTransformOrigin="0.535,2.726" Content="Sending For Charging" Visibility="Hidden"/>
             <Button x:Name="btnSchedulingForSending" Content="Scheduling for sending" HorizontalAlignment="Left" Height="45" Margin="47,361,0,0" VerticalAlignment="Top" Width="196" FontSize="18" Click="btnSchedulingForSending_Click" Visibility="Hidden" Grid.RowSpan="2"/>
@@ -49,7 +49,7 @@
             <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="100,50,0,0" Text="{Binding DroneStatus, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
             <TextBox x:Name="txtLongitude" HorizontalAlignment="Left" Margin="206,137,0,0" Text="{Binding Path=LocationNow.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" Grid.ColumnSpan="3"/>
             <TextBox x:Name="txtLatitude" HorizontalAlignment="Left" Margin="206,184,0,0" Text="{Binding Path=LocationNow.Longitude, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" Grid.ColumnSpan="3"/>
-            <ListBox x:Name="lsbParcelInWay" HorizontalAlignment="Left" Height="32" Margin="153,91,0,0" VerticalAlignment="Top" Width="265" FontSize="18" ItemsSource="{Binding ParcelInWay, Mode=TwoWay}"/>
+            <ListBox x:Name="lsbParcelInWay" HorizontalAlignment="Left" Height="32" Margin="153,91,0,0" VerticalAlignment="Top" Width="265" FontSize="18" ItemsSource="{Binding Path=ParcelInWay, Mode=TwoWay}"/>
         </Grid>
 
     </Grid>
