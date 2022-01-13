@@ -324,4 +324,40 @@
       <latitude>35.28311767861392</latitude>
     </location>
   </Station>
+  <Station>
+    <id>1</id>
+    <name>8821</name>
+    <numOfChargeSlots>24</numOfChargeSlots>
+    <location>
+      <longitude>33.02044754709138</longitude>
+      <latitude>34.959270270522346</latitude>
+    </location>
+  </Station>
+  <Station>
+    <id>2</id>
+    <name>9120</name>
+    <numOfChargeSlots>14</numOfChargeSlots>
+    <location>
+      <longitude>30.72435461903194</longitude>
+      <latitude>36.01519944053851</latitude>
+    </location>
+  </Station>
+  <Station>
+    <id>1</id>
+    <name>5654</name>
+    <numOfChargeSlots>13</numOfChargeSlots>
+    <location>
+      <longitude>32.89260505647054</longitude>
+      <latitude>36.948310065524794</latitude>
+    </location>
+  </Station>
+  <Station>
+    <id>2</id>
+    <name>2888</name>
+    <numOfChargeSlots>41</numOfChargeSlots>
+    <location>
+      <longitude>31.976047150313875</longitude>
+      <latitude>35.72224468072981</latitude>
+    </location>
+  </Station>
 </StationsXml.xml>

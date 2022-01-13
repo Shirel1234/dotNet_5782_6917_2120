@@ -3,81 +3,81 @@
   <Customer>
     <IdCustomer>323906917</IdCustomer>
     <NameCustomer>customer1</NameCustomer>
-    <Phone>050-7819630</Phone>
-    <Longitude>32.76785451116406</Longitude>
-    <Latitude>36.36897108674467</Latitude>
+    <Phone>0501512707</Phone>
+    <Longitude>32.43670147212069</Longitude>
+    <Latitude>35.58478216388485</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>371062510</IdCustomer>
+    <IdCustomer>760206737</IdCustomer>
     <NameCustomer>customer2</NameCustomer>
-    <Phone>050-5740984</Phone>
-    <Longitude>30.42111089612409</Longitude>
-    <Latitude>36.8111871582508</Latitude>
+    <Phone>0507816885</Phone>
+    <Longitude>33.639363725036084</Longitude>
+    <Latitude>36.980223680837184</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>669890751</IdCustomer>
+    <IdCustomer>215452986</IdCustomer>
     <NameCustomer>customer3</NameCustomer>
-    <Phone>050-9277490</Phone>
-    <Longitude>30.78323842807824</Longitude>
-    <Latitude>35.402869397496275</Latitude>
+    <Phone>0506530352</Phone>
+    <Longitude>30.240797540285065</Longitude>
+    <Latitude>34.74699252832075</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>705957940</IdCustomer>
+    <IdCustomer>466140944</IdCustomer>
     <NameCustomer>customer4</NameCustomer>
-    <Phone>050-4460430</Phone>
-    <Longitude>30.084628659805574</Longitude>
-    <Latitude>35.852669556556584</Latitude>
+    <Phone>0503297634</Phone>
+    <Longitude>30.397307539078085</Longitude>
+    <Latitude>36.15157927952315</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>987206983</IdCustomer>
+    <IdCustomer>307570357</IdCustomer>
     <NameCustomer>customer5</NameCustomer>
-    <Phone>050-1622333</Phone>
-    <Longitude>33.99991049803789</Longitude>
-    <Latitude>34.69612753190851</Latitude>
+    <Phone>0506321912</Phone>
+    <Longitude>32.784442468911614</Longitude>
+    <Latitude>35.83993311079216</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>919871234</IdCustomer>
+    <IdCustomer>472912062</IdCustomer>
     <NameCustomer>customer6</NameCustomer>
-    <Phone>050-3824875</Phone>
-    <Longitude>30.67559543143753</Longitude>
-    <Latitude>34.47284045697788</Latitude>
+    <Phone>0505283352</Phone>
+    <Longitude>31.617846098550523</Longitude>
+    <Latitude>35.47227227849526</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>518976196</IdCustomer>
+    <IdCustomer>461524633</IdCustomer>
     <NameCustomer>customer7</NameCustomer>
-    <Phone>050-9703172</Phone>
-    <Longitude>32.35555481042506</Longitude>
-    <Latitude>35.74425494705525</Latitude>
+    <Phone>0508195094</Phone>
+    <Longitude>30.30778588089523</Longitude>
+    <Latitude>36.12234573118498</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>670623220</IdCustomer>
+    <IdCustomer>491123376</IdCustomer>
     <NameCustomer>customer8</NameCustomer>
-    <Phone>050-3349128</Phone>
-    <Longitude>33.49148178170039</Longitude>
-    <Latitude>35.48931331349971</Latitude>
+    <Phone>0509569677</Phone>
+    <Longitude>31.48975375550322</Longitude>
+    <Latitude>36.07419671168281</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>821544756</IdCustomer>
+    <IdCustomer>989865828</IdCustomer>
     <NameCustomer>customer9</NameCustomer>
-    <Phone>050-6020807</Phone>
-    <Longitude>33.1108355569238</Longitude>
-    <Latitude>34.16603939010112</Latitude>
+    <Phone>0509024607</Phone>
+    <Longitude>31.72721392508932</Longitude>
+    <Latitude>35.26608398196571</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
   <Customer>
-    <IdCustomer>239101953</IdCustomer>
+    <IdCustomer>961959568</IdCustomer>
     <NameCustomer>customer10</NameCustomer>
-    <Phone>050-2555977</Phone>
-    <Longitude>30.905067209575822</Longitude>
-    <Latitude>34.65229674924738</Latitude>
+    <Phone>0507750248</Phone>
+    <Longitude>32.90538818850433</Longitude>
+    <Latitude>36.44537235956889</Latitude>
     <IsWorker>true</IsWorker>
   </Customer>
 </ArrayOfCustomer>
