@@ -39,8 +39,8 @@ namespace PL
                 DataContext = newCustomer;
                 btnUpdateCustomer.Visibility = Visibility.Hidden;
                 grdShowCustomer.Visibility = Visibility.Hidden;
-                if (!IsWorker)
-                    ckbIsWorker.Visibility = Visibility.Hidden;
+                if (IsWorker)
+                    ckbIsWorker.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -58,7 +58,9 @@ namespace PL
                 newCustomer = c;
                 DataContext = newCustomer;
                 btnAddCustomer.Visibility = Visibility.Hidden;
-                if (!c.IsWorker)
+                if (c.IsWorker)
+                    ckbIsWorker.Visibility = Visibility.Visible;
+                else
                     ckbIsWorker.Visibility = Visibility.Hidden;
                 lsvSentParcels.ItemsSource = newCustomer.SendParcels.ToList();
                 lsvAcceptedParcels.ItemsSource = newCustomer.TargetParcels.ToList();

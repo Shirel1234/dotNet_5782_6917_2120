@@ -29,7 +29,7 @@ namespace PL
 
         private void btnPressCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new MainCustomerWindow(bl).ShowDialog();
+            new MainCustomerWindow(bl,Convert.ToInt32(txtId.Text)).ShowDialog();
         }
 
         private void btnNewCustomer_Click(object sender, RoutedEventArgs e)

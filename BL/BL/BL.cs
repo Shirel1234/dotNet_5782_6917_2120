@@ -21,8 +21,7 @@ namespace BL
         double medium;
         double heavy;
         double chargingRate;
-        #endregion
-        #region
+        #region create Drone List
         public static Random rnd = new Random();
         
         public List<DroneForList> BODrones = new List<DroneForList>();
@@ -51,6 +50,7 @@ namespace BL
             BODrones = tempBoDrones.ToList();
         }
         #endregion
+
         #region Updating
         /// <summary>
         /// the function finds the details of this drone and sending it to charge in the closer base station
@@ -87,7 +87,11 @@ namespace BL
             else
                 throw new UpdateProblemException("The drone isn't free for charging");
         }
-        public void UpdateReleasingDroneFromCharge(int id/*, double timeOfCharging*/)
+        /// <summary>
+        /// the function releasesthe drone fron charging and calculates the battery after the charging by the timethat passed
+        /// </summary>
+        /// <param name="id"> id of drone </param>
+        public void UpdateReleasingDroneFromCharge(int id)
         {
             DroneForList droneList = BODrones.Find(droneL => droneL.Id == id);
             if (droneList.Id == 0)
@@ -97,7 +101,7 @@ namespace BL
                 //update drone
                 BODrones.Remove(droneList);
                 TimeSpan timeCharge = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(id).BeginingCharge);
-                double battery = Convert.ToDouble(timeCharge.Seconds) * chargingRate;
+                double battery = Convert.ToDouble(timeCharge.Seconds) * chargingRate+droneList.Battery;
                 if (battery > 100)
                     droneList.Battery = 100;
                 else
@@ -113,6 +117,11 @@ namespace BL
             }
 
         }
+        /// <summary>
+        /// the function search thr match parcel for the drone by priority
+        /// </summary>
+        /// <param name="id">id of drone </param>
+        /// <returns></returns>
         public bool UpdateParcelToDrone(int id)
         {
             DO.Parcel chosenParcel = default;

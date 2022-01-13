@@ -88,7 +88,7 @@ namespace PL
                     if (bl.GetParcel(myDrone.ParcelInWay.Id).PickedUp == null)
                         btnPickUpSending.Visibility = Visibility.Visible;
                     else
-                        btnDelivered.Visibility = Visibility.Hidden;
+                        btnDelivered.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception ex)

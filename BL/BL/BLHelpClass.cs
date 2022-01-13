@@ -134,7 +134,7 @@ namespace BL
                     if (minCharge > 100)
                         newDroneList.Battery = 100;
                     else
-                        newDroneList.Battery = rnd.Next((int)minCharge, 101);
+                        newDroneList.Battery = r.Next((int)minCharge, 101);
                 }
                 //the drone doesn't do sending
                 else
@@ -222,29 +222,27 @@ namespace BL
         /// <param name="parcels">list posibble of parcels for scheduling</param>
         /// <param name="droneList">drone for match it parcel </param>
         /// <returns></returns>
-        private ParcelForList GetParcelToDrone(List<ParcelForList> parcels, DroneForList droneList)
+
+        private DO.Parcel GetParcelToDrone(List<DO.Parcel> parcels, DroneForList droneList)
         {
-            ParcelForList chosenParcel = default;
+            DO.Parcel chosenParcel = default;
             //list of parcels that matching the weight
-            IEnumerable<ParcelForList> matchWeightParcels = from item in parcels
+            IEnumerable<DO.Parcel> matchWeightParcels = from item in parcels
                                      where ((int)item.Weight) <= ((int)droneList.Weight)
                                      select item;
             //find the closer parcel
-            if (matchWeightParcels.ToArray()[0].Id!=0)
+            if (matchWeightParcels.ToArray()[0].CodeParcel!=0)
             {
-                List<ParcelForList> closerParcels = (List<ParcelForList>)(from parcel in matchWeightParcels
-                                                                          let customer = dal.GetCustomersByCondition().FirstOrDefault(c => c.NameCustomer == parcel.NameSender)
-                                                                          let distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow)
-                                                                          orderby distance
-                                                                          select parcel)  ;
-
+                IEnumerable<DO.Parcel> closerParcels = (from parcel in matchWeightParcels.ToList()
+                                                                  let customer = dal.GetCustomer(parcel.SenderId)
+                                                                  let distance = GetDistance(new Location(customer.Longitude, customer.Latitude), droneList.LocationNow)
+                                                                  orderby distance
+                                                                  select parcel);
                 //search the parcel that its battery will be enough
                 foreach (var item in closerParcels)
                 {
-                    DO.Customer customerSender = dal.GetCustomersByCondition().FirstOrDefault(c => c.NameCustomer == item.NameSender);
-                    DO.Customer customerTarget = dal.GetCustomersByCondition().FirstOrDefault(c => c.NameCustomer == item.NameTarget);
-                    Location locationSender = new Location(dal.GetCustomer(customerSender.IdCustomer).Longitude, dal.GetCustomer(customerSender.IdCustomer).Latitude);
-                    Location locationTarget = new Location(dal.GetCustomer(customerTarget.IdCustomer).Longitude, dal.GetCustomer(customerTarget.IdCustomer).Latitude);
+                    Location locationSender = new Location(dal.GetCustomer(item.SenderId).Longitude, dal.GetCustomer(item.SenderId).Latitude);
+                    Location locationTarget = new Location(dal.GetCustomer(item.TargetId).Longitude, dal.GetCustomer(item.TargetId).Latitude);
                     double chargeBattery = GetDistance(droneList.LocationNow, locationSender) * free;
                     double distanceSenderToTarget = GetDistance(locationSender, locationTarget);
                     chargeBattery += GetElectricityUseOfBattery(distanceSenderToTarget, (WeightCategories)item.Weight);
@@ -261,5 +259,7 @@ namespace BL
             return chosenParcel;
 
         }
+
     }
 }
+

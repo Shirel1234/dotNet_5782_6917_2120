@@ -6,7 +6,57 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainCustomerWindow" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="/shutterstock_1231838656132541713690573635.jpg"/>
+    </Window.Background>
     <Grid>
-        
+        <Button x:Name="btnUpdate" Content="Update details" HorizontalAlignment="Left" Height="75" Margin="10,12,0,0" VerticalAlignment="Top" Width="177" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnUpdate_Click" FontWeight="Normal" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="75" Margin="10,105,0,0" VerticalAlignment="Top" Width="177" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnAddParcel_Click" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnShowParcelsSend" Content="Show Parcels Sended" Height="76" Margin="10,194,570,0" VerticalAlignment="Top" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnShowSended_Click" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnShowParcelsTarget" Content="Show Parcels Targeted" Height="75" Margin="10,296,570,0" VerticalAlignment="Top" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnShowTargeted_Click" FontFamily="Global Sans Serif"/>
+        <ListView x:Name="lsvParcelsSender" HorizontalAlignment="Left" Height="104" Margin="270,180,0,0" VerticalAlignment="Top" Width="484" Visibility="Hidden" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                    <GridViewColumn Header="Code Parcel" Width="80" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Weight" Width="80" DisplayMemberBinding="{Binding Weight}" />
+                    <GridViewColumn Header="Name Target" Width="80" DisplayMemberBinding="{Binding NameTarget}"/>
+                    <GridViewColumn Header="Priority" Width="80" DisplayMemberBinding="{Binding Priority}"/>
+                    <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding Status}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView x:Name="lsvParcelsTarget" HorizontalAlignment="Left" Height="104" Margin="270,300,0,0" VerticalAlignment="Top" Width="484" Visibility="Hidden" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                    <GridViewColumn Header="Code Parcel" Width="80" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Weight" Width="80" DisplayMemberBinding="{Binding Weight}" />
+                    <GridViewColumn Header="Name Sender" Width="80" DisplayMemberBinding="{Binding NameSender}"/>
+                    <GridViewColumn Header="Priority" Width="80" DisplayMemberBinding="{Binding Priority}"/>
+                    <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding Status}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label x:Name="lblTitleDay" Content="Have a nice day!" HorizontalAlignment="Left" Height="68" Margin="270,32,0,0" VerticalAlignment="Top" Width="405" FontSize="48" FontFamily="Book Antiqua" Background="{x:Null}" Visibility="Hidden">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFB01010" Offset="0.012"/>
+                    <GradientStop Color="#FFF62727" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <Label x:Name="lblTitleNight" Content="Good Night!" HorizontalAlignment="Left" Height="68" Margin="270,32,0,0" VerticalAlignment="Top" Width="405" FontSize="48" FontFamily="Book Antiqua" Background="{x:Null}" Visibility="Hidden">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFB01010" Offset="0.012"/>
+                    <GradientStop Color="#FFF62727" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+
     </Grid>
 </Window>
