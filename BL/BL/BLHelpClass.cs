@@ -188,7 +188,7 @@ namespace BL
                         var listCustomerGotParcel = from parcel in dal.GetParcelsByCondition().ToList()
                                                     where parcel.Delivered <= DateTime.Now
                                                     select dal.GetCustomersByCondition().ToList().Find(c => c.IdCustomer == parcel.TargetId);
-                        if(listCustomerGotParcel.Count() != 0)
+                        if (listCustomerGotParcel.Count() != 0)
                         {
                             int count = listCustomerGotParcel.Count();
                             DO.Customer[] arrCustomerGotParcel = new DO.Customer[count];
@@ -197,8 +197,7 @@ namespace BL
                             newDrone.LocationNow = new Location(randomCustomer.Longitude, randomCustomer.Latitude);
                         }
                         //random battery between minimum of arriving to base station for charge
-                        DO.BaseStation baseStation = GetCloserBaseStation(newDrone.LocationNow);
-                        DO.BaseStation closerBaseStation = baseStation;
+                        DO.BaseStation closerBaseStation = GetCloserBaseStation(newDrone.LocationNow);
                         closerBaseStation.ChargeSlots--;
                         dal.UpDateBaseStation(closerBaseStation);
                         double distance = GetDistance(newDrone.LocationNow, new Location(closerBaseStation.Longitude, closerBaseStation.Latitude));
@@ -214,7 +213,7 @@ namespace BL
             {
                 throw new GetDetailsProblemException(ex.Message);
             }
-            
+
         }
         private double GetElectricityUseOfBattery(double distance, WeightCategories weight)
         {
