@@ -10,7 +10,7 @@ namespace Dal
 {
     class DataSourceXml
     {
-        #region fields
+        #region fields and lists
         internal static Random r = new Random();
         internal static List<BaseStation> stations = new List<BaseStation>();
         internal static List<Customer> customers = new List<Customer>();
