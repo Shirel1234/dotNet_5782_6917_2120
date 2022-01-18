@@ -5,6 +5,7 @@ namespace DalApi
 {
     public static class DalFactory
     {
+        #region getDal
         public static IDal GetDal()
         {
             string dalType = DalConfig.DalName;
@@ -23,5 +24,6 @@ namespace DalApi
             
             return dal;
         }
+        #endregion
     }
 }

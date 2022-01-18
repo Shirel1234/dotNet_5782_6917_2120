@@ -31,7 +31,7 @@
         <Button x:Name="btnCustomer" Style="{StaticResource myButtonStyle}" Content="Customer" Click="btnPressCustomer_Click" Margin="190,344,422,24" Background="#FFEA8B42" BorderBrush="#FFD66318" Visibility="Hidden"/>
         <Button x:Name="btnWorker" Style = "{StaticResource myButtonStyle}" Content="Worker" Margin="426,343,207,28" Background="#FFEA8B42" Click="btnWorker_Click" Visibility="Hidden" />
         <Button x:Name="btnNewCustomer" Style = "{StaticResource myButtonStyle}" Content="New Customer" Click="btnNewCustomer_Click" Margin="268,341,299,24" Background="#FFEA8B42" Visibility="Hidden"/>
-        <Label x:Name="lblWellcome" Content="Wellcome" HorizontalAlignment="Left" Height="152" VerticalAlignment="Top" Width="460" FontSize="72" Background="{x:Null}" FontFamily="Rockwell Extra Bold" Margin="148,16,0,0">
+        <Label x:Name="lblWellcome" Content="Welcome" HorizontalAlignment="Left" Height="152" VerticalAlignment="Top" Width="460" FontSize="72" Background="{x:Null}" FontFamily="Rockwell Extra Bold" Margin="168,16,0,0">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF1B4889" Offset="0.142"/>

@@ -5,7 +5,6 @@ using DalApi;
 using DO;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ namespace Dal
 {
     sealed class DalXml : IDal
     {
-        #region singelton
+        #region fields and singelton
         static readonly IDal instance = new DalXml();
         public static IDal Instance { get => instance; }
         XElement baseStationRoot;
@@ -24,15 +23,19 @@ namespace Dal
         string customersPath = @"CustomersXml.xml";//XMLSerializer
         string parcelsPath = @"ParcelsXml.xml";//XMLSerializer
         string dronesChargePath = @"DronesChargeXml.xml";//XMLSerializer
+        string runNumberPath = @"RunNumbers.xml";//XMLSerializer
         #endregion
         private DalXml()
         {
-            //In the first time
-           // DataSourceXml.Initialize();
-            baseStationRoot = XMLTools.LoadListFromXMLElement(baseStationPath);
-
+           //In the first time
+           //DataSourceXml.Initialize();
+           baseStationRoot = XMLTools.LoadListFromXMLElement(baseStationPath);
         }
         #region Adding
+        /// <summary>
+        /// add a base station
+        /// </summary>
+        /// <param name="b">a base station</param>
         public void AddStation(BaseStation b)
         {
             BaseStation bs = GetStation(b.CodeStation);
@@ -48,6 +51,10 @@ namespace Dal
             baseStationRoot.Add(new XElement("Station", id, name, numOfChargeSlots, location));
             XMLTools.SaveListToXMLElement(baseStationRoot, baseStationPath);
         }
+        /// <summary>
+        /// add a drone
+        /// </summary>
+        /// <param name="drone">a drone</param>
         public void AddDrone(Drone drone)
         {
             List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -62,7 +69,10 @@ namespace Dal
 
             XMLTools.SaveListToXMLSerializer<Drone>(droneList, dronesPath);
         }
-
+        /// <summary>
+        /// add a customer
+        /// </summary>
+        /// <param name="customer"> a customer</param>
         public void AddCustomer(Customer customer)
         {
             List<Customer> customerList = XMLTools.LoadListFromXMLSerializer<Customer>(customersPath);
@@ -78,16 +88,26 @@ namespace Dal
 
             XMLTools.SaveListToXMLSerializer<Customer>(customerList, customersPath);
         }
-
+        /// <summary>
+        /// add a parcel
+        /// </summary>
+        /// <param name="parcel">a parcel</param>
         public void AddParcel(Parcel parcel)
         {
             List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-
-            parcel.CodeParcel = DataSourceXml.Config.countIdParcel++;
+            List<int> runNumbers = XMLTools.LoadListFromXMLSerializer<int>(runNumberPath);
+            parcel.CodeParcel = runNumbers[0]++;
             parcelList.Add(parcel);
 
             XMLTools.SaveListToXMLSerializer<Parcel>(parcelList, parcelsPath);
+            XMLTools.SaveListToXMLSerializer<int>(runNumbers, runNumberPath);
         }
+        /// <summary>
+        /// add a droneCharge
+        /// </summary>
+        /// <param name="idD">id of the drone</param>
+        /// <param name="idS">id of the station that the drone is in charge there</param>
+        /// <param name="dateTime">the time of starting the charging</param>
         public void AddDroneCharge(int idD, int idS, DateTime? dateTime)
         {
             List<DroneCharge> droneChargeList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesChargePath);
@@ -102,6 +122,10 @@ namespace Dal
         #endregion
 
         #region Updateing
+        /// <summary>
+        /// update a base station
+        /// </summary>
+        /// <param name="b">an updated base station</param>
         public void UpDateBaseStation(BaseStation b)
         {
             BaseStation baseStation = GetStation(b.CodeStation);
@@ -117,6 +141,10 @@ namespace Dal
 
             baseStationRoot.Save(baseStationPath);
         }
+        /// <summary>
+        /// update a parcel
+        /// </summary>
+        /// <param name="parcel">an updated parcel</param>
         public void UpDateParcel(Parcel parcel)
         {
             List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -128,7 +156,10 @@ namespace Dal
             parcelList[index] = parcel;
             XMLTools.SaveListToXMLSerializer<Parcel>(parcelList, parcelsPath);
         }
-
+        /// <summary>
+        /// update a drone
+        /// </summary>
+        /// <param name="drone">an updated drone</param>
         public void UpDateDrone(Drone drone)
         {
             List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -140,7 +171,10 @@ namespace Dal
             droneList[index] = drone;
             XMLTools.SaveListToXMLSerializer<Drone>(droneList, dronesPath);
         }
-
+        /// <summary>
+        /// update a customer
+        /// </summary>
+        /// <param name="customer">an updated customer</param>
         public void UpDateCustomer(Customer customer)
         {
             List<Customer> customerList = XMLTools.LoadListFromXMLSerializer<Customer>(customersPath);
@@ -159,6 +193,10 @@ namespace Dal
         #endregion
 
         #region Removeing
+        /// <summary>
+        /// remove a drone in charging
+        /// </summary>
+        /// <param name="dc">a droneCharge</param>
         public void RemoveDroneCharge(DroneCharge dc)
         {
             List<DroneCharge> droneChargeList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesChargePath);
@@ -169,6 +207,10 @@ namespace Dal
 
             XMLTools.SaveListToXMLSerializer<DroneCharge>(droneChargeList, dronesChargePath);
         }
+        /// <summary>
+        /// remove a parcel
+        /// </summary>
+        /// <param name="id">id of the parcel to remove</param>
         public void RemoveParcel(int id)
         {
             List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -186,6 +228,11 @@ namespace Dal
         #endregion
 
         #region Getting
+        /// <summary>
+        /// get a single base station according to its id number
+        /// </summary>
+        /// <param name="idS">id number of base station</param>
+        /// <returns>a single base station</returns>
         public BaseStation GetStation(int idS)
         {
             XMLTools.LoadListFromXMLElement(baseStationPath);
@@ -210,7 +257,11 @@ namespace Dal
             return baseStation;
         }
 
-
+        /// <summary>
+        /// get a single drone according to its id number
+        /// </summary>
+        /// <param name="id">id number of drone</param>
+        /// <returns>a single drone</returns>
         public Drone GetDrone(int id)
         {
             List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -219,6 +270,11 @@ namespace Dal
                 throw new DoesntExistException("This drone does not exist");
             return droneList.FirstOrDefault(d => d.CodeDrone == id);
         }
+        /// <summary>
+        /// get a single customer according to its id number
+        /// </summary>
+        /// <param name="id">id number of customer</param>
+        /// <returns>a single customer</returns>
         public Customer GetCustomer(int id)
         {
             List<Customer> customerList = XMLTools.LoadListFromXMLSerializer<Customer>(customersPath);
@@ -227,7 +283,11 @@ namespace Dal
                 throw new DoesntExistException("This customer does not exist");
             return customerList.FirstOrDefault(c => c.IdCustomer == id);
         }
-
+        /// <summary>
+        /// get a single parcel according to its id number
+        /// </summary>
+        /// <param name="id">id number of parcel</param>
+        /// <returns>a single parcel</returns>
         public Parcel GetParcel(int id)
         {
             List<Parcel> parcelList = GetParcelsByCondition().ToList();
@@ -236,7 +296,11 @@ namespace Dal
                 throw new DoesntExistException("This parcel does not exist");
             return parcelList.FirstOrDefault(p => p.CodeParcel == id);
         }
-
+        /// <summary>
+        /// get a single DroneCharge according to its id number
+        /// </summary>
+        /// <param name="id">id number of DroneCharge</param>
+        /// <returns>a single DroneCharge</returns>
         public DroneCharge GetDroneCharge(int id)
         {
             List<DroneCharge> droneChargelList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesChargePath);
@@ -248,6 +312,11 @@ namespace Dal
         #endregion
 
         #region GettingAllByCondition
+        /// <summary>
+        /// get all the base stations that answer to this condition, if exists
+        /// </summary>
+        /// <param name="conditionDelegate">the condition</param>
+        /// <returns>all the base stations</returns>
         public IEnumerable<BaseStation> GetStationsByCondition(Func<BaseStation, bool> conditionDelegate = null)
         {
             baseStationRoot=XMLTools.LoadListFromXMLElement(baseStationPath);
@@ -263,8 +332,11 @@ namespace Dal
                             });
             return stations;
         }
-
-
+        /// <summary>
+        /// get all the parcels that answer to this condition, if exists
+        /// </summary>
+        /// <param name="conditionDelegate">the condition</param>
+        /// <returns>all the parcels</returns>
         public IEnumerable<Parcel> GetParcelsByCondition(Func<Parcel, bool> conditionDelegate = null)
          {
                 List<Parcel> parcelList = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -274,7 +346,11 @@ namespace Dal
                     return v.AsEnumerable().OrderByDescending(p => p.CodeParcel);
                 return v.Where(conditionDelegate).OrderByDescending(p => p.CodeParcel);
         }
-
+        /// <summary>
+        /// get all the drones that answer to this condition, if exists
+        /// </summary>
+        /// <param name="conditionDelegate">the condition</param>
+        /// <returns>all the drones</returns>
         public IEnumerable<Drone> GetDronesByCondition(Func<Drone, bool> conditionDelegate = null)
         {
             List<Drone> droneList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -284,7 +360,11 @@ namespace Dal
                 return v.AsEnumerable().OrderByDescending(d => d.CodeDrone);
             return v.Where(conditionDelegate).OrderByDescending(d => d.CodeDrone);
         }
-
+        /// <summary>
+        /// get all the customers that answer to this condition, if exists
+        /// </summary>
+        /// <param name="conditionDelegate">the condition</param>
+        /// <returns>all the customers</returns>
         public IEnumerable<Customer> GetCustomersByCondition(Func<Customer, bool> conditionDelegate = null)
         {
             List<Customer> customerList = XMLTools.LoadListFromXMLSerializer<Customer>(customersPath);
@@ -294,6 +374,11 @@ namespace Dal
                 return v.AsEnumerable().OrderByDescending(c => c.IdCustomer);
             return v.Where(conditionDelegate).OrderByDescending(c => c.IdCustomer);
         }
+        /// <summary>
+        /// get all the drones in charge that answer to this condition, if exists
+        /// </summary>
+        /// <param name="conditionDelegate">the condition</param>
+        /// <returns>all the drones in charge</returns>
         public IEnumerable<DroneCharge> GetDronesChargeByCondition(Func<DroneCharge, bool> conditionDelegate = null)
         {
             List<DroneCharge> droneChargeList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesChargePath);

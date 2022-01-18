@@ -9,6 +9,7 @@ namespace BL
 {
     public partial class BL
     {
+        #region parcel functions
         /// <summary>
         /// the function checks the details and throw errors in step and then adds a new parcel to the list of parcels
         /// </summary>
@@ -152,5 +153,6 @@ namespace BL
             dal.RemoveParcel(id);
         }
 
+        #endregion
     }
 }

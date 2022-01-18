@@ -9,21 +9,29 @@ namespace Dal
 {
     static class DataSource
     {
+        #region fields
         internal static Random r = new Random();
         internal static List<BaseStation> stations = new List<BaseStation>();
         internal static List<Customer> customers = new List<Customer>();
         internal static List<Drone> drones = new List<Drone>();
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
+        #endregion
+        #region class config
         internal class Config
         {
             internal static int countIdParcel = 100010;
-            internal static double Free { get => 0.01; }
-            internal static double Easy { get => 0.011; }
-            internal static double Medium { get => 0.012; }
-            internal static double Heavy { get => 0.013; }
-            internal static double ChargingRate { get => 10.25; }
+            internal static double Free { get => 0.001; }
+            internal static double Easy { get => 0.0011; }
+            internal static double Medium { get => 0.0012; }
+            internal static double Heavy { get => 0.0013; }
+            internal static double ChargingRate { get => 3; }
         }
+        #endregion
+        #region Initialize
+        /// <summary>
+        /// Initialize function for all the fields of this class
+        /// </summary>
         public static void Initialize()
         {
             BaseStation b = new BaseStation();
@@ -86,5 +94,6 @@ namespace Dal
                 parcels.Add(p);
             }
         }
+        #endregion
     }
 }

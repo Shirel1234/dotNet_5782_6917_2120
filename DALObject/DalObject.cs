@@ -7,6 +7,7 @@ namespace Dal
 {
     sealed partial class DalObject : IDal
     {
+        #region
         static readonly IDal instance = new DalObject();
         public static IDal Instance { get => instance; }
         DalObject() 
@@ -117,5 +118,6 @@ namespace Dal
                 return listDronesChargeByCondition;
             }
         }
+        #endregion
     }
 }

@@ -50,7 +50,6 @@ namespace BL
             BODrones = tempBoDrones.ToList();
         }
         #endregion
-
         #region Updating
         /// <summary>
         /// the function finds the details of this drone and sending it to charge in the closer base station
@@ -266,7 +265,6 @@ namespace BL
             new Simulator(id, updateDelegate, stopDelegate, this);
         }
         #endregion
-
     }
 }    
 

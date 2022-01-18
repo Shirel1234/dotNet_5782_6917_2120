@@ -9,6 +9,7 @@ namespace Dal
 {
     partial class DalObject
     {
+        #region
         /// <summary>
         /// the function check if this station is exist yet
         /// </summary>
@@ -77,5 +78,6 @@ namespace Dal
                 throw new DoesntExistException ("This parcel doesn't exist in the system");
             DataSource.parcels.Remove(p);
         }
+        #endregion
     }
 }

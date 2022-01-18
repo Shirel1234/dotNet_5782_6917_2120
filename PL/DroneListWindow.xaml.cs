@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-
 namespace PL
 {
     /// <summary>
@@ -52,7 +51,6 @@ namespace PL
             try
             {
                 DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem)));
-                //lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
                 this.if_selected_changed = true;
                 cmbWeight.SelectedIndex = -1; 
                 rdbByStatus.IsChecked = false;
@@ -71,8 +69,7 @@ namespace PL
         {
             try
             {
-                DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbWeight.SelectedItem)));
-                //lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
+                DataContext = new List<DroneForList>(bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem)));
                 this.if_selected_changed = true;
                 cmbStatuses.SelectedIndex = -1;
                 rdbByStatus.IsChecked = false;
@@ -96,20 +93,15 @@ namespace PL
                 {
                     if ((cmbWeight.SelectedIndex != -1))
                         DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbWeight.SelectedItem)));
-                    //lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
                     else
                         if ((cmbStatuses.SelectedIndex != -1))
                              DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem)));
-
-                    //lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
                     else
                              if (rdbByStatus.IsChecked == true)
                                 this.GroupingByStatus(sender, e);
                 }
                 else
                     DataContext = new List<DroneForList>(bll.GetDrones());
-
-                //lsvDrones.ItemsSource = bll.GetDrones();
             }
             catch (Exception ex)
             {
@@ -136,20 +128,15 @@ namespace PL
                 {
                     if ((cmbWeight.SelectedIndex != -1))
                         DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbWeight.SelectedItem)));
-                    //lsvDrones.ItemsSource = bll.GetDronesByWeight(Convert.ToInt32(cmbWeight.SelectedItem));
                     else
                         if ((cmbStatuses.SelectedIndex != -1))
-                        DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem)));
-
-                    //lsvDrones.ItemsSource = bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem));
-                    else
+                            DataContext = new List<DroneForList>(bll.GetDronesByStatus(Convert.ToInt32(cmbStatuses.SelectedItem)));
+                        else
                              if (rdbByStatus.IsChecked == true)
-                        this.GroupingByStatus(sender, e);
+                                 this.GroupingByStatus(sender, e);
                 }
                 else
                     DataContext = new List<DroneForList>(bll.GetDrones());
-
-                //lsvDrones.ItemsSource = bll.GetDrones();
             }
             catch (Exception ex)
             {
@@ -169,7 +156,6 @@ namespace PL
                 cmbWeight.SelectedIndex = -1;
                 cmbStatuses.SelectedIndex = -1;
                 DataContext = new List<DroneForList>(bll.GetDrones());
-                //lsvDrones.ItemsSource = bll.GetDrones();
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvDrones.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("DroneStatus");
                 view.GroupDescriptions.Add(groupDescription);
@@ -190,7 +176,6 @@ namespace PL
             try
             {
                 DataContext = new List<DroneForList>(bll.GetDrones());
-                //lsvDrones.ItemsSource = bll.GetDrones();
                 cmbWeight.SelectedIndex = -1;
                 cmbStatuses.SelectedIndex = -1;
                 rdbByStatus.IsChecked = false;

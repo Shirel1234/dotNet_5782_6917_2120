@@ -20,7 +20,6 @@ namespace Dal
             //      Directory.CreateDirectory(dir);
         }
         #region SaveLoadWithXElement
-
         //save a specific xml file according the name- throw exception in case of problems..
         //for the using with XElement..
         public static void SaveListToXMLElement(XElement rootElem, string filePath)
@@ -103,6 +102,5 @@ namespace Dal
             }
         }
         #endregion
-
     }
 }

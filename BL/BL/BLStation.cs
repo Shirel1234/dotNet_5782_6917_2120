@@ -9,6 +9,7 @@ namespace BL
 {
     public partial class BL
     {
+        #region base station functions
         /// <summary>
         /// the function checks the details and throw errors in step and then adds a new station to the list of stations
         /// </summary>
@@ -168,5 +169,6 @@ namespace BL
                 dronesCharge = new List<DroneInCharge>();
             return dronesCharge;
         }
+        #endregion
     }
 }

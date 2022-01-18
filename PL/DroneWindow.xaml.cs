@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
-using System.ComponentModel;
 
 namespace PL
 {
@@ -55,7 +54,7 @@ namespace PL
                 InitializeComponent();
                 lblTitleDrone.Content = "Update Drone:";
                 bll = bl;
-                myDrone = drone; 
+                myDrone = drone;
                 DataContext = myDrone;
                 cmbWeightDrone.Visibility = Visibility.Hidden;
                 txtStatus.Visibility = Visibility.Visible;
@@ -83,7 +82,7 @@ namespace PL
                 }
                 else
                     if (myDrone.DroneStatus == DroneStatuses.maintenace)
-                        btnReleaseDroneCharging.Visibility = Visibility.Visible;
+                    btnReleaseDroneCharging.Visibility = Visibility.Visible;
                 else
                 //in sending
                 {

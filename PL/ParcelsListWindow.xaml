@@ -14,8 +14,8 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Grid x:Name="grdGrouping" HorizontalAlignment="Left" Height="50" Margin="79,45,0,0" VerticalAlignment="Top" Width="207" Grid.ColumnSpan="2">
-            <RadioButton x:Name="rdbBySender" Content="By Sender" HorizontalAlignment="Left" Height="32" Margin="105,24,0,0" VerticalAlignment="Top" Width="99" Checked="GroupingBySender"/>
-            <RadioButton x:Name="rdbByTarget" Content="By Target" HorizontalAlignment="Left" Height="32" Margin="14,24,0,0" VerticalAlignment="Top" Width="84" Click="GroupingByTarget"/>
+            <RadioButton x:Name="rdbBySender" Content="By Sender" HorizontalAlignment="Left" Height="32" Margin="105,32,0,0" VerticalAlignment="Top" Width="99" Checked="GroupingBySender"/>
+            <RadioButton x:Name="rdbByTarget" Content="By Target" HorizontalAlignment="Left" Height="32" Margin="14,30,0,0" VerticalAlignment="Top" Width="84" Click="GroupingByTarget"/>
             <Label x:Name="lblGrouping" Content="Grouping:" Height="33" Margin="0,-8,102,0" VerticalAlignment="Top" FontSize="16"/>
         </Grid>
         <Grid Margin="10,119,10,170" Grid.ColumnSpan="2">
@@ -46,10 +46,10 @@
                 </ListView.GroupStyle>
             </ListView>
         </Grid>
-        <Grid x:Name="grdSorting" HorizontalAlignment="Left" Height="82" Margin="229,37,0,0" VerticalAlignment="Top" Width="350" Grid.Column="1">
+        <Grid x:Name="grdSorting" HorizontalAlignment="Left" Height="82" Margin="376,42,0,0" VerticalAlignment="Top" Width="350">
             <Label x:Name="lblSort" Content="Sorting:" HorizontalAlignment="Left" Height="38" Margin="0,-7,0,0" VerticalAlignment="Top" Width="87" FontSize="18"/>
-            <Label Content="Status Parcel:" HorizontalAlignment="Left" Height="27" Margin="10,31,0,0" VerticalAlignment="Top" Width="89"/>
-            <ComboBox x:Name="cmbStatuses" HorizontalAlignment="Left" Height="27" Margin="87,31,0,0" VerticalAlignment="Top" Width="109" SelectionChanged="cmbStatuses_SelectionChanged"/>
+            <Label Content="Status Parcel:" HorizontalAlignment="Left" Height="26" Margin="10,0,0,0" VerticalAlignment="Center" Width="89"/>
+            <ComboBox x:Name="cmbStatuses" HorizontalAlignment="Left" Height="26" Margin="95,30,0,0" VerticalAlignment="Top" Width="109" SelectionChanged="cmbStatuses_SelectionChanged"/>
             <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="298,4,0,0" VerticalAlignment="Top" Height="27" Width="52" Click="btbRefresh_Click"/>
         </Grid>
         <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="43" Margin="356,463,0,0" VerticalAlignment="Top" Width="223" FontSize="18" Click="btnAddParcel_Click" Grid.Column="1"/>

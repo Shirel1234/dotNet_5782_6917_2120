@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace DalApi
 {
+    #region class DalConfig
     class DalConfig
     {
         internal static string DalName;
@@ -18,9 +19,12 @@ namespace DalApi
                           ).ToDictionary(p => "" + p.Name, p => p.Value);
         }
     }
+    #endregion
+    #region class DalConfigException
     public class DalConfigException : Exception
     {
         public DalConfigException(string msg) : base(msg) { }
         public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
     }
+    #endregion
 }

@@ -10,8 +10,9 @@ namespace BL
     public partial class BL
     {
         Random r = new Random();
+        #region help functions
         /// <summary>
-        /// the function move from cordinates to distance in km by radius and math calculation
+        /// the function transforms cordinates to distance in km by radius and math calculation
         /// </summary>
         /// <param name="l1"> first location</param>
         /// <param name="l2">second location </param>
@@ -170,13 +171,6 @@ namespace BL
                             baseStation = dal.GetStation(2);
                             newDrone.LocationNow = new Location(baseStation.Longitude, baseStation.Latitude);
                         }
-                        //DO.BaseStation[] arrBaseStation = dal.GetStationsByCondition().ToArray();
-                        //int randomNumOfStationForCharge = r.Next(0, 2);
-                        //DO.BaseStation randomBaseStation = arrBaseStation[randomNumOfStationForCharge];
-                        ////check if the station which was randomed has available charge slots. If not, the other station must have.
-                        //if (randomBaseStation.ChargeSlots <= 0)
-                        //    randomBaseStation = arrBaseStation[1 - randomNumOfStationForCharge];
-                        //newDrone.LocationNow = new Location(randomBaseStation.Longitude, randomBaseStation.Latitude);
                         baseStation.ChargeSlots--;
                         dal.AddDroneCharge(d.CodeDrone, baseStation.CodeStation, DateTime.Now);
                         dal.UpDateBaseStation(baseStation);
@@ -283,9 +277,8 @@ namespace BL
                 }
             }
             return chosenParcel;
-
         }
-
+        #endregion
     }
 }
 

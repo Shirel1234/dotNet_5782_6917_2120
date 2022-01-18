@@ -51,7 +51,7 @@ namespace PL
             }
         }
         ///constructor for updating or showing a customer
-        public AddCustomerWindow(BlApi.IBL bl,Customer c)
+        public AddCustomerWindow(BlApi.IBL bl, Customer c)
         {
             try
             {
@@ -100,11 +100,11 @@ namespace PL
             try
             {
                 Customer c = bll.GetCustomer(newCustomer.Id);
-                if(txtNameCustomer.Text == c.Name && txtPhoneCustomer.Text == c.Phone && ckbIsWorker.IsChecked.Value)
+                if (txtNameCustomer.Text == c.Name && txtPhoneCustomer.Text == c.Phone && ckbIsWorker.IsChecked.Value)
                     MessageBox.Show("No field updated.", "Error");
                 else
                 {
-                    bll.UpdateCustomer(newCustomer.Id, newCustomer.Name, newCustomer.Phone,newCustomer.IsWorker);
+                    bll.UpdateCustomer(newCustomer.Id, newCustomer.Name, newCustomer.Phone, newCustomer.IsWorker);
                     MessageBox.Show("The customer was successfully updated", "Done");
                     this.Close();
                 }
@@ -124,11 +124,11 @@ namespace PL
         {
             try
             {
-                if(!lsvSentParcels.Items.IsEmpty)
+                if (!lsvSentParcels.Items.IsEmpty)
                 {
                     Parcel p = bll.GetParcel(((ParcelInCustomer)lsvSentParcels.SelectedItem).Id);
                     new AddParcelWindow(bll, p).ShowDialog();
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -139,7 +139,7 @@ namespace PL
         {
             try
             {
-                if(!lsvAcceptedParcels.Items.IsEmpty)
+                if (!lsvAcceptedParcels.Items.IsEmpty)
                 {
                     Parcel p = bll.GetParcel(((ParcelInCustomer)lsvAcceptedParcels.SelectedItem).Id);
                     new AddParcelWindow(bll, p).ShowDialog();
@@ -193,8 +193,8 @@ namespace PL
                 }
                 else
                     if (!txtLatitudeCustomer.Text.Contains("."))
-                        if (e.Key == Key.OemPeriod && !txtLatitudeCustomer.Text.Equals(""))
-                            return;
+                    if (e.Key == Key.OemPeriod && !txtLatitudeCustomer.Text.Equals(""))
+                        return;
             e.Handled = true;
             MessageBox.Show("Only digits alowed!");
         }
@@ -292,7 +292,7 @@ namespace PL
         /// <param name="e"></param>
         private void txtLatitudeCustomer_LostFocus(object sender, RoutedEventArgs e)
         {
-            try 
+            try
             {
                 if (!btnCloseWindow.IsKeyboardFocused && !txtLatitudeCustomer.Text.Equals(""))
                     if (Convert.ToDouble(txtLatitudeCustomer.Text) < 33.5 || Convert.ToDouble(txtLatitudeCustomer.Text) > 36.3)
@@ -332,7 +332,7 @@ namespace PL
                     }
                 }
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }

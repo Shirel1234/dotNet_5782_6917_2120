@@ -10,10 +10,10 @@
         <ImageBrush ImageSource="/shutterstock_1231838656132541713690573635.jpg"/>
     </Window.Background>
     <Grid>
-        <Button x:Name="btnUpdate" Content="Update details" HorizontalAlignment="Left" Height="75" Margin="10,12,0,0" VerticalAlignment="Top" Width="177" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnUpdate_Click" FontWeight="Normal" FontFamily="Global Sans Serif"/>
-        <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="75" Margin="10,105,0,0" VerticalAlignment="Top" Width="177" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnAddParcel_Click" FontFamily="Global Sans Serif"/>
-        <Button x:Name="btnShowParcelsSend" Content="Show Parcels Sended" Height="76" Margin="10,194,570,0" VerticalAlignment="Top" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnShowSended_Click" FontFamily="Global Sans Serif"/>
-        <Button x:Name="btnShowParcelsTarget" Content="Show Parcels Targeted" Height="75" Margin="10,296,570,0" VerticalAlignment="Top" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnShowTargeted_Click" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnUpdate" Content="Update details" HorizontalAlignment="Left" Height="75" Margin="10,12,0,0" VerticalAlignment="Top" Width="220" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnUpdate_Click" FontWeight="Normal" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnAddParcel" Content="Add Parcel" HorizontalAlignment="Left" Height="75" Margin="10,105,0,0" VerticalAlignment="Top" Width="220" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnAddParcel_Click" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnShowParcelsSend" Content="Show Sent Parcels" Height="76" Margin="10,198,570,0" VerticalAlignment="Top" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnShowSended_Click" FontFamily="Global Sans Serif"/>
+        <Button x:Name="btnShowParcelsTarget" Content="Show Received Parcels" Height="75" Margin="10,296,570,0" VerticalAlignment="Top" FontSize="20" Background="{x:Null}" BorderBrush="#FF0E0C0C" Click="btnShowTargeted_Click" FontFamily="Global Sans Serif"/>
         <ListView x:Name="lsvParcelsSender" HorizontalAlignment="Left" Height="104" Margin="270,180,0,0" VerticalAlignment="Top" Width="484" Visibility="Hidden" >
             <ListView.View>
                 <GridView>

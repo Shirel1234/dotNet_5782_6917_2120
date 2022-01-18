@@ -15,7 +15,8 @@ namespace BL
         private const int DELAY = 500;
         private const double TIME_STEP = DELAY/1000;
         private const double STEP = VELOCITY / TIME_STEP;
-       public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL bl)
+        #region funcions
+        public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL bl)
         {
             Stopwatch stopwatch = new Stopwatch();
             Drone myDrone;
@@ -61,7 +62,6 @@ namespace BL
                                 }
                             }
                             break;
-
                         }
                     case DroneStatuses.sending:
                     {
@@ -72,32 +72,19 @@ namespace BL
                                 {
                                     if(myDrone.ParcelInWay.TransportDistance/ VELOCITY<=((TimeSpan)(DateTime.Now-p.Scheduled)).Seconds)
                                     {
-
+                                        bl.UpdateParcelPickedUpByDrone(myDrone.Id);
+                                        updateDelegate();
                                     }
                                 }
-                                
-
-                                //    updateDelegate();
-                                //    bl.UpdateParcelPickedUpByDrone(myDrone.Id);
-                                //    System.Threading.Thread.Sleep(500);
-                                //    updateDelegate();
-                                //    bl.UpdateDeliveredParcelByDrone(myDrone.Id);
-                                //    System.Threading.Thread.Sleep(500);
-                                //    updateDelegate();
-                                //}
-                                //bl.UpdateSendingDroneToCharge(myDrone.Id);
-                                //updateDelegate();
-                                //bl.UpdateReleasingDroneFromCharge(myDrone.Id);
-                                //updateDelegate();
-
-
+                                bl.UpdateDeliveredParcelByDrone(myDrone.Id);
+                                System.Threading.Thread.Sleep(500);
+                                updateDelegate();
                             }
                             break;
                     }
                 }
-
             }
-       }
-
-   }
+            #endregion
+        }
+    }
 }

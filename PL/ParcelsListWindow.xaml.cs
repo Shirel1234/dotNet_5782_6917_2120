@@ -92,8 +92,8 @@ namespace PL
         private void cmbStatuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
-            { 
-                if(cmbStatuses.SelectedIndex != -1)
+            {
+                if (cmbStatuses.SelectedIndex != -1)
                 {
                     rdbBySender.IsChecked = false;
                     rdbByTarget.IsChecked = false;
@@ -122,7 +122,7 @@ namespace PL
                         this.GroupingBySender(sender, e);
                     else
                         if (rdbByTarget.IsChecked == true)
-                            this.GroupingByTarget(sender, e);
+                        this.GroupingByTarget(sender, e);
                 }
                 else
                     lsvParcels.ItemsSource = bll.GetParcels();

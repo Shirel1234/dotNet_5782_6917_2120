@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{B8B1650A-9AA
 		DronesChargeXml.xml = DronesChargeXml.xml
 		DronesXml.xml = DronesXml.xml
 		ParcelsXml.xml = ParcelsXml.xml
+		RunNumbers.xml = RunNumbers.xml
 		StationsXml.xml = StationsXml.xml
 	EndProjectSection
 EndProject

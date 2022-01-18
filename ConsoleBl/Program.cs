@@ -10,6 +10,7 @@ namespace ConsoleBl
 {
     class Program
     {
+        #region fields and menu enums
         static IBL bl = BlFactory.GetBl();
         enum MenuOption { Exit, Add, Update, View, ViewList }
         enum AddOption { Exit, Station, Drone, Customer, Parcel }
@@ -17,6 +18,8 @@ namespace ConsoleBl
         enum ShowOption { Exit, Station, Drone, Customer, Parcel }
         enum ShowListOption { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingsStations }
         public static Random rnd = new Random();
+        #endregion
+        #region main menu
         static void Main(string[] args)
         {
             Menu();
@@ -31,7 +34,6 @@ namespace ConsoleBl
                 if (int.TryParse(Console.ReadLine(), out choice))
                 {
                     menu = (MenuOption)choice;
-                    //choice = (Char)Console.Read();
                     switch (menu)
                     {
                         case MenuOption.Add: Program.AddingOptions(); break;
@@ -45,6 +47,8 @@ namespace ConsoleBl
             }
             while (choice != 0);
         }
+        #endregion
+        #region adding
         public static void AddingOptions()
         {
             AddOption addOp;
@@ -188,6 +192,8 @@ namespace ConsoleBl
                 Console.WriteLine(ex.Message + "\n");
             }
         }
+        #endregion
+        #region updating
         /// <summary>
         /// view of the update possibilities for the user and going to the matching update function according to his choice
         /// </summary>
@@ -348,6 +354,8 @@ namespace ConsoleBl
                 Console.WriteLine(ex.Message + "\n");
             }
         }
+        #endregion
+        #region view single object
         public static void ViewOptions()
         {
             ShowOption showOp;
@@ -430,6 +438,8 @@ namespace ConsoleBl
                 Console.WriteLine(ex.Message + "\n");
             }
         }
+        #endregion
+        #region view list of objects
         public static void ListViewOptions()
         {
             ShowListOption showListOp;
@@ -544,8 +554,6 @@ namespace ConsoleBl
                 Console.WriteLine(ex.Message + "\n");
             }
         }
+        #endregion
     }
 }
-
-
-

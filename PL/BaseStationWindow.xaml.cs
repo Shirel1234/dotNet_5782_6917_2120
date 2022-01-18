@@ -33,7 +33,7 @@ namespace PL
             {
                 InitializeComponent();
                 newStation = new();
-                newStation.Location = new Location(0,0);
+                newStation.Location = new Location(0, 0);
                 bll = bl;
                 DataContext = newStation;
                 btnUpdateStation.Visibility = Visibility.Hidden;
@@ -42,7 +42,7 @@ namespace PL
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,"Error");
+                MessageBox.Show(ex.Message, "Error");
             }
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace PL
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="bs"></param>
-        public AddBaseStationWindow(BlApi.IBL bl,BaseStationForList bs)
+        public AddBaseStationWindow(BlApi.IBL bl, BaseStationForList bs)
         {
             try
             {
@@ -76,9 +76,9 @@ namespace PL
         {
             try
             {
-                if (txtIdStation.Text == "" || txtNameStation.Text == "" || txtLongitudeStation.Text == "" || txtLatitudeStation.Text == "" || txtAvailableChargeSlotsOfStation.Text == "")  
+                if (txtIdStation.Text == "" || txtNameStation.Text == "" || txtLongitudeStation.Text == "" || txtLatitudeStation.Text == "" || txtAvailableChargeSlotsOfStation.Text == "")
                     MessageBox.Show("One or more of the fields are empty. Please complete the missing information.", "Error");
-                
+
                 else
                 {
                     bll.AddBaseStation(newStation);
@@ -86,7 +86,7 @@ namespace PL
                     this.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "The base station could not be added");
             }
@@ -106,7 +106,7 @@ namespace PL
                     this.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "The base station could not be updated");
             }
@@ -126,7 +126,7 @@ namespace PL
             try
             {
                 ///only if there are drones in the list
-                if(!lsvDronesListOfStation.Items.IsEmpty)
+                if (!lsvDronesListOfStation.Items.IsEmpty)
                 {
                     Drone d = bll.GetDrone(((DroneInCharge)lsvDronesListOfStation.SelectedItem).Id);
                     new AddDroneWindow(bll, d).ShowDialog();
@@ -167,8 +167,8 @@ namespace PL
                 }
                 else
                     if (!txtLatitudeStation.Text.Contains("."))
-                        if (e.Key == Key.OemPeriod && !txtLatitudeStation.Text.Equals(""))
-                            return;
+                    if (e.Key == Key.OemPeriod && !txtLatitudeStation.Text.Equals(""))
+                        return;
             e.Handled = true;
             MessageBox.Show("Only digits alowed!");
         }

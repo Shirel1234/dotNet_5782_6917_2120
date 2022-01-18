@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    #region UpdateProblemException
     public class UpdateProblemException : Exception
     {
         public UpdateProblemException() : base() { }
@@ -15,7 +16,8 @@ namespace BO
         public UpdateProblemException(string message, Exception inner) : base(message, inner) { }
         protected UpdateProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
-
+    #endregion
+    #region GetDetailsProblemException
     [Serializable]
     public class GetDetailsProblemException : Exception
     {
@@ -24,6 +26,8 @@ namespace BO
         public GetDetailsProblemException(string message, Exception inner) : base(message, inner) { }
         protected GetDetailsProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
+    #endregion
+    #region AddingProblemException
     [Serializable]
     public class AddingProblemException : Exception
     {
@@ -32,7 +36,8 @@ namespace BO
         public AddingProblemException(string message, Exception inner) : base(message, inner) { }
         protected AddingProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
-
+    #endregion
+    #region InvalidValueException
     [Serializable]
     public class InvalidValueException : Exception
     {
@@ -41,4 +46,5 @@ namespace BO
         public InvalidValueException(string message, Exception inner) : base(message, inner) { }
         protected InvalidValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
+    #endregion
 }

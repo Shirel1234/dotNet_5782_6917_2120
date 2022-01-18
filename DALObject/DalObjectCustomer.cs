@@ -9,6 +9,7 @@ namespace Dal
 {
     partial class DalObject
     {
+        #region
         /// <summary>
         /// the function check if this station is exist yet
         /// </summary>
@@ -72,6 +73,7 @@ namespace Dal
                 return listCustomerByCondition;
             }
         }
+        #endregion
     }
 }
 

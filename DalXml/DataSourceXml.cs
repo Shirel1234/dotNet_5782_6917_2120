@@ -10,12 +10,16 @@ namespace Dal
 {
     class DataSourceXml
     {
+        #region fields
         internal static Random r = new Random();
         internal static List<BaseStation> stations = new List<BaseStation>();
         internal static List<Customer> customers = new List<Customer>();
         internal static List<Drone> drones = new List<Drone>();
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<DroneCharge> dronesCharge = new List<DroneCharge>();
+        internal static List<int> runNumbers = new List<int>();
+        #endregion
+        #region class config
         internal class Config
         {
             internal static int countIdParcel = 100010;
@@ -25,9 +29,13 @@ namespace Dal
             internal static double Heavy { get => 0.0013; }
             internal static double ChargingRate { get => 3; }
         }
+        #endregion
+        #region Initialize
+        /// <summary>
+        /// Initialize function for all the fields of this class
+        /// </summary>
         public static void Initialize()
         {
-
             Drone d = new Drone();
             for (int i = 1; i < 6; i++)
             {
@@ -83,9 +91,10 @@ namespace Dal
                 parcels.Add(p);
             }
             XMLTools.SaveListToXMLSerializer(parcels, @"ParcelsXml.xml");
+            runNumbers.Add(Config.countIdParcel);
+            XMLTools.SaveListToXMLSerializer(runNumbers, @"RunNumbers.xml");
 
             BaseStation b = new BaseStation();
-            //XElement baseStationRoot = new XElement("Station", 0, 0, 0, 0);
              XElement baseStationRoot = XMLTools.LoadListFromXMLElement(@"StationsXml.xml");
             for (int i = 1; i < 3; i++)
             {
@@ -103,9 +112,8 @@ namespace Dal
                 XElement location = new XElement("location", longitude, latitude);
                 baseStationRoot.Add(new XElement("Station", id, name, numOfChargeSlots, location));
                 XMLTools.SaveListToXMLElement(baseStationRoot, @"StationsXml.xml");
-
             }
-
         }
+        #endregion
     }
 }

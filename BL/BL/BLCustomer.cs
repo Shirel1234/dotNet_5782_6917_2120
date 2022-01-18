@@ -9,6 +9,7 @@ namespace BL
 {
     public partial class BL
     {
+        #region customer functions
         /// <summary>
         /// the function checks the details and throw errors in step and then adds a new castumer to the list of customers
         /// </summary>
@@ -146,7 +147,7 @@ namespace BL
         /// <summary>
         /// the function brings all of the customers from dal and add the mess detail for bl Customer
         /// </summary>
-        /// <returns>list of customer</returns>
+        /// <returns>list of customers</returns>
         public IEnumerable<CustomerForList> GetCustomers()
         {
             List<DO.Customer> DOcustomersList = dal.GetCustomersByCondition().ToList();
@@ -169,7 +170,7 @@ namespace BL
                     IsWorker=customer.IsWorker
                 };
         }
-
+        #endregion
     }
 }
 

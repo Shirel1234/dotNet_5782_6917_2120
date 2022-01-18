@@ -90,7 +90,7 @@ namespace PL
                 Customer c = bll.GetCustomer(((CustomerInParcel)lblShowSender.Content).Id);
                 new AddCustomerWindow(bll, c).ShowDialog();
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
@@ -110,11 +110,11 @@ namespace PL
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             try
             {
-                if(cmbSenders.SelectedIndex==-1 || cmbTargets.SelectedIndex==-1)
-                     MessageBox.Show("One or more of the details are empty. Please complete the missing information.", "ERROR");
+                if (cmbSenders.SelectedIndex == -1 || cmbTargets.SelectedIndex == -1)
+                    MessageBox.Show("One or more of the details are empty. Please complete the missing information.", "ERROR");
                 else
                 {
                     myParcel.SenderCustomer = new CustomerInParcel { Id = ((CustomerForList)cmbSenders.SelectedItem).Id, Name = ((CustomerForList)cmbSenders.SelectedItem).Name };
@@ -123,11 +123,11 @@ namespace PL
                     MessageBox.Show("The new parcel was successfully added", "Done");
                     this.Close();
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message , "ERROR");
+                MessageBox.Show(ex.Message, "ERROR");
             }
         }
 
@@ -139,7 +139,7 @@ namespace PL
                 MessageBox.Show("The parcel was successfully removed", "Done");
                 this.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }

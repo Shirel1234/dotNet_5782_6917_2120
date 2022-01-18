@@ -1,16 +1,4 @@
-﻿//using System;
-
-//namespace ConsoleDal
-//{
-//    class Program
-//    {
-//        static void Main(string[] args)
-//        {
-//            Console.WriteLine("Hello World!");
-//        }
-//    }
-//}
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +10,14 @@ namespace ConsoleDal
 {
     class Program
     {
+        #region fields and menu enums
         static IDal dal = DalFactory.GetDal();
         enum Menu { Exit, Add, View, ViewList }
         enum AddOption { Exit, Station, Drone, Customer, Parcel }
         enum ShowOption { Exit, Station, Drone, Customer, Parcel }
         enum ShowListOption { Exit, Station, Drone, Customers, Parcels, UnAssignmentParcel, AvailableChargingsStation }
+        #endregion
+        #region adding
         /// <summary>
         /// the function offers the user 4 adding options for adding base station/drone/customer/parcel.
         /// </summary>
@@ -39,10 +30,6 @@ namespace ConsoleDal
             if (int.TryParse(Console.ReadLine(), out choice))
             {
                 addOp = (AddOption)choice;
-
-                //Console.WriteLine("enter number:");
-                //bool success = int.TryParse(Console.ReadLine(), out x);
-                // Console.WriteLine(x);
                 {
                     switch (addOp)
                     {
@@ -80,7 +67,6 @@ namespace ConsoleDal
                         baseStation.Latitude = lattitude;
                         dal.AddStation(baseStation);
                     }
-
         }
         /// <summary>
         /// the function adds a new drone to the list.
@@ -100,9 +86,6 @@ namespace ConsoleDal
                 DO.Drone drone = new DO.Drone();
                 drone.CodeDrone = id;
                 drone.ModelDrone = model;
-                //   drone.Battery = battery;
-                //
-                //drone.Status = DroneStatuses.free;
                 drone.MaxWeight = weight;
                 dal.AddDrone(drone);
             }
@@ -156,7 +139,8 @@ namespace ConsoleDal
                         dal.AddParcel(parcel);
                     }
         }
-
+        #endregion
+        #region view single object
         /// <summary>
         /// the function offers the user 4 view options for view of a base station/a drone/a customer/a parcel
         /// </summary>
@@ -189,14 +173,14 @@ namespace ConsoleDal
         {
             Console.WriteLine("enter the base station ID");
             int idS;
-            if (int.TryParse(Console.ReadLine(), out idS))
+            try
             {
-                //DAL.IDAL.DO.BaseStation baseStation = DAL.DalObject.DalObject.ShowStation(idS);
-                //if (baseStation.CodeStation == idS)
-                //Console.WriteLine(baseStation + "\n");
-                //else
-                // Console.WriteLine("Sorry. The base station is not found\n");
-                Console.WriteLine(dal.GetStation(idS));
+                if (int.TryParse(Console.ReadLine(), out idS))
+                    Console.WriteLine(dal.GetStation(idS));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
         /// <summary>
@@ -208,14 +192,13 @@ namespace ConsoleDal
         {
             Console.WriteLine("enter the drone ID");
             int idD;
-            if (int.TryParse(Console.ReadLine(), out idD))
+            try {
+                if (int.TryParse(Console.ReadLine(), out idD))
+                    Console.WriteLine(dal.GetDrone(idD));
+            }
+            catch(Exception ex)
             {
-                //DAL.IDAL.DO.Drone drone = DAL.DalObject.DalObject.ShowDrone(idD);
-                // if (drone.CodeDrone == idD)
-                //Console.WriteLine(drone + "\n");//לבדוק איך למנוע הדפסה במקרה שנזרקה חריגה, אולי לעשות כאן טריי
-                // else
-                // Console.WriteLine("Sorry. The drone is not found\n");
-                Console.WriteLine(dal.GetDrone(idD));
+                Console.WriteLine(ex.Message);
             }
         }
         /// <summary>
@@ -227,14 +210,14 @@ namespace ConsoleDal
         {
             Console.WriteLine("enter the customer ID");
             int idC;
-            if (int.TryParse(Console.ReadLine(), out idC))
+            try
             {
-                //DAL.IDAL.DO.Customer customer = DAL.DalObject.DalObject.ShowCustomer(idC);
-                //if (customer.IdCustomer == idC)//איך לבדוק שהאובייקט לא ריק
-                // Console.WriteLine(customer + "\n");
-                //else
-                // Console.WriteLine("Sorry. The customer is not found\n");
-                Console.WriteLine(dal.GetCustomer(idC));
+                if (int.TryParse(Console.ReadLine(), out idC))
+                    Console.WriteLine(dal.GetCustomer(idC));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
         /// <summary>
@@ -246,16 +229,18 @@ namespace ConsoleDal
         {
             Console.WriteLine("enter the parcel ID");
             int idP;
-            if (int.TryParse(Console.ReadLine(), out idP))
+            try
             {
-                //DAL.IDAL.DO.Parcel parcel = DAL.DalObject.DalObject.ShowParcel(idP);
-                //if (parcel.CodeParcel == idP)
-                //  Console.WriteLine(parcel + "\n");
-                // else
-                //  Console.WriteLine("Sorry. The parcel is not found\n");
-                Console.WriteLine(dal.GetParcel(idP));
+                if (int.TryParse(Console.ReadLine(), out idP))
+                    Console.WriteLine(dal.GetParcel(idP));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
+        #endregion
+        #region view list of objects
         /// <summary>
         /// the function shows the options of view lists and cout the chose of the user
         /// </summary>
@@ -287,8 +272,6 @@ namespace ConsoleDal
         public static void baseStationsListView()
         {
             List<BaseStation> baseStations = dal.GetStationsByCondition().ToList();
-            //for (int i = 1; i <= baseStations.Count; i++)
-            //    Console.WriteLine("Base station No. " + i + ":\n" + baseStations[i]);
             foreach (BaseStation item in baseStations)
             {
                 Console.WriteLine(item);
@@ -300,8 +283,6 @@ namespace ConsoleDal
         public static void dronesListView()
         {
             List<Drone> drones = dal.GetDronesByCondition().ToList();
-            //for (int i = 1; i <= drones.Count; i++)
-            //    Console.WriteLine("Drone No. " + i + ":\n" + drones[i]);
             foreach (Drone item in drones)
             {
                 Console.WriteLine(item);
@@ -313,8 +294,6 @@ namespace ConsoleDal
         public static void customersListView()
         {
             List<Customer> customers = dal.GetCustomersByCondition().ToList();
-            //for (int i = 1; i <= customers.Count; i++)
-            //    Console.WriteLine("Customer No. " + i + ":\n" + customers[i]);
             foreach (Customer item in customers)
             {
                 Console.WriteLine(item);
@@ -326,8 +305,6 @@ namespace ConsoleDal
         public static void parcelsListView()
         {
             List<Parcel> parcels = dal.GetParcelsByCondition().ToList();
-            //for (int i = 1; i <= parcels.Count; i++)
-            //    Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
             foreach (Parcel item in parcels)
             {
                 Console.WriteLine(item);
@@ -339,8 +316,6 @@ namespace ConsoleDal
         public static void parcelsWithoutdrone()
         {
             List<Parcel> parcels = dal.GetParcelsByCondition(parcel => parcel.DroneId == 0).ToList();
-            //for (int i = 1; i <= parcels.Count; i++)
-            //    Console.WriteLine("Parcel No. " + i + ":\n" + parcels[i]);
             foreach (Parcel item in parcels)
             {
                 Console.WriteLine(item);
@@ -352,13 +327,13 @@ namespace ConsoleDal
         public static void baseStationsWithChargeSlots()
         {
             List<BaseStation> baseStations = dal.GetStationsByCondition(station => station.ChargeSlots > 0).ToList();
-            //for (int i = 1; i <= baseStations.Count; i++)
-            //    Console.WriteLine("Parcel No. " + i + ":\n" + baseStations[i]);
             foreach (BaseStation item in baseStations)
             {
                 Console.WriteLine(item);
             }
         }
+        #endregion
+        #region main menu
         static void Main(string[] args)
         {
             int choice;
@@ -369,7 +344,6 @@ namespace ConsoleDal
                 if (int.TryParse(Console.ReadLine(), out choice))
                 {
                     menu = (Menu)choice;
-                    //choice = (Char)Console.Read();
                     switch (menu)
                     {
                         case Menu.Add: AddingOptions(); break;
@@ -382,6 +356,6 @@ namespace ConsoleDal
             }
             while (choice != 0);
         }
-
+        #endregion
     }
 }

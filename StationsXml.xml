@@ -3,16 +3,7 @@
   <Station>
     <id>1</id>
     <name>7802</name>
-    <numOfChargeSlots>44</numOfChargeSlots>
-    <location>
-      <longitude>32.600578538887476</longitude>
-      <latitude>34.25856285693988</latitude>
-    </location>
-  </Station>
-  <Station>
-    <id>1</id>
-    <name>7802</name>
-    <numOfChargeSlots>46</numOfChargeSlots>
+    <numOfChargeSlots>45</numOfChargeSlots>
     <location>
       <longitude>32.600578538887476</longitude>
       <latitude>34.25856285693988</latitude>
